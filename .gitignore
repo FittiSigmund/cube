@@ -1,0 +1,5 @@
+.idea/*
+lib/*
+**/bin/*
+lib64
+pyvenv.cfg
