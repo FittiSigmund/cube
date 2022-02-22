@@ -1,4 +1,13 @@
+import psycopg2
+from psycopg2 import Error
+
 from Cube import Level, Hierarchy, Dimension, Cube, Measure
+
+DATABASE_USER = "sigmundur"
+DATABASE_PASSWORD = ""
+DATABASE_HOST = "127.0.0.1"
+DATABASE_PORT = "5432"
+DATABASE_NAME = "salesdb_snowflake"
 
 
 def init_cube():
@@ -20,10 +29,44 @@ def init_cube():
     return Cube([d1, d2, d3], [], [], backend)
 
 
-cube = init_cube()
-cube2 = cube.columns(cube.Supplier.City.name)
-cube3 = cube.rows(cube.Customer.Address.name)
-cube4 = cube.columns(cube.Supplier.City.name).rows(cube.Customer.Address.name)
-print(cube2.__str__())
-print(cube3.__str__())
-print(cube4.__str__())
+def test_cube():
+    cube = init_cube()
+    cube2 = cube.columns(cube.Supplier.City.name)
+    cube3 = cube.rows(cube.Customer.Address.name)
+    cube4 = cube.columns(cube.Supplier.City.name).rows(cube.Customer.Address.name)
+    print(cube2.__str__())
+    print(cube3.__str__())
+    print(cube4.__str__())
+
+
+def get_cursor(user, password, host, port, database):
+    connection = psycopg2.connect(user=user,
+                                  password=password,
+                                  host=host,
+                                  port=port,
+                                  database=database)
+    return connection.cursor()
+
+
+def infer_cube_structure(db_cursor):
+    db_cursor.execute("""
+        SELECT 
+            table_info.table_schema,
+            table_info.table_name,
+            '>- no FKs' as foreign_keys
+        FROM information_schema.tables AS table_info
+        WHERE table_schema NOT IN ('pg_catalog', 'information_schema')
+        AND table_info.table_type = 'BASE TABLE';
+        """)
+
+    return db_cursor.fetchall()
+
+
+try:
+    cursor = get_cursor(DATABASE_USER, DATABASE_PASSWORD, DATABASE_HOST, DATABASE_PORT, DATABASE_NAME)
+    result = infer_cube_structure(cursor)
+    print("Number of results: ", len(result))
+    for i in range(0, len(result)):
+        print("Table Schema -> ", result[i][0], "| Table Name -> ", result[i][1], "| foreign_keys -> ", result[i][2])
+except (Exception, Error) as error:
+    print("Error connecting to Postgres", error)
