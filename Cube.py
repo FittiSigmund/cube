@@ -53,16 +53,59 @@ class Dimension:
         return f"Dimension Name: {self.name}, Hierarchy: {self._hierarchy}, \n Class Attributes: {self.__dict__.keys()}"
 
 
+class AggregateFunction:
+    def __init__(self, name, function):
+        self.__name = name
+        self.__function = function
+
+    @property
+    def name(self):
+        return self.__name
+
+    @name.setter
+    def name(self, name):
+        self.__name = name
+
+    def eval(self, *args):
+        return self.__function(*args)
+
+
 class Measure:
-    def __init__(self, name):
-        self.name = name
+    def __init__(self, name, function):
+        self.__name = name
+        self.__aggregate_function = function
+
+    def aggregate(self, *args):
+        return self.__aggregate_function.eval(*args)
+
+    @property
+    def name(self):
+        return self.__name
+
+    @name.setter
+    def name(self, name):
+        self.__name = name
+
+    @property
+    def aggregate_function(self):
+        return self.__aggregate_function
 
 
 class Cube:
-    def __init__(self, dimension_list):
-        self.dimension_list = dimension_list
+    def __init__(self, dimension_list, measure_list, name):
+        self.__dimension_list = dimension_list
+        self.__measure_list = measure_list
+        self.__name = name
         for dimension in dimension_list:
             setattr(self, dimension.name, dimension)
+
+    @property
+    def name(self):
+        return self.__name
+
+    @name.setter
+    def name(self, name):
+        self.__name = name
 
     def columns(self, value_set):
         pass
@@ -72,4 +115,7 @@ class Cube:
 
     def where(self, slicer):
         pass
+
+    def measures(self):
+        return self.__measure_list
 
