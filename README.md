@@ -1,3 +1,44 @@
+# Current limitations in the code
+## Assumptions about the relational representation of the data source
+* Snowflake schema
+* Fact table only consists of foreign keys and measures
+* No table refers to the fact table with a foreign key
+* Measures cannot be unique 
+    * Measures are found by taking all columns that are not foreign keys, primary keys, or have a unique constraint
+    * This assumption should not be an issue
+* Only one hierarchy per dimension
+* Only one fact table
+* All tables which do not have any foreign keys are the coarsest non-T level of a hierarchy in a dimension
+* Level tables are named 'DimensionName_LevelName'
+    * Dimension names are automatically extracted from the name of a level table in the hierarchy
+
+## Cube metadata
+* No cycle based internal representation of the cube metadata
+    * Only able to store it in memory using "variables"
+
+## General
+* The only aggregate function available is `SUM`
+* `SUM` is applied to all measures automatically
+* No mechanism for the user to assign another aggregate function to a measure
+* `columns()` and `rows()` are not implemented
+* The cube inferral algorithm is Postgres specific
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 In the following it will be implied that `cube` is a variable instanstiate with an actual cube, with an active dimension off `Supplier`.
 
 # Methods on cubes
