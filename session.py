@@ -1,5 +1,7 @@
 import psycopg2
 from psycopg2 import Error
+from rdflib import Graph, URIRef, Namespace
+from rdflib.namespace import RDF, RDFS
 
 from Cube import Level, Hierarchy, Dimension, Cube, Measure, AggregateFunction
 
@@ -50,6 +52,15 @@ def create_measures(measure_list):
 def create_session(engine):
     try:
         cursor = get_cursor(engine.user, engine.password, engine.host, engine.port, engine.dbname)
+        qb = Namespace("http://purl.org/linked-data/cube#")
+        qb4o = Namespace("http://purl.org/qb4olap/cubes#")
+        metadata = Graph()
+        dsd_name = URIRef("http://example.org/" + engine.dbname + "_dsd")
+        metadata.add((dsd_name, RDF.type, qb.DataStructureDefinition))
+        for s, p, o in metadata:
+            print(s, p, o)
+        print(metadata.serialize(format="turtle"))
+        ## TODO: Add more QB4OLAP structures
         table_with_no_fks = get_table_with_no_fks(cursor)
         hierarchies = create_hierarchies(cursor, table_with_no_fks)
         dimensions = create_dimensions(hierarchies)
