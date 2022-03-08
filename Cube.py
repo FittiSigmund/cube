@@ -3,9 +3,11 @@ from Interface import CubeInterface, DimensionInterface, Interface
 
 
 class Level:
-    def __init__(self, name, parent):
+    def __init__(self, name):
         self._name = name
-        self._parent = parent
+        # Initialize parent to None first in order to set it later using the parent.setter
+        # If I didn't do this, I would have a never ending chain of Level initializations
+        self._parent = None
 
     def members(self):
         raise NotImplementedError
@@ -18,30 +20,15 @@ class Level:
     def parent(self):
         return self._parent
 
-
-class Hierarchy:
-    def __init__(self, levels):
-        self.levels = levels
-
-    def go_up(self):
-        pass
-
-    def go_down(self):
-        pass
-
-    def get_current_level(self):
-        raise NotImplementedError
-
-    def __str__(self):
-        level_names = list(map(lambda x: x.name, self.levels))
-        return ' -> '.join(level_names)
+    @parent.setter
+    def parent(self, value):
+        self._parent = value
 
 
 class Dimension:
-    def __init__(self, name, hierarchy, level_list):
+    def __init__(self, name, level_list):
         self.name = name
-        self._hierarchy = hierarchy
-        self._lowest_level = hierarchy[0]
+        self._lowest_level = level_list[0]
         for level in level_list:
             setattr(self, level.name, level)
 
@@ -60,7 +47,7 @@ class Dimension:
     #     pass
 
     def __str__(self):
-        return f"Dimension Name: {self.name}, Hierarchy: {self._hierarchy}, \n Class Attributes: {self.__dict__.keys()}"
+        return f"Dimension Name: {self.name}, Class Attributes: {self.__dict__.keys()}"
 
 
 class AggregateFunction:
@@ -128,4 +115,3 @@ class Cube:
 
     def measures(self):
         return self.__measure_list
-

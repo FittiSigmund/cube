@@ -3,9 +3,15 @@ from psycopg2 import Error
 from rdflib import Graph, URIRef, BNode, Namespace
 from rdflib.namespace import RDF, RDFS, QB
 
-from Cube import Level, Hierarchy, Dimension, Cube, Measure, AggregateFunction
+from Cube import Level, Dimension, Cube, Measure, AggregateFunction
 
 fact_table_list = []
+
+EG_NAMESPACE_PREFIX = "http://example.org/"
+QB4O_NAMESPACE_PREFIX = "http://purl.org/qb4olap/cubes/"
+
+EG = Namespace("http://example.org/")
+QB4O = Namespace("http://purl.org/qb4olap/cubes/")
 
 
 class Session:
@@ -49,44 +55,99 @@ def create_measures(measure_list):
     return list(map(lambda x: create_measure(x[0]), measure_list))
 
 
+def initialize_rdf_graph():
+    g = Graph()
+    g.bind("eg", EG)
+    g.bind("qb4o", QB4O)
+    return g
+
+
+def create_namespaces():
+    return Namespace(EG_NAMESPACE_PREFIX), Namespace(QB4O_NAMESPACE_PREFIX)
+
+
+def add_data_structure_definition(metadata, dsd_node):
+    metadata.add((dsd_node, RDF.type, QB.DataStructureDefinition))
+
+
+def create_dsd_node(dbname):
+    dsd_name = dbname + "_dsd"
+    return EG[dsd_name]
+
+
+def create_metadata_for_measure(measure, metadata, dsd_node):
+    blank_measure_node = BNode()
+    metadata.add((dsd_node, QB.component, blank_measure_node))
+    ## TODO: Add mapping from aggregate function names to qb4o names
+    metadata.add((blank_measure_node, QB4O.hasAggregateFunction, QB4O.sum))
+    metadata.add((blank_measure_node, QB.measure, EG[measure.name]))
+    metadata.add((EG[measure.name], RDF.type, QB.MeasureProperty))
+
+
+def create_metadata_for_measures(measures, metadata, dsd_node):
+    # Need the call to list, because map is lazily evaluated
+    list(map(lambda x: create_metadata_for_measure(x, metadata, dsd_node), measures))
+
+
+def remove_tuple_from_list(table_with_no_fks_tuple):
+    return list(map(lambda x: x[0], table_with_no_fks_tuple))
+
+
+def create_metadata_for_dimension(dimension, metadata, dsd_node):
+    blank_node = BNode()
+    dimension_node = EG[dimension.name]
+
+    metadata.add((dsd_node, QB.component, blank_node))
+    metadata.add((blank_node, QB4O.level, EG[dimension.lowest_level.name]))
+
+    metadata.add((dimension_node, RDF.type, QB.DimensionProperty))
+
+    level = dimension.lowest_level
+    while level.parent is not level:
+        level_node = EG[level.name]
+        parent_level_node = EG[level.parent.name]
+        metadata.add((level_node, RDF.type, QB4O.LevelProperty))
+        metadata.add((level_node, QB4O.inDimension, dimension_node))
+        metadata.add((level_node, QB4O.parentLevel, parent_level_node))
+        level = level.parent
+
+    level_node = EG[level.name]
+    metadata.add((level_node, RDF.type, QB4O.LevelProperty))
+    metadata.add((level_node, QB4O.inDimension, dimension_node))
+
+
+def create_metadata_for_dimensions(dimensions, metadata, dsd_node):
+    list(map(lambda x: create_metadata_for_dimension(x, metadata, dsd_node), dimensions))
+
+
+def create_cube_metadata(dsd_name, dimensions, measures):
+    ## TODO: Generate proper URIs (or use proper prefix)
+    metadata = initialize_rdf_graph()
+    dsd_node = create_dsd_node(dsd_name)
+    add_data_structure_definition(metadata, dsd_node)
+    create_metadata_for_dimensions(dimensions, metadata, dsd_node)
+    create_metadata_for_measures(measures, metadata, dsd_node)
+    print(metadata.serialize(format="turtle"))
+
+
+def infer_cube_structure(db_cursor):
+    table_with_no_fks = get_table_with_no_fks(db_cursor)
+    levels = create_levels_in_hierarchies(db_cursor, table_with_no_fks)
+    fact_table = get_fact_table()
+    return create_dimensions(levels), create_measures(get_measures(db_cursor, fact_table))
+
+
 def create_session(engine):
     try:
-        ## TODO: Generate proper URIs
-        cursor = get_cursor(engine.user, engine.password, engine.host, engine.port, engine.dbname)
-        # qb = Namespace("http://purl.org/linked-data/cube/")
-        qb4o = Namespace("http://purl.org/qb4olap/cubes/")
-        metadata = Graph()
-        metadata.bind("qb4o", qb4o)
-        # metadata.bind("qb", qb)
-        eg = Namespace("http://example.org/")
-        metadata.bind("eg", eg)
-        dsd_name = engine.dbname + "_dsd"
-        dsd_node = eg[dsd_name]
-        metadata.add((dsd_node, RDF.type, QB.DataStructureDefinition))
-        table_with_no_fks = get_table_with_no_fks(cursor)
-        hierarchies = create_hierarchies(cursor, table_with_no_fks)
-        dimensions = create_dimensions(hierarchies)
-
-
-
-        fact_table = get_fact_table()
-        measures = create_measures(get_measures(cursor, fact_table))
-
-        for measure in measures:
-            blank_measure_node = BNode()
-            metadata.add((dsd_node, QB.component, blank_measure_node))
-            ## TODO: Add mapping from aggregate function names to qb4o names
-            metadata.add((blank_measure_node, qb4o.hasAggregateFunction, qb4o.sum))
-            metadata.add((blank_measure_node, QB.measure, eg[measure.name]))
-            metadata.add((eg[measure.name], RDF.type, QB.MeasureProperty))
-
-        print(metadata.serialize(format="turtle"))
+        cursor = get_db_cursor(engine.user, engine.password, engine.host, engine.port, engine.dbname)
+        dimensions, measures = infer_cube_structure(cursor)
+        create_cube_metadata(engine.dbname, dimensions, measures)
         return Session([create_cube(dimensions, measures, engine.dbname)])
     except (Exception, Error) as error:
         print("ERROR: ", error)
 
 
-def get_cursor(user, password, host, port, database):
+def get_db_cursor(user, password, host, port, database):
     connection = psycopg2.connect(user=user,
                                   password=password,
                                   host=host,
@@ -95,7 +156,7 @@ def get_cursor(user, password, host, port, database):
     return connection.cursor()
 
 
-def get_table_with_no_fks(db_cursor):
+def fetch_table_with_no_fks(db_cursor):
     db_cursor.execute("""
         SELECT
             table_info.table_name
@@ -109,6 +170,11 @@ def get_table_with_no_fks(db_cursor):
     """)
 
     return db_cursor.fetchall()
+
+
+def get_table_with_no_fks(db_cursor):
+    table_with_no_fks_tuple = fetch_table_with_no_fks(db_cursor)
+    return list(map(lambda x: x[0], table_with_no_fks_tuple))
 
 
 def get_next_level(db_cursor, level):
@@ -142,35 +208,32 @@ def get_levels(db_cursor, level):
             fact_table_list.append(next_level)
             fact_table_found = True
 
-    level_name_list = list(reversed(level_name_list))
-    result = []
-    for i in range(len(level_name_list)):
-        if i == len(level_name_list):
-            result.append(Level(level_name_list[i], level_name_list[i]))
-            continue
-        result.append(Level(level_name_list[i], level_name_list[i + 1]))
-    ## TODO: Add parent to level
-    return result
+    return list(map(lambda x: Level(x), level_name_list))
 
 
-def create_hierarchy(db_cursor, level_tuple):
-    levels = get_levels(db_cursor, level_tuple[0])
-    print(levels[0].parent)
-    return Hierarchy(levels)
+def create_levels_in_hierarchy(db_cursor, level):
+    level_list = get_levels(db_cursor, level)
+    for i in range(len(level_list)):
+        if i == 0:
+            level_list[i].parent = level_list[i]
+        else:
+            level_list[i].parent = level_list[i - 1]
+
+    return list(reversed(level_list))
 
 
-def create_dimension(hierarchy):
-    dimension_name = hierarchy.levels[0].name.split('_')[0]
-    return Dimension(dimension_name, hierarchy, hierarchy.levels)
+def create_dimension(levels):
+    dimension_name = levels[0].name.split('_')[0]
+    return Dimension(dimension_name, levels)
 
 
 def create_cube(dimension_list, measure_list, dbname):
     return Cube(dimension_list, measure_list, dbname)
 
 
-def create_hierarchies(db_cursor, no_fk_table_list):
-    return list(map(lambda x: create_hierarchy(db_cursor, x), no_fk_table_list))
+def create_levels_in_hierarchies(db_cursor, no_fk_table_list):
+    return list(map(lambda x: create_levels_in_hierarchy(db_cursor, x), no_fk_table_list))
 
 
-def create_dimensions(hierarchy_list):
-    return list(map(lambda x: create_dimension(x), hierarchy_list))
+def create_dimensions(level_list):
+    return list(map(lambda x: create_dimension(x), level_list))
