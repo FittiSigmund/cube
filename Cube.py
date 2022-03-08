@@ -3,8 +3,9 @@ from Interface import CubeInterface, DimensionInterface, Interface
 
 
 class Level:
-    def __init__(self, name):
+    def __init__(self, name, parent):
         self._name = name
+        self._parent = parent
 
     def members(self):
         raise NotImplementedError
@@ -12,6 +13,10 @@ class Level:
     @property
     def name(self):
         return self._name
+
+    @property
+    def parent(self):
+        return self._parent
 
 
 class Hierarchy:
@@ -36,6 +41,7 @@ class Dimension:
     def __init__(self, name, hierarchy, level_list):
         self.name = name
         self._hierarchy = hierarchy
+        self._lowest_level = hierarchy[0]
         for level in level_list:
             setattr(self, level.name, level)
 
@@ -44,6 +50,10 @@ class Dimension:
 
     def drill_down(self):
         pass
+
+    @property
+    def lowest_level(self):
+        return self._lowest_level
 
     # @property
     # def hierarchy(self):

@@ -1,7 +1,7 @@
 import psycopg2
 from psycopg2 import Error
-from rdflib import Graph, URIRef, Namespace
-from rdflib.namespace import RDF, RDFS
+from rdflib import Graph, URIRef, BNode, Namespace
+from rdflib.namespace import RDF, RDFS, QB
 
 from Cube import Level, Hierarchy, Dimension, Cube, Measure, AggregateFunction
 
@@ -46,26 +46,41 @@ def create_measure(measure):
 
 
 def create_measures(measure_list):
-    return list(map(lambda x: create_measure(x), measure_list))
+    return list(map(lambda x: create_measure(x[0]), measure_list))
 
 
 def create_session(engine):
     try:
+        ## TODO: Generate proper URIs
         cursor = get_cursor(engine.user, engine.password, engine.host, engine.port, engine.dbname)
-        qb = Namespace("http://purl.org/linked-data/cube#")
-        qb4o = Namespace("http://purl.org/qb4olap/cubes#")
+        # qb = Namespace("http://purl.org/linked-data/cube/")
+        qb4o = Namespace("http://purl.org/qb4olap/cubes/")
         metadata = Graph()
-        dsd_name = URIRef("http://example.org/" + engine.dbname + "_dsd")
-        metadata.add((dsd_name, RDF.type, qb.DataStructureDefinition))
-        for s, p, o in metadata:
-            print(s, p, o)
-        print(metadata.serialize(format="turtle"))
-        ## TODO: Add more QB4OLAP structures
+        metadata.bind("qb4o", qb4o)
+        # metadata.bind("qb", qb)
+        eg = Namespace("http://example.org/")
+        metadata.bind("eg", eg)
+        dsd_name = engine.dbname + "_dsd"
+        dsd_node = eg[dsd_name]
+        metadata.add((dsd_node, RDF.type, QB.DataStructureDefinition))
         table_with_no_fks = get_table_with_no_fks(cursor)
         hierarchies = create_hierarchies(cursor, table_with_no_fks)
         dimensions = create_dimensions(hierarchies)
+
+
+
         fact_table = get_fact_table()
         measures = create_measures(get_measures(cursor, fact_table))
+
+        for measure in measures:
+            blank_measure_node = BNode()
+            metadata.add((dsd_node, QB.component, blank_measure_node))
+            ## TODO: Add mapping from aggregate function names to qb4o names
+            metadata.add((blank_measure_node, qb4o.hasAggregateFunction, qb4o.sum))
+            metadata.add((blank_measure_node, QB.measure, eg[measure.name]))
+            metadata.add((eg[measure.name], RDF.type, QB.MeasureProperty))
+
+        print(metadata.serialize(format="turtle"))
         return Session([create_cube(dimensions, measures, engine.dbname)])
     except (Exception, Error) as error:
         print("ERROR: ", error)
@@ -127,11 +142,20 @@ def get_levels(db_cursor, level):
             fact_table_list.append(next_level)
             fact_table_found = True
 
-    return list(map(lambda x: Level(x), level_name_list))
+    level_name_list = list(reversed(level_name_list))
+    result = []
+    for i in range(len(level_name_list)):
+        if i == len(level_name_list):
+            result.append(Level(level_name_list[i], level_name_list[i]))
+            continue
+        result.append(Level(level_name_list[i], level_name_list[i + 1]))
+    ## TODO: Add parent to level
+    return result
 
 
 def create_hierarchy(db_cursor, level_tuple):
     levels = get_levels(db_cursor, level_tuple[0])
+    print(levels[0].parent)
     return Hierarchy(levels)
 
 
