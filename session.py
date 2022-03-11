@@ -2,6 +2,7 @@ import psycopg2
 from psycopg2 import Error
 from rdflib import Graph, URIRef, BNode, Namespace
 from rdflib.namespace import RDF, RDFS, QB
+from Levenshtein import distance as levenshtein_distance
 
 from Cube import Level, Dimension, Cube, Measure, AggregateFunction
 
@@ -47,8 +48,8 @@ def get_measures(db_cursor, fact_table):
 
 
 def create_measure(measure):
-    SUM = AggregateFunction("SUM", lambda x, y: x + y)
-    return Measure(measure, SUM)
+    sum_agg_func = AggregateFunction("SUM", lambda x, y: x + y)
+    return Measure(measure, sum_agg_func)
 
 
 def create_measures(measure_list):
@@ -120,28 +121,41 @@ def create_metadata_for_dimensions(dimensions, metadata, dsd_node):
     list(map(lambda x: create_metadata_for_dimension(x, metadata, dsd_node), dimensions))
 
 
-def create_cube_metadata(dsd_name, dimensions, measures):
+def create_metadata_for_level_attribute(metadata, level_attribute):
+    for level_name, level_attribute_names in level_attribute.items():
+        for level_attribute_name in level_attribute_names:
+            metadata.add((EG[level_attribute_name], RDF.type, QB.AttributeProperty))
+            metadata.add((EG[level_name], QB4O.hasAttribute, EG[level_attribute_name]))
+
+
+def create_metadata_for_level_attributes(metadata, level_attributes):
+    list(map(lambda x: create_metadata_for_level_attribute(metadata, x), level_attributes))
+
+
+def create_cube_metadata(dsd_name, dimensions, level_attributes, measures):
     ## TODO: Generate proper URIs (or use proper prefix)
     metadata = initialize_rdf_graph()
     dsd_node = create_dsd_node(dsd_name)
     add_data_structure_definition(metadata, dsd_node)
     create_metadata_for_dimensions(dimensions, metadata, dsd_node)
+    create_metadata_for_level_attributes(metadata, level_attributes)
     create_metadata_for_measures(measures, metadata, dsd_node)
-    print(metadata.serialize(format="turtle"))
+    # print(metadata.serialize(format="turtle"))
 
 
 def infer_cube_structure(db_cursor):
-    table_with_no_fks = get_table_with_no_fks(db_cursor)
-    levels = create_levels_in_hierarchies(db_cursor, table_with_no_fks)
+    top_level_names = get_table_with_no_fks(db_cursor)
+    result = create_levels_in_hierarchies(db_cursor, top_level_names)
+    levels, level_attributes = zip(*result)
     fact_table = get_fact_table()
-    return create_dimensions(levels), create_measures(get_measures(db_cursor, fact_table))
+    return create_dimensions(levels), level_attributes, create_measures(get_measures(db_cursor, fact_table))
 
 
 def create_session(engine):
     try:
         cursor = get_db_cursor(engine.user, engine.password, engine.host, engine.port, engine.dbname)
-        dimensions, measures = infer_cube_structure(cursor)
-        create_cube_metadata(engine.dbname, dimensions, measures)
+        dimensions, level_attributes, measures = infer_cube_structure(cursor)
+        create_cube_metadata(engine.dbname, dimensions, level_attributes, measures)
         return Session([create_cube(dimensions, measures, engine.dbname)])
     except (Exception, Error) as error:
         print("ERROR: ", error)
@@ -177,7 +191,7 @@ def get_table_with_no_fks(db_cursor):
     return list(map(lambda x: x[0], table_with_no_fks_tuple))
 
 
-def get_next_level(db_cursor, level):
+def get_next_level_name(db_cursor, level):
     db_cursor.execute(f"""
         SELECT relname
         FROM pg_class
@@ -191,35 +205,100 @@ def get_next_level(db_cursor, level):
     return db_cursor.fetchall()
 
 
-def get_levels(db_cursor, level):
-    level_name_list = [level]
-    current_level = level
+def get_level_attributesREMOVE(level, attribute_list):
+    attribute_distance = {}
+    for attribute in attribute_list:
+        attribute_distance[levenshtein_distance(level, attribute[0])] = attribute[0]
+
+    attribute_distance.pop(min(attribute_distance.keys()))
+    return list(attribute_distance.values())
+
+
+def get_level_attributes_metadata(db_cursor, level):
+    db_cursor.execute(f"""
+        SELECT info_col.column_name
+        FROM information_schema.columns AS info_col
+        WHERE info_col.table_name = '{level}'
+        AND info_col.column_name NOT IN (SELECT kcu.column_name FROM information_schema.key_column_usage AS kcu WHERE kcu.table_name = '{level}')
+    """)
+
+    non_key_columns = db_cursor.fetchall()
+    return get_level_attributesREMOVE(level, non_key_columns) if len(non_key_columns) > 1 else None
+
+
+def get_levels(db_cursor, top_level_name):
+    level_name_list = [top_level_name]
+    current_level_name = top_level_name
     fact_table_found = False
+    metadata_list = []
+    top_level_attributes = get_level_attributes_metadata(db_cursor, top_level_name)
+    if top_level_attributes is not None:
+        metadata_list.append(top_level_attributes)
 
     while fact_table_found is False:
-        next_level = get_next_level(db_cursor, current_level)[0][0]
-        potential_level = get_next_level(db_cursor, next_level)
+        next_level_name = get_next_level_name(db_cursor, current_level_name)[0][0]
+        potential_level_name = get_next_level_name(db_cursor, next_level_name)
 
-        if potential_level:
-            level_name_list.append(next_level)
-            current_level = next_level
+        if potential_level_name:
+            level_attributes_metadata = get_level_attributes_metadata(db_cursor, next_level_name)
+            if level_attributes_metadata is not None:
+                metadata_list.append(level_attributes_metadata)
+            level_name_list.append(next_level_name)
+            current_level_name = next_level_name
             continue
         else:
-            fact_table_list.append(next_level)
+            fact_table_list.append(next_level_name)
             fact_table_found = True
 
-    return list(map(lambda x: Level(x), level_name_list))
+    return level_name_list
 
 
-def create_levels_in_hierarchy(db_cursor, level):
-    level_list = get_levels(db_cursor, level)
+def remove_tuples_from_list(list_of_tuples):
+    return list(map(lambda x: x[0], list_of_tuples))
+
+
+def remove_level_member(level_name, level_attribute_names):
+    distance_dict = {}
+    for name in level_attribute_names:
+        distance_dict[levenshtein_distance(level_name, name)] = name
+
+    distance_dict.pop(min(list(distance_dict.keys())))
+    return list(distance_dict.values())
+
+
+def get_level_attributes(db_cursor, level_name_list):
+    level_attributes_dict = {}
+    for level_name in level_name_list:
+        db_cursor.execute(f"""
+            SELECT info_col.column_name
+            FROM information_schema.columns AS info_col
+            WHERE info_col.table_name = '{level_name}'
+            AND info_col.column_name NOT IN (SELECT kcu.column_name FROM information_schema.key_column_usage AS kcu WHERE kcu.table_name = '{level_name}')
+        """)
+        non_key_columns = db_cursor.fetchall()
+        if len(non_key_columns) > 1:
+            non_key_columns_without_tuples = remove_tuples_from_list(non_key_columns)
+            level_attributes = remove_level_member(level_name, non_key_columns_without_tuples)
+            level_attributes_dict[level_name] = level_attributes
+
+    return level_attributes_dict
+
+
+def convert_to_levels(level_names):
+    return list(map(lambda x: Level(x), level_names))
+
+
+def create_levels_in_hierarchy(db_cursor, top_level_name):
+    level_name_list = get_levels(db_cursor, top_level_name)
+    level_list = convert_to_levels(level_name_list)
+    level_attributes = get_level_attributes(db_cursor, level_name_list)
     for i in range(len(level_list)):
         if i == 0:
             level_list[i].parent = level_list[i]
         else:
             level_list[i].parent = level_list[i - 1]
 
-    return list(reversed(level_list))
+    return list(reversed(level_list)), level_attributes
 
 
 def create_dimension(levels):
@@ -231,8 +310,8 @@ def create_cube(dimension_list, measure_list, dbname):
     return Cube(dimension_list, measure_list, dbname)
 
 
-def create_levels_in_hierarchies(db_cursor, no_fk_table_list):
-    return list(map(lambda x: create_levels_in_hierarchy(db_cursor, x), no_fk_table_list))
+def create_levels_in_hierarchies(db_cursor, top_level_names):
+    return list(map(lambda x: create_levels_in_hierarchy(db_cursor, x), top_level_names))
 
 
 def create_dimensions(level_list):
