@@ -140,7 +140,7 @@ def create_cube_metadata(dsd_name, dimensions, level_attributes, measures):
     create_metadata_for_dimensions(dimensions, metadata, dsd_node)
     create_metadata_for_level_attributes(metadata, level_attributes)
     create_metadata_for_measures(measures, metadata, dsd_node)
-    # print(metadata.serialize(format="turtle"))
+    print(metadata.serialize(format="turtle"))
 
 
 def infer_cube_structure(db_cursor):
@@ -205,44 +205,16 @@ def get_next_level_name(db_cursor, level):
     return db_cursor.fetchall()
 
 
-def get_level_attributesREMOVE(level, attribute_list):
-    attribute_distance = {}
-    for attribute in attribute_list:
-        attribute_distance[levenshtein_distance(level, attribute[0])] = attribute[0]
-
-    attribute_distance.pop(min(attribute_distance.keys()))
-    return list(attribute_distance.values())
-
-
-def get_level_attributes_metadata(db_cursor, level):
-    db_cursor.execute(f"""
-        SELECT info_col.column_name
-        FROM information_schema.columns AS info_col
-        WHERE info_col.table_name = '{level}'
-        AND info_col.column_name NOT IN (SELECT kcu.column_name FROM information_schema.key_column_usage AS kcu WHERE kcu.table_name = '{level}')
-    """)
-
-    non_key_columns = db_cursor.fetchall()
-    return get_level_attributesREMOVE(level, non_key_columns) if len(non_key_columns) > 1 else None
-
-
-def get_levels(db_cursor, top_level_name):
+def get_level_names(db_cursor, top_level_name):
     level_name_list = [top_level_name]
     current_level_name = top_level_name
     fact_table_found = False
-    metadata_list = []
-    top_level_attributes = get_level_attributes_metadata(db_cursor, top_level_name)
-    if top_level_attributes is not None:
-        metadata_list.append(top_level_attributes)
 
     while fact_table_found is False:
         next_level_name = get_next_level_name(db_cursor, current_level_name)[0][0]
         potential_level_name = get_next_level_name(db_cursor, next_level_name)
 
         if potential_level_name:
-            level_attributes_metadata = get_level_attributes_metadata(db_cursor, next_level_name)
-            if level_attributes_metadata is not None:
-                metadata_list.append(level_attributes_metadata)
             level_name_list.append(next_level_name)
             current_level_name = next_level_name
             continue
@@ -289,7 +261,7 @@ def convert_to_levels(level_names):
 
 
 def create_levels_in_hierarchy(db_cursor, top_level_name):
-    level_name_list = get_levels(db_cursor, top_level_name)
+    level_name_list = get_level_names(db_cursor, top_level_name)
     level_list = convert_to_levels(level_name_list)
     level_attributes = get_level_attributes(db_cursor, level_name_list)
     for i in range(len(level_list)):
