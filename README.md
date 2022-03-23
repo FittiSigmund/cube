@@ -12,9 +12,6 @@
 * Level tables are named 'DimensionName_LevelName'
     * Dimension names are automatically extracted from the name of a level table in the hierarchy
 
-## Cube metadata
-* No cycle based internal representation of the cube metadata
-    * Only able to store it in memory using "variables"
 
 ## General
 * The only aggregate function available is `SUM`
