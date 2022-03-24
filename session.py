@@ -148,7 +148,8 @@ def infer_cube_structure(db_cursor):
     result = create_levels_in_hierarchies(db_cursor, top_level_names)
     levels, level_attributes = zip(*result)
     fact_table = get_fact_table()
-    return create_dimensions(levels), level_attributes, create_measures(get_measures(db_cursor, fact_table))
+    measures = create_measures(get_measures(db_cursor, fact_table))
+    return create_dimensions(levels), level_attributes, measures
 
 
 def create_session(engine):
@@ -245,7 +246,11 @@ def get_level_attributes(db_cursor, level_name_list):
             SELECT info_col.column_name
             FROM information_schema.columns AS info_col
             WHERE info_col.table_name = '{level_name}'
-            AND info_col.column_name NOT IN (SELECT kcu.column_name FROM information_schema.key_column_usage AS kcu WHERE kcu.table_name = '{level_name}')
+            AND info_col.column_name NOT IN (
+                SELECT kcu.column_name 
+                FROM information_schema.key_column_usage AS kcu 
+                WHERE kcu.table_name = '{level_name}'
+                )
         """)
         non_key_columns = db_cursor.fetchall()
         if len(non_key_columns) > 1:
