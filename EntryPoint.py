@@ -10,4 +10,6 @@ DATABASE_NAME = "salesdb_snowflake"
 postgres_engine = engines.postgres(DATABASE_NAME, DATABASE_USER, DATABASE_PASSWORD, DATABASE_HOST, DATABASE_PORT)
 postgres = create_session(postgres_engine)
 cube = postgres.load_cube('salesdb_snowflake')
-price = cube.measures()[0]
+print(cube.measures())
+print(cube.dimensions())
+

@@ -1,7 +1,3 @@
-from Enums import Backend
-from Interface import CubeInterface, DimensionInterface, Interface
-
-
 class Level:
     def __init__(self, name):
         self._name = name
@@ -27,10 +23,14 @@ class Level:
 
 class Dimension:
     def __init__(self, name, level_list):
-        self.name = name
-        self._lowest_level = level_list[0]
+        self.__name = name
+        self.__lowest_level = level_list[0]
         for level in level_list:
             setattr(self, level.name, level)
+
+    @property
+    def name(self):
+        return self.__name
 
     def roll_up(self):
         pass
@@ -40,14 +40,7 @@ class Dimension:
 
     @property
     def lowest_level(self):
-        return self._lowest_level
-
-    # @property
-    # def hierarchy(self):
-    #     pass
-
-    def __str__(self):
-        return f"Dimension Name: {self.name}, Class Attributes: {self.__dict__.keys()}"
+        return self.__lowest_level
 
 
 class AggregateFunction:
@@ -114,4 +107,7 @@ class Cube:
         pass
 
     def measures(self):
-        return self.__measure_list
+        return list(map(lambda x: x.name, self.__measure_list))
+
+    def dimensions(self):
+        return list(map(lambda x: x.name, self.__dimension_list))

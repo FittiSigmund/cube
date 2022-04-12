@@ -15,7 +15,6 @@ def create_cube_metadata(dsd_name, dimensions, level_attributes, measures):
     create_metadata_for_dimensions(dimensions, metadata, dsd_node)
     create_metadata_for_level_attributes(metadata, level_attributes)
     create_metadata_for_measures(measures, metadata, dsd_node)
-    print(metadata.serialize(format="turtle"))
 
 
 def initialize_rdf_graph():

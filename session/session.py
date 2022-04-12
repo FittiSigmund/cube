@@ -1,5 +1,3 @@
-from functools import reduce
-
 import psycopg2
 from psycopg2 import Error
 
