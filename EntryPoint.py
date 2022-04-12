@@ -1,5 +1,5 @@
 import engines
-from session import *
+from session.session import *
 
 DATABASE_USER = "sigmundur"
 DATABASE_PASSWORD = ""
