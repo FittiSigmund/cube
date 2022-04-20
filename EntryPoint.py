@@ -14,9 +14,6 @@ print()
 print("Measures: ", cube.measures())
 print("Dimensions: ", cube.dimensions())
 print("Date hierarchy: ", cube.date.hierarchies())
-print(cube.date.date_year._2022)
-print("members: ", cube.date.date_year.members())
-print("__dict__: ", cube.date.date_year.__dict__)
+print(cube.date.date_year._2022.__dict__)
 
-## VITA UM LEVEL MEMBER INSTANCES RIGGAR
 

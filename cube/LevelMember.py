@@ -3,7 +3,7 @@ class LevelMember:
         self.__name = name
         self.__children = children
         for child in children:
-            setattr(self, f"{child}", child)
+            setattr(self, f"_{child.name}", child)
 
     @property
     def name(self):

@@ -1,3 +1,4 @@
+from collections import deque
 from functools import reduce
 from Levenshtein import distance as levenshtein_distance
 
@@ -27,31 +28,60 @@ def create_level_member_value(values):
     return values
 
 
-def create_levels_in_hierarchy(db_cursor, level_name):
-    level_dto_list = create_hierarchy(db_cursor, level_name)
-    # list(map(lambda x: print(x.member_values), level_dto_list))
-    for i in range(len(level_dto_list)):
-        for j in range(len(level_dto_list[i].member_values)):
-            if i == len(level_dto_list) - 1:
-                level_dto_list[i].level_member_instances.append(LevelMember(level_dto_list[i].member_values[j], []))
-                continue
-            level_dto_list[i].level_member_instances.append(LevelMember(level_dto_list[i].member_values[j], level_dto_list[i + 1].member_values))
+def create_level_member_instances(level_dto_list):
+    result = []
+    if not level_dto_list:
+        return result
+    head, tail = level_dto_list.popleft(), level_dto_list
 
-    # for dto in level_dto_list:
-    #     for inst in dto.level_member_instances:
-    #         print("Level member name -> ", inst.name, "Level member children -> ", inst.children())
+    # print("Head is -> ", head.member_values)
+    # if tail:
+    #     for t in list(tail):
+    #         print("Tail is -> ", t.member_values)
+    # else:
+    #     print("Tail is -> ", tail)
 
-    levels = list(map(lambda l: Level(l.name, l.level_member_instances), level_dto_list))
+    # print("Head Head is -> ", head.name)
+    for value in head.member_values:
+        temp = LevelMember(value, create_level_member_instances(tail))
+        result.append(temp)
+
+    head.level_member_instances = result
+    return result
+
+
+def attach_level_member_instances(level_dto_list, level_member_instance_tree):
+    current_level_members = level_member_instance_tree
+    i = 0
+    while current_level_members:
+        level_dto_list[i].level_member_instances = current_level_members
+        i += 1
+        current_level_members = current_level_members[0].children()
+
+
+def attach_parents_to_levels(levels):
     for i in range(len(levels)):
         if i == 0:
             levels[i].parent = levels[i]
         else:
             levels[i].parent = levels[i - 1]
-    ## CREATE LEVEL MEMBER INSTANCES AND ATTACH THEM TO LEVELS
-    ## THE ATTACHMENT MUST BE DONE IN A "TOP DOWN" MANNER, MEANING THAT LEVEL_DTO_LIST AND LEVELS MUST BE REVERSED
+    return levels
 
+
+def attach_levels_to_dto_list(level_dto_list, levels):
     for i in range(len(levels)):
         level_dto_list[i].level = levels[i]
+    return level_dto_list
+
+
+def create_levels_in_hierarchy(db_cursor, level_name):
+    level_dto_list = create_hierarchy(db_cursor, level_name)
+    level_member_instance_tree = create_level_member_instances(deque(level_dto_list))
+    attach_level_member_instances(level_dto_list, level_member_instance_tree)
+
+    levels = list(map(lambda l: Level(l.name, l.level_member_instances), level_dto_list))
+    levels = attach_parents_to_levels(levels)
+    level_dto_list = attach_levels_to_dto_list(level_dto_list, levels)
 
     return level_dto_list
 

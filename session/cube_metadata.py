@@ -1,7 +1,7 @@
 from rdflib import Graph, Namespace, BNode
 from rdflib.namespace import RDF, QB
 
-from Cube import Cube
+from cube.Cube import Cube
 
 EG = Namespace("http://example.org/")
 QB4O = Namespace("http://purl.org/qb4olap/cubes/")
