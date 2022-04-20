@@ -7,14 +7,15 @@ EG = Namespace("http://example.org/")
 QB4O = Namespace("http://purl.org/qb4olap/cubes/")
 
 
-def create_cube_metadata(dsd_name, dimensions, level_attributes, measures):
+def create_cube_metadata(dsd_name, dimensions, level_dto_list_list, measures):
     ## TODO: Generate proper URIs (or use proper prefix)
     metadata = initialize_rdf_graph()
     dsd_node = create_dsd_node(dsd_name)
     add_data_structure_definition(metadata, dsd_node)
     create_metadata_for_dimensions(dimensions, metadata, dsd_node)
-    create_metadata_for_level_attributes(metadata, level_attributes)
+    create_metadata_for_level_attributes(metadata, level_dto_list_list)
     create_metadata_for_measures(measures, metadata, dsd_node)
+    # print(metadata.serialize())
 
 
 def initialize_rdf_graph():
@@ -60,15 +61,15 @@ def create_metadata_for_dimension(dimension, metadata, dsd_node):
     metadata.add((level_node, QB4O.inDimension, dimension_node))
 
 
-def create_metadata_for_level_attributes(metadata, level_attributes):
-    list(map(lambda x: new_create_metadata_for_level_attribute(metadata, x), level_attributes))
+def create_metadata_for_level_attributes(metadata, level_dto_list_list):
+    list(map(lambda x: create_metadata_for_level_attribute(metadata, x), level_dto_list_list))
 
 
-def new_create_metadata_for_level_attribute(metadata, level_attribute_tuple):
-    for level_attributes in level_attribute_tuple:
-        for level_attribute in level_attributes[1]:
-            metadata.add((EG[level_attribute], RDF.type, QB.AttributeProperty))
-            metadata.add((EG[level_attributes[0]], QB4O.hasAttribute, EG[level_attribute]))
+def create_metadata_for_level_attribute(metadata, level_dto_list):
+    for dto in level_dto_list:
+        for attribute in dto.attributes:
+            metadata.add((EG[attribute], RDF.type, QB.AttributeProperty))
+            metadata.add((EG[dto.name], QB4O.hasAttribute, EG[attribute]))
 
 
 def create_metadata_for_measures(measures, metadata, dsd_node):

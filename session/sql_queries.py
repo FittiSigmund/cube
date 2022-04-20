@@ -8,13 +8,13 @@ ALL_USER_TABLES_QUERY = """
 
 TABLE_CARDINALITY_QUERY = lambda table_name: f"""SELECT COUNT(*) FROM {table_name};"""
 
-LOWEST_LEVELS_QUERY = """
+LOWEST_LEVELS_QUERY = lambda fact_table_name: f"""
         SELECT relname 
         FROM pg_class 
         WHERE oid IN 
             (SELECT confrelid 
             FROM pg_constraint 
-            WHERE conrelid = (SELECT oid FROM pg_class WHERE relname = 'sales') 
+            WHERE conrelid = (SELECT oid FROM pg_class WHERE relname = '{fact_table_name}') 
             AND contype = 'f');
 """
 

@@ -2,8 +2,8 @@ import psycopg2
 from psycopg2 import Error
 
 from .cube_metadata import create_cube_metadata, create_cube
-from .infer_cube import get_fact_table_name, create_levels_in_hierarchies, create_dimensions, get_measures, \
-    create_measures
+from .infer_cube import get_fact_table_name, create_levels, create_dimensions, get_measures, \
+    create_measures, get_lowest_level_names
 
 
 class Session:
@@ -23,13 +23,16 @@ def create_session(engine):
     try:
         cursor = get_db_cursor(engine.user, engine.password, engine.host, engine.port, engine.dbname)
         fact_table_name = get_fact_table_name(cursor)
-        levels, level_attributes = create_levels_in_hierarchies(cursor)
-        dimensions = create_dimensions(levels)
+        all_lowest_level_names = get_lowest_level_names(cursor, fact_table_name)
+        level_dto_list_list = create_levels(cursor, all_lowest_level_names)
+        dimensions = create_dimensions(level_dto_list_list)
         measures = create_measures(get_measures(cursor, fact_table_name))
-        create_cube_metadata(engine.dbname, dimensions, level_attributes, measures)
+        create_cube_metadata(engine.dbname, dimensions, level_dto_list_list, measures)
         return Session([create_cube(dimensions, measures, engine.dbname)])
     except (Exception, Error) as error:
         print("ERROR: ", error)
+    finally:
+        cursor.close()
 
 
 def get_db_cursor(user, password, host, port, database):

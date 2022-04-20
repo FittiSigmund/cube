@@ -1,26 +1,3 @@
-class Level:
-    def __init__(self, name):
-        self._name = name
-        # Initialize parent to None first in order to set it later using the parent.setter
-        # If I didn't do this, I would have a never ending chain of Level initializations
-        self._parent = None
-
-    def members(self):
-        raise NotImplementedError
-
-    @property
-    def name(self):
-        return self._name
-
-    @property
-    def parent(self):
-        return self._parent
-
-    @parent.setter
-    def parent(self, value):
-        self._parent = value
-
-
 class Dimension:
     def __init__(self, name, level_list):
         self.__name = name
@@ -41,6 +18,14 @@ class Dimension:
     @property
     def lowest_level(self):
         return self.__lowest_level
+
+    def hierarchies(self):
+        current_level = self.lowest_level
+        hierarchy = [current_level]
+        while current_level != current_level.parent:
+            current_level = current_level.parent
+            hierarchy.append(current_level)
+        return list(map(lambda x: x.name, hierarchy))
 
 
 class AggregateFunction:
