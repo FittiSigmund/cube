@@ -2,7 +2,7 @@ import unittest
 
 import psycopg2
 
-from Cube import Dimension
+from cube.Dimension import Dimension
 from session.infer_cube import get_all_table_names, get_fact_table_name, get_lowest_level_names
 
 DATABASE_USER = "sigmundur"

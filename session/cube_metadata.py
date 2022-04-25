@@ -16,6 +16,7 @@ def create_cube_metadata(dsd_name, dimensions, level_dto_list_list, measures):
     create_metadata_for_level_attributes(metadata, level_dto_list_list)
     create_metadata_for_measures(measures, metadata, dsd_node)
     # print(metadata.serialize())
+    return metadata
 
 
 def initialize_rdf_graph():
@@ -86,5 +87,5 @@ def create_metadata_for_measure(measure, metadata, dsd_node):
     metadata.add((EG[measure.name], RDF.type, QB.MeasureProperty))
 
 
-def create_cube(dimension_list, measure_list, dbname):
-    return Cube(dimension_list, measure_list, dbname)
+def create_cube(fact_table_name, dimension_list, measure_list, dbname, metadata):
+    return Cube(fact_table_name, dimension_list, measure_list, dbname, metadata)

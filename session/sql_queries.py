@@ -18,6 +18,13 @@ LOWEST_LEVELS_QUERY = lambda fact_table_name: f"""
             AND contype = 'f');
 """
 
+GET_PK_AND_FK_COLUMNS_QUERY = lambda level_name: f"""
+        SELECT k.column_name, tc.constraint_type 
+        FROM information_schema.table_constraints AS tc, information_schema.key_column_usage AS k 
+        WHERE tc.table_name = '{level_name}' 
+        AND tc.constraint_type IN ('PRIMARY KEY', 'FOREIGN KEY')
+        AND tc.constraint_name = k.constraint_name;
+"""
 GET_NON_KEY_COLUMNS_QUERY = lambda level_name: f"""
         SELECT info_col.column_name
         FROM information_schema.columns AS info_col

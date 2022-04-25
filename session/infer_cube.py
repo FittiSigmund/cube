@@ -1,12 +1,15 @@
-from collections import deque
 from functools import reduce
+
+import psycopg2
 from Levenshtein import distance as levenshtein_distance
 
-from Cube import Dimension, AggregateFunction, Measure
+from cube.AggregateFunction import AggregateFunction
+from cube.Dimension import Dimension
+from cube.Measure import Measure
 from cube.Level import Level
 from cube.LevelMember import LevelMember
 from session.sql_queries import ALL_USER_TABLES_QUERY, TABLE_CARDINALITY_QUERY, LOWEST_LEVELS_QUERY, \
-    GET_NON_KEY_COLUMNS_QUERY, GET_NEXT_LEVEL_QUERY, GET_ALL_MEASURES_QUERY
+    GET_NON_KEY_COLUMNS_QUERY, GET_NEXT_LEVEL_QUERY, GET_ALL_MEASURES_QUERY, GET_PK_AND_FK_COLUMNS_QUERY
 
 
 def get_fact_table_name(db_cursor):
@@ -34,17 +37,8 @@ def create_level_member_instances(level_dto_list):
         return result
     head, tail = level_dto_list.popleft(), level_dto_list
 
-    # print("Head is -> ", head.member_values)
-    # if tail:
-    #     for t in list(tail):
-    #         print("Tail is -> ", t.member_values)
-    # else:
-    #     print("Tail is -> ", tail)
-
-    # print("Head Head is -> ", head.name)
     for value in head.member_values:
-        temp = LevelMember(value, create_level_member_instances(tail))
-        result.append(temp)
+        result.append(LevelMember(value, create_level_member_instances(tail)))
 
     head.level_member_instances = result
     return result
@@ -57,6 +51,15 @@ def attach_level_member_instances(level_dto_list, level_member_instance_tree):
         level_dto_list[i].level_member_instances = current_level_members
         i += 1
         current_level_members = current_level_members[0].children()
+
+
+def attach_children_to_levels(levels):
+    for i in range(len(levels)):
+        if i == len(levels) - 1:
+            levels[i].child = levels[i]
+        else:
+            levels[i].child = levels[i + 1]
+    return levels
 
 
 def attach_parents_to_levels(levels):
@@ -74,20 +77,18 @@ def attach_levels_to_dto_list(level_dto_list, levels):
     return level_dto_list
 
 
-def create_levels_in_hierarchy(db_cursor, level_name):
+def create_levels_in_hierarchy(db_cursor, level_name, engine):
     level_dto_list = create_hierarchy(db_cursor, level_name)
-    level_member_instance_tree = create_level_member_instances(deque(level_dto_list))
-    attach_level_member_instances(level_dto_list, level_member_instance_tree)
-
-    levels = list(map(lambda l: Level(l.name, l.level_member_instances), level_dto_list))
+    levels = list(map(lambda l: Level(l.name, l.member, engine, l.pk_name, l.fk_name), level_dto_list))
     levels = attach_parents_to_levels(levels)
+    levels = attach_children_to_levels(levels)
     level_dto_list = attach_levels_to_dto_list(level_dto_list, levels)
 
     return level_dto_list
 
 
-def create_levels(db_cursor, lowest_level_names):
-    return list(map(lambda x: create_levels_in_hierarchy(db_cursor, x), lowest_level_names))
+def create_levels(db_cursor, lowest_level_names, engine):
+    return list(map(lambda x: create_levels_in_hierarchy(db_cursor, x, engine), lowest_level_names))
 
 
 def get_lowest_level_names(db_cursor, fact_table_name):
@@ -97,7 +98,7 @@ def get_lowest_level_names(db_cursor, fact_table_name):
 
 def get_level_member_values(db_cursor, level_member_name, level_name):
     db_cursor.execute(f"""
-        SELECT DISTINCT {level_member_name}
+        SELECT {level_member_name}
         FROM {level_name}
     """)
     return list(map(lambda x: x[0], db_cursor.fetchall()))
@@ -110,20 +111,36 @@ def create_level_member_values(db_cursor, level_name, level_member_name):
 class LevelDTO:
     level = []
 
-    def __init__(self, level_name, level_member, level_member_values, level_attributes):
+    def __init__(self, level_name, level_member, level_attributes, pk, fk):
         self.level_member_instances = []
         self.name = level_name
         self.member = level_member
-        self.member_values = level_member_values
         self.attributes = level_attributes
+        self.pk_name = pk
+        self.fk_name = fk
+
+    def __repr__(self):
+        return f"LevelDTO: {self.name}"
+
+
+def get_pk_and_fk_column_names(cursor, level_name):
+    cursor.execute(GET_PK_AND_FK_COLUMNS_QUERY(level_name))
+    pk, fk = None, None
+    for t in cursor.fetchall():
+        if t[1] == 'PRIMARY KEY':
+            pk = t[0]
+        else:
+            fk = t[0]
+
+    return pk, fk
 
 
 def create_hierarchy(db_cursor, level_name):
     current_level = level_name
     found_top_level = False
     level_member_name, level_attribute_names = get_level_attributes_and_member_name(db_cursor, current_level)
-    level_member_values = create_level_member_values(db_cursor, current_level, level_member_name)
-    hierarchy_dto_list = [LevelDTO(current_level, level_member_name, level_member_values, level_attribute_names)]
+    pk, fk = get_pk_and_fk_column_names(db_cursor, level_name)
+    hierarchy_dto_list = [LevelDTO(current_level, level_member_name, level_attribute_names, pk, fk)]
 
     while not found_top_level:
         current_level = get_next_level_name(db_cursor, current_level)
@@ -131,9 +148,8 @@ def create_hierarchy(db_cursor, level_name):
             found_top_level = True
             continue
         level_member_name, level_attribute_names = get_level_attributes_and_member_name(db_cursor, current_level)
-        level_member_values = create_level_member_values(db_cursor, current_level, level_member_name)
-        hierarchy_dto_list.append(
-            LevelDTO(current_level, level_member_name, level_member_values, level_attribute_names))
+        pk, fk = get_pk_and_fk_column_names(db_cursor, current_level)
+        hierarchy_dto_list.append(LevelDTO(current_level, level_member_name, level_attribute_names, pk, fk))
 
     hierarchy_dto_list.reverse()
     return hierarchy_dto_list
@@ -166,14 +182,14 @@ def remove_level_member(level_name, level_attribute_names):
     return level_member, list(distance_dict.values())
 
 
-def create_dimensions(level_dto_list_list):
-    return list(map(lambda x: create_dimension(x), level_dto_list_list))
+def create_dimensions(level_dto_list_list, engine):
+    return list(map(lambda x: create_dimension(x[::-1], engine), level_dto_list_list))
 
 
-def create_dimension(level_dto_list):
+def create_dimension(level_dto_list, engine):
     dimension_name = level_dto_list[0].name.split('_')[0]
     levels = list(map(lambda x: x.level, level_dto_list))
-    return Dimension(dimension_name, levels)
+    return Dimension(dimension_name, levels, engine)
 
 
 def get_measures(db_cursor, fact_table):
@@ -188,3 +204,12 @@ def create_measures(measure_list):
 def create_measure(measure):
     sum_agg_func = AggregateFunction("SUM", lambda x, y: x + y)
     return Measure(measure, sum_agg_func)
+
+
+def get_db_cursor(engine):
+    connection = psycopg2.connect(user=engine.user,
+                                  password=engine.password,
+                                  host=engine.host,
+                                  port=engine.port,
+                                  database=engine.dbname)
+    return connection.cursor()
