@@ -7,6 +7,7 @@ from cube.LevelMember import LevelMember
 EG = Namespace("http://example.org/")
 QB4O = Namespace("http://purl.org/qb4olap/cubes/")
 
+
 def remove_underscore_prefix(item):
     return item[1::]
 
@@ -23,6 +24,7 @@ class Level:
         self._parent = None
         self._child = None
         self._metadata = None
+        self._dimension = None
 
     def members(self):
         return self.__level_member_values

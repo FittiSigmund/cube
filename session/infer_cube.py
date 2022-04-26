@@ -77,8 +77,8 @@ def attach_levels_to_dto_list(level_dto_list, levels):
     return level_dto_list
 
 
-def create_levels_in_hierarchy(db_cursor, level_name, engine):
-    level_dto_list = create_hierarchy(db_cursor, level_name)
+def create_levels_in_hierarchy(db_cursor, lowest_level_dto, engine):
+    level_dto_list = create_hierarchy(db_cursor, lowest_level_dto.level_name, lowest_level_dto.fact_table_fk)
     levels = list(map(lambda l: Level(l.name, l.member, engine, l.pk_name, l.fk_name), level_dto_list))
     levels = attach_parents_to_levels(levels)
     levels = attach_children_to_levels(levels)
@@ -93,7 +93,8 @@ def create_levels(db_cursor, lowest_level_names, engine):
 
 def get_lowest_level_names(db_cursor, fact_table_name):
     db_cursor.execute(LOWEST_LEVELS_QUERY(fact_table_name))
-    return list(map(lambda x: x[0], db_cursor.fetchall()))
+    lowest_level_dto_list = list(map(lambda x: LowestLevelDTO(x[0], x[1]), db_cursor.fetchall()))
+    return lowest_level_dto_list
 
 
 def get_level_member_values(db_cursor, level_member_name, level_name):
@@ -111,16 +112,23 @@ def create_level_member_values(db_cursor, level_name, level_member_name):
 class LevelDTO:
     level = []
 
-    def __init__(self, level_name, level_member, level_attributes, pk, fk):
+    def __init__(self, level_name, level_member, level_attributes, pk, fk, fact_table_fk):
         self.level_member_instances = []
         self.name = level_name
         self.member = level_member
         self.attributes = level_attributes
         self.pk_name = pk
         self.fk_name = fk
+        self.fact_table_fk = fact_table_fk
 
     def __repr__(self):
         return f"LevelDTO: {self.name}"
+
+
+class LowestLevelDTO:
+    def __init__(self, level_name, fact_table_fk):
+        self.level_name = level_name
+        self.fact_table_fk = fact_table_fk
 
 
 def get_pk_and_fk_column_names(cursor, level_name):
@@ -135,12 +143,12 @@ def get_pk_and_fk_column_names(cursor, level_name):
     return pk, fk
 
 
-def create_hierarchy(db_cursor, level_name):
+def create_hierarchy(db_cursor, level_name, fact_table_fk):
     current_level = level_name
     found_top_level = False
     level_member_name, level_attribute_names = get_level_attributes_and_member_name(db_cursor, current_level)
     pk, fk = get_pk_and_fk_column_names(db_cursor, level_name)
-    hierarchy_dto_list = [LevelDTO(current_level, level_member_name, level_attribute_names, pk, fk)]
+    hierarchy_dto_list = [LevelDTO(current_level, level_member_name, level_attribute_names, pk, fk, fact_table_fk)]
 
     while not found_top_level:
         current_level = get_next_level_name(db_cursor, current_level)
@@ -149,7 +157,7 @@ def create_hierarchy(db_cursor, level_name):
             continue
         level_member_name, level_attribute_names = get_level_attributes_and_member_name(db_cursor, current_level)
         pk, fk = get_pk_and_fk_column_names(db_cursor, current_level)
-        hierarchy_dto_list.append(LevelDTO(current_level, level_member_name, level_attribute_names, pk, fk))
+        hierarchy_dto_list.append(LevelDTO(current_level, level_member_name, level_attribute_names, pk, fk, fact_table_fk))
 
     hierarchy_dto_list.reverse()
     return hierarchy_dto_list
@@ -189,7 +197,7 @@ def create_dimensions(level_dto_list_list, engine):
 def create_dimension(level_dto_list, engine):
     dimension_name = level_dto_list[0].name.split('_')[0]
     levels = list(map(lambda x: x.level, level_dto_list))
-    return Dimension(dimension_name, levels, engine)
+    return Dimension(dimension_name, levels, engine, level_dto_list[0].fact_table_fk)
 
 
 def get_measures(db_cursor, fact_table):

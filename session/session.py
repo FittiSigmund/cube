@@ -38,8 +38,8 @@ def create_session(engine):
     try:
         cursor = get_db_cursor(engine)
         fact_table_name = get_fact_table_name(cursor)
-        all_lowest_level_names = get_lowest_level_names(cursor, fact_table_name)
-        level_dto_list_list = create_levels(cursor, all_lowest_level_names, engine)
+        lowest_level_dto_list = get_lowest_level_names(cursor, fact_table_name)
+        level_dto_list_list = create_levels(cursor, lowest_level_dto_list, engine)
         dimensions = create_dimensions(level_dto_list_list, engine)
         measures = create_measures(get_measures(cursor, fact_table_name))
         metadata = create_cube_metadata(engine.dbname, dimensions, level_dto_list_list, measures)

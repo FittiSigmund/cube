@@ -11,13 +11,15 @@ def get_db_cursor(engine):
 
 
 class Dimension:
-    def __init__(self, name, level_list, engine):
+    def __init__(self, name, level_list, engine, fact_table_fk):
         self._name = name
         self._lowest_level = level_list[0]
         self._cursor = get_db_cursor(engine)
         self._metadata = None
         self._level_list = level_list
+        self._fact_table_fk = fact_table_fk
         for level in level_list:
+            level._dimension = self
             setattr(self, level.name, level)
 
     @property

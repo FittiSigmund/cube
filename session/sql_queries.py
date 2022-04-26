@@ -9,14 +9,26 @@ ALL_USER_TABLES_QUERY = """
 TABLE_CARDINALITY_QUERY = lambda table_name: f"""SELECT COUNT(*) FROM {table_name};"""
 
 LOWEST_LEVELS_QUERY = lambda fact_table_name: f"""
-        SELECT relname 
-        FROM pg_class 
-        WHERE oid IN 
-            (SELECT confrelid 
-            FROM pg_constraint 
-            WHERE conrelid = (SELECT oid FROM pg_class WHERE relname = '{fact_table_name}') 
-            AND contype = 'f');
+        SELECT p.relname, kcu.column_name 
+        FROM 
+            pg_class AS p, 
+            pg_constraint AS c, 
+            information_schema.key_column_usage AS kcu 
+        WHERE p.oid = c.confrelid 
+        AND contype = 'f' 
+        AND c.conrelid = (SELECT oid FROM pg_class WHERE relname = 'sales') 
+        AND c.conname = kcu.constraint_name
 """
+
+# """
+#         SELECT relname
+#         FROM pg_class
+#         WHERE oid IN
+#             (SELECT confrelid
+#             FROM pg_constraint
+#             WHERE conrelid = (SELECT oid FROM pg_class WHERE relname = '{fact_table_name}')
+#             AND contype = 'f');
+# """
 
 GET_PK_AND_FK_COLUMNS_QUERY = lambda level_name: f"""
         SELECT k.column_name, tc.constraint_type 

@@ -19,7 +19,6 @@ print("2022 Level member dictionary: ", cube.date.date_year._2022.__dict__)
 print("January Level member dictionary: ", cube.date.date_year._2022._January.__dict__)
 print("Day 1 Level member dictionary: ", cube.date.date_year._2022._January._1.__dict__)
 
-
 ### Supplier testing
 # print("Supplier hierarchy: ", cube.supplier.hierarchies())
 # print("Europe dictionary: ", cube.supplier.supplier_continent._Europe.__dict__)
@@ -27,8 +26,6 @@ print("Day 1 Level member dictionary: ", cube.date.date_year._2022._January._1._
 # print("POMPdeLUX dictionary: ", cube.supplier.supplier_continent._Europe._Denmark._POMPdeLUX.__dict__)
 
 
-
-
 print(cube.__dict__)
 cube.columns([cube.date.date_year._2022._January])
-cube.output()
+print(cube.output())
