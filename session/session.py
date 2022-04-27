@@ -34,6 +34,11 @@ class Session:
             print("ERROR: ", error)
 
 
+def remove_top_level(dimensions):
+    list(map(lambda x: print(x.__dict__), dimensions))
+    return ""
+
+
 def create_session(engine):
     try:
         cursor = get_db_cursor(engine)
@@ -42,6 +47,7 @@ def create_session(engine):
         level_dto_list_list = create_levels(cursor, lowest_level_dto_list, engine)
         dimensions = create_dimensions(level_dto_list_list, engine)
         measures = create_measures(get_measures(cursor, fact_table_name))
+        # dimensions = remove_top_level(dimensions)
         metadata = create_cube_metadata(engine.dbname, dimensions, level_dto_list_list, measures)
         cube = create_cube(fact_table_name, dimensions, measures, engine.dbname, metadata)
         return Session([cube], engine)

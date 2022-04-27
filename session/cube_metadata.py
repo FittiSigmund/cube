@@ -2,6 +2,7 @@ from rdflib import Graph, Namespace, BNode
 from rdflib.namespace import RDF, QB
 
 from cube.Cube import Cube
+from cube.TopLevel import TopLevel
 
 EG = Namespace("http://example.org/")
 QB4O = Namespace("http://purl.org/qb4olap/cubes/")
@@ -49,7 +50,7 @@ def create_metadata_for_dimension(dimension, metadata, dsd_node):
     metadata.add((dimension_node, RDF.type, QB.DimensionProperty))
 
     level = dimension.lowest_level
-    while level.parent is not level:
+    while not isinstance(level.parent, TopLevel):
         level_node = EG[level.name]
         parent_level_node = EG[level.parent.name]
         metadata.add((level_node, RDF.type, QB4O.LevelProperty))
@@ -63,7 +64,7 @@ def create_metadata_for_dimension(dimension, metadata, dsd_node):
 
 
 def create_metadata_for_level_attributes(metadata, level_dto_list_list):
-    list(map(lambda x: create_metadata_for_level_attribute(metadata, x), level_dto_list_list))
+    list(map(lambda x: create_metadata_for_level_attribute(metadata, x[1:]), level_dto_list_list))
 
 
 def create_metadata_for_level_attribute(metadata, level_dto_list):

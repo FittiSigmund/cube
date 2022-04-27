@@ -6,8 +6,9 @@ from Levenshtein import distance as levenshtein_distance
 from cube.AggregateFunction import AggregateFunction
 from cube.Dimension import Dimension
 from cube.Measure import Measure
-from cube.Level import Level
+from cube.NonTopLevel import NonTopLevel
 from cube.LevelMember import LevelMember
+from cube.TopLevel import TopLevel
 from session.sql_queries import ALL_USER_TABLES_QUERY, TABLE_CARDINALITY_QUERY, LOWEST_LEVELS_QUERY, \
     GET_NON_KEY_COLUMNS_QUERY, GET_NEXT_LEVEL_QUERY, GET_ALL_MEASURES_QUERY, GET_PK_AND_FK_COLUMNS_QUERY
 
@@ -79,7 +80,10 @@ def attach_levels_to_dto_list(level_dto_list, levels):
 
 def create_levels_in_hierarchy(db_cursor, lowest_level_dto, engine):
     level_dto_list = create_hierarchy(db_cursor, lowest_level_dto.level_name, lowest_level_dto.fact_table_fk)
-    levels = list(map(lambda l: Level(l.name, l.member, engine, l.pk_name, l.fk_name), level_dto_list))
+    levels = [TopLevel()]
+    for l in level_dto_list[1:]:
+        levels.append(NonTopLevel(l.name, l.member, engine, l.pk_name, l.fk_name))
+
     levels = attach_parents_to_levels(levels)
     levels = attach_children_to_levels(levels)
     level_dto_list = attach_levels_to_dto_list(level_dto_list, levels)
@@ -112,14 +116,15 @@ def create_level_member_values(db_cursor, level_name, level_member_name):
 class LevelDTO:
     level = []
 
-    def __init__(self, level_name, level_member, level_attributes, pk, fk, fact_table_fk):
+    def __init__(self, level_name=None, level_member=None, level_attributes=None, pk=None, fk=None, fact_table_fk=None, top_level=False):
         self.level_member_instances = []
-        self.name = level_name
         self.member = level_member
         self.attributes = level_attributes
         self.pk_name = pk
         self.fk_name = fk
         self.fact_table_fk = fact_table_fk
+        self.name = level_name
+        self.top_level = top_level
 
     def __repr__(self):
         return f"LevelDTO: {self.name}"
@@ -158,6 +163,7 @@ def create_hierarchy(db_cursor, level_name, fact_table_fk):
         level_member_name, level_attribute_names = get_level_attributes_and_member_name(db_cursor, current_level)
         pk, fk = get_pk_and_fk_column_names(db_cursor, current_level)
         hierarchy_dto_list.append(LevelDTO(current_level, level_member_name, level_attribute_names, pk, fk, fact_table_fk))
+    hierarchy_dto_list.append(LevelDTO(top_level=True))
 
     hierarchy_dto_list.reverse()
     return hierarchy_dto_list

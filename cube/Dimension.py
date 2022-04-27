@@ -1,5 +1,7 @@
 import psycopg2
 
+from cube.TopLevel import TopLevel
+
 
 def get_db_cursor(engine):
     connection = psycopg2.connect(user=engine.user,
@@ -20,7 +22,10 @@ class Dimension:
         self._fact_table_fk = fact_table_fk
         for level in level_list:
             level._dimension = self
-            setattr(self, level.name, level)
+            if not isinstance(level, TopLevel):
+                setattr(self, level.name, level)
+            else:
+                self.current_level = level
 
     @property
     def name(self):
@@ -47,6 +52,12 @@ class Dimension:
             current_level = current_level.parent
             hierarchy.append(current_level)
         return hierarchy
+
+    def _drill_down(self):
+        self.current_level = self.current_level.child
+
+    def _roll_up(self):
+        self.current_level = self.current_level.parent
 
     def __repr__(self):
         return self.name
