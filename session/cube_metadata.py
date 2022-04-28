@@ -88,5 +88,5 @@ def create_metadata_for_measure(measure, metadata, dsd_node):
     metadata.add((EG[measure.name], RDF.type, QB.MeasureProperty))
 
 
-def create_cube(fact_table_name, dimension_list, measure_list, dbname, metadata):
-    return Cube(fact_table_name, dimension_list, measure_list, dbname, metadata)
+def create_cube(fact_table_name, dimension_list, measure_list, dbname, metadata, engine):
+    return Cube(fact_table_name, dimension_list, measure_list, dbname, metadata, engine)

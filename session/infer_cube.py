@@ -4,7 +4,7 @@ import psycopg2
 from Levenshtein import distance as levenshtein_distance
 
 from cube.AggregateFunction import AggregateFunction
-from cube.Dimension import Dimension
+from cube.RegularDimension import RegularDimension
 from cube.Measure import Measure
 from cube.NonTopLevel import NonTopLevel
 from cube.LevelMember import LevelMember
@@ -203,7 +203,7 @@ def create_dimensions(level_dto_list_list, engine):
 def create_dimension(level_dto_list, engine):
     dimension_name = level_dto_list[0].name.split('_')[0]
     levels = list(map(lambda x: x.level, level_dto_list))
-    return Dimension(dimension_name, levels, engine, level_dto_list[0].fact_table_fk)
+    return RegularDimension(dimension_name, levels, engine, level_dto_list[0].fact_table_fk)
 
 
 def get_measures(db_cursor, fact_table):

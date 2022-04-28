@@ -16,10 +16,31 @@ print("Dimensions: ", cube.dimensions())
 print("Date hierarchy: ", cube.date.hierarchies())
 print("Date dimension dictionary: ", cube.date.__dict__)
 print("Date year level dictionary: ", cube.date.date_year.__dict__)
-cube.date._drill_down()
-print("Date dimension dictionary: ", cube.date.__dict__)
-cube.date._roll_up()
-print("Date dimension dictionary: ", cube.date.__dict__)
+
+print("Output of the cube (cube): ", cube.output())
+print("Date dimension current level: ", cube._dimension_list[1].current_level)
+c1 = cube._drill_down(cube.date)
+print("Date dimension current level: ", c1._dimension_list[1].current_level)
+print("c1 dictionary: ", c1.__dict__)
+print("Output of the cube (c1): ", c1.output())
+
+# c2 = c1._drill_down(c1.date)
+# print("Cube (c2) dictionary: ", c2.date.__dict__)
+# c3 = c2._slice(c2.date, c2.date.date_year._2022._January)
+# print(c3._dimension_list[1].__dict__)
+
+
+# print(c2._dimension_list[1].current_level)
+# c3 = c2._roll_up(c2.date)
+# print(c3._dimension_list[1].current_level)
+# c4 = c3._roll_up(c3.date)
+# print(c4._dimension_list[1].current_level)
+
+
+
+# print("Date dimension dictionary: ", cube.date.__dict__)
+# cube.date._roll_up()
+# print("Date dimension dictionary: ", cube.date.__dict__)
 
 # print("2022 Level member dictionary: ", cube.date.date_year._2022.__dict__)
 # print("January Level member dictionary: ", cube.date.date_year._2022._January.__dict__)

@@ -16,36 +16,16 @@ def remove_underscore_prefix(item):
 
 class NonTopLevel(Level):
     def __init__(self, name, member_name, engine, pk, fk):
-        super().__init__(name)
+        super().__init__(name, parent=None, child=None, dimension=None)
         self._member_name = member_name
         self._pk_name = pk
         self._fk_name = fk
         self._cursor = get_db_cursor(engine)
-        # Initialize parent to None first in order to set it later using the parent.setter
-        # If I didn't do this, I would have a never ending chain of Level initializations
-        self._parent = None
-        self._child = None
         self._metadata = None
-        self._dimension = None
+        self._member_values = None
 
     def members(self):
-        return self.__level_member_values
-
-    @property
-    def parent(self):
-        return self._parent
-
-    @parent.setter
-    def parent(self, value):
-        self._parent = value
-
-    @property
-    def child(self):
-        return self._child
-
-    @child.setter
-    def child(self, value):
-        self._child = value
+        raise NotImplementedError("Lazy version not implemented")
 
     def fetch_attribute_from_db(self, attribute):
         self._cursor.execute(f"""

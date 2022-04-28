@@ -1,6 +1,8 @@
 from rdflib import BNode, Namespace
 from rdflib.namespace import RDFS, SKOS
 
+from cube.TopLevel import TopLevel
+
 EG = Namespace("http://example.org/")
 QB4O = Namespace("http://purl.org/qb4olap/cubes/")
 
@@ -56,7 +58,7 @@ class LevelMember:
         current_level = self._level
         while True:
             current_level_parent = current_level.parent
-            if current_level == current_level_parent:
+            if current_level == current_level_parent or isinstance(current_level_parent, TopLevel):
                 break
             levels.append(current_level_parent)
             current_level = current_level_parent

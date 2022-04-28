@@ -49,7 +49,7 @@ def create_session(engine):
         measures = create_measures(get_measures(cursor, fact_table_name))
         # dimensions = remove_top_level(dimensions)
         metadata = create_cube_metadata(engine.dbname, dimensions, level_dto_list_list, measures)
-        cube = create_cube(fact_table_name, dimensions, measures, engine.dbname, metadata)
+        cube = create_cube(fact_table_name, dimensions, measures, engine.dbname, metadata, engine)
         return Session([cube], engine)
     except (Exception, Error) as error:
         print("ERROR: ", error)

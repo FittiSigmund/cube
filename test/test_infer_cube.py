@@ -2,7 +2,7 @@ import unittest
 
 import psycopg2
 
-from cube.Dimension import Dimension
+from cube.RegularDimension import RegularDimension
 from session.infer_cube import get_all_table_names, get_fact_table_name, get_lowest_level_names
 
 DATABASE_USER = "sigmundur"
@@ -29,7 +29,7 @@ class TestInferCube(unittest.TestCase):
 
     def setUp(self):
         self.fact_table_name = get_fact_table_name(self.cursor)
-        self.addTypeEqualityFunc(Dimension, dimension_compare)
+        self.addTypeEqualityFunc(RegularDimension, dimension_compare)
 
     @staticmethod
     def get_cursor():
