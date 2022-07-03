@@ -22,7 +22,7 @@ class NonTopLevel(Level):
         self._fk_name = fk
         self._cursor = get_db_cursor(engine)
         self._metadata = None
-        self._member_values = None
+        self._level_members = []
 
     def members(self):
         raise NotImplementedError("Lazy version not implemented")
@@ -40,6 +40,8 @@ class NonTopLevel(Level):
 
     def add_level_member_metadata(self, level_member_value):
         level_member_node = BNode()
+        if " " in level_member_value:
+            level_member_value = level_member_value.replace(" ", "%20")
         self._metadata.add((level_member_node, QB4O.inLevel, EG[self.name]))
         self._metadata.add((level_member_node, RDFS.label, EG[level_member_value]))
 
@@ -50,13 +52,33 @@ class NonTopLevel(Level):
         if db_result:
             level_member = self.create_level_member(db_result[0][0])
             setattr(self, item, level_member)
+            self._level_members.append(level_member)
             self.add_level_member_metadata(attribute)
             return level_member
         else:
-            raise NotImplementedError("Level getattr failed. Item failed to be retrieved: ", item)
+            raise NotImplementedError("Level getattr failed. Attribute failed to be retrieved: ", item)
+
+    def __getitem__(self, item):
+        result = next((x for x in self._level_members if x.name == item), False)
+        if result:
+            return result
+        else:
+            db_result = self.fetch_attribute_from_db(item)
+
+            if db_result:
+                level_member = self.create_level_member(db_result[0][0])
+                setattr(self, item, level_member)
+                self.add_level_member_metadata(item)
+                self._level_members.append(level_member)
+                return level_member
+            else:
+                raise NotImplementedError("Level getitem failed. Item failed to be retrieved: ", item)
+
+    def __eq__(self, other):
+        return lambda x: x.name == other
 
     def __repr__(self):
-        return self.name
+        return f"NonTopLevel({self.name})"
 
 
 def get_db_cursor(engine):

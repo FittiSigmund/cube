@@ -19,7 +19,7 @@ class CubeInterface(Interface):
         pass
 
     @abstractmethod
-    def where(self, slicer):
+    def where(self, **kwargs):
         pass
 
 

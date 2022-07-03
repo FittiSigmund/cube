@@ -131,4 +131,4 @@ class LevelMember:
             raise Exception("There was zero or several results from the query. DB_result: ", result)
 
     def __repr__(self):
-        return f"{self.name}"
+        return f"LevelMember({self.name})"

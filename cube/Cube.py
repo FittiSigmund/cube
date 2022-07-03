@@ -65,8 +65,9 @@ class Cube:
     def rows(self, value_list):
         pass
 
-    def where(self, slicer):
-        pass
+    def where(self, *args, **kwargs):
+        print(args)
+        print(kwargs)
 
     ## Half way through implementing output when the date dimension has been drilled down to the year level
     ## TODO: Make a decision on how to return the result (xarray, pandas, etc.)
