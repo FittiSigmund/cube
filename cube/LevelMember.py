@@ -1,5 +1,4 @@
-from rdflib import BNode, Namespace
-from rdflib.namespace import RDFS, SKOS
+from rdflib import Namespace
 
 from cube.TopLevel import TopLevel
 
@@ -31,23 +30,23 @@ class LevelMember:
     def name(self, value):
         self._name = value
 
+    @property
+    def level(self):
+        return self._level
+
     def children(self):
-        if self._children is None:
-            # Look up children
-            return []
-        else:
-            return self._children
+        return self._children if self._children is not None else []
 
     def _get_select_stmt(self):
-        return f"SELECT {self._level.child.name}.{self._level.child._member_name} "
+        return f"SELECT {self._level.child.name}.{self._level.child._level_member_name} "
 
     def _get_from_stmt(self):
         return f"FROM {self._level.child.name}, {self._level.name}"
 
     def _get_equality_condition_where_stmt(self, attribute):
         return f"""
-            WHERE {self._level.child.name}.{self._level.child._member_name} = '{attribute}'
-            AND {self._level.name}.{self._level._member_name} = '{self.name}'
+            WHERE {self._level.child.name}.{self._level.child._level_member_name} = '{attribute}'
+            AND {self._level.name}.{self._level._level_member_name} = '{self.name}'
         """
 
     def _get_join_condition_where_stmt(self):
@@ -74,7 +73,7 @@ class LevelMember:
             from_stmt = ", ".join([from_stmt, parents[i].name])
             ## Equality and Join conditions will fail if the hierarchy has more than 3 levels
             equality_conditions = " AND ".join(
-                [equality_conditions, f"{parents[i].name}.{parents[i]._member_name} = '{self._parent.name}' "])
+                [equality_conditions, f"{parents[i].name}.{parents[i]._level_member_name} = '{self._parent.name}' "])
             join_conditions = " AND ".join(
                 [join_conditions, f"{self._level.name}.{self._level._fk_name} = {parents[i].name}.{parents[i]._pk_name}"])
 
@@ -110,13 +109,6 @@ class LevelMember:
         else:
             raise Exception("Either zero or several parent nodes found in QB4OLAP graph")
 
-    def add_level_member_metadata(self, level_member_value):
-        parent_node = self._find_parent_node()
-        level_member_node = BNode()
-        self._metadata.add((level_member_node, RDFS.label, EG[level_member_value]))
-        self._metadata.add((level_member_node, QB4O.inLevel, EG[self._level._child.name]))
-        self._metadata.add((level_member_node, SKOS.broader, parent_node))
-
     def __getattr__(self, item):
         attribute = remove_underscore_prefix(item)
         parents = self.get_parents()
@@ -124,7 +116,17 @@ class LevelMember:
         if len(result) == 1:
             level_member_name = result[0][0]
             level_member = LevelMember(level_member_name, self._level.child, self._metadata, self)
-            self.add_level_member_metadata(attribute)
+            setattr(self, item, level_member)
+            return level_member
+        else:
+            raise Exception("There was zero or several results from the query. DB_result: ", result)
+
+    def __getitem__(self, item):
+        parents = self.get_parents()
+        result = self.fetch_level_member_from_db(item, parents)
+        if len(result) == 1:
+            level_member_name = result[0][0]
+            level_member = LevelMember(level_member_name, self._level.child, self._metadata, self)
             setattr(self, item, level_member)
             return level_member
         else:

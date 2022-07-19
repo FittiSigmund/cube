@@ -11,11 +11,13 @@ postgres_engine = engines.postgres(DATABASE_NAME, DATABASE_USER, DATABASE_PASSWO
 postgres = create_session(postgres_engine)
 cube = postgres.load_cube('salesdb_snowflake')
 print()
-# print("Measures: ", cube.measures())
-# print("Dimensions: ", cube.dimensions())
-# print("Date hierarchy: ", cube.date.hierarchies())
-# print("Date dimension dictionary: ", cube.date.__dict__)
-# print("Date year level dictionary: ", cube.date.date_year.__dict__)
+print("Measures: ", cube.measures())
+print("Dimensions: ", cube.dimensions())
+print("Date hierarchy: ", cube.date.hierarchies())
+print("Supplier name dictionary: ", cube.supplier.supplier_name.__dict__)
+print("Date dimension dictionary: ", cube.date.__dict__)
+print("Date year level dictionary: ", cube.date.date_year.__dict__)
+print("2022 Level member: ", cube.date.date_year["2022"]["January"])
 
 # print("Output of the cube (cube): ", cube.output())
 # print("Date dimension current level: ", cube._dimension_list[1].current_level)
@@ -45,18 +47,18 @@ print()
 # print("January Level member dictionary: ", cube.date.date_year._2022._January.__dict__)
 # print("Day 1 Level member dictionary: ", cube.date.date_year._2022._January._1.__dict__)
 
-## Supplier testing
-print("Supplier hierarchy: ", cube.supplier.hierarchies())
-print("Nation dictionary: ", cube.supplier.supplier_nation.__dict__)
-print("Denmark dictionary: ", cube.supplier.supplier_nation._Denmark.__dict__)
+# ## Supplier testing
+# print("Supplier hierarchy: ", cube.supplier.hierarchies())
+# print("Nation dictionary: ", cube.supplier.supplier_nation.__dict__)
+# print("Denmark dictionary: ", cube.supplier.supplier_nation._Denmark.__dict__)
 
 
 # cube.columns([cube.date.date_year._2022._January])
 # print("The output: ", cube.output())
 
 
-print()
-print(cube.store.store_address["Jyllandsgade 1"])
-print(cube.store.store_address["Jyllandsgade 2"])
-
-cube.where(cube.supplier.supplier_nation == "Denmark", cube.store.store_address == "Jyllandsgade 1")
+# print()
+# print(cube.store.store_address["Jyllandsgade 1"])
+# print(cube.store.store_address["Jyllandsgade 2"])
+#
+# cube.where(cube.supplier.supplier_nation == "Denmark", cube.store.store_address == "Jyllandsgade 1")

@@ -6,8 +6,9 @@ from cube.NonTopLevel import NonTopLevel
 from cube.SlicedDimension import SlicedDimension
 
 
-def construct_query(select_stmt, from_stmt):
-    return select_stmt + " " + from_stmt + ";"
+def construct_query(select_stmt, from_stmt, where_stmt, group_by_stmt):
+    stmt_list = [select_stmt, from_stmt, where_stmt, group_by_stmt]
+    return " ".join(stmt_list) + ";"
 
 
 def go_to_parent(current_level):
@@ -23,8 +24,44 @@ def get_hierarchy_up_to_current_level(dimension, level):
     return hierarchy[:hierarchy.index(level) + 1]
 
 
+def get_fact_table_join_stmt(fact_table_name, lowest_level):
+    return [
+        f"{fact_table_name}.{lowest_level.dimension.fact_table_fk} = {lowest_level.name}.{lowest_level.pk_name}"
+    ]
+
+
+def get_hierarchy_table_join_stmt(fact_table_name, join_tables):
+    hierarchy_table_join = get_fact_table_join_stmt(fact_table_name, join_tables[0])
+    for i in range(0, len(join_tables) - 1):
+        hierarchy_table_join.append(
+            f"{join_tables[i].name}.{join_tables[i]._fk_name} = {join_tables[i + 1].name}.{join_tables[i + 1]._pk_name}")
+
+    return " AND ".join(hierarchy_table_join)
+
+
+def get_list_of_values(column_list):
+    value_list = []
+    for column in column_list:
+        value_list.append(f"{column._name}")
+    return "(" + ", ".join(value_list) + ")"
+
+
+def get_table_and_column_name(column_level):
+    return f"{column_level.name}.{column_level.level_member_name}"
+
+
 class Cube:
-    def __init__(self, fact_table_name, dimension_list, measure_list, name, metadata, engine):
+    def __init__(
+            self,
+            fact_table_name,
+            dimension_list,
+            measure_list,
+            name,
+            metadata,
+            engine,
+            columns=None,
+            previous=None
+    ):
         self._fact_table_name = fact_table_name
         self._dimension_list = dimension_list
         self._name = name
@@ -33,6 +70,8 @@ class Cube:
         self._columns = []
         self._cursor = self._get_new_cursor()
         self._condition = None
+        self._column_list = columns
+        self._previous = previous
         if measure_list:
             self._default_measure = measure_list[0]
             self._measure_list = measure_list
@@ -60,7 +99,16 @@ class Cube:
         self._cursor = cursor
 
     def columns(self, value_list):
-        self._columns = value_list
+        return Cube(
+            self._fact_table_name,
+            self._dimension_list,
+            self._measure_list,
+            self.name,
+            self._metadata,
+            self._engine,
+            columns=value_list,
+            previous=self
+        )
 
     def rows(self, value_list):
         pass
@@ -69,16 +117,15 @@ class Cube:
         print(args)
         print(kwargs)
 
-    ## Half way through implementing output when the date dimension has been drilled down to the year level
     ## TODO: Make a decision on how to return the result (xarray, pandas, etc.)
     def output(self):
-        dimensions = self.dimensions()
-        current_levels = [(x, x.current_level) for x in dimensions if isinstance(x.current_level, NonTopLevel)]
-        if current_levels:
-            up_to_current_level = get_hierarchy_up_to_current_level(current_levels[0][0], current_levels[0][1])
         select_stmt = self._get_select_stmt()
-        from_stmt = self._get_from_stmt()
-        query = construct_query(select_stmt, from_stmt)
+        join_tables = self._get_necessary_tables_for_join()
+        from_tables = [self._fact_table_name] + list(map(lambda x: x.name, join_tables))
+        from_stmt = self._get_from_stmt(from_tables)
+        where_stmt = self._get_where_stmt(join_tables)
+        group_by_stmt = self._get_group_by_stmt()
+        query = construct_query(select_stmt, from_stmt, where_stmt, group_by_stmt)
         return self.execute_query(query)
 
     def measures(self):
@@ -96,7 +143,8 @@ class Cube:
 
         new_dimension.current_level = direction(dimension.current_level)
         new_dimension_list = [new_dimension if x == dimension else x for x in self._dimension_list]
-        return Cube(self._fact_table_name, new_dimension_list, self._measure_list, self.name, self._metadata, self._engine)
+        return Cube(self._fact_table_name, new_dimension_list, self._measure_list, self.name, self._metadata,
+                    self._engine)
 
     def _roll_up(self, dimension):
         return self._traverse_hierarchy(dimension, go_to_parent)
@@ -109,21 +157,44 @@ class Cube:
         sliced_dimension.fixed_level = dimension.current_level
         sliced_dimension.fixed_level_member = value
         new_dimension_list = [sliced_dimension if x == dimension else x for x in self._dimension_list]
-        return Cube(self._fact_table_name, new_dimension_list, self._measure_list, self.name, self._metadata, self._engine)
+        return Cube(self._fact_table_name, new_dimension_list, self._measure_list, self.name, self._metadata,
+                    self._engine)
 
     def _dice(self, condition):
-        cube = Cube(self._fact_table_name, self._dimension_list, self._measure_list, self.name, self._metadata, self._engine)
+        cube = Cube(self._fact_table_name, self._dimension_list, self._measure_list, self.name, self._metadata,
+                    self._engine)
         cube._condition = condition
         return cube
 
     def _get_select_stmt(self):
-        return f"SELECT {self._default_measure.aggregate_function.name}({self._fact_table_name}.{self._default_measure.name})"
+        select_table_name = get_table_and_column_name(self._column_list[0].level)
+        select_aggregate = f"{self._default_measure.aggregate_function.name}({self._fact_table_name}.{self._default_measure.name})"
+        return "SELECT " + select_table_name + ", " + select_aggregate
 
-    def _get_from_stmt(self):
-        return f"FROM {self._fact_table_name}"
+    def _get_necessary_tables_for_join(self):
+        column_level = self._column_list[0].level
+        result = [column_level]
+        while column_level != column_level.child:
+            column_level = column_level.child
+            result.append(column_level)
+        return list(reversed(result))
+
+    def _get_from_stmt(self, from_tables):
+        return "FROM " + ", ".join(from_tables)
+
+    def _get_where_stmt(self, join_tables):
+        table_hierarchy_join = get_hierarchy_table_join_stmt(self._fact_table_name, join_tables)
+        column_level = get_table_and_column_name(self._column_list[0].level)
+        values = get_list_of_values(self._column_list)
+        result = "WHERE " + table_hierarchy_join + " AND " + column_level + " IN " + values
+        return result
+
+    def _get_group_by_stmt(self):
+        return f"GROUP BY " + get_table_and_column_name(self._column_list[0].level)
 
     def execute_query(self, query):
         self._cursor.execute(query)
+        print(self._cursor.description)
         return self._cursor.fetchall()
 
     def _get_new_cursor(self):

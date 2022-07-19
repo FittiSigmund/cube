@@ -1,7 +1,6 @@
 import psycopg2
 
-from rdflib import BNode, Namespace
-from rdflib.namespace import RDFS
+from rdflib import Namespace
 
 from cube.Level import Level
 from cube.LevelMember import LevelMember
@@ -15,67 +14,67 @@ def remove_underscore_prefix(item):
 
 
 class NonTopLevel(Level):
-    def __init__(self, name, member_name, engine, pk, fk):
+    def __init__(self, name, level_member_name, engine, pk, fk):
         super().__init__(name, parent=None, child=None, dimension=None)
-        self._member_name = member_name
+        self._level_member_name = level_member_name
         self._pk_name = pk
         self._fk_name = fk
         self._cursor = get_db_cursor(engine)
         self._metadata = None
         self._level_members = []
 
+    @property
+    def child(self):
+        return self._child
+
+    @child.setter
+    def child(self, value):
+        self._child = value
+
+    @property
+    def pk_name(self):
+        return self._pk_name
+
+    @property
+    def level_member_name(self):
+        return self._level_member_name
+
     def members(self):
         raise NotImplementedError("Lazy version not implemented")
 
-    def fetch_attribute_from_db(self, attribute):
+    def _fetch_attribute_from_db(self, attribute):
         self._cursor.execute(f"""
-            SELECT {self._member_name}
+            SELECT {self._level_member_name}
             FROM {self.name}
-            WHERE {self._member_name} = '{attribute}';
+            WHERE {self._level_member_name} = '{attribute}';
         """)
         return self._cursor.fetchall()
 
     def create_level_member(self, name):
         return LevelMember(name, self, self._metadata)
 
-    def add_level_member_metadata(self, level_member_value):
-        level_member_node = BNode()
-        if " " in level_member_value:
-            level_member_value = level_member_value.replace(" ", "%20")
-        self._metadata.add((level_member_node, QB4O.inLevel, EG[self.name]))
-        self._metadata.add((level_member_node, RDFS.label, EG[level_member_value]))
-
-    def __getattr__(self, item):
-        attribute = remove_underscore_prefix(item)
-        db_result = self.fetch_attribute_from_db(attribute)
+    def _fetch_level_member_from_db_and_save_as_attribute(self, item):
+        db_result = self._fetch_attribute_from_db(item)
 
         if db_result:
             level_member = self.create_level_member(db_result[0][0])
             setattr(self, item, level_member)
             self._level_members.append(level_member)
-            self.add_level_member_metadata(attribute)
             return level_member
         else:
-            raise NotImplementedError("Level getattr failed. Attribute failed to be retrieved: ", item)
+            raise AttributeError(f"'{self.name}' level does not contain the '{item}' level member")
+
+    def __getattr__(self, item):
+        return self._fetch_level_member_from_db_and_save_as_attribute(item)
 
     def __getitem__(self, item):
         result = next((x for x in self._level_members if x.name == item), False)
         if result:
             return result
-        else:
-            db_result = self.fetch_attribute_from_db(item)
+        return self._fetch_level_member_from_db_and_save_as_attribute(item)
 
-            if db_result:
-                level_member = self.create_level_member(db_result[0][0])
-                setattr(self, item, level_member)
-                self.add_level_member_metadata(item)
-                self._level_members.append(level_member)
-                return level_member
-            else:
-                raise NotImplementedError("Level getitem failed. Item failed to be retrieved: ", item)
-
-    def __eq__(self, other):
-        return lambda x: x.name == other
+    # def __eq__(self, other):
+    #     return lambda x: x.name == other
 
     def __repr__(self):
         return f"NonTopLevel({self.name})"

@@ -28,7 +28,6 @@ class RegularDimension(Dimension):
             else:
                 self.current_level = level
 
-    @property
     def lowest_level(self):
         return self._lowest_level
 
@@ -43,7 +42,7 @@ class RegularDimension(Dimension):
             level._metadata = metadata
 
     def hierarchies(self):
-        current_level = self.lowest_level
+        current_level = self.lowest_level()
         hierarchy = [current_level]
         while current_level != current_level.parent:
             current_level = current_level.parent

@@ -45,11 +45,11 @@ def create_metadata_for_dimension(dimension, metadata, dsd_node):
     dimension_node = EG[dimension.name]
 
     metadata.add((dsd_node, QB.component, blank_node))
-    metadata.add((blank_node, QB4O.level, EG[dimension.lowest_level.name]))
+    metadata.add((blank_node, QB4O.level, EG[dimension.lowest_level().name]))
 
     metadata.add((dimension_node, RDF.type, QB.DimensionProperty))
 
-    level = dimension.lowest_level
+    level = dimension.lowest_level()
     while not isinstance(level.parent, TopLevel):
         level_node = EG[level.name]
         parent_level_node = EG[level.parent.name]

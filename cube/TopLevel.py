@@ -6,4 +6,4 @@ class TopLevel(Level):
         super().__init__(name="ALL", parent=None, child=None, dimension=None)
 
     def __repr__(self):
-        return self._name
+        return f"TopLevel({self.name})"
