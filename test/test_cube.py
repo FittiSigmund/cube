@@ -31,7 +31,52 @@ class TestCube(unittest.TestCase):
     def test_columns_on_year(self):
         cube = self.cube.columns([self.cube.date.date_year["2022"], self.cube.date.date_year["2021"]])
         result = cube.output()
-        ## Test that result contains the correct numbers in each of the two cells
+        self.assertEqual(result.shape, (1, 2))
+        self.assertEqual(result.columns.values[0], 2022)
+        self.assertEqual(result.columns.values[1], 2021)
+        self.assertEqual(result[2022][0], 190799.0)
+        self.assertEqual(result[2021][0], 176971.0)
+
+    def test_columns_on_january(self):
+        cube = self.cube.columns([self.cube.date.date_month.January])
+        result = cube.output()
+        self.assertEqual(result.shape, (1, 2))
+        self.assertEqual(result.columns.values[0], "January")
+        self.assertEqual(result.columns.values[1], "January")
+        self.assertEqual(result.iloc[0, 0], 15605.0)
+        self.assertEqual(result.iloc[0, 1], 16883.0)
+
+    def test_columns_on_january_and_february(self):
+        cube = self.cube.columns([self.cube.date.date_month.January, self.cube.date.date_month.February])
+        result = cube.output()
+        self.assertEqual(result.shape, (1, 4))
+        self.assertEqual(result.columns.values[0], "January")
+        self.assertEqual(result.columns.values[1], "January")
+        self.assertEqual(result.columns.values[2], "February")
+        self.assertEqual(result.columns.values[3], "February")
+        self.assertEqual(result.iloc[0, 0], 15605.0)
+        self.assertEqual(result.iloc[0, 1], 16883.0)
+        self.assertEqual(result.iloc[0, 2], 14078.0)
+        self.assertEqual(result.iloc[0, 3], 13420.0)
+
+    def test_columns_on_all_months_in_year(self):
+        cube = self.cube.columns([
+            self.cube.date.date_month.January,
+            self.cube.date.date_month.February,
+            self.cube.date.date_month.March,
+            self.cube.date.date_month.April,
+            self.cube.date.date_month.May,
+            self.cube.date.date_month.June,
+            self.cube.date.date_month.July,
+            self.cube.date.date_month.August,
+            self.cube.date.date_month.September,
+            self.cube.date.date_month.October,
+            self.cube.date.date_month.November,
+            self.cube.date.date_month.December,
+        ])
+        result = cube.output()
+        print(result)
+        ## KOMIN HERTIL
 
     def assert_equal_instance_and_name(self, cube_function, length, instance, name_list):
         self.assertEqual(len(cube_function()), length)

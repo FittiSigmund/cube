@@ -1,3 +1,5 @@
+import numpy as np
+import pandas as pd
 import psycopg2
 from psycopg2 import Error
 
@@ -6,8 +8,8 @@ from cube.NonTopLevel import NonTopLevel
 from cube.SlicedDimension import SlicedDimension
 
 
-def construct_query(select_stmt, from_stmt, where_stmt, group_by_stmt):
-    stmt_list = [select_stmt, from_stmt, where_stmt, group_by_stmt]
+def construct_query(select_stmt, from_stmt, where_stmt, group_by_stmt, order_by_stmt):
+    stmt_list = [select_stmt, from_stmt, where_stmt, group_by_stmt, order_by_stmt]
     return " ".join(stmt_list) + ";"
 
 
@@ -41,13 +43,24 @@ def get_hierarchy_table_join_stmt(fact_table_name, join_tables):
 
 def get_list_of_values(column_list):
     value_list = []
-    for column in column_list:
-        value_list.append(f"{column._name}")
-    return "(" + ", ".join(value_list) + ")"
+    if type(column_list[0].name) is int:
+        for column in column_list:
+            value_list.append(f"{column.name}")
+    else:
+        for column in column_list:
+            value_list.append(f"'{column.name}'")
+    return value_list
 
 
 def get_table_and_column_name(column_level):
     return f"{column_level.name}.{column_level.level_member_name}"
+
+
+def format_query_result_to_pandas_df(result):
+    length = len(result[0]) - 1
+    values = [list(map(lambda x: x[length], result))]
+    columns = list(map(lambda x: x[0], result))
+    return pd.DataFrame(values, index=[0], columns=columns)
 
 
 class Cube:
@@ -119,14 +132,18 @@ class Cube:
 
     ## TODO: Make a decision on how to return the result (xarray, pandas, etc.)
     def output(self):
-        select_stmt = self._get_select_stmt()
-        join_tables = self._get_necessary_tables_for_join()
-        from_tables = [self._fact_table_name] + list(map(lambda x: x.name, join_tables))
+        above_tables = self._get_tables_above_column_list_level()
+        below_tables_including = self._get_tables_below_column_list_level()
+        select_stmt = self._get_select_stmt(above_tables)
+        from_tables = [self._fact_table_name] + list(map(lambda x: x.name, below_tables_including)) + list(map(lambda x: x.name, above_tables))
         from_stmt = self._get_from_stmt(from_tables)
-        where_stmt = self._get_where_stmt(join_tables)
-        group_by_stmt = self._get_group_by_stmt()
-        query = construct_query(select_stmt, from_stmt, where_stmt, group_by_stmt)
-        return self.execute_query(query)
+        where_stmt = self._get_where_stmt(below_tables_including, above_tables)
+        group_by_stmt = self._get_group_by_stmt(above_tables)
+        order_by_stmt = self._get_order_by_stmt()
+        query = construct_query(select_stmt, from_stmt, where_stmt, group_by_stmt, order_by_stmt)
+        print(query)
+        query_result = self.execute_query(query)
+        return format_query_result_to_pandas_df(query_result)
 
     def measures(self):
         return self._measure_list
@@ -166,12 +183,19 @@ class Cube:
         cube._condition = condition
         return cube
 
-    def _get_select_stmt(self):
+    def _get_select_stmt(self, tables):
         select_table_name = get_table_and_column_name(self._column_list[0].level)
+        above_tables = []
+        for table in tables:
+            above_tables.append(get_table_and_column_name(table))
+        above_tables_string = ", ".join(above_tables)
         select_aggregate = f"{self._default_measure.aggregate_function.name}({self._fact_table_name}.{self._default_measure.name})"
-        return "SELECT " + select_table_name + ", " + select_aggregate
+        if above_tables:
+            return "SELECT " + select_table_name + ", " + above_tables_string + ", " + select_aggregate
+        else:
+            return "SELECT " + select_table_name + ", " + select_aggregate
 
-    def _get_necessary_tables_for_join(self):
+    def _get_tables_below_column_list_level(self):
         column_level = self._column_list[0].level
         result = [column_level]
         while column_level != column_level.child:
@@ -179,22 +203,45 @@ class Cube:
             result.append(column_level)
         return list(reversed(result))
 
+    def _get_tables_above_column_list_level(self):
+        column_level = self._column_list[0].level
+        result = []
+        while column_level != column_level.parent:
+            column_level = column_level.parent
+            if isinstance(column_level, NonTopLevel):
+                result.append(column_level)
+        return list(result)
+
     def _get_from_stmt(self, from_tables):
         return "FROM " + ", ".join(from_tables)
 
-    def _get_where_stmt(self, join_tables):
-        table_hierarchy_join = get_hierarchy_table_join_stmt(self._fact_table_name, join_tables)
+    def _get_where_stmt(self, tables_below, tables_above):
+        table_hierarchy_join = get_hierarchy_table_join_stmt(self._fact_table_name, tables_below + tables_above)
         column_level = get_table_and_column_name(self._column_list[0].level)
-        values = get_list_of_values(self._column_list)
+        value_list = get_list_of_values(self._column_list)
+        values = "(" + ", ".join(value_list) + ")"
         result = "WHERE " + table_hierarchy_join + " AND " + column_level + " IN " + values
         return result
 
-    def _get_group_by_stmt(self):
-        return f"GROUP BY " + get_table_and_column_name(self._column_list[0].level)
+    def _get_group_by_stmt(self, above_tables):
+        column_of_interest = get_table_and_column_name(self._column_list[0].level)
+        above_columns = []
+        for table in above_tables:
+            above_columns.append(get_table_and_column_name(table))
+        auxiliary_columns = ", ".join(above_columns)
+        if auxiliary_columns:
+            return f"GROUP BY " + column_of_interest + ", " + auxiliary_columns
+        else:
+            return f"GROUP BY " + column_of_interest
+
+    def _get_order_by_stmt(self):
+        value_list = get_list_of_values(self._column_list)
+        values = ", ".join(value_list)
+        table_column_name = get_table_and_column_name(self._column_list[0].level)
+        return f"ORDER BY array_position(array[{values}], {table_column_name})"
 
     def execute_query(self, query):
         self._cursor.execute(query)
-        print(self._cursor.description)
         return self._cursor.fetchall()
 
     def _get_new_cursor(self):

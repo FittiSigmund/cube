@@ -1,3 +1,8 @@
+import csv
+
+import numpy as np
+import pandas as pd
+
 import engines
 from session.session import *
 
@@ -62,3 +67,16 @@ print("2022 Level member: ", cube.date.date_year["2022"]["January"])
 # print(cube.store.store_address["Jyllandsgade 2"])
 #
 # cube.where(cube.supplier.supplier_nation == "Denmark", cube.store.store_address == "Jyllandsgade 1")
+
+def generate_data():
+    supplier = 1221
+    store = 4444
+    product = 9012
+    total_sales_price = np.random.randint(10, high=1000, size=721)
+    unit_sales = np.random.randint(1, high=20, size=721)
+    sale_date = [i for i in range(1, 722)]
+
+    with open("/home/sigmundur/test/test.csv", "w") as out:
+        csv_out = csv.writer(out)
+        for i in range(len(sale_date)):
+            csv_out.writerow((supplier, store, product, sale_date[i], total_sales_price[i], unit_sales[i]))
