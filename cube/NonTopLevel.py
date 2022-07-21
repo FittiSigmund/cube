@@ -19,7 +19,7 @@ class NonTopLevel(Level):
         self._level_member_name = level_member_name
         self._pk_name = pk
         self._fk_name = fk
-        self._cursor = get_db_cursor(engine)
+        self._engine = engine
         self._metadata = None
         self._level_members = []
 
@@ -43,15 +43,19 @@ class NonTopLevel(Level):
         raise NotImplementedError("Lazy version not implemented")
 
     def _fetch_attribute_from_db(self, attribute):
-        self._cursor.execute(f"""
-            SELECT {self._level_member_name}
-            FROM {self.name}
-            WHERE {self._level_member_name} = '{attribute}';
-        """)
-        return self._cursor.fetchall()
+        conn = self._get_db_conn()
+        with conn.cursor() as curs:
+            curs.execute(f"""
+                SELECT {self._level_member_name}
+                FROM {self.name}
+                WHERE {self._level_member_name} = '{attribute}';
+            """)
+            result = curs.fetchall()
+        conn.close()
+        return result
 
     def create_level_member(self, name):
-        return LevelMember(name, self, self._metadata)
+        return LevelMember(name, self, self._metadata, self._engine)
 
     def _fetch_level_member_from_db_and_save_as_attribute(self, item):
         db_result = self._fetch_attribute_from_db(item)
@@ -79,11 +83,9 @@ class NonTopLevel(Level):
     def __repr__(self):
         return f"NonTopLevel({self.name})"
 
-
-def get_db_cursor(engine):
-    connection = psycopg2.connect(user=engine.user,
-                                  password=engine.password,
-                                  host=engine.host,
-                                  port=engine.port,
-                                  database=engine.dbname)
-    return connection.cursor()
+    def _get_db_conn(self):
+        return psycopg2.connect(user=self._engine.user,
+                                password=self._engine.password,
+                                host=self._engine.host,
+                                port=self._engine.port,
+                                database=self._engine.dbname)

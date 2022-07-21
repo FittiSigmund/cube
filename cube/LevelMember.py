@@ -1,3 +1,4 @@
+import psycopg2
 from rdflib import Namespace
 
 from cube.TopLevel import TopLevel
@@ -15,11 +16,12 @@ def remove_uri_prefix(uri):
 
 
 class LevelMember:
-    def __init__(self, name, level, metadata, parent=None):
+    def __init__(self, name, level, metadata, engine, parent=None):
         self._name = name
         self._children = None
         self._level = level
         self._metadata = metadata
+        self._engine = engine
         self._parent = parent
 
     @property
@@ -75,7 +77,8 @@ class LevelMember:
             equality_conditions = " AND ".join(
                 [equality_conditions, f"{parents[i].name}.{parents[i]._level_member_name} = '{self._parent.name}' "])
             join_conditions = " AND ".join(
-                [join_conditions, f"{self._level.name}.{self._level._fk_name} = {parents[i].name}.{parents[i]._pk_name}"])
+                [join_conditions,
+                 f"{self._level.name}.{self._level._fk_name} = {parents[i].name}.{parents[i]._pk_name}"])
 
         return select_stmt + from_stmt + equality_conditions + join_conditions
 
@@ -91,8 +94,12 @@ class LevelMember:
             query = self._get_query_with_parents(attribute, parents)
         else:
             query = self._get_query_without_parents(attribute)
-        self._level._cursor.execute(query)
-        return self._level._cursor.fetchall()
+        conn = self._get_db_conn()
+        with conn.cursor() as curs:
+            curs.execute(query)
+            result = curs.fetchall()
+        conn.close()
+        return result
 
     def _find_parent_node(self):
         parent = self._metadata.query(f"""
@@ -109,13 +116,20 @@ class LevelMember:
         else:
             raise Exception("Either zero or several parent nodes found in QB4OLAP graph")
 
+    def _get_db_conn(self):
+        return psycopg2.connect(user=self._engine.user,
+                                password=self._engine.password,
+                                host=self._engine.host,
+                                port=self._engine.port,
+                                database=self._engine.dbname)
+
     def __getattr__(self, item):
         attribute = remove_underscore_prefix(item)
         parents = self.get_parents()
         result = self.fetch_level_member_from_db(attribute, parents)
         if len(result) == 1:
             level_member_name = result[0][0]
-            level_member = LevelMember(level_member_name, self._level.child, self._metadata, self)
+            level_member = LevelMember(level_member_name, self._level.child, self._metadata, self._engine, self)
             setattr(self, item, level_member)
             return level_member
         else:
@@ -126,7 +140,7 @@ class LevelMember:
         result = self.fetch_level_member_from_db(item, parents)
         if len(result) == 1:
             level_member_name = result[0][0]
-            level_member = LevelMember(level_member_name, self._level.child, self._metadata, self)
+            level_member = LevelMember(level_member_name, self._level.child, self._metadata, self._engine, self)
             setattr(self, item, level_member)
             return level_member
         else:

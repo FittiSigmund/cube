@@ -1,7 +1,7 @@
 from rdflib import Graph, Namespace, BNode
 from rdflib.namespace import RDF, QB
 
-from cube.Cube import Cube
+from cube.BaseCube import BaseCube
 from cube.TopLevel import TopLevel
 
 EG = Namespace("http://example.org/")
@@ -89,4 +89,4 @@ def create_metadata_for_measure(measure, metadata, dsd_node):
 
 
 def create_cube(fact_table_name, dimension_list, measure_list, dbname, metadata, engine):
-    return Cube(fact_table_name, dimension_list, measure_list, dbname, metadata, engine)
+    return BaseCube(fact_table_name, dimension_list, measure_list, dbname, metadata, engine)

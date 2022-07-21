@@ -28,32 +28,6 @@ def get_all_table_names(db_cursor):
     return list(map(lambda x: x[0], db_cursor.fetchall()))
 
 
-def create_level_member_value(values):
-    return values
-
-
-def create_level_member_instances(level_dto_list):
-    result = []
-    if not level_dto_list:
-        return result
-    head, tail = level_dto_list.popleft(), level_dto_list
-
-    for value in head.member_values:
-        result.append(LevelMember(value, create_level_member_instances(tail)))
-
-    head.level_member_instances = result
-    return result
-
-
-def attach_level_member_instances(level_dto_list, level_member_instance_tree):
-    current_level_members = level_member_instance_tree
-    i = 0
-    while current_level_members:
-        level_dto_list[i].level_member_instances = current_level_members
-        i += 1
-        current_level_members = current_level_members[0].children()
-
-
 def attach_children_to_levels(levels):
     for i in range(len(levels)):
         if i == len(levels) - 1:
@@ -81,8 +55,8 @@ def attach_levels_to_dto_list(level_dto_list, levels):
 def create_levels_in_hierarchy(db_cursor, lowest_level_dto, engine):
     level_dto_list = create_hierarchy(db_cursor, lowest_level_dto.level_name, lowest_level_dto.fact_table_fk)
     levels = [TopLevel()]
-    for l in level_dto_list[1:]:
-        levels.append(NonTopLevel(l.name, l.member, engine, l.pk_name, l.fk_name))
+    for lv in level_dto_list[1:]:
+        levels.append(NonTopLevel(lv.name, lv.member, engine, lv.pk_name, lv.fk_name))
 
     levels = attach_parents_to_levels(levels)
     levels = attach_children_to_levels(levels)
@@ -101,22 +75,11 @@ def get_lowest_level_names(db_cursor, fact_table_name):
     return lowest_level_dto_list
 
 
-def get_level_member_values(db_cursor, level_member_name, level_name):
-    db_cursor.execute(f"""
-        SELECT {level_member_name}
-        FROM {level_name}
-    """)
-    return list(map(lambda x: x[0], db_cursor.fetchall()))
-
-
-def create_level_member_values(db_cursor, level_name, level_member_name):
-    return get_level_member_values(db_cursor, level_member_name, level_name)
-
-
 class LevelDTO:
     level = []
 
-    def __init__(self, level_name=None, level_member=None, level_attributes=None, pk=None, fk=None, fact_table_fk=None, top_level=False):
+    def __init__(self, level_name=None, level_member=None, level_attributes=None, pk=None, fk=None, fact_table_fk=None,
+                 top_level=False):
         self.level_member_instances = []
         self.member = level_member
         self.attributes = level_attributes
@@ -162,7 +125,8 @@ def create_hierarchy(db_cursor, level_name, fact_table_fk):
             continue
         level_member_name, level_attribute_names = get_level_attributes_and_member_name(db_cursor, current_level)
         pk, fk = get_pk_and_fk_column_names(db_cursor, current_level)
-        hierarchy_dto_list.append(LevelDTO(current_level, level_member_name, level_attribute_names, pk, fk, fact_table_fk))
+        hierarchy_dto_list.append(
+            LevelDTO(current_level, level_member_name, level_attribute_names, pk, fk, fact_table_fk))
     hierarchy_dto_list.append(LevelDTO(top_level=True))
 
     hierarchy_dto_list.reverse()
@@ -218,12 +182,3 @@ def create_measures(measure_list):
 def create_measure(measure):
     sum_agg_func = AggregateFunction("SUM", lambda x, y: x + y)
     return Measure(measure, sum_agg_func)
-
-
-def get_db_cursor(engine):
-    connection = psycopg2.connect(user=engine.user,
-                                  password=engine.password,
-                                  host=engine.host,
-                                  port=engine.port,
-                                  database=engine.dbname)
-    return connection.cursor()
