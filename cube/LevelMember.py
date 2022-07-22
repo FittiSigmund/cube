@@ -36,6 +36,10 @@ class LevelMember:
     def level(self):
         return self._level
 
+    @property
+    def parent(self):
+        return self._parent
+
     def children(self):
         return self._children if self._children is not None else []
 
@@ -54,7 +58,7 @@ class LevelMember:
     def _get_join_condition_where_stmt(self):
         return f"AND {self._level.child.name}.{self._level.child._fk_name} = {self._level.name}.{self._level._pk_name}"
 
-    def get_parents(self):
+    def get_ancestors(self):
         levels = []
         current_level = self._level
         while True:
@@ -101,21 +105,6 @@ class LevelMember:
         conn.close()
         return result
 
-    def _find_parent_node(self):
-        parent = self._metadata.query(f"""
-            SELECT ?parent
-            WHERE {{
-                 ?parent qb4o:inLevel eg:{self._level.name} .
-                 ?parent rdfs:label eg:{self.name}
-            }}
-        """)
-        if len(parent) == 1:
-            for node in parent:
-                parent_node = node[0]
-            return parent_node
-        else:
-            raise Exception("Either zero or several parent nodes found in QB4OLAP graph")
-
     def _get_db_conn(self):
         return psycopg2.connect(user=self._engine.user,
                                 password=self._engine.password,
@@ -123,20 +112,8 @@ class LevelMember:
                                 port=self._engine.port,
                                 database=self._engine.dbname)
 
-    def __getattr__(self, item):
-        attribute = remove_underscore_prefix(item)
-        parents = self.get_parents()
-        result = self.fetch_level_member_from_db(attribute, parents)
-        if len(result) == 1:
-            level_member_name = result[0][0]
-            level_member = LevelMember(level_member_name, self._level.child, self._metadata, self._engine, self)
-            setattr(self, item, level_member)
-            return level_member
-        else:
-            raise Exception("There was zero or several results from the query. DB_result: ", result)
-
-    def __getitem__(self, item):
-        parents = self.get_parents()
+    def _get_attr_or_item(self, item):
+        parents = self.get_ancestors()
         result = self.fetch_level_member_from_db(item, parents)
         if len(result) == 1:
             level_member_name = result[0][0]
@@ -145,6 +122,12 @@ class LevelMember:
             return level_member
         else:
             raise Exception("There was zero or several results from the query. DB_result: ", result)
+
+    def __getattr__(self, item):
+        return self._get_attr_or_item(item)
+
+    def __getitem__(self, item):
+        return self._get_attr_or_item(item)
 
     def __repr__(self):
         return f"LevelMember({self.name})"

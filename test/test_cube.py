@@ -1,11 +1,18 @@
 import unittest
 
+import pandas as pd
+
 from cube.BaseCube import BaseCube
 from cube.Cuboid import Cuboid
 from cube.Measure import Measure
 from cube.RegularDimension import RegularDimension
 from session.session import create_session
 from test.utilities import Utilities as util
+
+
+def get_all_months_in_year():
+    return ["January", "February", "March", "April", "May", "June", "July",
+            "August", "September", "October", "November", "December"]
 
 
 def get_all_months_in_year_twice():
@@ -15,7 +22,7 @@ def get_all_months_in_year_twice():
             "November", "November", "December", "December"]
 
 
-def get_all_expected_values():
+def get_expected_values_for_all_months_in_all_years():
     return [16883, 15605, 14078, 13420, 18942, 13096, 14512, 12210, 15614, 17347,
             14928, 17445, 16620, 16470, 15645, 13669, 14342, 14497, 16609, 16351,
             13732, 16706, 12604, 16445]
@@ -36,6 +43,28 @@ def get_all_date_month_references(cube):
         cube.date.date_month.November,
         cube.date.date_month.December,
     ]
+
+
+def get_all_date_month_references_for_2022(cube):
+    return [
+        cube.date.date_year["2022"].January,
+        cube.date.date_year["2022"].February,
+        cube.date.date_year["2022"].March,
+        cube.date.date_year["2022"].April,
+        cube.date.date_year["2022"].May,
+        cube.date.date_year["2022"].June,
+        cube.date.date_year["2022"].July,
+        cube.date.date_year["2022"].August,
+        cube.date.date_year["2022"].September,
+        cube.date.date_year["2022"].October,
+        cube.date.date_year["2022"].November,
+        cube.date.date_year["2022"].December,
+    ]
+
+
+def get_expected_values_for_all_months_in_2022():
+    return [16883.0, 13420.0, 18942.0, 14512.0, 15614.0, 17445.0, 16470.0,
+            13669.0, 14342.0, 16351.0, 16706.0, 16445.0]
 
 
 class TestCube(unittest.TestCase):
@@ -94,16 +123,45 @@ class TestCube(unittest.TestCase):
         self.assertEqual(result.iloc[0, 2], 14078.0)
         self.assertEqual(result.iloc[0, 3], 13420.0)
 
-    def test_columns_on_all_months_in_year(self):
+    def test_columns_on_all_months_in_all_years(self):
         cube = self.cube.columns(get_all_date_month_references(self.cube))
         result = cube.output()
         columns = get_all_months_in_year_twice()
-        values = get_all_expected_values()
+        values = get_expected_values_for_all_months_in_all_years()
 
         self.assertEqual(result.shape, (1, 24))
         for i, column in enumerate(result.columns):
             self.assertEqual(column, columns[i])
             self.assertEqual(result.iloc[0, i], values[i])
+
+    def test_columns_on_all_months_in_2022(self):
+        cube = self.cube.columns(get_all_date_month_references_for_2022(self.cube))
+        result = cube.output()
+        columns = get_all_months_in_year()
+        values = get_expected_values_for_all_months_in_2022()
+
+        self.assertEqual(result.shape, (1, 12))
+        for i, column in enumerate(result.columns):
+            self.assertEqual(column, columns[i])
+            self.assertEqual(result.iloc[0, i], values[i])
+
+    def test_columns_on_all_years_using_members(self):
+        cube = self.cube.columns(self.cube.date.date_year.members())
+        result = cube.output()
+
+        self.assertEqual(result.shape, (1, 2))
+        self.assertEqual(result.columns[0], 2022)
+        self.assertEqual(result.columns[1], 2021)
+        self.assertEqual(result.iloc[0, 0], 190799.0)
+        self.assertEqual(result.iloc[0, 1], 176971.0)
+
+    def test_columns_all_years_members_and_explicit(self):
+        cube1 = self.cube.columns(self.cube.date.date_year.members())
+        result1 = cube1.output()
+        cube2 = self.cube.columns([self.cube.date.date_year["2022"], self.cube.date.date_year["2021"]])
+        result2 = cube2.output()
+
+        pd.testing.assert_frame_equal(result1, result2)
 
     def test_columns_returns_another_cube(self):
         cube = self.cube.columns([self.cube.date.date_month.January])
@@ -114,9 +172,16 @@ class TestCube(unittest.TestCase):
     def test_columns_twice_should_materialize_all_cuboids(self):
         c1 = self.cube.columns([self.cube.date.date_month.January, self.cube.date.date_month.February])
         c2 = c1.columns([self.cube.date.date_month.January])
-        result = c2.output()
-        print(result)
-        ## Komin hertil <--------------------
+        result2 = c2.output()
+        result1 = c1.output()
+        self.assertEqual(result1.shape, (1, 4))
+        self.assertEqual(result2.shape, (1, 2))
+        self.assertEqual(result2.iloc[0, 0], 15605.0)
+        self.assertEqual(result2.iloc[0, 1], 16883.0)
+
+    def test_columns_all_months_in_2022_with_children(self):
+        cube = self.cube.columns(self.cube.date.date_year["2022"].children())
+        print(cube.output())
 
     def assert_equal_instance_and_name(self, cube_function, length, instance, name_list):
         self.assertEqual(len(cube_function()), length)

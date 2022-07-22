@@ -22,6 +22,7 @@ class NonTopLevel(Level):
         self._engine = engine
         self._metadata = None
         self._level_members = []
+        self._all_lm_loaded = False
 
     @property
     def child(self):
@@ -40,7 +41,34 @@ class NonTopLevel(Level):
         return self._level_member_name
 
     def members(self):
-        raise NotImplementedError("Lazy version not implemented")
+        if self._all_lm_loaded:
+            return self._level_members
+        else:
+            db_result = self._fetch_all_lm_from_db()
+            lms = []
+            if db_result:
+                for result in db_result:
+                    lm_name = result[0]
+                    lm = self.create_level_member(lm_name)
+                    lms.append(lm)
+                    setattr(self, str(lm_name), lm)
+                    self._append_level_members_without_duplicates(lm)
+                self._all_lm_loaded = True
+                return lms
+            else:
+                raise AttributeError(f"'{self.name}' level does not contain any members")
+
+    def _append_level_members_without_duplicates(self, lm):
+        lms_str_list = list(map(lambda x: x.name, self._level_members))
+        self._level_members.append(lm) if lm.name not in lms_str_list else None
+
+    def _fetch_all_lm_from_db(self):
+        conn = self._get_db_conn()
+        with conn.cursor() as curs:
+            curs.execute(f"SELECT {self._level_member_name} FROM {self.name};")
+            result = curs.fetchall()
+        conn.close()
+        return result
 
     def _fetch_attribute_from_db(self, attribute):
         conn = self._get_db_conn()

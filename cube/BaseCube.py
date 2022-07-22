@@ -81,6 +81,35 @@ def get_tables_below_column_list_level(column_level):
     return list(reversed(result))
 
 
+def get_ancestor_lm_and_values(level_member):
+    result = []
+    while level_member.parent is not None:
+        level_member = level_member.parent
+        result.append([level_member.level, level_member])
+    return result
+
+
+def get_ancestor_value_stmt(level_member):
+    lm_value_list = get_ancestor_lm_and_values(level_member)
+    result = []
+    for k, v in lm_value_list:
+        if type(v.name) is int:
+            result.append(f"{k.name}.{k.level_member_name} IN ({v.name})")
+        else:
+            result.append(f"{k.name}.{k.level_member_name} IN ('{v.name}')")
+    if result:
+        return " AND " + " AND ".join(result)
+    else:
+        return ""
+
+
+def get_current_value_stmt(column_list):
+    column_level = get_table_and_column_name(column_list[0].level)
+    value_list = get_list_of_values(column_list)
+    values = "(" + ", ".join(value_list) + ")"
+    return f" AND {column_level} IN {values}"
+
+
 class BaseCube(Cube):
     def __init__(
             self,
@@ -196,11 +225,9 @@ class BaseCube(Cube):
 
     def _get_where_stmt(self, tables_below, tables_above, column_list):
         table_hierarchy_join = get_hierarchy_table_join_stmt(self._fact_table_name, tables_below + tables_above)
-        column_level_str = get_table_and_column_name(column_list[0].level)
-        value_list = get_list_of_values(column_list)
-        values = "(" + ", ".join(value_list) + ")"
-        result = "WHERE " + table_hierarchy_join + " AND " + column_level_str + " IN " + values
-        return result
+        current_value_str = get_current_value_stmt(column_list)
+        ancestor_value_str = get_ancestor_value_stmt(column_list[0])
+        return "WHERE " + table_hierarchy_join + current_value_str + ancestor_value_str
 
     def _get_group_by_stmt(self, above_tables, column_level):
         column_of_interest = get_table_and_column_name(column_level)

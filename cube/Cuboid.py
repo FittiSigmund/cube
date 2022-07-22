@@ -30,6 +30,9 @@ class Cuboid(Cube):
             return self._previous.output(self._column_list)
         else:
             prev_results = self._previous.output()
-            ## Perform operations on prev_results
-            result = prev_results
+            column_list_names = self._get_column_list_names()
+            result = prev_results[column_list_names]
             return result
+
+    def _get_column_list_names(self):
+        return list(map(lambda x: x.name, self._column_list))
