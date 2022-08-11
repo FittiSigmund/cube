@@ -62,11 +62,12 @@ print("2022 Level member: ", cube.date.date_year["2022"]["January"])
 # print("The output: ", cube.output())
 
 
-# print()
-# print(cube.store.store_address["Jyllandsgade 1"])
-# print(cube.store.store_address["Jyllandsgade 2"])
-#
-# cube.where(cube.supplier.supplier_nation == "Denmark", cube.store.store_address == "Jyllandsgade 1")
+print()
+print(cube.store.store_address["Jyllandsgade 1"])
+print(cube.store.store_address["Jyllandsgade 2"])
+
+cube.where(cube.supplier.supplier_nation == "Denmark" and cube.store.store_address == "Jyllandsgade 1")
+
 
 def generate_data():
     supplier = 1221
