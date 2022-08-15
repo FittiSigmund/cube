@@ -6,7 +6,7 @@ class Level(ABC):
         self._name = name
         self._parent = parent
         self._child = child
-        self.dimension = dimension
+        self._dimension = dimension
 
     @property
     def name(self):
@@ -27,3 +27,11 @@ class Level(ABC):
     @child.setter
     def child(self, value):
         self._child = value
+
+    @property
+    def dimension(self):
+        return self._dimension
+
+    @dimension.setter
+    def dimension(self, value):
+        self._dimension = value

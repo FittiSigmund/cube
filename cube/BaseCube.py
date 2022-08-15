@@ -3,6 +3,7 @@ import psycopg2
 from psycopg2 import Error
 
 from cube.Cube import Cube
+from cube.CubeOperators import rollup
 from cube.Cuboid import Cuboid
 from cube.RegularDimension import RegularDimension
 from cube.NonTopLevel import NonTopLevel
@@ -121,7 +122,7 @@ class BaseCube(Cube):
             engine,
             previous=None
     ):
-        super().__init__(dimension_list, measure_list, engine, previous)
+        super().__init__(dimension_list, measure_list, engine, previous, None)
         self._fact_table_name = fact_table_name
         self._dimension_list = dimension_list
         self._name = name
@@ -138,13 +139,13 @@ class BaseCube(Cube):
         self._name = name
 
     def columns(self, value_list):
-        return Cuboid(
-            self._dimension_list,
-            self._measure_list,
-            self._engine,
-            value_list,
-            self
-        )
+        if not value_list:
+            raise ValueError("Value_list cannot be empty")
+        else:
+            level_name = value_list[0].level.name
+            dimension_name = value_list[0].level.dimension.name
+            kwargs = {dimension_name: level_name}
+            return rollup(self, **kwargs)
 
     def rows(self, value_list):
         pass
@@ -156,7 +157,10 @@ class BaseCube(Cube):
         print(args)
         print(kwargs)
 
-    def output(self, column_list=None):
+    def output(self, next_cube: Cuboid):
+#######################################################################################################
+##                      CONVERT REPR AND OUTPUT TO CUBE OPERATOR CONVERSION                          ##
+#######################################################################################################
         above_tables = get_tables_above_column_list_level(column_list[0].level)
         below_tables_including = get_tables_below_column_list_level(column_list[0].level)
         select_stmt = self._get_select_stmt(column_list[0].level, above_tables)
@@ -183,8 +187,11 @@ class BaseCube(Cube):
 
         new_dimension.current_level = direction(dimension.current_level)
         new_dimension_list = [new_dimension if x == dimension else x for x in self._dimension_list]
-        return BaseCube(self._fact_table_name, new_dimension_list, self._measure_list, self.name, self._metadata,
-                        self._engine)
+        cube = BaseCube(self._fact_table_name, new_dimension_list, self._measure_list, self.name, self._metadata,
+                             self._engine)
+        cube.base_cube = cube
+        return cube
+
 
     def _roll_up(self, dimension):
         return self._traverse_hierarchy(dimension, go_to_parent)
@@ -197,12 +204,15 @@ class BaseCube(Cube):
         sliced_dimension.fixed_level = dimension.current_level
         sliced_dimension.fixed_level_member = value
         new_dimension_list = [sliced_dimension if x == dimension else x for x in self._dimension_list]
-        return BaseCube(self._fact_table_name, new_dimension_list, self._measure_list, self.name, self._metadata,
-                        self._engine)
+        cube = BaseCube(self._fact_table_name, new_dimension_list, self._measure_list, self.name, self._metadata,
+                             self._engine)
+        cube.base_cube = cube
+        return cube
 
     def _dice(self, condition):
         cube = BaseCube(self._fact_table_name, self._dimension_list, self._measure_list, self.name, self._metadata,
                         self._engine)
+        cube.base_cube = cube
         cube._condition = condition
         return cube
 
@@ -264,3 +274,6 @@ class BaseCube(Cube):
                                     database=self._engine.dbname)
         except (Exception, Error) as error:
             print("ERROR: ", error)
+
+    def __repr__(self):
+        return self.name

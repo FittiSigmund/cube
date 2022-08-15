@@ -179,9 +179,9 @@ class TestCube(unittest.TestCase):
         self.assertEqual(result2.iloc[0, 0], 15605.0)
         self.assertEqual(result2.iloc[0, 1], 16883.0)
 
-    def test_columns_all_months_in_2022_with_children(self):
-        cube = self.cube.columns(self.cube.date.date_year["2022"].children())
-        print(cube.output())
+    # def test_columns_all_months_in_2022_with_children(self):
+    #     cube = self.cube.columns(self.cube.date.date_year["2022"].children())
+    #     print(cube.output())
 
     def assert_equal_instance_and_name(self, cube_function, length, instance, name_list):
         self.assertEqual(len(cube_function()), length)

@@ -89,4 +89,6 @@ def create_metadata_for_measure(measure, metadata, dsd_node):
 
 
 def create_cube(fact_table_name, dimension_list, measure_list, dbname, metadata, engine):
-    return BaseCube(fact_table_name, dimension_list, measure_list, dbname, metadata, engine)
+    cube = BaseCube(fact_table_name, dimension_list, measure_list, dbname, metadata, engine)
+    cube.base_cube = cube
+    return cube

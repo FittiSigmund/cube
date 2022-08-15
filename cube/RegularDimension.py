@@ -25,8 +25,6 @@ class RegularDimension(Dimension):
             level.dimension = self
             if not isinstance(level, TopLevel):
                 setattr(self, level.name, level)
-            else:
-                self.current_level = level
 
     def lowest_level(self):
         return self._lowest_level
