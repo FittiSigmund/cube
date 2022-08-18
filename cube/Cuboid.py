@@ -27,7 +27,7 @@ class Cuboid(Cube):
     def where(self):
         pass
 
-    def output(self):
+    def output(self, cube: Cube):
         from cube.BaseCube import BaseCube
         if isinstance(self._previous, BaseCube):
             return self._previous.output(self)
