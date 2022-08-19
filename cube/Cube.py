@@ -2,13 +2,14 @@ from abc import ABC, abstractmethod
 
 
 class Cube(ABC):
-    def __init__(self, dimension_list, measure_list, engine, previous, base_cube):
-        self._previous = previous
+    def __init__(self, dimension_list, measure_list, engine, previous_cube, base_cube, next_cube):
+        self._previous = previous_cube
         self._dimension_list = dimension_list
         self._default_measure = measure_list[0]
         self._measure_list = measure_list
         self._engine = engine
         self._base_cube = base_cube
+        self._next_cube = next_cube
         for dimension in dimension_list:
             setattr(self, dimension.name, dimension)
 
@@ -32,6 +33,14 @@ class Cube(ABC):
     def base_cube(self, value):
         self._base_cube = value
 
+    @property
+    def next_cube(self):
+        return self._next_cube
+
+    @next_cube.setter
+    def next_cube(self, value):
+        self._next_cube = value
+
     @abstractmethod
     def columns(self, value_list):
         pass
@@ -49,5 +58,5 @@ class Cube(ABC):
         pass
 
     @abstractmethod
-    def output(self, cube):
+    def output(self):
         pass

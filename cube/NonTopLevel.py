@@ -37,6 +37,10 @@ class NonTopLevel(Level):
         return self._pk_name
 
     @property
+    def fk_name(self):
+        return self._fk_name
+
+    @property
     def level_member_name(self):
         return self._level_member_name
 
