@@ -203,16 +203,6 @@ class TestCube(unittest.TestCase):
         self.assertIsInstance(self.cube, BaseCube)
         self.assertIsInstance(cube, Cuboid)
 
-    # def test_columns_twice_should_materialize_all_cuboids(self):
-    #     c1 = self.cube.columns([self.cube.date.date_month.January, self.cube.date.date_month.February])
-    #     c2 = c1.columns([self.cube.date.date_month.January])
-    #     result2 = c2.output()
-    #     result1 = c1.output()
-    #     self.assertEqual(result1.shape, (1, 4))
-    #     self.assertEqual(result2.shape, (1, 2))
-    #     self.assertEqual(result2.iloc[0, 0], 15605.0)
-    #     self.assertEqual(result2.iloc[0, 1], 16883.0)
-
     def test_columns_all_months_in_2022_with_children(self):
         cube = self.cube.columns(self.cube.date.date_year["2022"].children())
         result = cube.output()
@@ -224,6 +214,111 @@ class TestCube(unittest.TestCase):
             self.assertEqual(column, columns[i])
             self.assertEqual(result.iloc[0, i], values[i])
 
+    def test_columns_on_year_using_unit_sales(self):
+        self.cube.default_measure = self.cube.unit_sales
+        cube = self.cube.columns([self.cube.date.date_year["2022"], self.cube.date.date_year["2021"]])
+        self.assertIsInstance(self.cube, BaseCube)
+        self.assertIsInstance(cube, Cuboid)
+        result = cube.output()
+        self.assertEqual(result.shape, (1, 2))
+        self.assertEqual(result.columns.values[0], 2022)
+        self.assertEqual(result.columns.values[1], 2021)
+        self.assertEqual(result[2022][0], 190799.0)
+        self.assertEqual(result[2021][0], 176971.0)
+
+    def test_columns_on_january(self):
+        cube = self.cube.columns([self.cube.date.date_month.January])
+        result = cube.output()
+        self.assertIsInstance(self.cube, BaseCube)
+        self.assertIsInstance(cube, Cuboid)
+        self.assertEqual(result.shape, (1, 2))
+        self.assertEqual(result.columns.values[0], "January")
+        self.assertEqual(result.columns.values[1], "January")
+        self.assertEqual(result.iloc[0, 0], 15605.0)
+        self.assertEqual(result.iloc[0, 1], 16883.0)
+
+    def test_columns_on_january_and_february(self):
+        cube = self.cube.columns([self.cube.date.date_month.January, self.cube.date.date_month.February])
+        result = cube.output()
+        self.assertIsInstance(self.cube, BaseCube)
+        self.assertIsInstance(cube, Cuboid)
+        self.assertEqual(result.shape, (1, 4))
+        self.assertEqual(result.columns.values[0], "January")
+        self.assertEqual(result.columns.values[1], "January")
+        self.assertEqual(result.columns.values[2], "February")
+        self.assertEqual(result.columns.values[3], "February")
+        self.assertEqual(result.iloc[0, 0], 15605.0)
+        self.assertEqual(result.iloc[0, 1], 16883.0)
+        self.assertEqual(result.iloc[0, 2], 14078.0)
+        self.assertEqual(result.iloc[0, 3], 13420.0)
+
+    def test_columns_on_all_months_in_all_years(self):
+        cube = self.cube.columns(get_all_date_month_references(self.cube))
+        result = cube.output()
+        columns = get_all_months_in_year_twice()
+        values = get_expected_values_for_all_months_in_all_years()
+
+        self.assertEqual(result.shape, (1, 24))
+        for i, column in enumerate(result.columns):
+            self.assertEqual(column, columns[i])
+            self.assertEqual(result.iloc[0, i], values[i])
+
+    def test_columns_on_all_months_in_2022(self):
+        cube = self.cube.columns(get_all_date_month_references_for_2022(self.cube))
+        result = cube.output()
+        columns = get_all_months_in_year()
+        values = get_expected_values_for_all_months_in_2022()
+
+        self.assertEqual(result.shape, (1, 12))
+        for i, column in enumerate(result.columns):
+            self.assertEqual(column, columns[i])
+            self.assertEqual(result.iloc[0, i], values[i])
+
+    def test_columns_on_all_months_in_2021(self):
+        cube = self.cube.columns(get_all_date_month_references_for_2021(self.cube))
+        result = cube.output()
+        columns = get_all_months_in_year()
+        expected_values = get_expected_values_for_all_months_in_2021()
+
+        self.assertEqual(result.shape, (1, 12))
+        for i, column in enumerate(result.columns):
+            self.assertEqual(column, columns[i])
+            self.assertEqual(result.iloc[0, i], expected_values[i])
+
+    def test_columns_on_all_years_using_members(self):
+        cube = self.cube.columns(self.cube.date.date_year.members())
+        result = cube.output()
+
+        self.assertEqual(result.shape, (1, 2))
+        self.assertEqual(result.columns[0], 2022)
+        self.assertEqual(result.columns[1], 2021)
+        self.assertEqual(result.iloc[0, 0], 190799.0)
+        self.assertEqual(result.iloc[0, 1], 176971.0)
+
+    def test_columns_all_years_members_and_explicit(self):
+        cube1 = self.cube.columns(self.cube.date.date_year.members())
+        result1 = cube1.output()
+        cube2 = self.cube.columns([self.cube.date.date_year["2022"], self.cube.date.date_year["2021"]])
+        result2 = cube2.output()
+
+        pd.testing.assert_frame_equal(result1, result2)
+
+    def test_columns_returns_another_cube(self):
+        cube = self.cube.columns([self.cube.date.date_month.January])
+        self.assertNotEqual(cube, self.cube)
+        self.assertIsInstance(self.cube, BaseCube)
+        self.assertIsInstance(cube, Cuboid)
+
+    def test_columns_all_months_in_2022_with_children(self):
+        cube = self.cube.columns(self.cube.date.date_year["2022"].children())
+        result = cube.output()
+        columns = get_all_months_in_year()
+        values = get_expected_values_for_all_months_in_2022()
+
+        self.assertEqual(result.shape, (1, 12))
+        for i, column in enumerate(result.columns):
+            self.assertEqual(column, columns[i])
+            self.assertEqual(result.iloc[0, i], values[i])
     def assert_equal_instance_and_name(self, cube_function, length, instance, name_list):
         self.assertEqual(len(cube_function()), length)
         for i in range(0, len(cube_function())):

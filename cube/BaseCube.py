@@ -9,6 +9,7 @@ from cube.Cube import Cube
 from cube.CubeOperators import rollup, dice
 from cube.Level import Level
 from cube.LevelMember import LevelMember
+from cube.Measure import Measure
 from cube.RegularDimension import RegularDimension
 from cube.NonTopLevel import NonTopLevel
 from cube.SlicedDimension import SlicedDimension
@@ -141,6 +142,14 @@ class BaseCube(Cube):
     def name(self, name):
         self._name = name
 
+    @property
+    def default_measure(self) -> Measure:
+        return self._default_measure
+
+    @default_measure.setter
+    def default_measure(self, value: Measure) -> None:
+        self._default_measure = value
+
     def columns(self, value_list):
         if not value_list:
             raise ValueError("Value_list cannot be empty")
@@ -175,6 +184,9 @@ class BaseCube(Cube):
         query: str = construct_query(select_stmt, from_stmt, where_stmt, group_by_stmt, order_by_stmt)
         query_result = self.execute_query(query)
         return format_query_result_to_pandas_df(query_result)
+
+    def set_default_measure(self, measure: Measure) -> None:
+        pass
 
     def measures(self):
         return self._measure_list

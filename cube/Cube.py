@@ -12,6 +12,8 @@ class Cube(ABC):
         self._next_cube = next_cube
         for dimension in dimension_list:
             setattr(self, dimension.name, dimension)
+        for measure in measure_list:
+            setattr(self, measure.name, measure)
 
     @property
     def previous(self):
