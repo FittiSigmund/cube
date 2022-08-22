@@ -94,7 +94,7 @@ class NonTopLevel(Level):
 
         if db_result:
             level_member = self.create_level_member(db_result[0][0])
-            setattr(self, item, level_member)
+            setattr(self, str(item), level_member)
             self._level_members.append(level_member)
             return level_member
         else:
@@ -104,7 +104,11 @@ class NonTopLevel(Level):
         return self._fetch_level_member_from_db_and_save_as_attribute(item)
 
     def __getitem__(self, item):
-        result = next((x for x in self._level_members if x.name == item), False)
+        if int(item):
+            item = int(item)
+            result = next((x for x in self._level_members if x.name == item), False)
+        else:
+            result = next((x for x in self._level_members if x.name == item), False)
         if result:
             return result
         return self._fetch_level_member_from_db_and_save_as_attribute(item)

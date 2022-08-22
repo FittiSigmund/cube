@@ -1,4 +1,5 @@
 import unittest
+from typing import List
 
 import pandas as pd
 
@@ -45,6 +46,23 @@ def get_all_date_month_references(cube):
     ]
 
 
+def get_all_date_month_references_for_2021(cube):
+    return [
+        cube.date.date_year["2021"].January,
+        cube.date.date_year["2021"].February,
+        cube.date.date_year["2021"].March,
+        cube.date.date_year["2021"].April,
+        cube.date.date_year["2021"].May,
+        cube.date.date_year["2021"].June,
+        cube.date.date_year["2021"].July,
+        cube.date.date_year["2021"].August,
+        cube.date.date_year["2021"].September,
+        cube.date.date_year["2021"].October,
+        cube.date.date_year["2021"].November,
+        cube.date.date_year["2021"].December,
+    ]
+
+
 def get_all_date_month_references_for_2022(cube):
     return [
         cube.date.date_year["2022"].January,
@@ -62,7 +80,12 @@ def get_all_date_month_references_for_2022(cube):
     ]
 
 
-def get_expected_values_for_all_months_in_2022():
+def get_expected_values_for_all_months_in_2021() -> List[float]:
+    return [15605.0, 14078.0, 13096.0, 12210.0, 17347.0, 14928,
+            16620.0, 15645.0, 14497.0, 16609.0, 13732.0, 12604.0]
+
+
+def get_expected_values_for_all_months_in_2022() -> List[float]:
     return [16883.0, 13420.0, 18942.0, 14512.0, 15614.0, 17445.0, 16470.0,
             13669.0, 14342.0, 16351.0, 16706.0, 16445.0]
 
@@ -145,6 +168,17 @@ class TestCube(unittest.TestCase):
             self.assertEqual(column, columns[i])
             self.assertEqual(result.iloc[0, i], values[i])
 
+    def test_columns_on_all_months_in_2021(self):
+        cube = self.cube.columns(get_all_date_month_references_for_2021(self.cube))
+        result = cube.output()
+        columns = get_all_months_in_year()
+        expected_values = get_expected_values_for_all_months_in_2021()
+
+        self.assertEqual(result.shape, (1, 12))
+        for i, column in enumerate(result.columns):
+            self.assertEqual(column, columns[i])
+            self.assertEqual(result.iloc[0, i], expected_values[i])
+
     def test_columns_on_all_years_using_members(self):
         cube = self.cube.columns(self.cube.date.date_year.members())
         result = cube.output()
@@ -169,19 +203,26 @@ class TestCube(unittest.TestCase):
         self.assertIsInstance(self.cube, BaseCube)
         self.assertIsInstance(cube, Cuboid)
 
-    def test_columns_twice_should_materialize_all_cuboids(self):
-        c1 = self.cube.columns([self.cube.date.date_month.January, self.cube.date.date_month.February])
-        c2 = c1.columns([self.cube.date.date_month.January])
-        result2 = c2.output()
-        result1 = c1.output()
-        self.assertEqual(result1.shape, (1, 4))
-        self.assertEqual(result2.shape, (1, 2))
-        self.assertEqual(result2.iloc[0, 0], 15605.0)
-        self.assertEqual(result2.iloc[0, 1], 16883.0)
+    # def test_columns_twice_should_materialize_all_cuboids(self):
+    #     c1 = self.cube.columns([self.cube.date.date_month.January, self.cube.date.date_month.February])
+    #     c2 = c1.columns([self.cube.date.date_month.January])
+    #     result2 = c2.output()
+    #     result1 = c1.output()
+    #     self.assertEqual(result1.shape, (1, 4))
+    #     self.assertEqual(result2.shape, (1, 2))
+    #     self.assertEqual(result2.iloc[0, 0], 15605.0)
+    #     self.assertEqual(result2.iloc[0, 1], 16883.0)
 
-    # def test_columns_all_months_in_2022_with_children(self):
-    #     cube = self.cube.columns(self.cube.date.date_year["2022"].children())
-    #     print(cube.output())
+    def test_columns_all_months_in_2022_with_children(self):
+        cube = self.cube.columns(self.cube.date.date_year["2022"].children())
+        result = cube.output()
+        columns = get_all_months_in_year()
+        values = get_expected_values_for_all_months_in_2022()
+
+        self.assertEqual(result.shape, (1, 12))
+        for i, column in enumerate(result.columns):
+            self.assertEqual(column, columns[i])
+            self.assertEqual(result.iloc[0, i], values[i])
 
     def assert_equal_instance_and_name(self, cube_function, length, instance, name_list):
         self.assertEqual(len(cube_function()), length)
