@@ -14,6 +14,14 @@ class Cube(ABC):
             setattr(self, dimension.name, dimension)
 
     @property
+    def previous(self):
+        return self._previous
+
+    @previous.setter
+    def previous(self, value):
+        self._previous = value
+
+    @property
     def dimension_list(self):
         return self._dimension_list
 

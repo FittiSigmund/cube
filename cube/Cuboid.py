@@ -1,21 +1,31 @@
-from typing import Union
+from typing import Optional, List
 
 from cube.Cube import Cube
+from cube.LevelMember import LevelMember
 from cube.NonTopLevel import NonTopLevel
 
 
 class Cuboid(Cube):
     def __init__(self, dimension_list, measure_list, engine, previous_cube, base_cube):
         super().__init__(dimension_list, measure_list, engine, previous_cube, base_cube=base_cube, next_cube=None)
-        self._visual_column: Union[NonTopLevel, None] = None
+        self._visual_column: Optional[NonTopLevel] = None
+        self._column_value_list: Optional[List[LevelMember]] = None
 
     @property
-    def visual_column(self) -> Union[NonTopLevel, None]:
+    def visual_column(self) -> Optional[NonTopLevel]:
         return self._visual_column
 
     @visual_column.setter
-    def visual_column(self, value: NonTopLevel):
+    def visual_column(self, value: NonTopLevel) -> None:
         self._visual_column: NonTopLevel = value
+
+    @property
+    def column_value_list(self) -> Optional[List[LevelMember]]:
+        return self._column_value_list
+
+    @column_value_list.setter
+    def column_value_list(self, value) -> None:
+        self._column_value_list = value
 
     def columns(self, value_list):
         # cube = Cuboid(

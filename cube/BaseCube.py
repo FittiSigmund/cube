@@ -6,7 +6,7 @@ from psycopg2 import Error
 from psycopg2._psycopg import connection
 
 from cube.Cube import Cube
-from cube.CubeOperators import rollup
+from cube.CubeOperators import rollup, dice
 from cube.Level import Level
 from cube.LevelMember import LevelMember
 from cube.RegularDimension import RegularDimension
@@ -148,10 +148,11 @@ class BaseCube(Cube):
             level_name = value_list[0].level.name
             dimension_name = value_list[0].level.dimension.name
             kwargs = {dimension_name: level_name}
-            cube = rollup(self, **kwargs)
-            cube.visual_column = value_list[0].level
-            self.next_cube = cube
-            return cube
+            cube1 = rollup(self, **kwargs)
+            cube2 = dice(cube1, value_list)
+            cube2.visual_column = value_list[0].level
+            self.next_cube = cube2
+            return cube2
 
     def rows(self, value_list):
         pass
@@ -168,12 +169,10 @@ class BaseCube(Cube):
         below_tables_including: List[NonTopLevel] = get_tables_below_column_list_level(self.next_cube.visual_column)
         select_stmt: str = self._get_select_stmt(self.next_cube.visual_column, above_tables)
         from_stmt: str = self._get_from_stmt(above_tables, below_tables_including)
-        test: List[LevelMember] = [self.next_cube.date.date_year["2022"], self.next_cube.date.date_year["2021"]]
-        where_stmt: str = self._get_where_stmt(below_tables_including, above_tables, test)
+        where_stmt: str = self._get_where_stmt(below_tables_including, above_tables, self.next_cube.column_value_list)
         group_by_stmt: str = self._get_group_by_stmt(above_tables, self.next_cube.visual_column)
-        # order_by_stmt: str = self._get_order_by_stmt(test)
-        # query: str = construct_query(select_stmt, from_stmt, where_stmt, group_by_stmt, order_by_stmt)
-        query: str = construct_query(select_stmt, from_stmt, where_stmt, group_by_stmt)
+        order_by_stmt: str = self._get_order_by_stmt(self.next_cube.column_value_list)
+        query: str = construct_query(select_stmt, from_stmt, where_stmt, group_by_stmt, order_by_stmt)
         query_result = self.execute_query(query)
         return format_query_result_to_pandas_df(query_result)
 
@@ -207,13 +206,6 @@ class BaseCube(Cube):
         cube.base_cube = cube
         return cube
 
-    def _dice(self, condition):
-        cube = BaseCube(self._fact_table_name, self._dimension_list, self._measure_list, self.name, self._metadata,
-                        self._engine)
-        cube.base_cube = cube
-        cube._condition = condition
-        return cube
-
     def _get_select_stmt(self, column_level: NonTopLevel, tables: List[NonTopLevel]) -> str:
         select_table_name: str = get_table_and_column_name(column_level)
         above_tables: List[str] = []
@@ -234,10 +226,9 @@ class BaseCube(Cube):
     def _get_where_stmt(self, tables_below: List[NonTopLevel], tables_above: List[NonTopLevel],
                         column_list: List[LevelMember]) -> str:
         table_hierarchy_join: str = get_hierarchy_table_join_stmt(self._fact_table_name, tables_below + tables_above)
-        # current_value: str = get_current_value_stmt(column_list)
-        # ancestor_value: str = get_ancestor_value_stmt(column_list[0])
-        return "WHERE " + table_hierarchy_join
-        # + current_value + ancestor_value
+        current_value: str = get_current_value_stmt(column_list)
+        ancestor_value: str = get_ancestor_value_stmt(column_list[0])
+        return "WHERE " + table_hierarchy_join + current_value + ancestor_value
 
     def _get_group_by_stmt(self, above_tables: List[NonTopLevel], column_level: NonTopLevel) -> str:
         column_of_interest: str = get_table_and_column_name(column_level)
@@ -258,7 +249,6 @@ class BaseCube(Cube):
 
     def execute_query(self, query: str):
         conn: connection = self._get_new_connection()
-        print(type(conn))
 
         with conn.cursor() as curs:
             curs.execute(query)
