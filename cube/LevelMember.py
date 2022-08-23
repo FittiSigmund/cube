@@ -133,10 +133,7 @@ class LevelMember:
         return f"FROM {self._level.child.name}, {self._level.name}"
 
     def _get_equality_condition_where_stmt(self, attribute: Union[str, int]):
-        return f"""
-            WHERE {self._level.child.name}.{self._level.child._level_member_name} = '{attribute}'
-            AND {self._level.name}.{self._level._level_member_name} = '{self.name}'
-        """
+        return f"WHERE {self._level.child.name}.{self._level.child._level_member_name} = '{attribute}' AND {self._level.name}.{self._level._level_member_name} = '{self.name}'"
 
     def _get_join_condition_where_stmt(self):
         return f"AND {self._level.child.name}.{self._level.child._fk_name} = {self._level.name}.{self._level._pk_name}"
@@ -156,7 +153,7 @@ class LevelMember:
                 [join_conditions,
                  f"{self._level.name}.{self._level._fk_name} = {parents[i].name}.{parents[i]._pk_name}"])
 
-        return select_stmt + from_stmt + equality_conditions + join_conditions
+        return select_stmt + from_stmt + " " + equality_conditions + join_conditions
 
     def _get_query_without_parents(self, attribute: Union[str, int]) -> str:
         select_stmt: str = self._get_select_stmt_for_getattr_or_getitem()

@@ -1,5 +1,3 @@
-from itertools import groupby
-from operator import itemgetter
 from typing import Dict, List
 
 from cube.Cube import Cube
@@ -48,9 +46,15 @@ def drilldown(cube: Cube, **kwargs: str) -> Cuboid:
     return Cuboid(dimension_list, cube.measure_list, cube.engine, cube, cube.base_cube)
 
 
-def dice(cube: Cube, value_list: List[LevelMember]) -> Cuboid:
+def dice(cube: Cube, value_list: List[LevelMember], axis: str) -> Cuboid:
     new_cube = Cuboid(cube.dimension_list, cube.measure_list, cube.engine, cube.previous, base_cube=cube.base_cube)
-    new_cube.column_value_list = value_list
+    match axis:
+        case "column":
+            new_cube.column_value_list = value_list
+        case "row":
+            new_cube.row_value_list = value_list
+        case _:
+            raise ValueError(f"No axis called {axis}")
     return new_cube
 
 

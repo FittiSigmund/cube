@@ -577,6 +577,23 @@ class TestCube(unittest.TestCase):
             self.assertEqual(column, all_months[i])
             self.assertEqual(total_sales_price_result.iloc[0, i], total_sales_price_values[i])
 
+    def test_test(self):
+        cube = self.cube.columns([self.cube.date.date_year["2022"].January["1"]])
+        result = cube.output()
+        hej = 1
+
+    def test_columns_and_rows_on_all_years_and_all_product_categories_using_total_sales_price(self):
+        cube = self.cube.columns([self.cube.date.date_year["2022"], self.cube.date.date_year["2021"]])\
+                        .rows(self.cube.product.product_category.members())
+        self.assertIsInstance(self.cube, BaseCube)
+        self.assertIsInstance(cube, Cuboid)
+        result = cube.output()
+        self.assertEqual(result.shape, (2, 1))
+        self.assertEqual(result.rows.values[0], 2022)
+        self.assertEqual(result.rows.values[1], 2021)
+        self.assertEqual(result[0][2022], 190799.0)
+        self.assertEqual(result[0][2021], 176971.0)
+
     def assert_equal_instance_and_name(self, cube_function, length, instance, name_list):
         self.assertEqual(len(cube_function()), length)
         for i in range(0, len(cube_function())):

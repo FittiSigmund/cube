@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import List, Union, TypeVar, Optional
+from typing import List, Union, TypeVar, Optional, Dict
 
 import pandas as pd
 import psycopg2
@@ -8,6 +8,7 @@ from psycopg2._psycopg import connection
 
 from cube.Cube import Cube
 from cube.CubeOperators import rollup, dice
+from cube.Cuboid import Cuboid
 from cube.Level import Level
 from cube.LevelMember import LevelMember
 from cube.Measure import Measure
@@ -72,7 +73,7 @@ def format_query_result_to_pandas_df(result) -> DataFrame:
     return pd.DataFrame(values, index=[0], columns=columns)
 
 
-def get_tables_above_column_list_level(column_level: Level) -> List[NonTopLevel]:
+def _get_tables_above_column_list_level(column_level: Level) -> List[NonTopLevel]:
     result: List[NonTopLevel] = []
     while column_level != column_level.parent:
         column_level = column_level.parent
@@ -143,21 +144,31 @@ class BaseCube(Cube):
     def name(self, name):
         self._name = name
 
-    def columns(self, value_list):
+    def columns(self, value_list) -> Cuboid:
         if not value_list:
             raise ValueError("Value_list cannot be empty")
         else:
-            level_name = value_list[0].level.name
-            dimension_name = value_list[0].level.dimension.name
-            kwargs = {dimension_name: level_name}
-            cube1 = rollup(self, **kwargs)
-            cube2 = dice(cube1, value_list)
+            dimension_name: Union[str, int] = value_list[0].level.dimension.name
+            level_name: Union[str, int] = value_list[0].level.name
+            kwargs: Dict[Union[str, int], Union[str, int]] = {dimension_name: level_name}
+            cube1: Cuboid = rollup(self, **kwargs)
+            cube2: Cuboid = dice(cube1, value_list, "column")
             cube2.visual_column = value_list[0].level
-            self.next_cube = cube2
+            self.next_cube: Cuboid = cube2
             return cube2
 
-    def rows(self, value_list):
-        pass
+    def rows(self, value_list) -> Cuboid:
+        if not value_list:
+            raise ValueError("Value_list cannot be empty")
+        else:
+            dimension_name: Union[str, int] = value_list[0].level.dimension.name
+            level_name: Union[str, int] = value_list[0].level.name
+            kwargs: Dict[Union[str, int], Union[str, int]] = {dimension_name: level_name}
+            cube1: Cuboid = rollup(self, **kwargs)
+            cube2: Cuboid = dice(cube1, value_list, "row")
+            cube2.visual_row = value_list[0].level
+            self.next_cube: Cuboid = cube2
+            return cube2
 
     def pages(self, value_list):
         pass
@@ -167,9 +178,9 @@ class BaseCube(Cube):
         print(kwargs)
 
     def output(self) -> DataFrame:
-        above_tables: List[NonTopLevel] = get_tables_above_column_list_level(self.next_cube.visual_column)
+        above_tables: List[NonTopLevel] = _get_tables_above_column_list_level(self.next_cube.visual_column)
         below_tables_including: List[NonTopLevel] = get_tables_below_column_list_level(self.next_cube.visual_column)
-        select_stmt: str = self._get_select_stmt(self.next_cube.visual_column, above_tables, self.next_cube)
+        select_stmt: str = self._get_select_stmt(self.next_cube)
         from_stmt: str = self._get_from_stmt(above_tables, below_tables_including)
         where_stmt: str = self._get_where_stmt(below_tables_including, above_tables, self.next_cube.column_value_list)
         group_by_stmt: str = self._get_group_by_stmt(above_tables, self.next_cube.visual_column)
@@ -208,13 +219,15 @@ class BaseCube(Cube):
         cube.base_cube = cube
         return cube
 
-    def _get_select_stmt(self, column_level: NonTopLevel,
-                         tables: List[NonTopLevel],
-                         next_cube: Cube) -> str:
+    def _get_select_stmt(self, next_cube: Cube) -> str:
+        column_level = self.next_cube.visual_column
         select_table_name: str = get_table_and_column_name(column_level)
+        tables: List[NonTopLevel] = _get_tables_above_column_list_level(self.next_cube.visual_column)
         above_tables: List[str] = []
-        for table in tables:
-            above_tables.append(get_table_and_column_name(table))
+
+        # for table in tables:
+        #     above_tables.append(get_table_and_column_name(table))
+
         above_tables_string: str = ", ".join(above_tables)
         if next_cube.use_temp_measure:
             select_aggregate: str = f"{next_cube.temp_measure.aggregate_function.name}({self._fact_table_name}.{next_cube.temp_measure.name})"
