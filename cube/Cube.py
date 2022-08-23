@@ -1,4 +1,8 @@
+from __future__ import annotations
 from abc import ABC, abstractmethod
+from typing import Optional
+
+from cube.Measure import Measure
 
 
 class Cube(ABC):
@@ -14,6 +18,8 @@ class Cube(ABC):
             setattr(self, dimension.name, dimension)
         for measure in measure_list:
             setattr(self, measure.name, measure)
+        self._temp_measure: Optional[Measure] = None
+        self._use_temp_measure: bool = False
 
     @property
     def previous(self):
@@ -59,6 +65,18 @@ class Cube(ABC):
     def next_cube(self, value):
         self._next_cube = value
 
+    @property
+    def use_temp_measure(self) -> bool:
+        return self._use_temp_measure
+
+    @use_temp_measure.setter
+    def use_temp_measure(self, value: bool) -> None:
+        self._use_temp_measure = value
+
+    @property
+    def temp_measure(self) -> Optional[Measure]:
+        return self._temp_measure
+
     @abstractmethod
     def columns(self, value_list):
         pass
@@ -79,6 +97,8 @@ class Cube(ABC):
     def output(self):
         pass
 
-    @abstractmethod
-    def with_measure(self, measure):
-        pass
+    def with_measures(self, measure: Measure) -> Cube:
+        self._temp_measure = measure
+        self._use_temp_measure = True
+        return self
+

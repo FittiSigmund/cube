@@ -336,9 +336,9 @@ class TestCube(unittest.TestCase):
             self.assertEqual(column, columns[i])
             self.assertEqual(result.iloc[0, i], values[i])
 
-## Test with_measures
     def test_columns_on_year_using_total_sales_price_with_measures(self):
-        cube = self.cube.columns([self.cube.date.date_year["2022"], self.cube.date.date_year["2021"]])
+        cube = self.cube.columns([self.cube.date.date_year["2022"], self.cube.date.date_year["2021"]]) \
+            .with_measures(self.cube.total_sales_price)
         self.assertIsInstance(self.cube, BaseCube)
         self.assertIsInstance(cube, Cuboid)
         result = cube.output()
@@ -348,8 +348,8 @@ class TestCube(unittest.TestCase):
         self.assertEqual(result[2022][0], 190799.0)
         self.assertEqual(result[2021][0], 176971.0)
 
-    def test_columns_on_january_using_total_sales_price(self):
-        cube = self.cube.columns([self.cube.date.date_month.January])
+    def test_columns_on_january_using_total_sales_price_with_measures(self):
+        cube = self.cube.columns([self.cube.date.date_month.January]).with_measures(self.cube.total_sales_price)
         result = cube.output()
         self.assertIsInstance(self.cube, BaseCube)
         self.assertIsInstance(cube, Cuboid)
@@ -359,8 +359,9 @@ class TestCube(unittest.TestCase):
         self.assertEqual(result.iloc[0, 0], 15605.0)
         self.assertEqual(result.iloc[0, 1], 16883.0)
 
-    def test_columns_on_january_and_february_using_total_sales_price(self):
-        cube = self.cube.columns([self.cube.date.date_month.January, self.cube.date.date_month.February])
+    def test_columns_on_january_and_february_using_total_sales_price_with_measures(self):
+        cube = self.cube.columns([self.cube.date.date_month.January, self.cube.date.date_month.February]) \
+            .with_measures(self.cube.total_sales_price)
         result = cube.output()
         self.assertIsInstance(self.cube, BaseCube)
         self.assertIsInstance(cube, Cuboid)
@@ -374,8 +375,8 @@ class TestCube(unittest.TestCase):
         self.assertEqual(result.iloc[0, 2], 14078.0)
         self.assertEqual(result.iloc[0, 3], 13420.0)
 
-    def test_columns_on_all_months_in_all_years_using_total_sales_price(self):
-        cube = self.cube.columns(get_all_date_month_references(self.cube))
+    def test_columns_on_all_months_in_all_years_using_total_sales_price_with_measures(self):
+        cube = self.cube.columns(get_all_date_month_references(self.cube)).with_measures(self.cube.total_sales_price)
         result = cube.output()
         columns = get_all_months_in_year_twice()
         values = get_expected_values_for_all_months_in_all_years_total_sales_price()
@@ -385,8 +386,9 @@ class TestCube(unittest.TestCase):
             self.assertEqual(column, columns[i])
             self.assertEqual(result.iloc[0, i], values[i])
 
-    def test_columns_on_all_months_in_2022_using_total_sales_price(self):
-        cube = self.cube.columns(get_all_date_month_references_for_2022(self.cube))
+    def test_columns_on_all_months_in_2022_using_total_sales_price_with_measures(self):
+        cube = self.cube.columns(get_all_date_month_references_for_2022(self.cube)) \
+            .with_measures(self.cube.total_sales_price)
         result = cube.output()
         columns = get_all_months_in_year()
         values = get_expected_values_for_all_months_in_2022_total_sales_price()
@@ -396,8 +398,9 @@ class TestCube(unittest.TestCase):
             self.assertEqual(column, columns[i])
             self.assertEqual(result.iloc[0, i], values[i])
 
-    def test_columns_on_all_months_in_2021_using_total_sales_price(self):
-        cube = self.cube.columns(get_all_date_month_references_for_2021(self.cube))
+    def test_columns_on_all_months_in_2021_using_total_sales_price_with_measures(self):
+        cube = self.cube.columns(get_all_date_month_references_for_2021(self.cube)) \
+            .with_measures(self.cube.total_sales_price)
         result = cube.output()
         columns = get_all_months_in_year()
         expected_values = get_expected_values_for_all_months_in_2021_total_sales_price()
@@ -407,8 +410,9 @@ class TestCube(unittest.TestCase):
             self.assertEqual(column, columns[i])
             self.assertEqual(result.iloc[0, i], expected_values[i])
 
-    def test_columns_on_all_years_using_members_using_total_sales_price(self):
-        cube = self.cube.columns(self.cube.date.date_year.members())
+    def test_columns_on_all_years_using_members_using_total_sales_price_with_measures(self):
+        cube = self.cube.columns(self.cube.date.date_year.members()) \
+            .with_measures(self.cube.total_sales_price)
         result = cube.output()
 
         self.assertEqual(result.shape, (1, 2))
@@ -417,22 +421,22 @@ class TestCube(unittest.TestCase):
         self.assertEqual(result.iloc[0, 0], 190799.0)
         self.assertEqual(result.iloc[0, 1], 176971.0)
 
-    def test_columns_all_years_members_and_explicit_using_total_sales_price(self):
-        cube1 = self.cube.columns(self.cube.date.date_year.members())
+    def test_columns_all_years_members_and_explicit_using_total_sales_price_with_measures(self):
+        cube1 = self.cube.columns(self.cube.date.date_year.members()).with_measures(self.cube.total_sales_price)
         result1 = cube1.output()
         cube2 = self.cube.columns([self.cube.date.date_year["2022"], self.cube.date.date_year["2021"]])
         result2 = cube2.output()
 
         pd.testing.assert_frame_equal(result1, result2)
 
-    def test_columns_returns_another_cube_using_total_sales_price(self):
-        cube = self.cube.columns([self.cube.date.date_month.January])
+    def test_columns_returns_another_cube_using_total_sales_price_with_measures(self):
+        cube = self.cube.columns([self.cube.date.date_month.January]).with_measures(self.cube.total_sales_price)
         self.assertNotEqual(cube, self.cube)
         self.assertIsInstance(self.cube, BaseCube)
         self.assertIsInstance(cube, Cuboid)
 
-    def test_columns_all_months_in_2022_with_children_using_total_sales_price(self):
-        cube = self.cube.columns(self.cube.date.date_year["2022"].children())
+    def test_columns_all_months_in_2022_with_children_using_total_sales_price_with_measures(self):
+        cube = self.cube.columns(self.cube.date.date_year["2022"].children()).with_measures(self.cube.total_sales_price)
         result = cube.output()
         columns = get_all_months_in_year()
         values = get_expected_values_for_all_months_in_2022_total_sales_price()
@@ -442,9 +446,10 @@ class TestCube(unittest.TestCase):
             self.assertEqual(column, columns[i])
             self.assertEqual(result.iloc[0, i], values[i])
 
-    def test_columns_on_year_using_unit_sales_using_total_sales_price(self):
+    def test_columns_on_year_using_unit_sales_using_total_sales_price_with_measures(self):
         self.cube.default_measure = self.cube.unit_sales
-        cube = self.cube.columns([self.cube.date.date_year["2022"], self.cube.date.date_year["2021"]])
+        cube = self.cube.columns([self.cube.date.date_year["2022"], self.cube.date.date_year["2021"]]) \
+            .with_measures(self.cube.unit_sales)
         self.assertIsInstance(self.cube, BaseCube)
         self.assertIsInstance(cube, Cuboid)
         result = cube.output()
@@ -454,9 +459,9 @@ class TestCube(unittest.TestCase):
         self.assertEqual(result[2022][0], 3668)
         self.assertEqual(result[2021][0], 3501)
 
-    def test_columns_on_january_using_unit_sales_using_total_sales_price(self):
+    def test_columns_on_january_using_unit_sales_using_total_sales_price_with_measures(self):
         self.cube.default_measure = self.cube.unit_sales
-        cube = self.cube.columns([self.cube.date.date_month.January])
+        cube = self.cube.columns([self.cube.date.date_month.January]).with_measures(self.cube.unit_sales)
         result = cube.output()
         self.assertIsInstance(self.cube, BaseCube)
         self.assertIsInstance(cube, Cuboid)
@@ -466,9 +471,10 @@ class TestCube(unittest.TestCase):
         self.assertEqual(result.iloc[0, 0], 294)
         self.assertEqual(result.iloc[0, 1], 301)
 
-    def test_columns_on_january_and_february_using_unit_sales(self):
+    def test_columns_on_january_and_february_using_unit_sales_with_measures(self):
         self.cube.default_measure = self.cube.unit_sales
-        cube = self.cube.columns([self.cube.date.date_month.January, self.cube.date.date_month.February])
+        cube = self.cube.columns([self.cube.date.date_month.January, self.cube.date.date_month.February]) \
+            .with_measures(self.cube.unit_sales)
         result = cube.output()
         self.assertIsInstance(self.cube, BaseCube)
         self.assertIsInstance(cube, Cuboid)
@@ -482,9 +488,9 @@ class TestCube(unittest.TestCase):
         self.assertEqual(result.iloc[0, 2], 286)
         self.assertEqual(result.iloc[0, 3], 259)
 
-    def test_columns_on_all_months_in_all_years_using_unit_sales(self):
+    def test_columns_on_all_months_in_all_years_using_unit_sales_with_measures(self):
         self.cube.default_measure = self.cube.unit_sales
-        cube = self.cube.columns(get_all_date_month_references(self.cube))
+        cube = self.cube.columns(get_all_date_month_references(self.cube)).with_measures(self.cube.unit_sales)
         result = cube.output()
         columns = get_all_months_in_year_twice()
         values = get_expected_values_for_all_months_in_all_years_unit_sales()
@@ -494,9 +500,9 @@ class TestCube(unittest.TestCase):
             self.assertEqual(column, columns[i])
             self.assertEqual(result.iloc[0, i], values[i])
 
-    def test_columns_on_all_months_in_2022_using_unit_sales(self):
+    def test_columns_on_all_months_in_2022_using_unit_sales_with_measures(self):
         self.cube.default_measure = self.cube.unit_sales
-        cube = self.cube.columns(get_all_date_month_references_for_2022(self.cube))
+        cube = self.cube.columns(get_all_date_month_references_for_2022(self.cube)).with_measures(self.cube.unit_sales)
         result = cube.output()
         columns = get_all_months_in_year()
         values = get_expected_values_for_all_months_in_2022_unit_sales()
@@ -506,9 +512,9 @@ class TestCube(unittest.TestCase):
             self.assertEqual(column, columns[i])
             self.assertEqual(result.iloc[0, i], values[i])
 
-    def test_columns_on_all_months_in_2021_using_unit_sales(self):
+    def test_columns_on_all_months_in_2021_using_unit_sales_with_measures(self):
         self.cube.default_measure = self.cube.unit_sales
-        cube = self.cube.columns(get_all_date_month_references_for_2021(self.cube))
+        cube = self.cube.columns(get_all_date_month_references_for_2021(self.cube)).with_measures(self.cube.unit_sales)
         result = cube.output()
         columns = get_all_months_in_year()
         expected_values = get_expected_values_for_all_months_in_2021_unit_sales()
@@ -518,9 +524,9 @@ class TestCube(unittest.TestCase):
             self.assertEqual(column, columns[i])
             self.assertEqual(result.iloc[0, i], expected_values[i])
 
-    def test_columns_on_all_years_using_members_using_unit_sales(self):
+    def test_columns_on_all_years_using_members_using_unit_sales_with_measures(self):
         self.cube.default_measure = self.cube.unit_sales
-        cube = self.cube.columns(self.cube.date.date_year.members())
+        cube = self.cube.columns(self.cube.date.date_year.members()).with_measures(self.cube.unit_sales)
         result = cube.output()
 
         self.assertEqual(result.shape, (1, 2))
@@ -530,18 +536,18 @@ class TestCube(unittest.TestCase):
         self.assertEqual(result.iloc[0, 0], 3668)
         self.assertEqual(result.iloc[0, 1], 3501)
 
-    def test_columns_all_years_members_and_explicit_using_unit_sales(self):
+    def test_columns_all_years_members_and_explicit_using_unit_sales_with_measures(self):
         self.cube.default_measure = self.cube.unit_sales
-        cube1 = self.cube.columns(self.cube.date.date_year.members())
+        cube1 = self.cube.columns(self.cube.date.date_year.members()).with_measures(self.cube.unit_sales)
         result1 = cube1.output()
         cube2 = self.cube.columns([self.cube.date.date_year["2022"], self.cube.date.date_year["2021"]])
         result2 = cube2.output()
 
         pd.testing.assert_frame_equal(result1, result2)
 
-    def test_columns_all_months_in_2022_with_children_using_unit_sales(self):
+    def test_columns_all_months_in_2022_with_children_using_unit_sales_with_measures(self):
         self.cube.default_measure = self.cube.unit_sales
-        cube = self.cube.columns(self.cube.date.date_year["2022"].children())
+        cube = self.cube.columns(self.cube.date.date_year["2022"].children()).with_measures(self.cube.unit_sales)
         result = cube.output()
         columns = get_all_months_in_year()
         values = get_expected_values_for_all_months_in_2022_unit_sales()
@@ -550,6 +556,27 @@ class TestCube(unittest.TestCase):
         for i, column in enumerate(result.columns):
             self.assertEqual(column, columns[i])
             self.assertEqual(result.iloc[0, i], values[i])
+
+    def test_with_measures_should_only_work_once_using_all_months_in_2022(self):
+        cube = self.cube.columns(self.cube.date.date_year["2022"].children()).with_measures(self.cube.unit_sales)
+        unit_sales_result = cube.output()
+        total_sales_price_result = cube.output()
+
+        all_months = get_all_months_in_year()
+        unit_sales_values = get_expected_values_for_all_months_in_2022_unit_sales()
+
+        self.assertEqual(unit_sales_result.shape, (1, 12))
+        for i, column in enumerate(unit_sales_result.columns):
+            self.assertEqual(column, all_months[i])
+            self.assertEqual(unit_sales_result.iloc[0, i], unit_sales_values[i])
+
+        total_sales_price_values = get_expected_values_for_all_months_in_2022_total_sales_price()
+
+        self.assertEqual(total_sales_price_result.shape, (1, 12))
+        for i, column in enumerate(total_sales_price_result.columns):
+            self.assertEqual(column, all_months[i])
+            self.assertEqual(total_sales_price_result.iloc[0, i], total_sales_price_values[i])
+
     def assert_equal_instance_and_name(self, cube_function, length, instance, name_list):
         self.assertEqual(len(cube_function()), length)
         for i in range(0, len(cube_function())):

@@ -134,8 +134,6 @@ class BaseCube(Cube):
         self._name = name
         self._metadata = metadata
         self._condition = None
-        self._temp_measure: Optional[Measure] = None
-        self._use_temp_measure: bool = False
 
     @property
     def name(self):
@@ -171,7 +169,7 @@ class BaseCube(Cube):
     def output(self) -> DataFrame:
         above_tables: List[NonTopLevel] = get_tables_above_column_list_level(self.next_cube.visual_column)
         below_tables_including: List[NonTopLevel] = get_tables_below_column_list_level(self.next_cube.visual_column)
-        select_stmt: str = self._get_select_stmt(self.next_cube.visual_column, above_tables)
+        select_stmt: str = self._get_select_stmt(self.next_cube.visual_column, above_tables, self.next_cube)
         from_stmt: str = self._get_from_stmt(above_tables, below_tables_including)
         where_stmt: str = self._get_where_stmt(below_tables_including, above_tables, self.next_cube.column_value_list)
         group_by_stmt: str = self._get_group_by_stmt(above_tables, self.next_cube.visual_column)
@@ -179,11 +177,6 @@ class BaseCube(Cube):
         query: str = construct_query(select_stmt, from_stmt, where_stmt, group_by_stmt, order_by_stmt)
         query_result = self.execute_query(query)
         return format_query_result_to_pandas_df(query_result)
-
-    def with_measure(self, measure: Measure) -> BaseCube:
-        self._temp_measure = measure
-        self._use_temp_measure = True
-        return self
 
     def measures(self):
         return self._measure_list
@@ -215,14 +208,17 @@ class BaseCube(Cube):
         cube.base_cube = cube
         return cube
 
-    def _get_select_stmt(self, column_level: NonTopLevel, tables: List[NonTopLevel]) -> str:
+    def _get_select_stmt(self, column_level: NonTopLevel,
+                         tables: List[NonTopLevel],
+                         next_cube: Cube) -> str:
         select_table_name: str = get_table_and_column_name(column_level)
         above_tables: List[str] = []
         for table in tables:
             above_tables.append(get_table_and_column_name(table))
         above_tables_string: str = ", ".join(above_tables)
-        if self._use_temp_measure:
-            select_aggregate: str = f"{self._temp_measure.aggregate_function.name}({self._fact_table_name}.{self._temp_measure.name})"
+        if next_cube.use_temp_measure:
+            select_aggregate: str = f"{next_cube.temp_measure.aggregate_function.name}({self._fact_table_name}.{next_cube.temp_measure.name})"
+            next_cube.use_temp_measure = False
         else:
             select_aggregate: str = f"{self._default_measure.aggregate_function.name}({self._fact_table_name}.{self._default_measure.name})"
         if above_tables:
