@@ -101,7 +101,10 @@ class NonTopLevel(Level):
             raise AttributeError(f"'{self.name}' level does not contain the '{item}' level member")
 
     def __getattr__(self, item):
-        return self._fetch_level_member_from_db_and_save_as_attribute(item)
+        if item in self.__dict__.keys():
+            return self.__dict__[item]
+        else:
+            return self._fetch_level_member_from_db_and_save_as_attribute(item)
 
     def __getitem__(self, item):
         if int(item):

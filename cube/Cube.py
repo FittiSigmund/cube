@@ -5,8 +5,8 @@ class Cube(ABC):
     def __init__(self, dimension_list, measure_list, engine, previous_cube, base_cube, next_cube):
         self._previous = previous_cube
         self._dimension_list = dimension_list
-        self._default_measure = measure_list[0]
         self._measure_list = measure_list
+        self._default_measure = measure_list[0]
         self._engine = engine
         self._base_cube = base_cube
         self._next_cube = next_cube
@@ -30,6 +30,14 @@ class Cube(ABC):
     @property
     def measure_list(self):
         return self._measure_list
+
+    @property
+    def default_measure(self):
+        return self._default_measure
+
+    @default_measure.setter
+    def default_measure(self, value):
+        self._default_measure = value
 
     @property
     def engine(self):
@@ -69,4 +77,8 @@ class Cube(ABC):
 
     @abstractmethod
     def output(self):
+        pass
+
+    @abstractmethod
+    def with_measure(self, measure):
         pass

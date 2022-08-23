@@ -1,4 +1,5 @@
-from typing import List, Union, TypeVar
+from __future__ import annotations
+from typing import List, Union, TypeVar, Optional
 
 import pandas as pd
 import psycopg2
@@ -133,6 +134,8 @@ class BaseCube(Cube):
         self._name = name
         self._metadata = metadata
         self._condition = None
+        self._temp_measure: Optional[Measure] = None
+        self._use_temp_measure: bool = False
 
     @property
     def name(self):
@@ -141,14 +144,6 @@ class BaseCube(Cube):
     @name.setter
     def name(self, name):
         self._name = name
-
-    @property
-    def default_measure(self) -> Measure:
-        return self._default_measure
-
-    @default_measure.setter
-    def default_measure(self, value: Measure) -> None:
-        self._default_measure = value
 
     def columns(self, value_list):
         if not value_list:
@@ -185,8 +180,10 @@ class BaseCube(Cube):
         query_result = self.execute_query(query)
         return format_query_result_to_pandas_df(query_result)
 
-    def set_default_measure(self, measure: Measure) -> None:
-        pass
+    def with_measure(self, measure: Measure) -> BaseCube:
+        self._temp_measure = measure
+        self._use_temp_measure = True
+        return self
 
     def measures(self):
         return self._measure_list
@@ -224,7 +221,10 @@ class BaseCube(Cube):
         for table in tables:
             above_tables.append(get_table_and_column_name(table))
         above_tables_string: str = ", ".join(above_tables)
-        select_aggregate: str = f"{self._default_measure.aggregate_function.name}({self._fact_table_name}.{self._default_measure.name})"
+        if self._use_temp_measure:
+            select_aggregate: str = f"{self._temp_measure.aggregate_function.name}({self._fact_table_name}.{self._temp_measure.name})"
+        else:
+            select_aggregate: str = f"{self._default_measure.aggregate_function.name}({self._fact_table_name}.{self._default_measure.name})"
         if above_tables:
             return "SELECT " + select_table_name + ", " + above_tables_string + ", " + select_aggregate
         else:
