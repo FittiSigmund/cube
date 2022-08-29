@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import List, Union, TypeVar, Optional, Dict
+from typing import List, Union, TypeVar, Optional, Dict, Any, Tuple, Set
 
 import pandas as pd
 import psycopg2
@@ -66,27 +66,31 @@ def get_table_and_column_name(column_level: NonTopLevel) -> str:
     return f"{column_level.name}.{column_level.level_member_name}"
 
 
-def format_query_result_to_pandas_df(result) -> DataFrame:
+def format_query_result_to_pandas_df(result: List[Tuple[Any, ...]]) -> DataFrame:
     length: int = len(result[0]) - 1
     values = [list(map(lambda x: x[length], result))]
     columns: List[Union[str, int]] = list(map(lambda x: x[0], result))
-    return pd.DataFrame(values, index=[0], columns=columns)
+    if length >= 2:
+        rows: Set[Union[str, int]] = set(map(lambda x: x[1], result))
+        return pd.DataFrame(values, index=rows, columns=columns)
+    else:
+        return pd.DataFrame(values, index=[0], columns=columns)
 
 
-def _get_tables_above_column_list_level(column_level: Level) -> List[NonTopLevel]:
+def get_tables_above(level: Level) -> List[NonTopLevel]:
     result: List[NonTopLevel] = []
-    while column_level != column_level.parent:
-        column_level = column_level.parent
-        if isinstance(column_level, NonTopLevel):
-            result.append(column_level)
+    while level != level.parent:
+        level = level.parent
+        if isinstance(level, NonTopLevel):
+            result.append(level)
     return list(result)
 
 
-def get_tables_below_column_list_level(column_level: Level) -> List[NonTopLevel]:
-    result: List[NonTopLevel] = [column_level]
-    while column_level != column_level.child:
-        column_level: NonTopLevel = column_level.child
-        result.append(column_level)
+def get_tables_below_including(level: Level) -> List[NonTopLevel]:
+    result: List[NonTopLevel] = [level]
+    while level != level.child:
+        level: NonTopLevel = level.child
+        result.append(level)
     return list(reversed(result))
 
 
@@ -178,15 +182,13 @@ class BaseCube(Cube):
         print(kwargs)
 
     def output(self) -> DataFrame:
-        above_tables: List[NonTopLevel] = _get_tables_above_column_list_level(self.next_cube.visual_column)
-        below_tables_including: List[NonTopLevel] = get_tables_below_column_list_level(self.next_cube.visual_column)
-        select_stmt: str = self._get_select_stmt(self.next_cube)
-        from_stmt: str = self._get_from_stmt(above_tables, below_tables_including)
-        where_stmt: str = self._get_where_stmt(below_tables_including, above_tables, self.next_cube.column_value_list)
-        group_by_stmt: str = self._get_group_by_stmt(above_tables, self.next_cube.visual_column)
+        select_stmt: str = self._get_select_stmt()
+        from_stmt: str = self._get_from_stmt()
+        where_stmt: str = self._get_where_stmt()
+        group_by_stmt: str = self._get_group_by_stmt()
         order_by_stmt: str = self._get_order_by_stmt(self.next_cube.column_value_list)
         query: str = construct_query(select_stmt, from_stmt, where_stmt, group_by_stmt, order_by_stmt)
-        query_result = self.execute_query(query)
+        query_result: List[Tuple[Any, ...]] = self.execute_query(query)
         return format_query_result_to_pandas_df(query_result)
 
     def measures(self):
@@ -219,48 +221,129 @@ class BaseCube(Cube):
         cube.base_cube = cube
         return cube
 
-    def _get_select_stmt(self, next_cube: Cube) -> str:
-        column_level = self.next_cube.visual_column
-        select_table_name: str = get_table_and_column_name(column_level)
-        tables: List[NonTopLevel] = _get_tables_above_column_list_level(self.next_cube.visual_column)
-        above_tables: List[str] = []
+    def _get_column_name_if_exists(self) -> str:
+        return get_table_and_column_name(self.next_cube.visual_column) if self.next_cube.visual_column else ""
 
-        # for table in tables:
-        #     above_tables.append(get_table_and_column_name(table))
+    def _get_row_name_if_exists(self) -> str:
+        return get_table_and_column_name(self.next_cube.visual_row) if self.next_cube.visual_row else ""
 
-        above_tables_string: str = ", ".join(above_tables)
-        if next_cube.use_temp_measure:
-            select_aggregate: str = f"{next_cube.temp_measure.aggregate_function.name}({self._fact_table_name}.{next_cube.temp_measure.name})"
-            next_cube.use_temp_measure = False
+    def _get_select_stmt(self) -> str:
+        column_name: str = self._get_column_name_if_exists()
+        row_name: str = self._get_row_name_if_exists()
+        metadata_name: str = ", ".join(list(filter(lambda x: x != "", [column_name, row_name])))
+
+        # tables: List[NonTopLevel] = _get_tables_above_column_list_level(self.next_cube.visual_column)
+
+        if self.next_cube.use_temp_measure:
+            select_aggregate: str = f"{self.next_cube.temp_measure.aggregate_function.name}({self._fact_table_name}.{self.next_cube.temp_measure.name})"
+            self.next_cube.use_temp_measure = False
         else:
             select_aggregate: str = f"{self._default_measure.aggregate_function.name}({self._fact_table_name}.{self._default_measure.name})"
-        if above_tables:
-            return "SELECT " + select_table_name + ", " + above_tables_string + ", " + select_aggregate
+        return "SELECT " + metadata_name + ", " + select_aggregate
+
+    def _get_from_column_names(self) -> str:
+        if self.next_cube.visual_column:
+            above_tables: List[NonTopLevel] = get_tables_above(self.next_cube.visual_column)
+            below_tables_including: List[NonTopLevel] = get_tables_below_including(self.next_cube.visual_column)
+            return ", ".join(list(map(lambda x: x.name, below_tables_including))
+                             + list(map(lambda x: x.name, above_tables)))
         else:
-            return "SELECT " + select_table_name + ", " + select_aggregate
+            return ""
 
-    def _get_from_stmt(self, above_tables: List[NonTopLevel], below_tables: List[NonTopLevel]) -> str:
-        from_tables = [self._fact_table_name] + list(map(lambda x: x.name, below_tables)) + list(
-            map(lambda x: x.name, above_tables))
-        return "FROM " + ", ".join(from_tables)
+    def _get_from_row_names(self) -> str:
+        if self.next_cube.visual_row:
+            above_tables: List[NonTopLevel] = get_tables_above(self.next_cube.visual_row)
+            below_tables_including: List[NonTopLevel] = get_tables_below_including(self.next_cube.visual_row)
+            return ", ".join(list(map(lambda x: x.name, below_tables_including))
+                             + list(map(lambda x: x.name, above_tables)))
+        else:
+            return ""
 
-    def _get_where_stmt(self, tables_below: List[NonTopLevel], tables_above: List[NonTopLevel],
-                        column_list: List[LevelMember]) -> str:
-        table_hierarchy_join: str = get_hierarchy_table_join_stmt(self._fact_table_name, tables_below + tables_above)
-        current_value: str = get_current_value_stmt(column_list)
-        ancestor_value: str = get_ancestor_value_stmt(column_list[0])
-        return "WHERE " + table_hierarchy_join + current_value + ancestor_value
+    def _get_from_stmt(self) -> str:
+        fact_table: str = self._fact_table_name
+        column_names: str = self._get_from_column_names()
+        row_names: str = self._get_from_row_names()
+        return "FROM " + fact_table + ", " + column_names + ", " + row_names
 
-    def _get_group_by_stmt(self, above_tables: List[NonTopLevel], column_level: NonTopLevel) -> str:
-        column_of_interest: str = get_table_and_column_name(column_level)
+    def _get_column_hierarchy_join(self) -> str:
+        if self.next_cube.visual_column:
+            join_tables = get_tables_below_including(self.next_cube.visual_column) \
+                          + get_tables_above(self.next_cube.visual_column)
+            hierarchy_table_join: List[str] = [get_fact_table_join_stmt(self._fact_table_name, join_tables[0])]
+            for i in range(0, len(join_tables) - 1):
+                hierarchy_table_join.append(
+                    f"{join_tables[i].name}.{join_tables[i].fk_name} = {join_tables[i + 1].name}.{join_tables[i + 1].pk_name}")
+
+            return " AND ".join(hierarchy_table_join)
+        else:
+            return ""
+
+    def _get_row_hierarchy_join(self) -> str:
+        if self.next_cube.visual_row:
+            join_tables = get_tables_below_including(self.next_cube.visual_row) \
+                          + get_tables_above(self.next_cube.visual_row)
+            hierarchy_table_join: List[str] = [get_fact_table_join_stmt(self._fact_table_name, join_tables[0])]
+            for i in range(0, len(join_tables) - 1):
+                hierarchy_table_join.append(
+                    f"{join_tables[i].name}.{join_tables[i].fk_name} = {join_tables[i + 1].name}.{join_tables[i + 1].pk_name}")
+
+            return " AND ".join(hierarchy_table_join)
+        else:
+            return ""
+
+    def _get_column_where_stmt(self) -> str:
+        hierarchy_join: str = self._get_column_hierarchy_join()
+        current_value: str = get_current_value_stmt(self.next_cube.column_value_list)
+        ancestor_value: str = get_ancestor_value_stmt(self.next_cube.column_value_list[0])
+        return hierarchy_join + current_value + ancestor_value
+
+    def _get_row_where_stmt(self) -> str:
+        hierarchy_join: str = self._get_row_hierarchy_join()
+        current_value: str = get_current_value_stmt(self.next_cube.row_value_list)
+        ancestor_value: str = get_ancestor_value_stmt(self.next_cube.row_value_list[0])
+        return hierarchy_join + current_value + ancestor_value
+
+    def _get_where_stmt(self) -> str:
+        column_where_stmt: str = self._get_column_where_stmt()
+        row_where_stmt: str = self._get_row_where_stmt()
+        result = "WHERE "
+        if column_where_stmt and row_where_stmt:
+            result += column_where_stmt + " AND " + row_where_stmt
+        elif column_where_stmt:
+            result += column_where_stmt
+        else:
+            result += row_where_stmt
+        return result
+
+    def _get_group_by_column_stmt(self) -> str:
+        column_name: str = self._get_column_name_if_exists()
+        above_tables: List[NonTopLevel] = get_tables_above(self.next_cube.visual_column)
         above_columns: List[str] = []
         for table in above_tables:
             above_columns.append(get_table_and_column_name(table))
         auxiliary_columns: str = ", ".join(above_columns)
-        if auxiliary_columns:
-            return f"GROUP BY " + column_of_interest + ", " + auxiliary_columns
+        return column_name + ", " + auxiliary_columns if auxiliary_columns else column_name
+
+    def _get_group_by_row_stmt(self) -> str:
+        row_name: str = self._get_row_name_if_exists()
+        above_tables: List[NonTopLevel] = get_tables_above(self.next_cube.visual_row)
+        above_columns: List[str] = []
+        for table in above_tables:
+            above_columns.append(get_table_and_column_name(table))
+        auxiliary_columns: str = ", ".join(above_columns)
+        return row_name + ", " + auxiliary_columns if auxiliary_columns else row_name
+
+    def _get_group_by_stmt(self) -> str:
+        column_name: str = self._get_group_by_column_stmt()
+        row_name: str = self._get_group_by_row_stmt()
+        result = "GROUP BY "
+        if column_name and row_name:
+            result += column_name + ", " + row_name
+        elif column_name:
+            result += column_name
         else:
-            return f"GROUP BY " + column_of_interest
+            result += row_name
+        return result
 
     def _get_order_by_stmt(self, column_list: List[LevelMember]) -> str:
         value_list: List[str] = get_list_of_values(column_list)
@@ -268,12 +351,12 @@ class BaseCube(Cube):
         table_column_name: str = get_table_and_column_name(column_list[0].level)
         return f"ORDER BY array_position(array[{values}], {table_column_name})"
 
-    def execute_query(self, query: str):
+    def execute_query(self, query: str) -> List[Tuple[Any, ...]]:
         conn: connection = self._get_new_connection()
 
         with conn.cursor() as curs:
             curs.execute(query)
-            result = curs.fetchall()
+            result: List[Tuple[Any, ...]] = curs.fetchall()
         conn.close()
         return result
 
