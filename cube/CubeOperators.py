@@ -9,6 +9,16 @@ from cube.RegularDimension import RegularDimension
 from cube.TopLevel import TopLevel
 
 
+def generate_cube(cube: Cuboid) -> Cuboid:
+    # dimension_name: Union[str, int] = value_list[0].level.dimension.name
+    # level_name: Union[str, int] = value_list[0].level.name
+    # kwargs: Dict[Union[str, int], Union[str, int]] = {dimension_name: level_name}
+    # cube1: Cuboid = rollup(self, **kwargs)
+    # cube2: Cuboid = dice(cube1, value_list, "column")
+    # cube2.visual_column = value_list[0].level
+    # self.next_cube: Cuboid = cube2
+    pass
+
 def rollup(cube: Cube, **kwargs: str) -> Cuboid:
     dimension_names_list = list(map(lambda x: x.name, cube.dimension_list))
     new_dimension_list: List[RegularDimension] = []

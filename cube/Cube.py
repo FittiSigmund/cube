@@ -6,8 +6,7 @@ from cube.Measure import Measure
 
 
 class Cube(ABC):
-    def __init__(self, dimension_list, measure_list, engine, previous_cube, base_cube, next_cube):
-        self._previous = previous_cube
+    def __init__(self, dimension_list, measure_list, engine, base_cube, next_cube):
         self._dimension_list = dimension_list
         self._measure_list = measure_list
         self._default_measure = measure_list[0]
@@ -21,13 +20,6 @@ class Cube(ABC):
         self._temp_measure: Optional[Measure] = None
         self._use_temp_measure: bool = False
 
-    @property
-    def previous(self):
-        return self._previous
-
-    @previous.setter
-    def previous(self, value):
-        self._previous = value
 
     @property
     def dimension_list(self):

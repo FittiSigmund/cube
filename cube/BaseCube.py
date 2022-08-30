@@ -133,7 +133,7 @@ class BaseCube(Cube):
             metadata,
             engine,
     ):
-        super().__init__(dimension_list, measure_list, engine, previous_cube=None, base_cube=None, next_cube=None)
+        super().__init__(dimension_list, measure_list, engine, base_cube=None, next_cube=None)
         self._fact_table_name = fact_table_name
         self._dimension_list = dimension_list
         self._name = name
@@ -152,14 +152,12 @@ class BaseCube(Cube):
         if not value_list:
             raise ValueError("Value_list cannot be empty")
         else:
-            dimension_name: Union[str, int] = value_list[0].level.dimension.name
-            level_name: Union[str, int] = value_list[0].level.name
-            kwargs: Dict[Union[str, int], Union[str, int]] = {dimension_name: level_name}
-            cube1: Cuboid = rollup(self, **kwargs)
-            cube2: Cuboid = dice(cube1, value_list, "column")
-            cube2.visual_column = value_list[0].level
-            self.next_cube: Cuboid = cube2
-            return cube2
+            c = Cuboid(self.dimension_list,
+                       self.measure_list,
+                       self.engine,
+                       self,
+                       visual_column=value_list[0].level,
+                       column_value_list=value_list)
 
     def rows(self, value_list) -> Cuboid:
         if not value_list:

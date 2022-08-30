@@ -7,7 +7,7 @@ from cube.RegularDimension import RegularDimension
 from engines import Postgres
 
 if TYPE_CHECKING:
-    from cube.CubeOperators import rollup, dice
+    from cube.CubeOperators import rollup, dice, generate_cube
     from cube.BaseCube import BaseCube
 from cube.LevelMember import LevelMember
 from cube.NonTopLevel import NonTopLevel
@@ -18,20 +18,28 @@ class Cuboid(Cube):
                  dimension_list: List[RegularDimension],
                  measure_list: List[Measure],
                  engine: Postgres,
-                 previous_cube: Cube,
                  base_cube: BaseCube,
-                 visual_column: Optional[NonTopLevel] = None,
-                 column_value_list: Optional[List[NonTopLevel]] = None,
-                 visual_row: Optional[NonTopLevel] = None,
-                 row_value_list: Optional[List[NonTopLevel]] = None):
-        super().__init__(dimension_list, measure_list, engine, previous_cube, base_cube=base_cube, next_cube=None)
-        self._visual_column: Optional[NonTopLevel] = visual_column
-        self._column_value_list: Optional[List[LevelMember]] = column_value_list
-        self._visual_row: Optional[NonTopLevel] = visual_row
-        self._row_value_list: Optional[List[LevelMember]] = row_value_list
+                 visual_column: NonTopLevel | None = None,
+                 column_value_list: List[NonTopLevel] | None = None,
+                 visual_row: NonTopLevel | None = None,
+                 row_value_list: List[NonTopLevel] | None = None):
+        super().__init__(dimension_list, measure_list, engine, base_cube=base_cube, next_cube=None)
+        self._previous: Cube | None = None
+        self._visual_column: NonTopLevel | None = visual_column
+        self._column_value_list: List[LevelMember] | None = column_value_list
+        self._visual_row: NonTopLevel | None = visual_row
+        self._row_value_list: List[LevelMember] | None = row_value_list
 
     @property
-    def visual_column(self) -> Optional[NonTopLevel]:
+    def previous(self):
+        return self._previous
+
+    @previous.setter
+    def previous(self, value):
+        self._previous = value
+
+    @property
+    def visual_column(self) -> NonTopLevel | None:
         return self._visual_column
 
     @visual_column.setter
@@ -39,7 +47,7 @@ class Cuboid(Cube):
         self._visual_column: NonTopLevel = value
 
     @property
-    def column_value_list(self) -> Optional[List[LevelMember]]:
+    def column_value_list(self) -> List[LevelMember] | None:
         return self._column_value_list
 
     @column_value_list.setter
@@ -47,7 +55,7 @@ class Cuboid(Cube):
         self._column_value_list = value
 
     @property
-    def visual_row(self) -> Optional[NonTopLevel]:
+    def visual_row(self) -> NonTopLevel | None:
         return self._visual_row
 
     @visual_row.setter
@@ -55,7 +63,7 @@ class Cuboid(Cube):
         self._visual_row = value
 
     @property
-    def row_value_list(self) -> Optional[List[LevelMember]]:
+    def row_value_list(self) -> List[LevelMember] | None:
         return self._row_value_list
 
     @row_value_list.setter
@@ -102,8 +110,8 @@ class Cuboid(Cube):
         pass
 
     def output(self):
-        from cube.BaseCube import BaseCube
-        return self.previous.output()
+        cube: Cuboid = generate_cube(self)
+        return cube.previous.output()
         # if isinstance(self._previous, BaseCube):
         #     return self._previous.output()
         # else:

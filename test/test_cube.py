@@ -577,23 +577,23 @@ class TestCube(unittest.TestCase):
             self.assertEqual(column, all_months[i])
             self.assertEqual(total_sales_price_result.iloc[0, i], total_sales_price_values[i])
 
-    def test_columns_and_rows_on_all_years_and_all_product_categories_using_total_sales_price(self):
-        cube = self.cube.columns([self.cube.date.date_year["2022"], self.cube.date.date_year["2021"]])\
-                        .rows(self.cube.product.product_category.members())
-        self.assertIsInstance(self.cube, BaseCube)
-        self.assertIsInstance(cube, Cuboid)
-        result = cube.output()
-        self.assertEqual((1, 2), result.shape)
-        self.assertEqual(result.columns.values[0], 2022)
-        self.assertEqual(result.columns.values[1], 2021)
-        self.assertEqual(result.index.values[0], "Blouse")
-        self.assertEqual(result.loc["Blouse", 2022], 190570.0)
-        self.assertEqual(result.loc["Blouse", 2021], 176337.0)
+    # def test_columns_and_rows_on_all_years_and_all_product_categories_using_total_sales_price(self):
+    #     cube = self.cube.columns([self.cube.date.date_year["2022"], self.cube.date.date_year["2021"]])\
+    #                     .rows(self.cube.product.product_category.members())
+    #     self.assertIsInstance(self.cube, BaseCube)
+    #     self.assertIsInstance(cube, Cuboid)
+    #     result = cube.output()
+    #     self.assertEqual((1, 2), result.shape)
+    #     self.assertEqual(result.columns.values[0], 2022)
+    #     self.assertEqual(result.columns.values[1], 2021)
+    #     self.assertEqual(result.index.values[0], "Blouse")
+    #     self.assertEqual(result.loc["Blouse", 2022], 190570.0)
+    #     self.assertEqual(result.loc["Blouse", 2021], 176337.0)
 
-    def test_columns_and_rows_on_all_years_and_all_store_addresses_using_total_sales_price(self):
-        cube = self.cube.columns(self.cube.date.date_year.members()).rows(self.cube.store.store_address.members())
-        result = cube.output()
-        test = 1
+    # def test_columns_and_rows_on_all_years_and_all_store_addresses_using_total_sales_price(self):
+    #     cube = self.cube.columns(self.cube.date.date_year.members()).rows(self.cube.store.store_address.members())
+    #     result = cube.output()
+    #     test = 1
 
     def assert_equal_instance_and_name(self, cube_function, length, instance, name_list):
         self.assertEqual(len(cube_function()), length)
