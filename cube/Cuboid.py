@@ -20,15 +20,16 @@ class Cuboid(Cube):
                  engine: Postgres,
                  base_cube: BaseCube,
                  visual_column: NonTopLevel | None = None,
-                 column_value_list: List[NonTopLevel] | None = None,
+                 column_value_list: List[LevelMember] | None = None,
                  visual_row: NonTopLevel | None = None,
-                 row_value_list: List[NonTopLevel] | None = None):
+                 row_value_list: List[LevelMember] | None = None):
         super().__init__(dimension_list, measure_list, engine, base_cube=base_cube, next_cube=None)
         self._previous: Cube | None = None
         self._visual_column: NonTopLevel | None = visual_column
         self._column_value_list: List[LevelMember] | None = column_value_list
         self._visual_row: NonTopLevel | None = visual_row
         self._row_value_list: List[LevelMember] | None = row_value_list
+        self._is_generated: bool = False
 
     @property
     def previous(self):
@@ -70,38 +71,43 @@ class Cuboid(Cube):
     def row_value_list(self, value: List[LevelMember]) -> None:
         self._row_value_list = value
 
+    @property
+    def is_generated(self) -> bool:
+        return self._is_generated
+
+    @is_generated.setter
+    def is_generated(self, value: bool) -> None:
+        self._is_generated = value
+
     def columns(self, value_list):
-        # cube = Cuboid(
-        #     self._dimension_list,
-        #     self._measure_list,
-        #     self._engine,
-        #     self,
-        #     self._base_cube,
-        #     columns=value_list
-        # )
-        # self.next_cube = cube
-        # return cube
-        raise NotImplementedError("Not implemented columns for Cuboids, only BaseCubes, "
-                                  "because I'm changing the way the columns attribute is used.")
+        if not value_list:
+            raise ValueError("Value_list cannot be empty")
+        else:
+            c = Cuboid(self.dimension_list,
+                       self.measure_list,
+                       self.engine,
+                       self.base_cube,
+                       visual_column=value_list[0].level,
+                       column_value_list=value_list,
+                       visual_row=self.visual_row,
+                       row_value_list=self.row_value_list)
+            c.previous = self.previous
+            return c
 
     def rows(self, value_list: List[LevelMember]) -> Cuboid:
         if not value_list:
             raise ValueError("Value_list cannot be empty")
         else:
-            from cube.CubeOperators import rollup, dice
-            dimension_name: Union[str, int] = value_list[0].level.dimension.name
-            level_name: Union[str, int] = value_list[0].level.name
-            kwargs: Dict[Union[str, int], Union[str, int]] = {dimension_name: level_name}
-            cube1: Cuboid = rollup(self, **kwargs)
-            cube2: Cuboid = dice(cube1, value_list, "row")
-            if self._column_value_list:
-                cube2.column_value_list = self._column_value_list
-                cube2.visual_column = self.visual_column
-            cube2.row_value_list = value_list
-            cube2.visual_row = value_list[0].level
-            self.base_cube.next_cube = cube2
-            return cube2
-
+            c = Cuboid(self.dimension_list,
+                       self.measure_list,
+                       self.engine,
+                       self.base_cube,
+                       visual_column=self.visual_column,
+                       column_value_list=self.column_value_list,
+                       visual_row=value_list[0].level,
+                       row_value_list=value_list)
+            c.previous = self.previous
+            return c
 
     def pages(self, value_list):
         pass
@@ -110,16 +116,13 @@ class Cuboid(Cube):
         pass
 
     def output(self):
-        cube: Cuboid = generate_cube(self)
-        return cube.previous.output()
-        # if isinstance(self._previous, BaseCube):
-        #     return self._previous.output()
-        # else:
-        #     raise NotImplementedError("Only output for BaseCube is implemented")
-            # prev_results = self._previous.output()
-            # column_list_names = self._get_column_list_names()
-            # result = prev_results[column_list_names]
-            # return result
+        if not self.is_generated:
+            from cube.CubeOperators import generate_cube
+            cube: Cuboid = generate_cube(self)
+            self.is_generated = True
+            return cube.previous.output()
+        else:
+            return self.previous.output()
 
     def __repr__(self):
         return "Cuboid"

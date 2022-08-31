@@ -1,6 +1,7 @@
 import unittest
 from typing import List
 
+import numpy as np
 import pandas as pd
 
 from cube.BaseCube import BaseCube
@@ -577,23 +578,85 @@ class TestCube(unittest.TestCase):
             self.assertEqual(column, all_months[i])
             self.assertEqual(total_sales_price_result.iloc[0, i], total_sales_price_values[i])
 
-    # def test_columns_and_rows_on_all_years_and_all_product_categories_using_total_sales_price(self):
-    #     cube = self.cube.columns([self.cube.date.date_year["2022"], self.cube.date.date_year["2021"]])\
-    #                     .rows(self.cube.product.product_category.members())
-    #     self.assertIsInstance(self.cube, BaseCube)
-    #     self.assertIsInstance(cube, Cuboid)
-    #     result = cube.output()
-    #     self.assertEqual((1, 2), result.shape)
-    #     self.assertEqual(result.columns.values[0], 2022)
-    #     self.assertEqual(result.columns.values[1], 2021)
-    #     self.assertEqual(result.index.values[0], "Blouse")
-    #     self.assertEqual(result.loc["Blouse", 2022], 190570.0)
-    #     self.assertEqual(result.loc["Blouse", 2021], 176337.0)
+    def test_columns_and_rows_on_all_years_and_all_product_categories_using_total_sales_price(self):
+        cube = self.cube.columns([self.cube.date.date_year["2022"], self.cube.date.date_year["2021"]]) \
+            .rows(self.cube.product.product_category.members())
+        self.assertIsInstance(self.cube, BaseCube)
+        self.assertIsInstance(cube, Cuboid)
+        result = cube.output()
+        self.assertEqual((1, 2), result.shape)
+        self.assertEqual(result.columns.values[0], 2022)
+        self.assertEqual(result.columns.values[1], 2021)
+        self.assertEqual(result.index.values[0], "Blouse")
+        self.assertEqual(result.loc["Blouse", 2022], 190570.0)
+        self.assertEqual(result.loc["Blouse", 2021], 176337.0)
 
-    # def test_columns_and_rows_on_all_years_and_all_store_addresses_using_total_sales_price(self):
-    #     cube = self.cube.columns(self.cube.date.date_year.members()).rows(self.cube.store.store_address.members())
-    #     result = cube.output()
-    #     test = 1
+    def test_columns_and_rows_on_all_years_and_all_store_addresses_using_total_sales_price(self):
+        cube = self.cube.columns(self.cube.date.date_year.members()) \
+            .rows(self.cube.store.store_address.members())
+        result = cube.output()
+        self.assertEqual((2, 2), result.shape)
+        self.assertEqual(result.columns.values[0], 2022)
+        self.assertEqual(result.columns.values[1], 2021)
+        self.assertEqual(result.index.values[0], "Jyllandsgade 1")
+        self.assertEqual(result.index.values[1], "Jyllandsgade 2")
+        self.assertEqual(result.loc["Jyllandsgade 1", 2022], 2673)
+        self.assertTrue(pd.isnull(result.loc["Jyllandsgade 1", 2021]))
+        self.assertEqual(result.loc["Jyllandsgade 2", 2022], 187897)
+        self.assertEqual(result.loc["Jyllandsgade 2", 2021], 176337)
+
+    def test_column_and_rows_on_all_months_in_2022_and_all_store_addresses_using_total_sales_price(self):
+        cube = self.cube.columns(self.cube.date.date_year["2022"].children()) \
+            .rows(self.cube.store.store_address.members())
+        result = cube.output()
+        self.assertEqual((2, 12), result.shape)
+        values_jyll2 = get_expected_values_for_all_months_in_2022_total_sales_price()
+        values_jyll2[0] = 13981.0
+        self.assertEqual(result.loc["Jyllandsgade 1", "January"], 2673)
+        months = get_all_months_in_year()
+        for i in range(1, len(months)):
+            self.assertTrue(pd.isnull(result.loc["Jyllandsgade 1", months[i]]))
+        for i, month in enumerate(months):
+            self.assertEqual(result.loc["Jyllandsgade 2", month], values_jyll2[i])
+
+    def test_columns_and_rows_on_all_years_and_all_store_addresses_using_unit_sales(self):
+        cube = self.cube.columns(self.cube.date.date_year.members()) \
+            .rows(self.cube.store.store_address.members())\
+            .with_measures(self.cube.unit_sales)
+        result = cube.output()
+        self.assertEqual((2, 2), result.shape)
+        self.assertEqual(result.columns.values[0], 2022)
+        self.assertEqual(result.columns.values[1], 2021)
+        self.assertEqual(result.index.values[0], "Jyllandsgade 1")
+        self.assertEqual(result.index.values[1], "Jyllandsgade 2")
+        self.assertEqual(result.loc["Jyllandsgade 1", 2022], 27)
+        self.assertTrue(pd.isnull(result.loc["Jyllandsgade 1", 2021]))
+        self.assertEqual(result.loc["Jyllandsgade 2", 2022], 3640)
+        self.assertEqual(result.loc["Jyllandsgade 2", 2021], 3498)
+
+    def test_column_and_rows_on_all_months_in_2022_and_all_store_addresses_using_unit_sales(self):
+        cube = self.cube.columns(self.cube.date.date_year["2022"].children()) \
+            .rows(self.cube.store.store_address.members())\
+            .with_measures(self.cube.unit_sales)
+        result = cube.output()
+        self.assertEqual((2, 12), result.shape)
+        values_jyll2 = get_expected_values_for_all_months_in_2022_unit_sales()
+        values_jyll2[0] = 273
+        self.assertEqual(result.loc["Jyllandsgade 1", "January"], 27)
+        months = get_all_months_in_year()
+        for i in range(1, len(months)):
+            self.assertTrue(pd.isnull(result.loc["Jyllandsgade 1", months[i]]))
+        for i, month in enumerate(months):
+            self.assertEqual(result.loc["Jyllandsgade 2", month], values_jyll2[i])
+
+    def test_column_and_rows_on_all_months_in_all_years_and_all_store_addresses_using_unit_sales(self):
+        cube = self.cube.columns(self.cube.date.date_month.members())\
+                        .rows(self.cube.store.store_address.members())\
+                        .with_measures(self.cube.unit_sales)
+        result = cube.output()
+        ## Result comes back in wrong order (all jans first, then febs)
+        ## Messes with the pd dataframe formatter
+        self.assertEqual((2, 24), result.shape)
 
     def assert_equal_instance_and_name(self, cube_function, length, instance, name_list):
         self.assertEqual(len(cube_function()), length)

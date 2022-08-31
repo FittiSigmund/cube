@@ -90,7 +90,6 @@ class Cube(ABC):
         pass
 
     def with_measures(self, measure: Measure) -> Cube:
-        self._temp_measure = measure
-        self._use_temp_measure = True
+        self._temp_measure, self._use_temp_measure = measure, True
         return self
 

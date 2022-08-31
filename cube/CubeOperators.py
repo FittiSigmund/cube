@@ -1,4 +1,4 @@
-from typing import Dict, List
+from typing import Dict, List, Union
 
 from cube.Cube import Cube
 from cube.Cuboid import Cuboid
@@ -10,14 +10,26 @@ from cube.TopLevel import TopLevel
 
 
 def generate_cube(cube: Cuboid) -> Cuboid:
-    # dimension_name: Union[str, int] = value_list[0].level.dimension.name
-    # level_name: Union[str, int] = value_list[0].level.name
-    # kwargs: Dict[Union[str, int], Union[str, int]] = {dimension_name: level_name}
-    # cube1: Cuboid = rollup(self, **kwargs)
-    # cube2: Cuboid = dice(cube1, value_list, "column")
-    # cube2.visual_column = value_list[0].level
-    # self.next_cube: Cuboid = cube2
-    pass
+    kwargs: Dict[str | int, str | int] = {}
+    axes_value_list = {}
+    if cube.column_value_list:
+        dimension_name: str | int = cube.column_value_list[0].level.dimension.name
+        level_name: str | int = cube.column_value_list[0].level.name
+        kwargs[dimension_name] = level_name
+        axes_value_list["column"] = cube.column_value_list
+    if cube.row_value_list:
+        dimension_name: str | int = cube.row_value_list[0].level.dimension.name
+        level_name: str | int = cube.row_value_list[0].level.name
+        kwargs[dimension_name] = level_name
+        axes_value_list["row"] = cube.row_value_list
+    c1: Cuboid = rollup(cube, **kwargs)
+    c2: Cuboid = dice(c1, axes_value_list)
+    c2.previous = cube.previous
+    c2.previous.next_cube = c2
+    if cube.use_temp_measure:
+        c2.with_measures(cube.temp_measure)
+    return c2
+
 
 def rollup(cube: Cube, **kwargs: str) -> Cuboid:
     dimension_names_list = list(map(lambda x: x.name, cube.dimension_list))
@@ -56,15 +68,18 @@ def drilldown(cube: Cube, **kwargs: str) -> Cuboid:
     return Cuboid(dimension_list, cube.measure_list, cube.engine, cube, cube.base_cube)
 
 
-def dice(cube: Cube, value_list: List[LevelMember], axis: str) -> Cuboid:
-    new_cube = Cuboid(cube.dimension_list, cube.measure_list, cube.engine, cube.previous, base_cube=cube.base_cube)
-    match axis:
-        case "column":
-            new_cube.column_value_list = value_list
-        case "row":
-            new_cube.row_value_list = value_list
-        case _:
-            raise ValueError(f"No axis called {axis}")
+def dice(cube: Cube, axes_value_list: Dict[str, List[LevelMember]]) -> Cuboid:
+    new_cube = Cuboid(cube.dimension_list, cube.measure_list, cube.engine, base_cube=cube.base_cube)
+    for axis in axes_value_list.keys():
+        match axis:
+            case "column":
+                new_cube.column_value_list = axes_value_list[axis]
+                new_cube.visual_column = axes_value_list[axis][0].level
+            case "row":
+                new_cube.row_value_list = axes_value_list[axis]
+                new_cube.visual_row = axes_value_list[axis][0].level
+            case _:
+                raise ValueError(f"No axis called {axis}")
     return new_cube
 
 

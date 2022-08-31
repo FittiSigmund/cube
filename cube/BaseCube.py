@@ -1,5 +1,7 @@
 from __future__ import annotations
-from typing import List, Union, TypeVar, Optional, Dict, Any, Tuple, Set
+
+from collections import deque
+from typing import List, Union, TypeVar, Optional, Dict, Any, Tuple, Set, Deque
 
 import pandas as pd
 import psycopg2
@@ -51,13 +53,13 @@ def get_hierarchy_table_join_stmt(fact_table_name: str, join_tables: List[NonTop
     return " AND ".join(hierarchy_table_join)
 
 
-def get_list_of_values(column_list: List[LevelMember]) -> List[str]:
+def get_list_of_values(lms: List[LevelMember]) -> List[str]:
     value_list: List[str] = []
-    if type(column_list[0].name) is int:
-        for column in column_list:
+    if type(lms[0].name) is int:
+        for column in lms:
             value_list.append(f"{column.name}")
     else:
-        for column in column_list:
+        for column in lms:
             value_list.append(f"'{column.name}'")
     return value_list
 
@@ -66,15 +68,20 @@ def get_table_and_column_name(column_level: NonTopLevel) -> str:
     return f"{column_level.name}.{column_level.level_member_name}"
 
 
-def format_query_result_to_pandas_df(result: List[Tuple[Any, ...]]) -> DataFrame:
-    length: int = len(result[0]) - 1
-    values = [list(map(lambda x: x[length], result))]
-    columns: List[Union[str, int]] = list(map(lambda x: x[0], result))
-    if length >= 2:
-        rows: Set[Union[str, int]] = set(map(lambda x: x[1], result))
-        return pd.DataFrame(values, index=rows, columns=columns)
-    else:
-        return pd.DataFrame(values, index=[0], columns=columns)
+def _fill_in_missing_values_for_df(values: Deque[Tuple[Any, ...]],
+                                   columns: List[str | int],
+                                   rows: List[str | int],
+                                   length: int) -> List[List[float]]:
+    values_with_missing: List[List[float]] = []
+    for row in rows:
+        row_value = []
+        for column in columns:
+            if values and (column and row in values[0]):
+                row_value.append(values.popleft()[length])
+            else:
+                row_value.append(None)
+        values_with_missing.append(row_value)
+    return values_with_missing
 
 
 def get_tables_above(level: Level) -> List[NonTopLevel]:
@@ -116,9 +123,9 @@ def get_ancestor_value_stmt(level_member: LevelMember) -> str:
         return ""
 
 
-def get_current_value_stmt(column_list: List[LevelMember]) -> str:
-    column_level: str = get_table_and_column_name(column_list[0].level)
-    value_list: List[str] = get_list_of_values(column_list)
+def get_current_value_stmt(value_list: List[LevelMember]) -> str:
+    column_level: str = get_table_and_column_name(value_list[0].level)
+    value_list: List[str] = get_list_of_values(value_list)
     values: str = "(" + ", ".join(value_list) + ")"
     return f" AND {column_level} IN {values}"
 
@@ -148,7 +155,7 @@ class BaseCube(Cube):
     def name(self, name):
         self._name = name
 
-    def columns(self, value_list) -> Cuboid:
+    def columns(self, value_list: List[LevelMember]) -> Cuboid:
         if not value_list:
             raise ValueError("Value_list cannot be empty")
         else:
@@ -158,19 +165,21 @@ class BaseCube(Cube):
                        self,
                        visual_column=value_list[0].level,
                        column_value_list=value_list)
+            c.previous = self
+            return c
 
-    def rows(self, value_list) -> Cuboid:
+    def rows(self, value_list: List[LevelMember]) -> Cuboid:
         if not value_list:
             raise ValueError("Value_list cannot be empty")
         else:
-            dimension_name: Union[str, int] = value_list[0].level.dimension.name
-            level_name: Union[str, int] = value_list[0].level.name
-            kwargs: Dict[Union[str, int], Union[str, int]] = {dimension_name: level_name}
-            cube1: Cuboid = rollup(self, **kwargs)
-            cube2: Cuboid = dice(cube1, value_list, "row")
-            cube2.visual_row = value_list[0].level
-            self.next_cube: Cuboid = cube2
-            return cube2
+            c = Cuboid(self.dimension_list,
+                       self.measure_list,
+                       self.engine,
+                       self,
+                       visual_row=value_list[0].level,
+                       row_value_list=value_list)
+            c.previous = self
+            return c
 
     def pages(self, value_list):
         pass
@@ -184,16 +193,33 @@ class BaseCube(Cube):
         from_stmt: str = self._get_from_stmt()
         where_stmt: str = self._get_where_stmt()
         group_by_stmt: str = self._get_group_by_stmt()
-        order_by_stmt: str = self._get_order_by_stmt(self.next_cube.column_value_list)
+        order_by_stmt: str = self._get_order_by_stmt()
         query: str = construct_query(select_stmt, from_stmt, where_stmt, group_by_stmt, order_by_stmt)
         query_result: List[Tuple[Any, ...]] = self.execute_query(query)
-        return format_query_result_to_pandas_df(query_result)
+        return self._format_query_result_to_pandas_df(query_result)
 
     def measures(self):
         return self._measure_list
 
     def dimensions(self):
         return self._dimension_list
+
+    def _format_query_result_to_pandas_df(self, result: List[Tuple[Any, ...]]) -> DataFrame:
+        length: int = len(result[0]) - 1
+        columns: List[str | int] = list(map(lambda x: x.name, self.next_cube.column_value_list))
+        if length >= 2:
+            rows: List[str | int] = list(map(lambda x: x.name, self.next_cube.row_value_list))
+            if len(columns) * len(rows) > len(result):
+                values: List[List[float]] = _fill_in_missing_values_for_df(deque(result), columns, rows, length)
+                return pd.DataFrame(values, index=rows, columns=columns)
+            else:
+                values: List[List[float]] = [list(map(lambda x: x[length], result))]
+                return pd.DataFrame(values, index=rows, columns=columns)
+        else:
+            values: List[List[float]] = [list(map(lambda x: x[length], result))]
+            return pd.DataFrame(values, index=[0], columns=columns)
+
+
 
     def _traverse_hierarchy(self, dimension, direction):
         if dimension in self._dimension_list:
@@ -261,7 +287,13 @@ class BaseCube(Cube):
         fact_table: str = self._fact_table_name
         column_names: str = self._get_from_column_names()
         row_names: str = self._get_from_row_names()
-        return "FROM " + fact_table + ", " + column_names + ", " + row_names
+        result: str = "FROM " + fact_table
+        if column_names and row_names:
+            return result + ", " + column_names + ", " + row_names
+        if column_names:
+            return result + ", " + column_names
+        if row_names:
+            return result + ", " + row_names
 
     def _get_column_hierarchy_join(self) -> str:
         if self.next_cube.visual_column:
@@ -302,8 +334,12 @@ class BaseCube(Cube):
         return hierarchy_join + current_value + ancestor_value
 
     def _get_where_stmt(self) -> str:
-        column_where_stmt: str = self._get_column_where_stmt()
-        row_where_stmt: str = self._get_row_where_stmt()
+        column_where_stmt: str = ""
+        row_where_stmt: str = ""
+        if self.next_cube.visual_column:
+            column_where_stmt = self._get_column_where_stmt()
+        if self.next_cube.visual_row:
+            row_where_stmt = self._get_row_where_stmt()
         result = "WHERE "
         if column_where_stmt and row_where_stmt:
             result += column_where_stmt + " AND " + row_where_stmt
@@ -315,6 +351,7 @@ class BaseCube(Cube):
 
     def _get_group_by_column_stmt(self) -> str:
         column_name: str = self._get_column_name_if_exists()
+        above_columns = []
         above_tables: List[NonTopLevel] = get_tables_above(self.next_cube.visual_column)
         above_columns: List[str] = []
         for table in above_tables:
@@ -324,16 +361,21 @@ class BaseCube(Cube):
 
     def _get_group_by_row_stmt(self) -> str:
         row_name: str = self._get_row_name_if_exists()
+        above_rows = []
         above_tables: List[NonTopLevel] = get_tables_above(self.next_cube.visual_row)
-        above_columns: List[str] = []
+        above_rows: List[str] = []
         for table in above_tables:
-            above_columns.append(get_table_and_column_name(table))
-        auxiliary_columns: str = ", ".join(above_columns)
+            above_rows.append(get_table_and_column_name(table))
+        auxiliary_columns: str = ", ".join(above_rows)
         return row_name + ", " + auxiliary_columns if auxiliary_columns else row_name
 
     def _get_group_by_stmt(self) -> str:
-        column_name: str = self._get_group_by_column_stmt()
-        row_name: str = self._get_group_by_row_stmt()
+        column_name: str = ""
+        row_name: str = ""
+        if self.next_cube.visual_column:
+            column_name = self._get_group_by_column_stmt()
+        if self.next_cube.visual_row:
+            row_name = self._get_group_by_row_stmt()
         result = "GROUP BY "
         if column_name and row_name:
             result += column_name + ", " + row_name
@@ -343,11 +385,26 @@ class BaseCube(Cube):
             result += row_name
         return result
 
-    def _get_order_by_stmt(self, column_list: List[LevelMember]) -> str:
-        value_list: List[str] = get_list_of_values(column_list)
-        values: str = ", ".join(value_list)
-        table_column_name: str = get_table_and_column_name(column_list[0].level)
-        return f"ORDER BY array_position(array[{values}], {table_column_name})"
+    def _get_order_by_stmt(self) -> str:
+        column_arr_pos: str = ""
+        row_arr_pos: str = ""
+        result: str = "ORDER BY "
+        if self.next_cube.column_value_list:
+            column_value_list: List[str] = get_list_of_values(self.next_cube.column_value_list)
+            values: str = ", ".join(column_value_list)
+            table_column_name: str = get_table_and_column_name(self.next_cube.column_value_list[0].level)
+            column_arr_pos = f"array_position(array[{values}], {table_column_name})"
+        if self.next_cube.row_value_list:
+            row_value_list: List[str] = get_list_of_values(self.next_cube.row_value_list)
+            values: str = ", ".join(row_value_list)
+            table_column_name: str = get_table_and_column_name(self.next_cube.row_value_list[0].level)
+            row_arr_pos = f"array_position(array[{values}], {table_column_name})"
+        if column_arr_pos and row_arr_pos:
+            return result + column_arr_pos + ", " + row_arr_pos
+        if column_arr_pos:
+            return result + column_arr_pos
+        if row_arr_pos:
+            return result + row_arr_pos
 
     def execute_query(self, query: str) -> List[Tuple[Any, ...]]:
         conn: connection = self._get_new_connection()
