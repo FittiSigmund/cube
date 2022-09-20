@@ -1,4 +1,5 @@
 import unittest
+from collections import Counter
 from typing import List
 
 import numpy as np
@@ -164,12 +165,13 @@ class TestCube(unittest.TestCase):
         cube = self.cube.columns(get_all_date_month_references(self.cube))
         result = cube.output()
         columns = get_all_months_in_year_twice()
-        values = get_expected_values_for_all_months_in_all_years_total_sales_price()
+        values = Counter(get_expected_values_for_all_months_in_all_years_total_sales_price())
+        df_values = Counter(result.iloc[0])
+        self.assertEqual(df_values, values)
 
         self.assertEqual(result.shape, (1, 24))
         for i, column in enumerate(result.columns):
             self.assertEqual(column, columns[i])
-            self.assertEqual(result.iloc[0, i], values[i])
 
     def test_columns_on_all_months_in_2022_using_total_sales_price(self):
         cube = self.cube.columns(get_all_date_month_references_for_2022(self.cube))
@@ -273,12 +275,13 @@ class TestCube(unittest.TestCase):
         cube = self.cube.columns(get_all_date_month_references(self.cube))
         result = cube.output()
         columns = get_all_months_in_year_twice()
-        values = get_expected_values_for_all_months_in_all_years_unit_sales()
+        values = Counter(get_expected_values_for_all_months_in_all_years_unit_sales())
+        df_values = Counter(result.iloc[0])
+        self.assertEqual(values, df_values)
 
         self.assertEqual(result.shape, (1, 24))
         for i, column in enumerate(result.columns):
             self.assertEqual(column, columns[i])
-            self.assertEqual(result.iloc[0, i], values[i])
 
     def test_columns_on_all_months_in_2022_using_unit_sales(self):
         self.cube.default_measure = self.cube.unit_sales
@@ -380,12 +383,13 @@ class TestCube(unittest.TestCase):
         cube = self.cube.columns(get_all_date_month_references(self.cube)).with_measures(self.cube.total_sales_price)
         result = cube.output()
         columns = get_all_months_in_year_twice()
-        values = get_expected_values_for_all_months_in_all_years_total_sales_price()
+        values = Counter(get_expected_values_for_all_months_in_all_years_total_sales_price())
+        df_values = Counter(result.iloc[0])
+        self.assertEqual(values, df_values)
 
         self.assertEqual(result.shape, (1, 24))
         for i, column in enumerate(result.columns):
             self.assertEqual(column, columns[i])
-            self.assertEqual(result.iloc[0, i], values[i])
 
     def test_columns_on_all_months_in_2022_using_total_sales_price_with_measures(self):
         cube = self.cube.columns(get_all_date_month_references_for_2022(self.cube)) \
@@ -494,12 +498,13 @@ class TestCube(unittest.TestCase):
         cube = self.cube.columns(get_all_date_month_references(self.cube)).with_measures(self.cube.unit_sales)
         result = cube.output()
         columns = get_all_months_in_year_twice()
-        values = get_expected_values_for_all_months_in_all_years_unit_sales()
+        values = Counter(get_expected_values_for_all_months_in_all_years_unit_sales())
+        df_values = Counter(result.iloc[0])
+        self.assertEqual(values, df_values)
 
         self.assertEqual(result.shape, (1, 24))
         for i, column in enumerate(result.columns):
             self.assertEqual(column, columns[i])
-            self.assertEqual(result.iloc[0, i], values[i])
 
     def test_columns_on_all_months_in_2022_using_unit_sales_with_measures(self):
         self.cube.default_measure = self.cube.unit_sales
@@ -593,7 +598,7 @@ class TestCube(unittest.TestCase):
 
     def test_columns_and_rows_on_all_years_and_all_store_addresses_using_total_sales_price(self):
         cube = self.cube.columns(self.cube.date.date_year.members()) \
-            .rows(self.cube.store.store_address.members())
+                        .rows(self.cube.store.store_address.members())
         result = cube.output()
         self.assertEqual((2, 2), result.shape)
         self.assertEqual(result.columns.values[0], 2022)
@@ -654,9 +659,19 @@ class TestCube(unittest.TestCase):
                         .rows(self.cube.store.store_address.members())\
                         .with_measures(self.cube.unit_sales)
         result = cube.output()
-        ## Result comes back in wrong order (all jans first, then febs)
-        ## Messes with the pd dataframe formatter
         self.assertEqual((2, 24), result.shape)
+
+        months = get_all_months_in_year_twice()
+        self.assertEqual(Counter(result.columns.values), Counter(months))
+        self.assertEqual(Counter(result.index.values), Counter(["Jyllandsgade 1", "Jyllandsgade 2"]))
+
+        self.assertEqual(result.iloc[0, 0], 27)
+        for i in range(1, len(months)):
+            self.assertTrue(pd.isnull(result.iloc[0, i]))
+
+        values_row2 = Counter([273, 291, 259, 286, 329, 285, 277, 314, 262, 310, 261, 349, 381, 292, 360, 257, 300, 266, 289, 303, 299, 274, 299, 322])
+        df_values_row2 = Counter(result.iloc[1])
+        self.assertEqual(values_row2, df_values_row2)
 
     def assert_equal_instance_and_name(self, cube_function, length, instance, name_list):
         self.assertEqual(len(cube_function()), length)

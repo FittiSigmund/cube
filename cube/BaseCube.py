@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import copy
 from collections import deque
 from typing import List, Union, TypeVar, Optional, Dict, Any, Tuple, Set, Deque
 
@@ -17,6 +18,7 @@ from cube.Measure import Measure
 from cube.RegularDimension import RegularDimension
 from cube.NonTopLevel import NonTopLevel
 from cube.SlicedDimension import SlicedDimension
+from cube.TopLevel import TopLevel
 
 DataFrame = TypeVar(pd.DataFrame)
 
@@ -101,24 +103,36 @@ def get_tables_below_including(level: Level) -> List[NonTopLevel]:
     return list(reversed(result))
 
 
-def get_ancestor_lm_and_values(level_member: LevelMember) -> List[List[Union[NonTopLevel, LevelMember]]]:
-    result: List[List[Union[NonTopLevel, LevelMember]]] = []
-    while level_member.parent is not None:
-        level_member = level_member.parent
-        result.append([level_member.level, level_member])
+def get_ancestor_lm_and_values(lm_list: List[LevelMember]) -> List[Tuple[NonTopLevel, List[LevelMember], bool]]:
+    result: List[Tuple[NonTopLevel, List[LevelMember], bool]] = []
+    anc_amount: int = 0
+    parent_lm: LevelMember = lm_list[0].parent
+    while parent_lm is not None:
+        anc_amount += 1
+        parent_lm: LevelMember = parent_lm.parent
+    for i in range(0, anc_amount):
+        lms: List[LevelMember] = []
+        level: NonTopLevel | None = None
+        for lm in lm_list:
+            lm: LevelMember = lm.parent
+            level: NonTopLevel = lm.level
+            is_int: bool = True if type(lm.name) is int else False
+            lms.append(lm)
+        result.append((level, lms, is_int))
     return result
 
 
-def get_ancestor_value_stmt(level_member: LevelMember) -> str:
-    lm_value_list: List[List[Union[NonTopLevel, LevelMember]]] = get_ancestor_lm_and_values(level_member)
+def get_ancestor_value_stmt(level_member: List[LevelMember]) -> str:
+    lm_value_list: List[Tuple[NonTopLevel, List[LevelMember], bool]] = get_ancestor_lm_and_values(level_member)
     result: List[str] = []
-    for k, v in lm_value_list:
-        if type(v.name) is int:
-            result.append(f"{k.name}.{k.level_member_name} IN ({v.name})")
+    for k, v, is_int in lm_value_list:
+        values = ", ".join(list(map(lambda x: str(x.name), v)))
+        if is_int:
+            result.append(f"{k.name}.{k.level_member_name} IN ({values})")
         else:
-            result.append(f"{k.name}.{k.level_member_name} IN ('{v.name}')")
+            result.append(f"{k.name}.{k.level_member_name} IN ('{values}')")
     if result:
-        return " AND " + " AND ".join(result)
+        return " AND ".join(result)
     else:
         return ""
 
@@ -127,7 +141,41 @@ def get_current_value_stmt(value_list: List[LevelMember]) -> str:
     column_level: str = get_table_and_column_name(value_list[0].level)
     value_list: List[str] = get_list_of_values(value_list)
     values: str = "(" + ", ".join(value_list) + ")"
-    return f" AND {column_level} IN {values}"
+    return f" {column_level} IN {values}"
+
+
+def _get_all_value_list(value_list: List[LevelMember]) -> List[LevelMember]:
+    if value_list[0].level.all_lm_loaded:
+        return value_list
+    result: List[List[LevelMember]] = []
+    for value in value_list:
+        original_value = value
+        while value.parent:
+            value = value.parent
+        if isinstance(value.level.parent, TopLevel):
+            result.append([original_value])
+        else:
+            tmp: List[LevelMember] = []
+            parents: List[NonTopLevel] = []
+            level = value.level.parent
+            while not isinstance(level, TopLevel):
+                parents.append(level)
+                level = level.parent
+            parents = list(reversed(parents))
+            parent_lms: List[LevelMember] = parents[0].members()
+            for i in range(1, len(parents)):
+                tmp: List[List[LevelMember]] = list(map(lambda x: x.children, parent_lms))
+                parent_lms = [item for sublist in tmp for item in sublist]
+
+            for lm in parent_lms:
+                try:
+                    level_member: LevelMember = lm[value.name]
+                    tmp.append(level_member)
+                except AttributeError:
+                    continue
+            result.append(tmp)
+
+    return [x for value in result for x in value]
 
 
 class BaseCube(Cube):
@@ -159,6 +207,7 @@ class BaseCube(Cube):
         if not value_list:
             raise ValueError("Value_list cannot be empty")
         else:
+            value_list: List[LevelMember] = _get_all_value_list(value_list)
             c = Cuboid(self.dimension_list,
                        self.measure_list,
                        self.engine,
@@ -265,21 +314,48 @@ class BaseCube(Cube):
             select_aggregate: str = f"{self._default_measure.aggregate_function.name}({self._fact_table_name}.{self._default_measure.name})"
         return "SELECT " + metadata_name + ", " + select_aggregate
 
-    def _get_from_column_names(self) -> str:
+    def _get_from_row_join_conditions(self) -> Dict[str, str]:
+        if self.next_cube.visual_row:
+            join_tables: List[NonTopLevel] = \
+                get_tables_below_including(self.next_cube.visual_row) \
+                + get_tables_above(self.next_cube.visual_row)
+            hierarchy_table_join: Dict[str, str] = {join_tables[0].name: get_fact_table_join_stmt(self._fact_table_name, join_tables[0])}
+            for i in range(0, len(join_tables) - 1):
+                hierarchy_table_join[join_tables[i + 1].name] = f"{join_tables[i].name}.{join_tables[i].fk_name} = {join_tables[i + 1].name}.{join_tables[i + 1].pk_name}"
+            return hierarchy_table_join
+        else:
+            return {}
+
+    def _get_from_column_join_conditions(self) -> Dict[str, str]:
         if self.next_cube.visual_column:
-            above_tables: List[NonTopLevel] = get_tables_above(self.next_cube.visual_column)
-            below_tables_including: List[NonTopLevel] = get_tables_below_including(self.next_cube.visual_column)
-            return ", ".join(list(map(lambda x: x.name, below_tables_including))
-                             + list(map(lambda x: x.name, above_tables)))
+            join_tables: List[NonTopLevel] = \
+                get_tables_below_including(self.next_cube.visual_column) \
+                + get_tables_above(self.next_cube.visual_column)
+            hierarchy_table_join: Dict[str, str] = {join_tables[0].name: get_fact_table_join_stmt(self._fact_table_name, join_tables[0])}
+            for i in range(0, len(join_tables) - 1):
+                hierarchy_table_join[join_tables[i + 1].name] = f"{join_tables[i].name}.{join_tables[i].fk_name} = {join_tables[i + 1].name}.{join_tables[i + 1].pk_name}"
+
+            return hierarchy_table_join
+        else:
+            return {}
+
+    def _get_from_column_names(self) -> str:
+        col_name_and_cond: Dict[str, str] = self._get_from_column_join_conditions()
+        join_names: List[str] = []
+        for k, v in col_name_and_cond.items():
+            join_names.append(f"{k} ON {v}")
+        if join_names:
+            return "JOIN " + " JOIN ".join(join_names)
         else:
             return ""
 
     def _get_from_row_names(self) -> str:
-        if self.next_cube.visual_row:
-            above_tables: List[NonTopLevel] = get_tables_above(self.next_cube.visual_row)
-            below_tables_including: List[NonTopLevel] = get_tables_below_including(self.next_cube.visual_row)
-            return ", ".join(list(map(lambda x: x.name, below_tables_including))
-                             + list(map(lambda x: x.name, above_tables)))
+        row_name_and_cond: Dict[str, str] = self._get_from_row_join_conditions()
+        join_names: List[str] = []
+        for k, v in row_name_and_cond.items():
+            join_names.append(f"{k} ON {v}")
+        if join_names:
+            return "JOIN " + " JOIN ".join(join_names)
         else:
             return ""
 
@@ -289,11 +365,11 @@ class BaseCube(Cube):
         row_names: str = self._get_from_row_names()
         result: str = "FROM " + fact_table
         if column_names and row_names:
-            return result + ", " + column_names + ", " + row_names
+            return result + " " + column_names + " " + row_names
         if column_names:
-            return result + ", " + column_names
+            return result + " " + column_names
         if row_names:
-            return result + ", " + row_names
+            return result + " " + row_names
 
     def _get_column_hierarchy_join(self) -> str:
         if self.next_cube.visual_column:
@@ -322,16 +398,20 @@ class BaseCube(Cube):
             return ""
 
     def _get_column_where_stmt(self) -> str:
-        hierarchy_join: str = self._get_column_hierarchy_join()
         current_value: str = get_current_value_stmt(self.next_cube.column_value_list)
-        ancestor_value: str = get_ancestor_value_stmt(self.next_cube.column_value_list[0])
-        return hierarchy_join + current_value + ancestor_value
+        ancestor_value: str = get_ancestor_value_stmt(self.next_cube.column_value_list)
+        if ancestor_value:
+            return current_value + " AND " + ancestor_value
+        else:
+            return current_value
 
     def _get_row_where_stmt(self) -> str:
-        hierarchy_join: str = self._get_row_hierarchy_join()
         current_value: str = get_current_value_stmt(self.next_cube.row_value_list)
-        ancestor_value: str = get_ancestor_value_stmt(self.next_cube.row_value_list[0])
-        return hierarchy_join + current_value + ancestor_value
+        ancestor_value: str = get_ancestor_value_stmt(self.next_cube.row_value_list)
+        if ancestor_value:
+            return current_value + " AND " + ancestor_value
+        else:
+            return current_value
 
     def _get_where_stmt(self) -> str:
         column_where_stmt: str = ""
@@ -427,3 +507,4 @@ class BaseCube(Cube):
 
     def __repr__(self):
         return self.name
+

@@ -44,6 +44,10 @@ class NonTopLevel(Level):
     def level_member_name(self):
         return self._level_member_name
 
+    @property
+    def all_lm_loaded(self) -> bool:
+        return self._all_lm_loaded
+
     def members(self):
         if self._all_lm_loaded:
             return self._level_members

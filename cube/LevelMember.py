@@ -130,10 +130,10 @@ class LevelMember:
         return f"SELECT {self._level.child.name}.{self._level.child._level_member_name} "
 
     def _get_from_stmt_for_getattr_or_getitem(self):
-        return f"FROM {self._level.child.name}, {self._level.name}"
+        return f"FROM {self._level.child.name}, {self._level.name} "
 
     def _get_equality_condition_where_stmt(self, attribute: Union[str, int]):
-        return f"WHERE {self._level.child.name}.{self._level.child._level_member_name} = '{attribute}' AND {self._level.name}.{self._level._level_member_name} = '{self.name}'"
+        return f"WHERE {self._level.child.name}.{self._level.child._level_member_name} = '{attribute}' AND {self._level.name}.{self._level._level_member_name} = '{self.name}' "
 
     def _get_join_condition_where_stmt(self):
         return f"AND {self._level.child.name}.{self._level.child._fk_name} = {self._level.name}.{self._level._pk_name}"
