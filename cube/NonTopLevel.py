@@ -111,7 +111,7 @@ class NonTopLevel(Level):
             return self._fetch_level_member_from_db_and_save_as_attribute(item)
 
     def __getitem__(self, item):
-        if int(item):
+        if type(item) is int:
             item = int(item)
             result = next((x for x in self._level_members if x.name == item), False)
         else:
@@ -120,8 +120,13 @@ class NonTopLevel(Level):
             return result
         return self._fetch_level_member_from_db_and_save_as_attribute(item)
 
-    # def __eq__(self, other):
-    #     return lambda x: x.name == other
+    def __eq__(self, other):
+        def eq():
+            this_level = self
+            requirement = other
+            print(this_level.name)
+            print(requirement)
+        return self.name
 
     def __repr__(self):
         return f"NonTopLevel({self.name})"

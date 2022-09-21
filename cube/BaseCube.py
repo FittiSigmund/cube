@@ -235,6 +235,7 @@ class BaseCube(Cube):
 
     def where(self, *args, **kwargs):
         print(args)
+        print(args[0])
         print(kwargs)
 
     def output(self) -> DataFrame:
