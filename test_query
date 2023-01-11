@@ -1,0 +1,11 @@
+SELECT date_year.year, date_month.month, product_category.category, SUM(sales.total_sales_price)
+FROM sales
+    JOIN date_day ON sales.sale_date = date_day.day_id 
+    JOIN date_month ON date_day.month_id = date_month.month_id
+    JOIN date_year ON date_month.year_id = date_year.year_id
+    JOIN product_name ON sales.product = product_name.name_id
+    JOIN product_category ON product_name.category_id = product_category.category_id 
+    JOIN store_address ON sales.store = store_address.address_id
+WHERE date_day.day <= 7
+    AND store_address.address = 'Jyllandsgade 2'
+GROUP BY date_year.year, date_month.month, product_category.category;

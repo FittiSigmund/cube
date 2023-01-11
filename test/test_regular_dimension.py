@@ -11,7 +11,7 @@ class TestRegularDimension(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         session = create_session(util.get_engine())
-        cls.cube = session.load_cube("salesdb_snowflake_test")
+        cls.cube = session.load_view("salesdb_snowflake_test")
         cls.date = cls.cube.date
         cls.product = cls.cube.product
         cls.store = cls.cube.store

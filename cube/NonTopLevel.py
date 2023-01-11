@@ -4,6 +4,7 @@ from rdflib import Namespace
 
 from cube.Level import Level
 from cube.LevelMember import LevelMember
+from engines import Postgres
 
 EG = Namespace("http://example.org/")
 QB4O = Namespace("http://purl.org/qb4olap/cubes/")
@@ -14,15 +15,15 @@ def remove_underscore_prefix(item):
 
 
 class NonTopLevel(Level):
-    def __init__(self, name, level_member_name, engine, pk, fk):
+    def __init__(self, name: str, level_member_name: str, engine: Postgres, pk: str, fk: str):
         super().__init__(name, parent=None, child=None, dimension=None)
-        self._level_member_name = level_member_name
-        self._pk_name = pk
-        self._fk_name = fk
-        self._engine = engine
+        self._level_member_name: str = level_member_name
+        self._pk_name: str = pk
+        self._fk_name: str = fk
+        self._engine: Postgres = engine
         self._metadata = None
         self._level_members = []
-        self._all_lm_loaded = False
+        self._all_lm_loaded: bool = False
 
     @property
     def child(self):

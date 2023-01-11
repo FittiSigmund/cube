@@ -33,7 +33,7 @@ class TestNonTopLevel(unittest.TestCase):
 
     def setUp(self):
         session = create_session(self.engine)
-        self.cube = session.load_cube("salesdb_snowflake_test")
+        self.cube = session.load_view("salesdb_snowflake_test")
 
     def test_children(self):
         level_member = self.cube.date.date_year["2022"]

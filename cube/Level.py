@@ -1,12 +1,14 @@
 from abc import ABC
 
+from cube import RegularDimension
+
 
 class Level(ABC):
-    def __init__(self, name, parent, child, dimension):
-        self._name = name
+    def __init__(self, name: str, parent, child, dimension: RegularDimension):
+        self._name: str = name
         self._parent = parent
         self._child = child
-        self._dimension = dimension
+        self._dimension: RegularDimension = dimension
 
     @property
     def name(self):

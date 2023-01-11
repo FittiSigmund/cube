@@ -6,9 +6,11 @@ ALL_USER_TABLES_QUERY = """
         AND table_info.table_type = 'BASE TABLE';
 """
 
-TABLE_CARDINALITY_QUERY = lambda table_name: f"""SELECT COUNT(*) FROM {table_name};"""
+def table_cardinality_query(table_name: str) -> str:
+    return f"""SELECT COUNT(*) FROM {table_name};"""
 
-LOWEST_LEVELS_QUERY = lambda fact_table_name: f"""
+def lowest_levels_query(fact_table_name: str) -> str:
+    return f"""
         SELECT p.relname, kcu.column_name 
         FROM 
             pg_class AS p, 
@@ -16,7 +18,7 @@ LOWEST_LEVELS_QUERY = lambda fact_table_name: f"""
             information_schema.key_column_usage AS kcu 
         WHERE p.oid = c.confrelid 
         AND contype = 'f' 
-        AND c.conrelid = (SELECT oid FROM pg_class WHERE relname = 'sales') 
+        AND c.conrelid = (SELECT oid FROM pg_class WHERE relname = '{fact_table_name}') 
         AND c.conname = kcu.constraint_name
 """
 
@@ -30,14 +32,16 @@ LOWEST_LEVELS_QUERY = lambda fact_table_name: f"""
 #             AND contype = 'f');
 # """
 
-GET_PK_AND_FK_COLUMNS_QUERY = lambda level_name: f"""
+def get_pk_and_fk_columns_query(level_name: str) -> str:
+    return f"""
         SELECT k.column_name, tc.constraint_type 
         FROM information_schema.table_constraints AS tc, information_schema.key_column_usage AS k 
         WHERE tc.table_name = '{level_name}' 
         AND tc.constraint_type IN ('PRIMARY KEY', 'FOREIGN KEY')
         AND tc.constraint_name = k.constraint_name;
 """
-GET_NON_KEY_COLUMNS_QUERY = lambda level_name: f"""
+def get_non_key_columns_query(level_name: str) -> str:
+    return f"""
         SELECT info_col.column_name
         FROM information_schema.columns AS info_col
         WHERE info_col.table_name = '{level_name}'
@@ -48,7 +52,8 @@ GET_NON_KEY_COLUMNS_QUERY = lambda level_name: f"""
             )
 """
 
-GET_NEXT_LEVEL_QUERY = lambda current_level: f"""
+def get_next_level_query(current_level: str) -> str:
+    return f"""
         SELECT relname 
         FROM pg_class 
         WHERE oid = 
@@ -61,7 +66,8 @@ GET_NEXT_LEVEL_QUERY = lambda current_level: f"""
                 AND contype = 'f')
 """
 
-GET_ALL_MEASURES_QUERY = lambda fact_table: f"""
+def get_all_measures_query(fact_table: str) -> str:
+    return f"""
             SELECT pg_attribute.attname
             FROM pg_attribute
             WHERE pg_attribute.attrelid = (SELECT oid FROM pg_class WHERE pg_class.relname = '{fact_table}')

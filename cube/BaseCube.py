@@ -2,12 +2,13 @@ from __future__ import annotations
 
 import copy
 from collections import deque
-from typing import List, Union, TypeVar, Optional, Dict, Any, Tuple, Set, Deque
+from typing import List, TypeVar, Dict, Any, Tuple, Deque
 
 import pandas as pd
 import psycopg2
 from psycopg2 import Error
 from psycopg2._psycopg import connection
+from rdflib import Graph
 
 from cube.Cube import Cube
 from cube.CubeOperators import rollup, dice
@@ -19,6 +20,7 @@ from cube.RegularDimension import RegularDimension
 from cube.NonTopLevel import NonTopLevel
 from cube.SlicedDimension import SlicedDimension
 from cube.TopLevel import TopLevel
+from engines import Postgres
 
 DataFrame = TypeVar(pd.DataFrame)
 
@@ -181,18 +183,18 @@ def _get_all_value_list(value_list: List[LevelMember]) -> List[LevelMember]:
 class BaseCube(Cube):
     def __init__(
             self,
-            fact_table_name,
-            dimension_list,
-            measure_list,
-            name,
-            metadata,
-            engine,
+            fact_table_name: str,
+            dimension_list: List[RegularDimension],
+            measure_list: List[Measure],
+            name: str,
+            metadata: Graph,
+            engine: Postgres,
     ):
         super().__init__(dimension_list, measure_list, engine, base_cube=None, next_cube=None)
-        self._fact_table_name = fact_table_name
-        self._dimension_list = dimension_list
-        self._name = name
-        self._metadata = metadata
+        self._fact_table_name: str = fact_table_name
+        self._dimension_list: List[RegularDimension] = dimension_list
+        self._name: str = name
+        self._metadata: Graph = metadata
         self._condition = None
 
     @property
@@ -248,10 +250,10 @@ class BaseCube(Cube):
         query_result: List[Tuple[Any, ...]] = self.execute_query(query)
         return self._format_query_result_to_pandas_df(query_result)
 
-    def measures(self):
+    def measures(self) -> List[Measure]:
         return self._measure_list
 
-    def dimensions(self):
+    def dimensions(self) -> List[RegularDimension]:
         return self._dimension_list
 
     def _format_query_result_to_pandas_df(self, result: List[Tuple[Any, ...]]) -> DataFrame:

@@ -1,44 +1,78 @@
+from typing import Tuple, List
+
 import psycopg2
 from psycopg2 import Error
+from psycopg2.extensions import connection as psyconn
+from psycopg2.extensions import cursor as psycur
 
+from cube import Measure
+from cube.Axis import Axis
+from cube.BaseCube import BaseCube
+from cube.Cube import Cube
+from cube.CubeView import CubeView
+from cube.Filter import Filter
 from cube.RegularDimension import RegularDimension
+from engines import Postgres
+from rdflib import Graph
 from .cube_metadata import create_cube_metadata, create_cube
 from .infer_cube import get_fact_table_name, create_levels, create_dimensions, get_measures, \
-    create_measures, get_lowest_level_names
+    create_measures, get_lowest_level_names, LowestLevelDTO, LevelDTO
 
 
 class Session:
-    def __init__(self, cubes, engine):
-        self._cube_list = cubes
-        self._engine = engine
+    def __init__(self, views: List[CubeView], engine: Postgres):
+        self._views: List[CubeView] = views
+        self._engine: Postgres = engine
 
     @property
-    def cubes(self):
-        return self._cube_list
+    def cubes(self) -> List[CubeView]:
+        return self._views
 
-    def load_cube(self, cube_name):
-        cube_candidate = list(filter(lambda x: x.name == cube_name, self._cube_list))
-        return cube_candidate[0] if len(cube_candidate) == 1 else f"No cube found with name: {cube_name}"
+    def load_view(self, cube_name: str) -> CubeView | str:
+        view_candidate: List[CubeView] = list(filter(lambda x: x.name == cube_name, self._views))
+        return view_candidate[0] if len(view_candidate) == 1 else f"No cube found with name: {cube_name}"
 
 
-def attach_metadata_to_dimensions(dimensions, metadata):
+def attach_metadata_to_dimensions(dimensions: List[RegularDimension], metadata: Graph) -> None:
     for dimension in dimensions:
         if isinstance(dimension, RegularDimension):
             dimension.metadata = metadata
 
 
-def create_session(engine):
+def get_default_axes(dimensions: List[RegularDimension]) -> List[Axis]:
+    return list(map(lambda x: Axis(x.lowest_level(), x.lowest_level().members()), dimensions))
+
+
+def get_default_measure(cube: BaseCube) -> List[Measure]:
+    return [cube.default_measure]
+
+
+def get_default_filters() -> List[Filter]:
+    return []
+
+
+def create_view(cube: BaseCube) -> CubeView:
+    axes: List[Axis] = get_default_axes(cube.dimensions())
+    measures: List[Measure] = get_default_measure(cube)
+    filters: List[Filter] = get_default_filters()
+    return CubeView(axes, measures, filters, cube)
+
+
+def create_session(engine: Postgres) -> Session:
+    conn: psyconn
+    cursor: psycur
     conn, cursor = get_db_connection_and_cursor(engine)
     try:
-        fact_table_name = get_fact_table_name(cursor)
-        lowest_level_dto_list = get_lowest_level_names(cursor, fact_table_name)
-        level_dto_list_list = create_levels(cursor, lowest_level_dto_list, engine)
-        dimensions = create_dimensions(level_dto_list_list, engine)
-        measures = create_measures(get_measures(cursor, fact_table_name))
-        metadata = create_cube_metadata(engine.dbname, dimensions, level_dto_list_list, measures)
+        fact_table_name: str = get_fact_table_name(cursor)
+        lowest_levels: List[LowestLevelDTO] = get_lowest_level_names(cursor, fact_table_name)
+        levelDTOs: List[List[LevelDTO]] = create_levels(cursor, lowest_levels, engine)
+        dimensions: List[RegularDimension] = create_dimensions(levelDTOs, engine)
+        measures: List[Measure] = create_measures(get_measures(cursor, fact_table_name))
+        metadata: Graph = create_cube_metadata(engine.dbname, dimensions, levelDTOs, measures)
         attach_metadata_to_dimensions(dimensions, metadata)
-        cube = create_cube(fact_table_name, dimensions, measures, engine.dbname, metadata, engine)
-        return Session([cube], engine)
+        cube: BaseCube = create_cube(fact_table_name, dimensions, measures, engine.dbname, metadata, engine)
+        view: CubeView = create_view(cube)
+        return Session([view], engine)
     except (Exception, Error) as error:
         print("ERROR: ", error)
     finally:
@@ -46,7 +80,7 @@ def create_session(engine):
         conn.close()
 
 
-def get_db_connection_and_cursor(engine):
+def get_db_connection_and_cursor(engine: Postgres) -> Tuple[psyconn, psycur]:
     conn = psycopg2.connect(user=engine.user,
                             password=engine.password,
                             host=engine.host,

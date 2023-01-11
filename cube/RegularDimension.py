@@ -1,10 +1,18 @@
+from typing import List, TypeVar
+
 import psycopg2
+from psycopg2.extensions import cursor as psycur
+from rdflib import Graph
 
 from cube.Dimension import Dimension
+from cube.Level import Level
+from cube.NonTopLevel import NonTopLevel
 from cube.TopLevel import TopLevel
+from engines import Postgres
 
+level = TypeVar("level", bound=Level)
 
-def get_db_cursor(engine):
+def get_db_cursor(engine: Postgres) -> psycur:
     connection = psycopg2.connect(user=engine.user,
                                   password=engine.password,
                                   host=engine.host,
@@ -14,28 +22,32 @@ def get_db_cursor(engine):
 
 
 class RegularDimension(Dimension):
-    def __init__(self, name, level_list, engine, fact_table_fk):
+    def __init__(self,
+                 name: str,
+                 level_list: List[level],
+                 engine: Postgres,
+                 fact_table_fk: str):
         super().__init__(name, level_list)
-        self._lowest_level = level_list[0]
-        self.engine = engine
-        self._cursor = get_db_cursor(engine)
-        self._metadata = None
-        self.fact_table_fk = fact_table_fk
+        self._lowest_level: NonTopLevel = level_list[0]
+        self.engine: Postgres = engine
+        self._cursor: psycur = get_db_cursor(engine)
+        self._metadata: Graph | None = None
+        self.fact_table_fk: str = fact_table_fk
         for level in level_list:
             level.dimension = self
             if not isinstance(level, TopLevel):
                 setattr(self, level.name, level)
 
-    def lowest_level(self):
+    def lowest_level(self) -> NonTopLevel:
         return self._lowest_level
 
     @property
-    def metadata(self):
+    def metadata(self) -> Graph | None:
         return self._metadata
 
     @metadata.setter
-    def metadata(self, metadata):
-        self._metadata = metadata
+    def metadata(self, metadata: Graph) -> None:
+        self._metadata: Graph = metadata
         for level in self.level_list:
             level._metadata = metadata
 

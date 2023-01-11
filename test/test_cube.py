@@ -112,7 +112,7 @@ class TestCube(unittest.TestCase):
 
     def setUp(self):
         session = create_session(self.engine)
-        self.cube = session.load_cube("salesdb_snowflake_test")
+        self.cube = session.load_view("salesdb_snowflake_test")
 
     def test_measures(self):
         cube_function = lambda: self.cube.measures()

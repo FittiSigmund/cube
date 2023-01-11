@@ -38,7 +38,7 @@ class TestCubeOperators(unittest.TestCase):
 
     def setUp(self):
         session = create_session(self.engine)
-        self.cube = session.load_cube("salesdb_snowflake_test")
+        self.cube = session.load_view("salesdb_snowflake_test")
 
     def test_roll_up_one_level_one_dimension(self):
         c = rollup(self.cube, supplier="supplier_nation")

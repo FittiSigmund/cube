@@ -7,5 +7,5 @@ class Postgres:
         self.port = port
 
 
-def postgres(dbname, user, password, host, port):
+def postgres(dbname: str, user: str, password: str, host: str, port: str) -> Postgres:
     return Postgres(dbname, user, password, host, port)
