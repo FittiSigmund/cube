@@ -1,4 +1,4 @@
-from itertools import product
+from itertools import product, repeat
 from typing import List, Dict
 
 from sklearn.utils.extmath import cartesian
@@ -15,12 +15,11 @@ conn = psycopg2.connect(
 
 name_table: Dict[str, List[str]] = {}
 table_tuples: Dict[str, int] = {}
-max_num_of_tuples = 0
+max_num_of_tuples: int = 0
+measures_num: int = 0
 
-def create_dimensions(cur: cursor, num_dimensions: int, num_levels: List[int]) -> None:
-    if len(num_levels) != num_dimensions:
-        raise Exception("num levels != num dimensions")
-    dimensions: List[str] = ["dimension" + str(i) for i in range(num_dimensions)]
+def create_dimensions(cur: cursor, num_levels: List[int]) -> None:
+    dimensions: List[str] = ["dimension" + str(i) for i in range(len(num_levels))]
     for i, dimension in enumerate(dimensions):
         create_dimension(cur, dimension, num_levels[i])
 def create_dimension(cur: cursor, dimension: str, num_levels: int) -> None:
@@ -67,9 +66,11 @@ def add_level_members_to_dimension(cur: cursor, dimension: str, level: str, chil
     cur.execute(f"INSERT INTO {dimension}_{level} VALUES {values};")
 
 def create_fact_table(cur: cursor, num_of_measures: int) -> None:
-    dimensions = "".join([f"{dimension}_{level[0]} INTEGER REFERENCES {dimension}_{level[1]}({level[1]}_id), "
+    global measures_num
+    measures_num = num_of_measures
+    dimensions = "".join([f"{dimension}_{list(reversed(level))[0]} INTEGER REFERENCES {dimension}_{list(reversed(level))[0]}({list(reversed(level))[0]}_id), "
                                     for dimension, level in name_table.items()])
-    primary_key = "PRIMARY KEY (" + ", ".join([f"{dimension}_{level[0]}" for dimension, level in name_table.items()]) \
+    primary_key = "PRIMARY KEY (" + ", ".join([f"{dimension}_{list(reversed(level))[0]}" for dimension, level in name_table.items()]) \
                   + ")"
     measures = ", ".join([f"measure{str(i)} NUMERIC" for i in range(num_of_measures)])
     query = f"CREATE TABLE fact_table({dimensions} {measures}, {primary_key});"
@@ -87,17 +88,17 @@ def add_facts_to_fact_table(cur: cursor, num_of_tuples: int) -> None:
 
     values = []
     for i, t in enumerate(product(*dimensions)):
-        values.append(str(t + (i,)))
+        values.append(str(t + tuple(repeat(i + 1, times=measures_num))))
     values = ", ".join(values)
     cur.execute(f"INSERT INTO fact_table VALUES {values};")
 
 
 with conn:
     with conn.cursor() as curs:
-        create_dimensions(curs, 2, [2, 3])
-        create_fact_table(curs, 1)
-        add_level_members_to_dimensions(curs, [2, 3])
-        add_facts_to_fact_table(curs, 700)
+        create_dimensions(curs, [1, 2, 3, 4])
+        create_fact_table(curs, 2)
+        add_level_members_to_dimensions(curs, [1, 2, 3, 4])
+        add_facts_to_fact_table(curs, 4000)
 
 with conn:
     with conn.cursor() as curs:
