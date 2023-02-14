@@ -1,10 +1,10 @@
+from __future__ import annotations
+
 import csv
 
 import numpy as np
-import pandas as pd
 
 import engines
-from engines import Postgres
 from session.session import *
 
 DATABASE_USER = "sigmundur"
@@ -15,15 +15,16 @@ DATABASE_NAME = "salesdb_snowflake"
 
 postgres_engine: Postgres = engines.postgres(DATABASE_NAME, DATABASE_USER, DATABASE_PASSWORD, DATABASE_HOST, DATABASE_PORT)
 postgres = create_session(postgres_engine)
-cube = postgres.load_view('salesdb_snowflake')
-print()
-print("Measures: ", cube.measures())
-print("Dimensions: ", cube.dimensions())
-print("Date hierarchy: ", cube.date.hierarchies())
-print("Supplier name dictionary: ", cube.supplier.supplier_name.__dict__)
-print("Date dimension dictionary: ", cube.date.__dict__)
-print("Date year level dictionary: ", cube.date.date_year.__dict__)
-print("2022 Level member: ", cube.date.date_year["2022"]["January"])
+view = postgres.load_view('salesdb_snowflake')
+
+# print()
+# print("Measures: ", cube.measures())
+# print("Dimensions: ", cube.dimensions())
+# print("Date hierarchy: ", cube.date.hierarchies())
+# print("Supplier name dictionary: ", cube.supplier.supplier_name.__dict__)
+# print("Date dimension dictionary: ", cube.date.__dict__)
+# print("Date year level dictionary: ", cube.date.date_year.__dict__)
+# print("2022 Level member: ", cube.date.date_year["2022"]["January"])
 
 # print("Output of the cube (cube): ", cube.output())
 # print("Date dimension current level: ", cube._dimension_list[1].current_level)
@@ -68,6 +69,12 @@ print("2022 Level member: ", cube.date.date_year["2022"]["January"])
 # print(cube.store.store_address["Jyllandsgade 2"])
 #
 # cube.where(cube.supplier.supplier_nation == "Denmark" and cube.store.store_address == "Jyllandsgade 1")
+
+
+# Cube -> View syntactic suger not implemented
+view._axes = []
+view = view.axis(0, view.cube.date.date_year.members())
+print(view.__dict__)
 
 def generate_data():
     supplier = 1221

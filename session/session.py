@@ -1,14 +1,16 @@
-from typing import Tuple, List
+from __future__ import annotations
+
+from typing import Tuple, List, TYPE_CHECKING
 
 import psycopg2
 from psycopg2 import Error
 from psycopg2.extensions import connection as psyconn
 from psycopg2.extensions import cursor as psycur
 
-from cube import Measure
+if TYPE_CHECKING:
+    from cube import Measure
 from cube.Axis import Axis
 from cube.BaseCube import BaseCube
-from cube.Cube import Cube
 from cube.CubeView import CubeView
 from cube.Filter import Filter
 from cube.RegularDimension import RegularDimension
@@ -28,9 +30,9 @@ class Session:
     def cubes(self) -> List[CubeView]:
         return self._views
 
-    def load_view(self, cube_name: str) -> CubeView | str:
-        view_candidate: List[CubeView] = list(filter(lambda x: x.name == cube_name, self._views))
-        return view_candidate[0] if len(view_candidate) == 1 else f"No cube found with name: {cube_name}"
+    def load_view(self, view_name: str) -> CubeView | str:
+        view_candidate: List[CubeView] = list(filter(lambda x: x.cube.name == view_name, self._views))
+        return view_candidate[0] if len(view_candidate) == 1 else f"No view found with name: {view_name}"
 
 
 def attach_metadata_to_dimensions(dimensions: List[RegularDimension], metadata: Graph) -> None:
