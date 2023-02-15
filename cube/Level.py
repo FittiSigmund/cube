@@ -6,6 +6,7 @@ from cube import RegularDimension
 class Level(ABC):
     def __init__(self, name: str, parent, child, dimension: RegularDimension):
         self._name: str = name
+        self.table_name: str = name
         self._parent = parent
         self._child = child
         self._dimension: RegularDimension = dimension

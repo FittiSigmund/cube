@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import copy
 from collections import deque
 from typing import List, TypeVar, Dict, Any, Tuple, Deque
 
@@ -11,7 +10,6 @@ from psycopg2._psycopg import connection
 from rdflib import Graph
 
 from cube.Cube import Cube
-from cube.CubeOperators import rollup, dice
 from cube.Cuboid import Cuboid
 from cube.Level import Level
 from cube.LevelMember import LevelMember
@@ -69,7 +67,7 @@ def get_list_of_values(lms: List[LevelMember]) -> List[str]:
 
 
 def get_table_and_column_name(column_level: NonTopLevel) -> str:
-    return f"{column_level.name}.{column_level.level_member_name}"
+    return f"{column_level.name}.{column_level.column_name}"
 
 
 def _fill_in_missing_values_for_df(values: Deque[Tuple[Any, ...]],
@@ -130,9 +128,9 @@ def get_ancestor_value_stmt(level_member: List[LevelMember]) -> str:
     for k, v, is_int in lm_value_list:
         values = ", ".join(list(map(lambda x: str(x.name), v)))
         if is_int:
-            result.append(f"{k.name}.{k.level_member_name} IN ({values})")
+            result.append(f"{k.name}.{k.column_name} IN ({values})")
         else:
-            result.append(f"{k.name}.{k.level_member_name} IN ('{values}')")
+            result.append(f"{k.name}.{k.column_name} IN ('{values}')")
     if result:
         return " AND ".join(result)
     else:
@@ -191,7 +189,7 @@ class BaseCube(Cube):
             engine: Postgres,
     ):
         super().__init__(dimension_list, measure_list, engine, base_cube=None, next_cube=None)
-        self._fact_table_name: str = fact_table_name
+        self.fact_table_name: str = fact_table_name
         self._dimension_list: List[RegularDimension] = dimension_list
         self._name: str = name
         self._metadata: Graph = metadata
@@ -282,7 +280,7 @@ class BaseCube(Cube):
 
         new_dimension.current_level = direction(dimension.current_level)
         new_dimension_list = [new_dimension if x == dimension else x for x in self._dimension_list]
-        cube = BaseCube(self._fact_table_name, new_dimension_list, self._measure_list, self.name, self._metadata,
+        cube = BaseCube(self.fact_table_name, new_dimension_list, self._measure_list, self.name, self._metadata,
                         self._engine)
         cube.base_cube = cube
         return cube
@@ -292,7 +290,7 @@ class BaseCube(Cube):
         sliced_dimension.fixed_level = dimension.current_level
         sliced_dimension.fixed_level_member = value
         new_dimension_list = [sliced_dimension if x == dimension else x for x in self._dimension_list]
-        cube = BaseCube(self._fact_table_name, new_dimension_list, self._measure_list, self.name, self._metadata,
+        cube = BaseCube(self.fact_table_name, new_dimension_list, self._measure_list, self.name, self._metadata,
                         self._engine)
         cube.base_cube = cube
         return cube
@@ -311,10 +309,10 @@ class BaseCube(Cube):
         # tables: List[NonTopLevel] = _get_tables_above_column_list_level(self.next_cube.visual_column)
 
         if self.next_cube.use_temp_measure:
-            select_aggregate: str = f"{self.next_cube.temp_measure.aggregate_function.name}({self._fact_table_name}.{self.next_cube.temp_measure.name})"
+            select_aggregate: str = f"{self.next_cube.temp_measure.aggregate_function.name}({self.fact_table_name}.{self.next_cube.temp_measure.name})"
             self.next_cube.use_temp_measure = False
         else:
-            select_aggregate: str = f"{self._default_measure.aggregate_function.name}({self._fact_table_name}.{self._default_measure.name})"
+            select_aggregate: str = f"{self._default_measure.aggregate_function.name}({self.fact_table_name}.{self._default_measure.name})"
         return "SELECT " + metadata_name + ", " + select_aggregate
 
     def _get_from_row_join_conditions(self) -> Dict[str, str]:
@@ -322,7 +320,7 @@ class BaseCube(Cube):
             join_tables: List[NonTopLevel] = \
                 get_tables_below_including(self.next_cube.visual_row) \
                 + get_tables_above(self.next_cube.visual_row)
-            hierarchy_table_join: Dict[str, str] = {join_tables[0].name: get_fact_table_join_stmt(self._fact_table_name, join_tables[0])}
+            hierarchy_table_join: Dict[str, str] = {join_tables[0].name: get_fact_table_join_stmt(self.fact_table_name, join_tables[0])}
             for i in range(0, len(join_tables) - 1):
                 hierarchy_table_join[join_tables[i + 1].name] = f"{join_tables[i].name}.{join_tables[i].fk_name} = {join_tables[i + 1].name}.{join_tables[i + 1].pk_name}"
             return hierarchy_table_join
@@ -334,7 +332,7 @@ class BaseCube(Cube):
             join_tables: List[NonTopLevel] = \
                 get_tables_below_including(self.next_cube.visual_column) \
                 + get_tables_above(self.next_cube.visual_column)
-            hierarchy_table_join: Dict[str, str] = {join_tables[0].name: get_fact_table_join_stmt(self._fact_table_name, join_tables[0])}
+            hierarchy_table_join: Dict[str, str] = {join_tables[0].name: get_fact_table_join_stmt(self.fact_table_name, join_tables[0])}
             for i in range(0, len(join_tables) - 1):
                 hierarchy_table_join[join_tables[i + 1].name] = f"{join_tables[i].name}.{join_tables[i].fk_name} = {join_tables[i + 1].name}.{join_tables[i + 1].pk_name}"
 
@@ -363,7 +361,7 @@ class BaseCube(Cube):
             return ""
 
     def _get_from_stmt(self) -> str:
-        fact_table: str = self._fact_table_name
+        fact_table: str = self.fact_table_name
         column_names: str = self._get_from_column_names()
         row_names: str = self._get_from_row_names()
         result: str = "FROM " + fact_table
@@ -378,7 +376,7 @@ class BaseCube(Cube):
         if self.next_cube.visual_column:
             join_tables = get_tables_below_including(self.next_cube.visual_column) \
                           + get_tables_above(self.next_cube.visual_column)
-            hierarchy_table_join: List[str] = [get_fact_table_join_stmt(self._fact_table_name, join_tables[0])]
+            hierarchy_table_join: List[str] = [get_fact_table_join_stmt(self.fact_table_name, join_tables[0])]
             for i in range(0, len(join_tables) - 1):
                 hierarchy_table_join.append(
                     f"{join_tables[i].name}.{join_tables[i].fk_name} = {join_tables[i + 1].name}.{join_tables[i + 1].pk_name}")
@@ -391,7 +389,7 @@ class BaseCube(Cube):
         if self.next_cube.visual_row:
             join_tables = get_tables_below_including(self.next_cube.visual_row) \
                           + get_tables_above(self.next_cube.visual_row)
-            hierarchy_table_join: List[str] = [get_fact_table_join_stmt(self._fact_table_name, join_tables[0])]
+            hierarchy_table_join: List[str] = [get_fact_table_join_stmt(self.fact_table_name, join_tables[0])]
             for i in range(0, len(join_tables) - 1):
                 hierarchy_table_join.append(
                     f"{join_tables[i].name}.{join_tables[i].fk_name} = {join_tables[i + 1].name}.{join_tables[i + 1].pk_name}")

@@ -71,10 +71,26 @@ view = postgres.load_view('salesdb_snowflake')
 # cube.where(cube.supplier.supplier_nation == "Denmark" and cube.store.store_address == "Jyllandsgade 1")
 
 
+
+conn = psycopg2.connect(
+    dbname="salesdb_snowflake_test",
+    user="sigmundur",
+    password=""
+)
+
+
 # Cube -> View syntactic suger not implemented
 view._axes = []
-view = view.axis(0, view.cube.date.date_year.members())
-print(view.__dict__)
+view = view.axis(0, view.cube.date.date_month.members())
+
+
+output = view.output()
+print(output)
+with conn:
+    with conn.cursor() as curs:
+        curs.execute(output)
+        print(curs.fetchall())
+
 
 def generate_data():
     supplier = 1221

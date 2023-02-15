@@ -17,7 +17,7 @@ def remove_underscore_prefix(item):
 class NonTopLevel(Level):
     def __init__(self, name: str, level_member_name: str, engine: Postgres, pk: str, fk: str):
         super().__init__(name, parent=None, child=None, dimension=None)
-        self._level_member_name: str = level_member_name
+        self._column_name: str = level_member_name
         self._pk_name: str = pk
         self._fk_name: str = fk
         self._engine: Postgres = engine
@@ -42,8 +42,8 @@ class NonTopLevel(Level):
         return self._fk_name
 
     @property
-    def level_member_name(self):
-        return self._level_member_name
+    def column_name(self):
+        return self._column_name
 
     @property
     def all_lm_loaded(self) -> bool:
@@ -74,7 +74,7 @@ class NonTopLevel(Level):
     def _fetch_all_lm_from_db(self):
         conn = self._get_db_conn()
         with conn.cursor() as curs:
-            curs.execute(f"SELECT {self._level_member_name} FROM {self.name};")
+            curs.execute(f"SELECT {self._column_name} FROM {self.name};")
             result = curs.fetchall()
         conn.close()
         return result
@@ -83,9 +83,9 @@ class NonTopLevel(Level):
         conn = self._get_db_conn()
         with conn.cursor() as curs:
             curs.execute(f"""
-                SELECT {self._level_member_name}
+                SELECT {self._column_name}
                 FROM {self.name}
-                WHERE {self._level_member_name} = '{attribute}';
+                WHERE {self._column_name} = '{attribute}';
             """)
             result = curs.fetchall()
         conn.close()
@@ -121,13 +121,13 @@ class NonTopLevel(Level):
             return result
         return self._fetch_level_member_from_db_and_save_as_attribute(item)
 
-    def __eq__(self, other):
-        def eq():
-            this_level = self
-            requirement = other
-            print(this_level.name)
-            print(requirement)
-        return self.name
+    # def __eq__(self, other):
+    #     def eq():
+    #         this_level = self
+    #         requirement = other
+    #         print(this_level.name)
+    #         print(requirement)
+    #     return self.name
 
     def __repr__(self):
         return f"NonTopLevel({self.name})"

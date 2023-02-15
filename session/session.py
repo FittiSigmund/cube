@@ -46,7 +46,7 @@ def get_default_axes(dimensions: List[RegularDimension]) -> List[Axis]:
 
 
 def get_default_measure(cube: BaseCube) -> List[Measure]:
-    return [cube.default_measure]
+    return cube.measure_list
 
 
 def get_default_filters() -> List[Filter]:

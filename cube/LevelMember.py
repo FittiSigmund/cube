@@ -27,12 +27,12 @@ def _construct_query(select_stmt: str, from_stmt: str, join: str, eq: str) -> st
 
 class LevelMember:
     def __init__(self,
-                 name: Union[str, int, float],
+                 name: str | int | float,
                  level: NonTopLevel,
                  metadata,
                  engine,
                  parent: Optional[LevelMember] = None):
-        self._name: Union[str, int, float] = name
+        self._name: str | int | float = name
         self._children: List[LevelMember] = []
         self._level: NonTopLevel = level
         self._metadata = metadata
@@ -104,7 +104,7 @@ class LevelMember:
         return result
 
     def _get_equality_condition_where_stmt_for_children(self) -> str:
-        return f"{self._level.name}.{self._level.level_member_name} = {self.name}"
+        return f"{self._level.name}.{self._level.column_name} = {self.name}"
 
     def _get_join_condition_where_stmt_for_children(self) -> str:
         return f"{self._level.name}.{self._level.pk_name} = {self._level.child.name}.{self._level.child.fk_name}"
@@ -113,7 +113,7 @@ class LevelMember:
         return f"{self._level.name}, {self._level.child.name}"
 
     def _get_select_stmt_for_children(self) -> str:
-        return f"{self._level.child.name}.{self._level.child.level_member_name}"
+        return f"{self._level.child.name}.{self._level.child.column_name}"
 
     def _get_ancestors(self) -> List[NonTopLevel]:
         levels = []
@@ -127,13 +127,13 @@ class LevelMember:
         return levels
 
     def _get_select_stmt_for_getattr_or_getitem(self) -> str:
-        return f"SELECT {self._level.child.name}.{self._level.child._level_member_name} "
+        return f"SELECT {self._level.child.name}.{self._level.child._column_name} "
 
     def _get_from_stmt_for_getattr_or_getitem(self):
         return f"FROM {self._level.child.name}, {self._level.name} "
 
     def _get_equality_condition_where_stmt(self, attribute: Union[str, int]):
-        return f"WHERE {self._level.child.name}.{self._level.child._level_member_name} = '{attribute}' AND {self._level.name}.{self._level._level_member_name} = '{self.name}' "
+        return f"WHERE {self._level.child.name}.{self._level.child._column_name} = '{attribute}' AND {self._level.name}.{self._level._column_name} = '{self.name}' "
 
     def _get_join_condition_where_stmt(self):
         return f"AND {self._level.child.name}.{self._level.child._fk_name} = {self._level.name}.{self._level._pk_name}"
@@ -148,7 +148,7 @@ class LevelMember:
             from_stmt: str = ", ".join([from_stmt, parents[i].name])
             ## Equality and Join conditions will fail if the hierarchy has more than 3 levels
             equality_conditions: str = " AND ".join(
-                [equality_conditions, f"{parents[i].name}.{parents[i]._level_member_name} = '{self._parent.name}' "])
+                [equality_conditions, f"{parents[i].name}.{parents[i]._column_name} = '{self._parent.name}' "])
             join_conditions: str = " AND ".join(
                 [join_conditions,
                  f"{self._level.name}.{self._level._fk_name} = {parents[i].name}.{parents[i]._pk_name}"])
