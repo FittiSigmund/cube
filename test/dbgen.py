@@ -92,10 +92,10 @@ def add_facts_to_fact_table(cur: cursor, num_of_tuples: int) -> None:
 def generate_db():
     with conn:
         with conn.cursor() as curs:
-            create_dimensions(curs, [1, 2, 3, 4])
+            create_dimensions(curs, [3, 2, 3, 4, 5, 6, 3])
             create_fact_table(curs, 2)
-            add_level_members_to_dimensions(curs, [1, 2, 3, 4])
-            add_facts_to_fact_table(curs, 4000)
+            add_level_members_to_dimensions(curs, [25, 100, 14, 20, 12, 9, 30])
+            add_facts_to_fact_table(curs, 600000)
 
 def delete_db():
     with conn:
@@ -105,7 +105,7 @@ def delete_db():
             curs.execute(f"DROP TABLE {', '.join(tables)} CASCADE")
 
 ## Delete or generate the db
-# generate_db()
+generate_db()
 # delete_db()
 
 ## Do axis and output here
@@ -115,14 +115,14 @@ DATABASE_HOST = "127.0.0.1"
 DATABASE_PORT = "5432"
 DATABASE_NAME = "salesdb_snowflake_gen"
 
-postgres_engine: Postgres = engines.postgres(DATABASE_NAME, DATABASE_USER, DATABASE_PASSWORD, DATABASE_HOST, DATABASE_PORT)
-postgres = create_session(postgres_engine)
-view = postgres.load_view('salesdb_snowflake_gen')
-
-view._axes = []
-view = view.axis(0, view.cube.dimension1.dimension1_level1.members())
-view._filters = [Filter(view.cube.dimension1.dimension1_level1, view.cube.dimension1.dimension1_level1.member1, FilterOperator.EQ)]
-print(view.output())
-print()
+# postgres_engine: Postgres = engines.postgres(DATABASE_NAME, DATABASE_USER, DATABASE_PASSWORD, DATABASE_HOST, DATABASE_PORT)
+# postgres = create_session(postgres_engine)
+# view = postgres.load_view('salesdb_snowflake_gen')
+#
+# view._axes = []
+# view = view.axis(0, view.cube.dimension1.dimension1_level1.members())
+# view._filters = [Filter(view.cube.dimension1.dimension1_level1, view.cube.dimension1.dimension1_level1.member1, FilterOperator.EQ)]
+# print(view.output())
+# print()
 
 conn.close()
