@@ -76,6 +76,8 @@ CREATE TABLE lineorder (
     PRIMARY KEY (orderkey, linenumber)
 );
 
+-- Load generated ssb data
+
 \copy supplier FROM '/home/sigmundur/work/cubeProject/cube/experiments/data/supplier.tbl' DELIMITER '|' CSV;
 \copy customer FROM '/home/sigmundur/work/cubeProject/cube/experiments/data/customer.tbl' DELIMITER '|' CSV;
 \copy part FROM '/home/sigmundur/work/cubeProject/cube/experiments/data/part.tbl' DELIMITER '|' CSV;
@@ -104,6 +106,31 @@ CREATE TABLE brand1 (
   b_categorykey SMALLSERIAL REFERENCES category(ca_categorykey)
 );
 
+CREATE TABLE region (
+    r_regionkey SMALLSERIAL PRIMARY KEY,
+    r_region CHAR(12)
+);
+
+CREATE TABLE nation (
+    n_nationkey SMALLSERIAL PRIMARY KEY,
+    n_nation CHAR(15),
+    n_regionkey SMALLSERIAL REFERENCES region(r_regionkey)
+);
+
+CREATE TABLE city (
+    ci_citykey SMALLSERIAL PRIMARY KEY,
+    ci_city CHAR(10),
+    ci_nationkey SMALLSERIAL REFERENCES nation(n_nationkey)
+);
+
+CREATE TABLE new_supplier (
+    s_suppkey INTEGER PRIMARY KEY,
+    s_name    CHAR(25),
+    s_address VARCHAR(25),
+    s_phone   CHAR(15),
+    s_citykey SMALLSERIAL REFERENCES city(ci_citykey)
+);
+
 CREATE TABLE new_part (
   p_partkey   INTEGER PRIMARY KEY,
   p_name      VARCHAR(22),
@@ -113,6 +140,46 @@ CREATE TABLE new_part (
   p_container CHAR(10),
   p_brand1key SMALLSERIAL REFERENCES brand1(b_brand1key)
 );
+
+CREATE TABLE new_customer (
+    c_custkey INTEGER PRIMARY KEY,
+    c_name VARCHAR(25),
+    c_address VARCHAR(25),
+    c_phone CHAR(15),
+    c_mktsegment CHAR(10),
+    c_citykey SMALLSERIAL REFERENCES city(ci_citykey)
+);
+
+CREATE TABLE year (
+    y_yearkey SMALLSERIAL PRIMARY KEY,
+    y_year SMALLINT
+);
+
+CREATE TABLE month (
+    mo_monthkey SMALLSERIAL PRIMARY KEY,
+    mo_month CHAR(9),
+    mo_yearmonthnum INTEGER,
+    mo_yearmonth CHAR(7),
+    mo_monthnuminyear SMALLINT,
+    mo_yearkey SMALLSERIAL REFERENCES year(y_yearkey)
+);
+
+CREATE TABLE day (
+    d_daykey INTEGER PRIMARY KEY,
+    d_dayofweek CHAR(9),
+    d_daynuminweek SMALLINT,
+    d_daynuminmonth SMALLINT,
+    d_sellingseason CHAR(12),
+    d_lastdayinweekfl BOOLEAN,
+    d_lastdayinmonthfl BOOLEAN,
+    d_holidayfl BOOLEAN,
+    d_weekdayfl BOOLEAN,
+    d_daynuminyear SMALLINT,
+    d_monthkey SMALLSERIAL REFERENCES month(mo_monthkey)
+);
+
+
+-- Convert and load ssb data from star schema to snowflake schema
 
 INSERT INTO mfgr (m_mfgr)
     SELECT mfgr
@@ -157,31 +224,6 @@ INSERT INTO new_part (p_partkey, p_name, p_color, p_type, p_size, p_container, p
         p.category = ca.ca_category AND
         p.mfgr = m.m_mfgr;
 
-CREATE TABLE region (
-    r_regionkey SMALLSERIAL PRIMARY KEY,
-    r_region CHAR(12)
-);
-
-CREATE TABLE nation (
-    n_nationkey SMALLSERIAL PRIMARY KEY,
-    n_nation CHAR(15),
-    n_regionkey SMALLSERIAL REFERENCES region(r_regionkey)
-);
-
-CREATE TABLE city (
-    ci_citykey SMALLSERIAL PRIMARY KEY,
-    ci_city CHAR(10),
-    ci_nationkey SMALLSERIAL REFERENCES nation(n_nationkey)
-);
-
-CREATE TABLE new_supplier (
-    s_suppkey INTEGER PRIMARY KEY,
-    s_name    CHAR(25),
-    s_address VARCHAR(25),
-    s_phone   CHAR(15),
-    s_citykey SMALLSERIAL REFERENCES city(ci_citykey)
-);
-
 INSERT INTO region (r_region) 
     SELECT region 
     FROM supplier 
@@ -225,15 +267,6 @@ INSERT INTO new_supplier (s_suppkey, s_name, s_address, s_phone, s_citykey)
         s.region = r.r_region;
 
 
-CREATE TABLE new_customer (
-    c_custkey INTEGER PRIMARY KEY,
-    c_name VARCHAR(25),
-    c_address VARCHAR(25),
-    c_phone CHAR(15),
-    c_mktsegment CHAR(10),
-    c_citykey SMALLSERIAL REFERENCES city(ci_citykey)
-);
-
 INSERT INTO new_customer (c_custkey, c_name, c_address, c_phone, c_mktsegment, c_citykey)
     SELECT 
         c.custkey, c.name, c.address, c.phone, c.mktsegment, ci.ci_citykey
@@ -248,34 +281,6 @@ INSERT INTO new_customer (c_custkey, c_name, c_address, c_phone, c_mktsegment, c
         c.city = ci.ci_city AND
         c.nation = n.n_nation AND
         c.region = r.r_region;
-
-CREATE TABLE year (
-    y_yearkey SMALLSERIAL PRIMARY KEY,
-    y_year SMALLINT
-);
-
-CREATE TABLE month (
-    mo_monthkey SMALLSERIAL PRIMARY KEY,
-    mo_month CHAR(9),
-    mo_yearmonthnum INTEGER,
-    mo_yearmonth CHAR(7),
-    mo_monthnuminyear SMALLINT,
-    mo_yearkey SMALLSERIAL REFERENCES year(y_yearkey)
-);
-
-CREATE TABLE day (
-    d_daykey INTEGER PRIMARY KEY,
-    d_dayofweek CHAR(9),
-    d_daynuminweek SMALLINT,
-    d_daynuminmonth SMALLINT,
-    d_sellingseason CHAR(12),
-    d_lastdayinweekfl BOOLEAN,
-    d_lastdayinmonthfl BOOLEAN,
-    d_holidayfl BOOLEAN,
-    d_weekdayfl BOOLEAN,
-    d_daynuminyear SMALLINT,
-    d_monthkey SMALLSERIAL REFERENCES month(mo_monthkey)
-);
 
 INSERT INTO year (y_year)
     SELECT 
@@ -316,6 +321,9 @@ INSERT INTO day (d_daykey, d_dayofweek, d_daynuminweek, d_daynuminmonth, d_selli
     ORDER BY 
         d.datekey;
 
+
+-- Remove foreign key constraints pointing to old star schema dimension tables
+
 ALTER TABLE 
     lineorder 
 DROP CONSTRAINT 
@@ -328,6 +336,9 @@ DROP CONSTRAINT
     lineorder_orderdate_fkey,
 DROP CONSTRAINT
     lineorder_commitdate_fkey;
+
+
+-- Add foreign key constraints pointing to new snowflake schema dimension tables
 
 ALTER TABLE
     lineorder
@@ -342,11 +353,16 @@ ADD CONSTRAINT
 ADD CONSTRAINT
     lineorder_commitdate_fkey FOREIGN KEY (commitdate) REFERENCES day(d_daykey);
 
+
+-- Delete old star schema dimension tables
 DROP TABLE customer, supplier, part, date;
 
+-- Rename new snowflake schema dimension tables to names previously taken by the old dimension tables
 ALTER TABLE new_customer RENAME TO customer;
 ALTER TABLE new_supplier RENAME TO supplier;
 ALTER TABLE new_part RENAME TO part;
+
+-- Lazily correct naming mistakes I made further up in the script :)
 ALTER TABLE day RENAME d_daykey TO d_datekey;
 ALTER TABLE day RENAME TO date;
 
