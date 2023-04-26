@@ -1,6 +1,8 @@
-BEGIN;
-
-DROP TABLE 
-    new_part, brand1, mfgr, category, year, month, day, new_customer, new_supplier, city, nation, region, part, supplier, customer, date, lineorder;
-
-COMMIT;
+DO $$ 
+    DECLARE r RECORD; 
+    BEGIN 
+        FOR r in (SELECT table_name FROM information_schema.tables WHERE table_schema = 'public') LOOP 
+            EXECUTE 'DROP TABLE IF EXISTS ' || r.table_name || ' CASCADE'; 
+        END LOOP; 
+    END 
+$$;
