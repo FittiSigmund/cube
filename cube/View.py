@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from typing import List, Tuple, Deque
 
+from cube.Attribute import Attribute
 from cube.Axis import Axis
 from cube.BaseCube import BaseCube
 from cube.Filter import Filter
@@ -13,29 +14,42 @@ from cube.Measure import Measure
 from cube.NonTopLevel import NonTopLevel
 
 
-class CubeView:
+class View:
     def __init__(self,
                  axes: List[Axis] = None,
                  measures: List[Measure] = None,
                  filters: List[Filter] = None,
                  cube: BaseCube | None = None) -> None:
-        self._axes: List[Axis] = axes if axes else []
+        self.axes: List[Axis] = axes if axes else []
         self._measures: List[Measure] = measures if measures else []
+        # Change to only having one filter. If the view has multiple then the filter will have a pointer to the next
+        # filter in line along with the correct boolean connective
         self._filters: List[Filter] = filters if filters else []
         self.cube: BaseCube = cube
 
     # Checks not implemented
     # All level members same
-    # lm contains atleast one member
-    # Index is correct
-    def axis(self, ax: int, lm: List[LevelMember]) -> CubeView:
-        new_axis = Axis(lm[0].level, lm)
-        self._axes.insert(ax, new_axis)
+    def axis(self, ax: int, lms: List[LevelMember]) -> View:
+        if lms:
+            lm = lms[0]
+            new_axis = Axis(lm.attribute.level.dimension, lm.attribute.level, lm.attribute, lms)
+        else:
+            raise Exception("Empty Level Member list")
+        self.axes.insert(ax, new_axis)
         return self
+
+    def columns(self, lms: List[LevelMember]) -> View:
+        return self.axis(0, lms)
+
+    def rows(self, lms: List[LevelMember]) -> View:
+        return self.axis(1, lms)
 
     def output(self) -> str:
         query: str = self._create_sql_query()
         return query
+
+    def __getattr__(self, item):
+        return self.cube.__getattribute__(item)
 
     def _create_sql_query(self) -> str:
         select_clause: str = self._create_select_clause()
@@ -45,13 +59,13 @@ class CubeView:
         return select_clause + " " + from_clause + " " + where_clause + " " + group_by_clause + ";"
 
     def _create_select_clause(self) -> str:
-        levels: List[str] = list(map(lambda x: f"{x.level.table_name}.{x.level.column_name}", self._axes))
+        levels: List[str] = list(map(lambda x: f"{x.level.table_name}.{x.level.column_name}", self.axes))
         measures: List[Tuple[str, str]] = list(map(lambda x: (x.aggregate_function.name, f"{self.cube.fact_table_name}.{x.name}"), self._measures))
         return "SELECT " + ", ".join(levels) + ", " + ", ".join(list(map(lambda x: f"{x[0]}({x[1]})", measures)))
 
     def _create_from_clause(self) -> str:
         subset_clauses: List[str] = []
-        for level in list(map(lambda x: x.level, self._axes)):
+        for level in list(map(lambda x: x.level, self.axes)):
             subset_clauses.append(self._create_from_subset_clause(level))
         return f"FROM {self.cube.fact_table_name} " + " ".join(subset_clauses)
 
@@ -72,7 +86,7 @@ class CubeView:
 
     def _create_group_by_clause(self) -> str:
         result: List[str] = []
-        for level in list(map(lambda x: x.level, self._axes)):
+        for level in list(map(lambda x: x.level, self.axes)):
             result.append(self._create_group_by_clause_for_level(level))
         return "GROUP BY " + ", ".join(result)
 
@@ -85,7 +99,7 @@ class CubeView:
                 return ", ".join(list(map(lambda x: f"'{x.name}'", lms)))
             elif a.type == LevelMemberType.INT:
                 return ", ".join(list(map(lambda x: f"{x.name}", lms)))
-        return list(map(lambda x: f"{x.level.name}.{x.level.column_name} IN ({format_level_members(x, x.level_members)})", self._axes))
+        return list(map(lambda x: f"{x.level.name}.{x.level.column_name} IN ({format_level_members(x, x.level_members)})", self.axes))
 
     def _create_filters_where_clause(self) -> List[str]:
         def format_filters(f: Filter):

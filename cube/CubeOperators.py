@@ -5,7 +5,7 @@ from cube.Cuboid import Cuboid
 from cube.Level import Level
 from cube.LevelMember import LevelMember
 from cube.NonTopLevel import NonTopLevel
-from cube.RegularDimension import RegularDimension
+from cube.Dimension import Dimension
 from cube.TopLevel import TopLevel
 
 
@@ -33,10 +33,10 @@ def generate_cube(cube: Cuboid) -> Cuboid:
 
 def rollup(cube: Cube, **kwargs: str) -> Cuboid:
     dimension_names_list = list(map(lambda x: x.name, cube.dimension_list))
-    new_dimension_list: List[RegularDimension] = []
+    new_dimension_list: List[Dimension] = []
     for key in kwargs.keys():
         _check_if_cube_contains_dimension(cube, dimension_names_list, key)
-        dimension: RegularDimension = _get_dimension(cube, key)
+        dimension: Dimension = _get_dimension(cube, key)
         level_names_list = _get_level_list_names(dimension, including=False)
         _check_if_dimension_contains_level(cube, dimension, key, kwargs, level_names_list)
         if kwargs[key] == "ALL":
@@ -50,11 +50,11 @@ def rollup(cube: Cube, **kwargs: str) -> Cuboid:
 
 def drilldown(cube: Cube, **kwargs: str) -> Cuboid:
     dimension_names_list = list(map(lambda x: x.name, cube.base_cube.dimension_list))
-    new_dimension_list: List[RegularDimension] = []
+    new_dimension_list: List[Dimension] = []
     for key in kwargs.keys():
         _check_if_cube_contains_dimension(cube, dimension_names_list, key)
-        dimension: RegularDimension = _get_dimension(cube, key)
-        base_dimension: RegularDimension = _get_dimension(cube.base_cube, key)
+        dimension: Dimension = _get_dimension(cube, key)
+        base_dimension: Dimension = _get_dimension(cube.base_cube, key)
         level_list_names: List[str] = _get_level_list_names(dimension, including=True)
         _check_if_level_already_contained_in_dimension(dimension, key, kwargs, level_list_names)
         base_level_list_names: List[str] = _get_level_list_names(base_dimension, including=False)
@@ -91,11 +91,11 @@ def _get_new_levels(level: NonTopLevel) -> List[Level]:
     return new_levels
 
 
-def _create_new_regular_dimension(dimension: RegularDimension, levels: List[Level]) -> RegularDimension:
-    return RegularDimension(dimension.name, levels, dimension.engine, dimension.fact_table_fk)
+def _create_new_regular_dimension(dimension: Dimension, levels: List[Level]) -> Dimension:
+    return Dimension(dimension.name, levels, dimension.engine, dimension.fact_table_fk)
 
 
-def _create_new_dimension_list(dimension_list: List[RegularDimension], cube: Cube) -> List[RegularDimension]:
+def _create_new_dimension_list(dimension_list: List[Dimension], cube: Cube) -> List[Dimension]:
     result = dimension_list
     result_name = list(map(lambda x: x.name, result))
     for old_dimension in cube.dimension_list:
@@ -104,19 +104,19 @@ def _create_new_dimension_list(dimension_list: List[RegularDimension], cube: Cub
     return result
 
 
-def _get_levels_and_create_dimension(dimension: RegularDimension, key: str, kwargs: Dict[str, str]) -> RegularDimension:
+def _get_levels_and_create_dimension(dimension: Dimension, key: str, kwargs: Dict[str, str]) -> Dimension:
     level: NonTopLevel = getattr(dimension, kwargs[key])
     new_levels: List[Level] = _get_new_levels(level)
     return _create_new_regular_dimension(dimension, new_levels)
 
 
-def _check_if_dimension_contains_level(cube: Cube, dimension: RegularDimension, key: str, kwargs: Dict[str, str],
+def _check_if_dimension_contains_level(cube: Cube, dimension: Dimension, key: str, kwargs: Dict[str, str],
                                        level_names_list: List[str]) -> None:
     if kwargs[key] not in level_names_list:
         raise ValueError(f"'{dimension.name}' dimension in '{cube}' cube has no level '{kwargs[key]}'")
 
 
-def _check_if_level_already_contained_in_dimension(dimension: RegularDimension, key: str, kwargs: Dict[str, str],
+def _check_if_level_already_contained_in_dimension(dimension: Dimension, key: str, kwargs: Dict[str, str],
                                                    level_list_names: List[str]) -> None:
     if kwargs[key] in level_list_names:
         raise ValueError(
@@ -124,7 +124,7 @@ def _check_if_level_already_contained_in_dimension(dimension: RegularDimension, 
             f"lowest level in '{dimension.name}' dimension.")
 
 
-def _get_level_list_names(dimension: RegularDimension, including: bool):
+def _get_level_list_names(dimension: Dimension, including: bool):
     result = list(map(lambda x: x.name, dimension.level_list))
     return result[1:] if including else result
 
@@ -134,11 +134,11 @@ def _check_if_cube_contains_dimension(cube: Cube, dimension_names_list: List[str
         raise ValueError(f"'{cube}' cube has no dimension '{key}'")
 
 
-def _get_dimension(cube: Cube, key: str) -> RegularDimension:
+def _get_dimension(cube: Cube, key: str) -> Dimension:
     return getattr(cube, key)
 
 
-def _get_the_all_level(dimension: RegularDimension, rollup: bool) -> List[TopLevel]:
+def _get_the_all_level(dimension: Dimension, rollup: bool) -> List[TopLevel]:
     if rollup:
         return list(filter(lambda x: isinstance(x, TopLevel), dimension.level_list))
     else:

@@ -109,12 +109,17 @@ def conv(table):
 #         hej = 1
 
 
-engine = create_engine("postgresql+psycopg2://sigmundur:@localhost/ssb")
-with engine.connect() as conn:
-    df = pd.read_sql(text(query), conn)
-    df1 = df.drop_duplicates(subset=["mo_month", "ca_category", "ci_city"])
-    df1["measures"] = df1[df1.columns[3:]].apply(lambda x: (x[0], x[1]), axis=1)
-    df2 = df1.drop(columns=["extendedprice", "quantity"])
-    final_df = df2.pivot(columns=["mo_month", "ci_city"], index="ca_category", values="measures")
-    print(final_df.loc["MFGR#33", ("ci_city")])
-    hej = 1
+connection_string = ""
+
+def DataFrameAlgorithm3():
+    engine = create_engine(connection_string)
+    with engine.connect() as conn:
+        df = pd.read_sql(text(query), conn)
+        df["Measures"] = df[df.columns[3:]].apply(lambda x: (x[0], x[1]), axis=1)
+        final_df = df.pivot(columns=["Month", "City"], index="Category", values="Measures")
+        return final_df
+
+
+
+    # "postgresql+psycopg2://sigmundur:@localhost/ssb"
+    # df1 = df.drop_duplicates(subset=["mo_month", "ca_category", "ci_city"])

@@ -3,7 +3,7 @@ from typing import Optional, List, Union, Dict, TYPE_CHECKING
 
 from cube.Cube import Cube
 from cube.Measure import Measure
-from cube.RegularDimension import RegularDimension
+from cube.Dimension import Dimension
 from engines import Postgres
 
 if TYPE_CHECKING:
@@ -15,7 +15,7 @@ from cube.NonTopLevel import NonTopLevel
 
 class Cuboid(Cube):
     def __init__(self,
-                 dimension_list: List[RegularDimension],
+                 dimension_list: List[Dimension],
                  measure_list: List[Measure],
                  engine: Postgres,
                  base_cube: BaseCube,

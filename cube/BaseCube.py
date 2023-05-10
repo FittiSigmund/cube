@@ -14,9 +14,9 @@ from cube.Cuboid import Cuboid
 from cube.Level import Level
 from cube.LevelMember import LevelMember
 from cube.Measure import Measure
-from cube.RegularDimension import RegularDimension
+from cube.Dimension import Dimension
 from cube.NonTopLevel import NonTopLevel
-from cube.SlicedDimension import SlicedDimension
+# from cube.SlicedDimension import SlicedDimension
 from cube.TopLevel import TopLevel
 from engines import Postgres
 
@@ -182,7 +182,7 @@ class BaseCube(Cube):
     def __init__(
             self,
             fact_table_name: str,
-            dimension_list: List[RegularDimension],
+            dimension_list: List[Dimension],
             measure_list: List[Measure],
             name: str,
             metadata: Graph,
@@ -190,7 +190,7 @@ class BaseCube(Cube):
     ):
         super().__init__(dimension_list, measure_list, engine, base_cube=None, next_cube=None)
         self.fact_table_name: str = fact_table_name
-        self._dimension_list: List[RegularDimension] = dimension_list
+        self._dimension_list: List[Dimension] = dimension_list
         self._name: str = name
         self._metadata: Graph = metadata
         self._condition = None
@@ -251,7 +251,7 @@ class BaseCube(Cube):
     def measures(self) -> List[Measure]:
         return self._measure_list
 
-    def dimensions(self) -> List[RegularDimension]:
+    def dimensions(self) -> List[Dimension]:
         return self._dimension_list
 
     def _format_query_result_to_pandas_df(self, result: List[Tuple[Any, ...]]) -> DataFrame:
@@ -273,8 +273,8 @@ class BaseCube(Cube):
 
     def _traverse_hierarchy(self, dimension, direction):
         if dimension in self._dimension_list:
-            new_dimension = RegularDimension(dimension.name, dimension.level_list, dimension.engine,
-                                             dimension.fact_table_fk)
+            new_dimension = Dimension(dimension.name, dimension.level_list, dimension.engine,
+                                      dimension.fact_table_fk)
         else:
             raise NotImplementedError("dimension not found in dimension list")
 
@@ -285,15 +285,15 @@ class BaseCube(Cube):
         cube.base_cube = cube
         return cube
 
-    def _slice(self, dimension, value):
-        sliced_dimension = SlicedDimension(dimension.name, dimension.level_list)
-        sliced_dimension.fixed_level = dimension.current_level
-        sliced_dimension.fixed_level_member = value
-        new_dimension_list = [sliced_dimension if x == dimension else x for x in self._dimension_list]
-        cube = BaseCube(self.fact_table_name, new_dimension_list, self._measure_list, self.name, self._metadata,
-                        self._engine)
-        cube.base_cube = cube
-        return cube
+    # def _slice(self, dimension, value):
+    #     sliced_dimension = SlicedDimension(dimension.name, dimension.level_list)
+    #     sliced_dimension.fixed_level = dimension.current_level
+    #     sliced_dimension.fixed_level_member = value
+    #     new_dimension_list = [sliced_dimension if x == dimension else x for x in self._dimension_list]
+    #     cube = BaseCube(self.fact_table_name, new_dimension_list, self._measure_list, self.name, self._metadata,
+    #                     self._engine)
+    #     cube.base_cube = cube
+    #     return cube
 
     def _get_column_name_if_exists(self) -> str:
         return get_table_and_column_name(self.next_cube.visual_column) if self.next_cube.visual_column else ""

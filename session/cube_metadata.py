@@ -5,7 +5,7 @@ from rdflib.namespace import RDF, QB
 
 from cube.BaseCube import BaseCube
 from cube.Measure import Measure
-from cube.RegularDimension import RegularDimension
+from cube.Dimension import Dimension
 from cube.TopLevel import TopLevel
 from engines import Postgres
 from session.infer_cube import LevelDTO
@@ -14,8 +14,9 @@ EG = Namespace("http://example.org/")
 QB4O = Namespace("http://purl.org/qb4olap/cubes/")
 
 
+## TODO: Level attributes are not correctly described in the metadata
 def create_cube_metadata(dsd_name: str,
-                         dimensions: List[RegularDimension],
+                         dimensions: List[Dimension],
                          levelDTOs: List[List[LevelDTO]],
                          measures: List[Measure]) -> Graph:
     ## TODO: Generate proper URIs (or use proper prefix)
@@ -98,7 +99,7 @@ def create_metadata_for_measure(measure, metadata, dsd_node):
 
 
 def create_cube(fact_table_name: str,
-                dimensions: List[RegularDimension],
+                dimensions: List[Dimension],
                 measures: List[Measure],
                 dbname: str,
                 metadata: Graph,

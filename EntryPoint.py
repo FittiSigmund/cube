@@ -11,11 +11,20 @@ DATABASE_USER = "sigmundur"
 DATABASE_PASSWORD = ""
 DATABASE_HOST = "127.0.0.1"
 DATABASE_PORT = "5432"
-DATABASE_NAME = "salesdb_snowflake"
+DATABASE_NAME = "ssb"
 
 postgres_engine: Postgres = engines.postgres(DATABASE_NAME, DATABASE_USER, DATABASE_PASSWORD, DATABASE_HOST, DATABASE_PORT)
 postgres = create_session(postgres_engine)
-view = postgres.load_view('salesdb_snowflake')
+view = postgres.load_view('ssb')
+
+print(view.date.year.y_year[1992])
+# ## ssb query 2.1
+# view.columns(view.date.year.y_year.members()) \
+#     .rows(view.part.brand1.b_brand1.members()) \
+#     .where(view.part.category.ca_category = "MFGR#12" &
+#            view.supplier.region.r_region = "AMERICA") \
+#     .measures(view.lo_revenue)
+
 
 # print()
 # print("Measures: ", cube.measures())
@@ -72,24 +81,24 @@ view = postgres.load_view('salesdb_snowflake')
 
 
 
-conn = psycopg2.connect(
-    dbname="salesdb_snowflake_test",
-    user="sigmundur",
-    password=""
-)
+# conn = psycopg2.connect(
+#     dbname="salesdb_snowflake_test",
+#     user="sigmundur",
+#     password=""
+# )
 
 
-# Cube -> View syntactic suger not implemented
-view._axes = []
-view = view.axis(0, view.cube.date.date_month.members())
+# # Cube -> View syntactic suger not implemented
+# view._axes = []
+# view = view.axis(0, view.cube.date.date_month.members())
 
 
-output = view.output()
-print(output)
-with conn:
-    with conn.cursor() as curs:
-        curs.execute(output)
-        print(curs.fetchall())
+# output = view.output()
+# print(output)
+# with conn:
+#     with conn.cursor() as curs:
+#         curs.execute(output)
+#         print(curs.fetchall())
 
 
 def generate_data():

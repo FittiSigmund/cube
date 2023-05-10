@@ -8,7 +8,7 @@ import pandas as pd
 from cube.BaseCube import BaseCube
 from cube.Cuboid import Cuboid
 from cube.Measure import Measure
-from cube.RegularDimension import RegularDimension
+from cube.Dimension import Dimension
 from session.session import create_session
 from test.utilities import Utilities as util
 
@@ -122,7 +122,7 @@ class TestCube(unittest.TestCase):
     def test_dimensions(self):
         cube_function = lambda: self.cube.dimensions()
         name_list = ["product", "date", "store", "supplier"]
-        self.assert_equal_instance_and_name(cube_function, 4, RegularDimension, name_list)
+        self.assert_equal_instance_and_name(cube_function, 4, Dimension, name_list)
 
     def test_columns_on_year_using_total_sales_price(self):
         cube = self.cube.columns([self.cube.date.date_year["2022"], self.cube.date.date_year["2021"]])

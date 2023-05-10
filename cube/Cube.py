@@ -2,19 +2,19 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from typing import List
 
-from cube import RegularDimension
+from cube import Dimension
 from cube.Measure import Measure
 from engines import Postgres
 
 
 class Cube(ABC):
     def __init__(self,
-                 dimension_list: List[RegularDimension],
+                 dimension_list: List[Dimension],
                  measure_list: List[Measure],
                  engine: Postgres,
                  base_cube: Cube | None,
                  next_cube: Cube | None):
-        self._dimension_list: List[RegularDimension] = dimension_list
+        self._dimension_list: List[Dimension] = dimension_list
         self._measure_list: List[Measure] = measure_list
         self._default_measure: Measure = measure_list[0]
         self._engine: Postgres = engine
@@ -29,7 +29,7 @@ class Cube(ABC):
 
 
     @property
-    def dimension_list(self) -> List[RegularDimension]:
+    def dimension_list(self) -> List[Dimension]:
         return self._dimension_list
 
     @property

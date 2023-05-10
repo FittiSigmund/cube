@@ -7,7 +7,8 @@ from Levenshtein import distance as levenshtein_distance
 
 from cube import Level
 from cube.AggregateFunction import AggregateFunction
-from cube.RegularDimension import RegularDimension
+from cube.Attribute import Attribute
+from cube.Dimension import Dimension
 from cube.Measure import Measure
 from cube.NonTopLevel import NonTopLevel
 from cube.TopLevel import TopLevel
@@ -16,6 +17,7 @@ from session.sql_queries import ALL_USER_TABLES_QUERY, table_cardinality_query, 
     get_non_key_columns_query, get_next_level_query, get_all_measures_query, get_pk_and_fk_columns_query
 
 
+## TODO: Optimise this to use only one query
 def get_fact_table_name(db_cursor: psycur) -> str:
     all_table_names: List[str] = get_all_table_names(db_cursor)
     result_tuple: List[Tuple[str, int]] = []
@@ -54,14 +56,11 @@ def attach_levels_to_dto_list(level_dtos: List[LevelDTO], levels: List[Level]) -
         level_dtos[i].level = levels[i]
     return level_dtos
 
-def get_non_top_levels_in_hierarchy(hierarchy: List[LevelDTO]) -> List[LevelDTO]:
-    return hierarchy[1:]
-
 def create_levels_in_hierarchy(db_cursor: psycur, lowest_level: LowestLevelDTO, engine: Postgres) -> List[LevelDTO]:
     hierarchy: List[LevelDTO] = create_hierarchy(db_cursor, lowest_level.level_name, lowest_level.fact_table_fk)
     levels: List[Level] = [TopLevel()]
-    for lv in get_non_top_levels_in_hierarchy(hierarchy):
-        levels.append(NonTopLevel(lv.name, lv.member, engine, lv.pk_name, lv.fk_name))
+    for lv in hierarchy[1:]:
+        levels.append(NonTopLevel(lv.name, lv.attributes, engine, lv.pk_name, lv.fk_name))
 
     levels: List[Level] = attach_parents_to_levels(levels)
     levels: List[Level] = attach_children_to_levels(levels)
@@ -84,8 +83,7 @@ class LevelDTO:
 
     def __init__(self,
                  level_name: str = "",
-                 level_member: str = "",
-                 level_attributes=None,
+                 level_attributes: List[str] = None,
                  pk: str = "",
                  fk: str = "",
                  fact_table_fk: str = "",
@@ -93,7 +91,6 @@ class LevelDTO:
         if level_attributes is None:
             level_attributes = []
         self.level_member_instances = []
-        self.member = level_member
         self.attributes = level_attributes
         self.pk_name = pk
         self.fk_name = fk
@@ -128,65 +125,44 @@ def get_pk_and_fk_column_names(cursor: psycur, level_name: str) -> Tuple[str, st
 def create_hierarchy(db_cursor: psycur, level_name: str, fact_table_fk: str) -> List[LevelDTO]:
     current_level: str = level_name
     found_top_level: bool = False
-    level_member: str
-    level_attributes: List[str]
-    level_member, level_attributes = get_level_attributes_and_member_name(db_cursor, current_level)
+    level_attributes: List[str] = get_level_attributes(db_cursor, current_level)
     pk: str
     fk: str
     pk, fk = get_pk_and_fk_column_names(db_cursor, level_name)
-    hierarchies: List[LevelDTO] = [LevelDTO(current_level, level_member, level_attributes, pk, fk, fact_table_fk)]
+    hierarchies: List[LevelDTO] = [LevelDTO(current_level, level_attributes, pk, fk, fact_table_fk)]
 
     while not found_top_level:
         current_level = get_next_level_name(db_cursor, current_level)
         if not current_level:
             found_top_level = True
             continue
-        level_member, level_attributes = get_level_attributes_and_member_name(db_cursor, current_level)
+        level_attributes = get_level_attributes(db_cursor, current_level)
         pk, fk = get_pk_and_fk_column_names(db_cursor, current_level)
         hierarchies.append(
-            LevelDTO(current_level, level_member, level_attributes, pk, fk, fact_table_fk))
+            LevelDTO(current_level, level_attributes, pk, fk, fact_table_fk))
     hierarchies.append(LevelDTO(top_level=True))
 
     hierarchies.reverse()
     return hierarchies
 
 
-def get_level_attributes_and_member_name(db_cursor: psycur, level_name: str) -> Tuple[str, List[str]]:
+def get_level_attributes(db_cursor: psycur, level_name: str) -> List[str]:
     db_cursor.execute(get_non_key_columns_query(level_name))
-    non_key_columns: List[str] = list(map(lambda x: x[0], db_cursor.fetchall()))
-
-    if len(non_key_columns) > 1:
-        level_member: str
-        level_attributes: List[str]
-        level_member, level_attributes = remove_level_member(level_name, non_key_columns)
-        return level_member, level_attributes
-
-    return non_key_columns[0], []
-
+    return list(map(lambda x: x[0], db_cursor.fetchall()))
 
 def get_next_level_name(db_cursor: psycur, current_level: str) -> str:
     db_cursor.execute(get_next_level_query(current_level))
     result: List[Tuple[str, Any]] = db_cursor.fetchall()
     return result[0][0] if result else ""
 
-
-def remove_level_member(level_name: str, level_attribute_names: List[str]) -> Tuple[str, List[str]]:
-    distance_dict: Dict[int, str] = {}
-    for name in level_attribute_names:
-        distance_dict[levenshtein_distance(level_name, name)] = name
-
-    level_member: str = distance_dict.pop(min(list(distance_dict.keys())))
-    return level_member, list(distance_dict.values())
-
-
-def create_dimensions(levelDTOs: List[List[LevelDTO]], engine: Postgres) -> List[RegularDimension]:
+def create_dimensions(levelDTOs: List[List[LevelDTO]], engine: Postgres) -> List[Dimension]:
     return list(map(lambda x: create_dimension(x[::-1], engine), levelDTOs))
 
 
-def create_dimension(levelDTOs: List[LevelDTO], engine: Postgres) -> RegularDimension:
-    dimension_name: str = levelDTOs[0].name.split('_')[0]
+def create_dimension(levelDTOs: List[LevelDTO], engine: Postgres) -> Dimension:
+    dimension_name: str = levelDTOs[0].name
     levels: List[Level] = list(map(lambda x: x.level, levelDTOs))
-    return RegularDimension(dimension_name, levels, engine, levelDTOs[0].fact_table_fk)
+    return Dimension(dimension_name, levels, engine, levelDTOs[0].fact_table_fk)
 
 
 def get_measures(db_cursor: psycur, fact_table: str) -> List[str]:

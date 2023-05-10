@@ -66,15 +66,27 @@ def get_next_level_query(current_level: str) -> str:
                 AND contype = 'f')
 """
 
+## This query fetches all non constraint bounded numeric columns from the fact table
+## The measures will all have the aggregate function SUM
+## Further adds the question of inference of summarisability
 def get_all_measures_query(fact_table: str) -> str:
     return f"""
             SELECT pg_attribute.attname
             FROM pg_attribute
-            WHERE pg_attribute.attrelid = (SELECT oid FROM pg_class WHERE pg_class.relname = '{fact_table}')
+            WHERE pg_attribute.attrelid = (
+                SELECT oid 
+                FROM pg_class 
+                WHERE pg_class.relname = '{fact_table}'
+            )
             AND pg_attribute.attnum >= 0
             AND pg_attribute.attname NOT IN (
-                                         SELECT kcu.column_name 
-                                         FROM information_schema.key_column_usage AS kcu 
-                                         WHERE kcu.table_name = '{fact_table}'
-                                         );
+                SELECT kcu.column_name 
+                FROM information_schema.key_column_usage AS kcu 
+                WHERE kcu.table_name = '{fact_table}'
+            )
+            AND pg_attribute.atttypid IN (
+                SELECT oid
+                FROM pg_type
+                WHERE pg_type.typcategory = 'N'
+            );
 """

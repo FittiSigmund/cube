@@ -1,7 +1,7 @@
 import unittest
 
 from test.utilities import Utilities as util
-from cube.RegularDimension import RegularDimension
+from cube.Dimension import Dimension
 from session.infer_cube import get_all_table_names, get_fact_table_name, get_lowest_level_names
 
 expected_tables = ['date_day', 'date_month', 'date_year', 'product_category', 'product_name', 'sales', 'store_address',
@@ -22,7 +22,7 @@ class TestInferCube(unittest.TestCase):
 
     def setUp(self):
         self.fact_table_name = get_fact_table_name(self.cursor)
-        self.addTypeEqualityFunc(RegularDimension, dimension_compare)
+        self.addTypeEqualityFunc(Dimension, dimension_compare)
 
     def test_all_user_tables_query(self):
         actual_tables_unsorted = get_all_table_names(self.cursor)
