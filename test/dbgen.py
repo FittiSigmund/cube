@@ -6,7 +6,7 @@ from psycopg2._psycopg import cursor
 import psycopg2
 
 import engines
-from cube.Filter import Filter
+from cube.Predicate import Predicate
 from cube.FilterOperator import FilterOperator
 from engines import Postgres
 from session.session import create_session

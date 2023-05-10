@@ -1,5 +1,8 @@
 from __future__ import annotations
-from typing import TYPE_CHECKING, List
+from typing import TYPE_CHECKING, List, Tuple
+
+from cube.FilterOperator import FilterOperator
+from cube.Predicate import Predicate
 
 if TYPE_CHECKING:
     from cube.NonTopLevel import NonTopLevel
@@ -18,31 +21,19 @@ class Attribute:
         self._engine: Postgres = engine
         self.level: NonTopLevel = level
         self.level_members: List[LevelMember] = []
-        self._all_lm_loaded: bool = False
 
     def members(self):
-        if self._all_lm_loaded:
-            return self._level_members
+        with self._get_db_conn() as conn:
+            with conn.cursor() as curs:
+                curs.execute(f"""
+                    SELECT {self.name}
+                    FROM {self.level.name}
+                """)
+                db_result: List[Tuple[str, ...]] = curs.fetchall()
+        if db_result:
+            return list(map(lambda x: LevelMember(x[0], self), db_result))
         else:
-            with self._get_db_conn() as conn:
-                with conn.cursor() as curs:
-                    curs.execute(f"""
-                        SELECT {self.name}
-                        FROM {self.level.name}
-                    """)
-                    db_result = curs.fetchall
-            lms = []
-            if db_result:
-                for result in db_result:
-                    lm_name = result[0]
-                    lm = self.create_level_member(lm_name)
-                    lms.append(lm)
-                    setattr(self, str(lm_name), lm)
-                    self._append_level_members_without_duplicates(lm)
-                self._all_lm_loaded = True
-                return lms
-            else:
-                raise AttributeError(f"'{self.name}' level does not contain any members")
+            raise AttributeError(f"The '{self.name}' Attribute does not contain any Level Members")
 
     def __getattr__(self, item: str):
         if item in self.__dict__["level_members"]:
@@ -55,6 +46,9 @@ class Attribute:
             return self.level_members[item]
         else:
             return self._fetch_lm_from_db_and_save(str(item))
+
+    def __eq__(self, other):
+        return Predicate(self, other, FilterOperator.EQ)
 
     def _fetch_lm_from_db_and_save(self, item: str):
         with self._get_db_conn() as conn:
@@ -80,3 +74,6 @@ class Attribute:
                                 host=self._engine.host,
                                 port=self._engine.port,
                                 database=self._engine.dbname)
+
+    def __repr__(self):
+        return f"Attribute({self.name})"

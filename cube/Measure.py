@@ -24,4 +24,4 @@ class Measure:
         return self._aggregate_function
 
     def __repr__(self) -> str:
-        return self.name
+        return f"Measure({self.name}, {self._aggregate_function})"

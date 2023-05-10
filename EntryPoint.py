@@ -17,7 +17,14 @@ postgres_engine: Postgres = engines.postgres(DATABASE_NAME, DATABASE_USER, DATAB
 postgres = create_session(postgres_engine)
 view = postgres.load_view('ssb')
 
-print(view.date.year.y_year[1992])
+view2 = view.columns(view.date.year.y_year.members()) \
+            .rows(view.part.brand1.b_brand1.members()) \
+            .where((view.part.category.ca_category == "MFGR#12") &
+                   (view.supplier.region.r_region == "AMERICA")) \
+            .measures(view.lo_revenue)
+view2_query = view2.output()
+
+hej = 1
 # ## ssb query 2.1
 # view.columns(view.date.year.y_year.members()) \
 #     .rows(view.part.brand1.b_brand1.members()) \

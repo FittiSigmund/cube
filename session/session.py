@@ -12,7 +12,7 @@ if TYPE_CHECKING:
 from cube.Axis import Axis
 from cube.BaseCube import BaseCube
 from cube.View import View
-from cube.Filter import Filter
+from cube.Predicate import Predicate
 from cube.Dimension import Dimension
 from engines import Postgres
 from rdflib import Graph
@@ -51,14 +51,14 @@ def get_default_measure(cube: BaseCube) -> List[Measure]:
     return cube.measure_list
 
 
-def get_default_filters() -> List[Filter]:
+def get_default_filters() -> List[Predicate]:
     return []
 
 
 def create_view(cube: BaseCube) -> View:
     axes: List[Axis] = get_default_axes(cube.dimensions())
     measures: List[Measure] = get_default_measure(cube)
-    filters: List[Filter] = get_default_filters()
+    filters: List[Predicate] = get_default_filters()
     return View(axes, measures, filters, cube)
 
 
