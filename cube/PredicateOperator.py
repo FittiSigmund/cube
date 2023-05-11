@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class FilterOperator(Enum):
+class PredicateOperator(Enum):
     LE = "<"
     LEQ = "<="
     EQ = "="
