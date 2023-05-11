@@ -16,7 +16,6 @@ from cube.LevelMember import LevelMember
 from cube.Measure import Measure
 from cube.Dimension import Dimension
 from cube.NonTopLevel import NonTopLevel
-# from cube.SlicedDimension import SlicedDimension
 from cube.TopLevel import TopLevel
 from engines import Postgres
 
@@ -43,14 +42,14 @@ def get_hierarchy_up_to_current_level(dimension, level):
 
 
 def get_fact_table_join_stmt(fact_table_name: str, lowest_level: NonTopLevel) -> str:
-    return f"{fact_table_name}.{lowest_level.dimension.fact_table_fk} = {lowest_level.name}.{lowest_level.pk_name}"
+    return f"{fact_table_name}.{lowest_level.dimension.fact_table_fk} = {lowest_level.name}.{lowest_level.key}"
 
 
 def get_hierarchy_table_join_stmt(fact_table_name: str, join_tables: List[NonTopLevel]) -> str:
     hierarchy_table_join: List[str] = [get_fact_table_join_stmt(fact_table_name, join_tables[0])]
     for i in range(0, len(join_tables) - 1):
         hierarchy_table_join.append(
-            f"{join_tables[i].name}.{join_tables[i].fk_name} = {join_tables[i + 1].name}.{join_tables[i + 1].pk_name}")
+            f"{join_tables[i].name}.{join_tables[i].fk_name} = {join_tables[i + 1].name}.{join_tables[i + 1].key}")
 
     return " AND ".join(hierarchy_table_join)
 
@@ -322,7 +321,7 @@ class BaseCube(Cube):
                 + get_tables_above(self.next_cube.visual_row)
             hierarchy_table_join: Dict[str, str] = {join_tables[0].name: get_fact_table_join_stmt(self.fact_table_name, join_tables[0])}
             for i in range(0, len(join_tables) - 1):
-                hierarchy_table_join[join_tables[i + 1].name] = f"{join_tables[i].name}.{join_tables[i].fk_name} = {join_tables[i + 1].name}.{join_tables[i + 1].pk_name}"
+                hierarchy_table_join[join_tables[i + 1].name] = f"{join_tables[i].name}.{join_tables[i].fk_name} = {join_tables[i + 1].name}.{join_tables[i + 1].key}"
             return hierarchy_table_join
         else:
             return {}
@@ -334,7 +333,7 @@ class BaseCube(Cube):
                 + get_tables_above(self.next_cube.visual_column)
             hierarchy_table_join: Dict[str, str] = {join_tables[0].name: get_fact_table_join_stmt(self.fact_table_name, join_tables[0])}
             for i in range(0, len(join_tables) - 1):
-                hierarchy_table_join[join_tables[i + 1].name] = f"{join_tables[i].name}.{join_tables[i].fk_name} = {join_tables[i + 1].name}.{join_tables[i + 1].pk_name}"
+                hierarchy_table_join[join_tables[i + 1].name] = f"{join_tables[i].name}.{join_tables[i].fk_name} = {join_tables[i + 1].name}.{join_tables[i + 1].key}"
 
             return hierarchy_table_join
         else:
@@ -379,7 +378,7 @@ class BaseCube(Cube):
             hierarchy_table_join: List[str] = [get_fact_table_join_stmt(self.fact_table_name, join_tables[0])]
             for i in range(0, len(join_tables) - 1):
                 hierarchy_table_join.append(
-                    f"{join_tables[i].name}.{join_tables[i].fk_name} = {join_tables[i + 1].name}.{join_tables[i + 1].pk_name}")
+                    f"{join_tables[i].name}.{join_tables[i].fk_name} = {join_tables[i + 1].name}.{join_tables[i + 1].key}")
 
             return " AND ".join(hierarchy_table_join)
         else:
@@ -392,7 +391,7 @@ class BaseCube(Cube):
             hierarchy_table_join: List[str] = [get_fact_table_join_stmt(self.fact_table_name, join_tables[0])]
             for i in range(0, len(join_tables) - 1):
                 hierarchy_table_join.append(
-                    f"{join_tables[i].name}.{join_tables[i].fk_name} = {join_tables[i + 1].name}.{join_tables[i + 1].pk_name}")
+                    f"{join_tables[i].name}.{join_tables[i].fk_name} = {join_tables[i + 1].name}.{join_tables[i + 1].key}")
 
             return " AND ".join(hierarchy_table_join)
         else:

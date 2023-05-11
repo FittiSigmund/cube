@@ -6,7 +6,7 @@ from cube.BooleanConnective import BooleanConnective
 
 if TYPE_CHECKING:
     from numbers import Number
-    from cube.FilterOperator import FilterOperator
+    from cube.PredicateOperator import PredicateOperator
     from cube.LevelMember import LevelMember
     from cube.Attribute import Attribute
 
@@ -21,10 +21,10 @@ class Predicate:
     def __init__(self,
                  attribute: Attribute = None,
                  value: Number | str = None,
-                 operator: FilterOperator | None = None) -> None:
+                 operator: PredicateOperator | None = None) -> None:
         self.attribute: Attribute | None = attribute
         self.value: Number | str = value
-        self.operator: FilterOperator | None = operator
+        self.operator: PredicateOperator | None = operator
         self.connective: BooleanConnective = BooleanConnective.EMPTY
         self.next_pred: Predicate | None = None
         match self.value:

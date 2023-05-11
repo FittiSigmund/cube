@@ -1,7 +1,7 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING, List, Tuple
 
-from cube.FilterOperator import FilterOperator
+from cube.PredicateOperator import PredicateOperator
 from cube.Predicate import Predicate
 
 if TYPE_CHECKING:
@@ -48,7 +48,7 @@ class Attribute:
             return self._fetch_lm_from_db_and_save(str(item))
 
     def __eq__(self, other):
-        return Predicate(self, other, FilterOperator.EQ)
+        return Predicate(self, other, PredicateOperator.EQ)
 
     def _fetch_lm_from_db_and_save(self, item: str):
         with self._get_db_conn() as conn:

@@ -17,10 +17,10 @@ def remove_underscore_prefix(item):
 
 
 class NonTopLevel(Level):
-    def __init__(self, name: str, attributes: List[str], engine: Postgres, pk: str, fk: str):
+    def __init__(self, name: str, attributes: List[str], engine: Postgres, key: str, fk: str):
         super().__init__(name, parent=None, child=None, dimension=None)
         self.attributes: List[str] = attributes
-        self._pk_name: str = pk
+        self.key: str = key
         self._fk_name: str = fk
         self._engine: Postgres = engine
         self._metadata = None
@@ -34,10 +34,6 @@ class NonTopLevel(Level):
     @child.setter
     def child(self, value):
         self._child = value
-
-    @property
-    def pk_name(self):
-        return self._pk_name
 
     @property
     def fk_name(self):

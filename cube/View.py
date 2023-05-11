@@ -1,6 +1,9 @@
 from __future__ import annotations
 
-from typing import List, Tuple, TYPE_CHECKING
+from typing import List, Tuple, TYPE_CHECKING, Any
+
+import pandas as pd
+from sqlalchemy import create_engine, text
 
 from cube.Axis import Axis
 from cube.BaseCube import BaseCube
@@ -49,9 +52,13 @@ class View:
         self._measures = list(args)
         return self
 
-    def output(self) -> str:
+    def output(self) -> pd.DataFrame:
         query: str = self._create_sql_query()
-        return query
+        db_result = self.cube.execute_query(query)
+        result = self._convert_to_df1(db_result)
+        # result = self._convert_to_df2(query)
+
+        return result
 
     def __getattr__(self, item):
         return self.cube.__getattribute__(item)
@@ -71,20 +78,29 @@ class View:
 
     def _create_from_clause(self) -> str:
         subset_clauses: List[str] = []
-        ## Refactor _create_from_subset_clause() method to take in attribute as parameter
-        ## Then when I will refactor measures to include (among others) attributes i can use same method for both
-        ## Attributes and Measures
-        for level in list(map(lambda x: x.level, self.axes)):
+        axis_lvls: List[NonTopLevel] = [x.level for x in self.axes]
+
+        all_pred_lvls: List[NonTopLevel] = [pred.attribute.level for pred in self._get_all_predicates()]
+        pred_lvls: List[NonTopLevel] = [lvl for lvl in all_pred_lvls if lvl.dimension
+                                        not in [x.dimension for x in axis_lvls]]
+
+        for level in axis_lvls + pred_lvls:
             subset_clauses.append(self._create_from_subset_clause(level))
+
         return f"FROM {self.cube.fact_table_name} " + " ".join(subset_clauses)
+
+    def _get_all_predicates(self) -> List[Predicate]:
+        current_pred = self.predicates
+        result: List[Predicate] = [current_pred]
+        while current_pred.next_pred is not None:
+            current_pred = current_pred.next_pred
+            result.append(current_pred)
+        return result
+
 
     def _create_where_clause(self) -> str:
         axes: List[str] = self._create_axes_where_clause()
         axes: str = " AND ".join(axes)
-
-        # Hardcoded filters for testing
-        # self._filters.append(Filter(self._axes[0].level, list(filter(lambda x: x.name == "January", self._axes[0].level_members))[0], FilterOperator.EQ))
-        # self._filters.append(Filter(self._axes[0].level.child, list(filter(lambda x: x.name == 7, self._axes[0].level.child._level_members))[0], FilterOperator.LEQ))
 
         filters: List[str] = self._create_filters_where_clause()
         filters: str = " AND ".join(filters)
@@ -93,12 +109,28 @@ class View:
 
     def _create_group_by_clause(self) -> str:
         result: List[str] = []
-        for level in list(map(lambda x: x.level, self.axes)):
-            result.append(self._create_group_by_clause_for_level(level))
+        for x in self.axes:
+            result.append(f"{x.level.name}.{x.attribute.name}")
+            result.append(f"{x.level.name}.{x.level.key}")
         return "GROUP BY " + ", ".join(result)
 
-    def _create_group_by_clause_for_level(self, l: NonTopLevel):
-        return ", ".join(list(map(lambda x: f"{x.table_name}.{x.column_name}", [l] + self._get_parents(l))))
+    # Strictly only 2d so far
+    def _convert_to_df1(self, table: List[Tuple[Any, ...]]) -> pd.DataFrame:
+        columns = [x.name for x in self.axes[0].level_members]
+        rows = [x.name for x in self.axes[1].level_members]
+        df = pd.DataFrame(columns=columns, index=rows)
+        for row in table:
+            df.loc[row[1], row[0]] = row[2]
+        return df
+
+    # Strictly only 2d so far
+    def _convert_to_df2(self, query: str) -> pd.DataFrame:
+        engine = create_engine("postgresql+psycopg2://sigmundur:@localhost/ssb")
+        with engine.connect() as conn:
+            df = pd.read_sql(text(query), conn)
+            df["Measures"] = df[df.columns[2:]].apply(lambda x: (x[0]), axis=1)
+            final_df = df.pivot(columns=[self.axes[0].attribute.name], index=self.axes[1].attribute.name, values="Measures")
+            hej = 1
 
     def _create_axes_where_clause(self) -> List[str]:
         def format_level_members(a: Axis, lms: List[LevelMember]) -> str:
@@ -108,17 +140,23 @@ class View:
                 return ", ".join(list(map(lambda x: f"{x.name}", lms)))
 
         return list(
-            map(lambda x: f"{x.level.name}.{x.level.column_name} IN ({format_level_members(x, x.level_members)})",
+            map(lambda x: f"{x.level.name}.{x.attribute.name} IN ({format_level_members(x, x.level_members)})",
                 self.axes))
 
     def _create_filters_where_clause(self) -> List[str]:
-        def format_filters(f: Predicate):
-            if f.level_member_type is LevelMemberType.STR:
-                return f"{f.level.table_name}.{f.level.column_name} {f.operator.value} '{f.value.name}'"
-            elif f.level_member_type is LevelMemberType.INT:
-                return f"{f.level.name}.{f.level.column_name} {f.operator.value} {f.value.name}"
+        def format_filters(p: Predicate):
+            if p.level_member_type is LevelMemberType.STR:
+                return f"{p.attribute.level.name}.{p.attribute.name} {p.operator.value} '{p.value}'"
+            elif p.level_member_type is LevelMemberType.INT:
+                return f"{p.attribute.level.name}.{p.attribute.name} {p.operator.value} {p.value}"
 
-        return list(map(lambda x: format_filters(x), self.predicates))
+        pred = self.predicates
+        result: List[str] = [format_filters(pred)]
+        while pred.next_pred is not None:
+            pred = pred.next_pred
+            result.append(format_filters(pred))
+        return result
+
 
     def _create_from_subset_clause(self, level: NonTopLevel) -> str:
         # The order in hierarchy is the lowest level first and highest last
@@ -133,7 +171,7 @@ class View:
         return "JOIN " + " JOIN ".join(result)
 
     def _create_on_condition_for_fact_table(self, fact_table: str, level: NonTopLevel) -> str:
-        return f"{level.name} ON {fact_table}.{level.dimension.fact_table_fk} = {level.name}.{level.pk_name}"
+        return f"{level.name} ON {fact_table}.{level.dimension.fact_table_fk} = {level.name}.{level.key}"
 
     def _get_children(self, level: NonTopLevel) -> List[NonTopLevel]:
         result: List[NonTopLevel] = []
@@ -151,4 +189,4 @@ class View:
         return list(result)
 
     def _create_on_condition(self, child: NonTopLevel, parent: NonTopLevel):
-        return f"{parent.table_name} ON {child.table_name}.{child.fk_name} = {parent.table_name}.{parent.pk_name}"
+        return f"{parent.table_name} ON {child.table_name}.{child.fk_name} = {parent.table_name}.{parent.key}"

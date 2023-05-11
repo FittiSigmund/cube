@@ -7,7 +7,7 @@ import psycopg2
 
 import engines
 from cube.Predicate import Predicate
-from cube.FilterOperator import FilterOperator
+from cube.PredicateOperator import PredicateOperator
 from engines import Postgres
 from session.session import create_session
 
