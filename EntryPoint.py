@@ -22,7 +22,7 @@ view2 = view.columns(view.date.year.y_year.members()) \
             .where((view.part.category.ca_category == "MFGR#12") &
                    (view.supplier.region.r_region == "AMERICA")) \
             .measures(view.lo_revenue)
-result = view2.output()
+result = view2.output(1)
 
 hej = 1
 # ## ssb query 2.1

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import List, Tuple, TYPE_CHECKING, Any
+from typing import List, Tuple, TYPE_CHECKING, Any, Dict
 
 import pandas as pd
 from sqlalchemy import create_engine, text
@@ -52,13 +52,16 @@ class View:
         self._measures = list(args)
         return self
 
-    def output(self) -> pd.DataFrame:
-        query: str = self._create_sql_query()
-        db_result = self.cube.execute_query(query)
-        result = self._convert_to_df1(db_result)
-        # result = self._convert_to_df2(query)
-
-        return result
+    def output(self, version: int) -> pd.DataFrame:
+        if version == 1:
+            result = self._convert_to_df1()
+            return result
+        elif version == 2:
+            query: str = self._create_sql_query()
+            result = self._convert_to_df2(query)
+            return result
+        else:
+            raise Exception(f"Version {version} is not 1 or 2")
 
     def __getattr__(self, item):
         return self.cube.__getattribute__(item)
@@ -115,22 +118,44 @@ class View:
         return "GROUP BY " + ", ".join(result)
 
     # Strictly only 2d so far
-    def _convert_to_df1(self, table: List[Tuple[Any, ...]]) -> pd.DataFrame:
-        columns = [x.name for x in self.axes[0].level_members]
-        rows = [x.name for x in self.axes[1].level_members]
+    def _convert_to_df1(self) -> pd.DataFrame:
+        levels: List[str] = list(map(lambda x: f"{x.level.name}.{x.attribute.name}", self.axes))
+
+        measures: List[str] = list(
+            map(lambda x: f"{x.aggregate_function.name}({self.cube.fact_table_name}.{x.name})", self._measures))
+        select_clause: str = "SELECT " + ", ".join(levels) + ", " + ", ".join(measures)
+        select_distinct_list: List[str] = [f"SELECT DISTINCT {levels[i]}" for i in range(len(levels))]
+
+        from_clause: str = self._create_from_clause()
+        where_clause: str = self._create_where_clause()
+        group_by_clause: str = self._create_group_by_clause()
+
+        ## Doesn't work to execute everything as one big query
+        actual_query: str = select_clause + " " + from_clause + " " + where_clause + " " + group_by_clause + ";"
+        query_distinct: List[str] = [distinct + " " + from_clause + " " + where_clause + " " + group_by_clause + ";"
+                                     for distinct in select_distinct_list]
+        query: str = actual_query + " ".join(query_distinct)
+
+        db_result = self.cube.execute_query(query)
+        db_result_columns = self.cube.execute_query(query_columns)
+        db_result_rows = self.cube.execute_query(query_rows)
+        columns = [x[0] for x in db_result_columns]
+        rows = [x[0] for x in db_result_rows]
         df = pd.DataFrame(columns=columns, index=rows)
-        for row in table:
+        for row in db_result:
             df.loc[row[1], row[0]] = row[2]
         return df
 
-    # Strictly only 2d so far
     def _convert_to_df2(self, query: str) -> pd.DataFrame:
         engine = create_engine("postgresql+psycopg2://sigmundur:@localhost/ssb")
         with engine.connect() as conn:
             df = pd.read_sql(text(query), conn)
-            df["Measures"] = df[df.columns[2:]].apply(lambda x: (x[0]), axis=1)
-            final_df = df.pivot(columns=[self.axes[0].attribute.name], index=self.axes[1].attribute.name, values="Measures")
-            hej = 1
+            df["Measures"] = df[df.columns[len(self.axes):]].apply(lambda x: (x[0]), axis=1)
+            columns = [ax.attribute.name for ax in [ax for i, ax in enumerate(self.axes) if i % 2 == 0]]
+            rows = [ax.attribute.name for ax in [ax for i, ax in enumerate(self.axes) if i % 2 == 1]]
+            final_df = df.pivot(columns=columns, index=rows, values="Measures")
+        engine.dispose()
+        return final_df
 
     def _create_axes_where_clause(self) -> List[str]:
         def format_level_members(a: Axis, lms: List[LevelMember]) -> str:
