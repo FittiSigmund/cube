@@ -130,18 +130,26 @@ class View:
         where_clause: str = self._create_where_clause()
         group_by_clause: str = self._create_group_by_clause()
 
-        ## Doesn't work to execute everything as one big query
-        actual_query: str = select_clause + " " + from_clause + " " + where_clause + " " + group_by_clause + ";"
+        query: str = select_clause + " " + from_clause + " " + where_clause + " " + group_by_clause + ";"
         query_distinct: List[str] = [distinct + " " + from_clause + " " + where_clause + " " + group_by_clause + ";"
                                      for distinct in select_distinct_list]
-        query: str = actual_query + " ".join(query_distinct)
 
         db_result = self.cube.execute_query(query)
-        db_result_columns = self.cube.execute_query(query_columns)
-        db_result_rows = self.cube.execute_query(query_rows)
-        columns = [x[0] for x in db_result_columns]
-        rows = [x[0] for x in db_result_rows]
-        df = pd.DataFrame(columns=columns, index=rows)
+        db_result_distinct: List[List[Tuple[Any, ...]]] = [self.cube.execute_query(x) for x in query_distinct]
+
+        column_results: List[List[Tuple[Any, ...]]] = [x for i, x in enumerate(db_result_distinct) if i % 2 == 0]
+        row_results: List[List[Tuple[Any, ...]]] = [x for i, x in enumerate(db_result_distinct) if i % 2 == 1]
+
+        columns: List[List[Any]] = []
+        rows: List[List[Any]] = []
+        for res in column_results:
+            columns.append([x[0] for x in res])
+        for res in row_results:
+            rows.append([x[0] for x in res])
+
+        df_columns = pd.MultiIndex.from_product(columns)
+        df_rows = pd.MultiIndex.from_product(rows)
+        df = pd.DataFrame(columns=df_columns, index=df_rows)
         for row in db_result:
             df.loc[row[1], row[0]] = row[2]
         return df
