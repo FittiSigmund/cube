@@ -75,7 +75,15 @@ def create_levels(db_cursor: psycur, lowest_levels: List[LowestLevelDTO], engine
 
 def get_lowest_level_names(db_cursor: psycur, fact_table_name: str) -> List[LowestLevelDTO]:
     db_cursor.execute(lowest_levels_query(fact_table_name))
-    return list(map(lambda x: LowestLevelDTO(x[0], x[1]), db_cursor.fetchall()))
+    result: List[Tuple[str, str]] = db_cursor.fetchall()
+    rel_names: List[str] = [x[0] for x in result]
+    counter: int = 1
+    for i, rel_name in enumerate(rel_names):
+        if rel_name in rel_names[i + 1:]:
+            result[i] = (result[i][0] + str(counter), result[i][1])
+            counter += 1
+
+    return list(map(lambda x: LowestLevelDTO(x[0], x[1]), result))
 
 
 class LevelDTO:
