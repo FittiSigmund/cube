@@ -11,18 +11,18 @@ DATABASE_USER = "sigmundur"
 DATABASE_PASSWORD = ""
 DATABASE_HOST = "127.0.0.1"
 DATABASE_PORT = "5432"
-DATABASE_NAME = "ssb"
+DATABASE_NAME = "ssb_snowflake"
 
 postgres_engine: Postgres = engines.postgres(DATABASE_NAME, DATABASE_USER, DATABASE_PASSWORD, DATABASE_HOST, DATABASE_PORT)
 postgres = create_session(postgres_engine)
-view = postgres.load_view('ssb')
+view = postgres.load_view('ssb_snowflake')
 
 view2 = view.columns(view.date.year.y_year.members()) \
             .rows(view.part.brand1.b_brand1.members()) \
             .where((view.part.category.ca_category == "MFGR#12") &
                    (view.supplier.region.r_region == "AMERICA")) \
             .measures(view.lo_revenue)
-result = view2.output(1)
+result = view2.output(2)
 
 hej = 1
 # ## ssb query 2.1
