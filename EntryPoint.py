@@ -21,8 +21,8 @@ view2 = view.columns(view.date.year.y_year.members()) \
             .rows(view.part.brand1.b_brand1.members()) \
             .where((view.part.category.ca_category == "MFGR#12") &
                    (view.supplier.region.r_region == "AMERICA")) \
-            .measures(view.lo_revenue)
-result = view2.output(2)
+            .measures(view.lo_revenue, revenue=view.lo_extendedprice * view.lo_discount)
+result = view2.output(1)
 
 hej = 1
 # ## ssb query 2.1

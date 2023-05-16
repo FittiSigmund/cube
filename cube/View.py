@@ -5,6 +5,7 @@ from typing import List, Tuple, TYPE_CHECKING, Any, Dict
 import pandas as pd
 from sqlalchemy import create_engine, text
 
+from cube.AggregateFunction import AggregateFunction
 from cube.Axis import Axis
 from cube.BaseCube import BaseCube
 from cube.LevelMember import LevelMember
@@ -48,10 +49,16 @@ class View:
         self.predicates = predicate
         return self
 
-    def measures(self, *args: Measure) -> View:
+    def measures(self, *args: Measure, **kwargs: Dict[str, str | AggregateFunction]) -> View:
         self._measures = list(args)
+        if kwargs:
+            calculated_measures: List[Measure] = []
+            for k, v in kwargs.items():
+                calculated_measures.append(Measure(k, v["function"], v["sqlname"]))
+            self._measures += calculated_measures
         return self
 
+    # Check for axes before converting
     def output(self, version: int) -> pd.DataFrame:
         if version == 1:
             result = self._convert_to_df1()
@@ -76,7 +83,7 @@ class View:
     def _create_select_clause(self) -> str:
         levels: List[str] = list(map(lambda x: f"{x.level.name}.{x.attribute.name}", self.axes))
         measures: List[str] = list(
-            map(lambda x: f"{x.aggregate_function.name}({self.cube.fact_table_name}.{x.name})", self._measures))
+            map(lambda x: f"{x.aggregate_function.name}({x.sqlname}) AS {x.name}", self._measures))
         return "SELECT " + ", ".join(levels) + ", " + ", ".join(measures)
 
     def _create_from_clause(self) -> str:
@@ -122,7 +129,7 @@ class View:
         levels: List[str] = list(map(lambda x: f"{x.level.name}.{x.attribute.name}", self.axes))
 
         measures: List[str] = list(
-            map(lambda x: f"{x.aggregate_function.name}({self.cube.fact_table_name}.{x.name})", self._measures))
+            map(lambda x: f"{x.aggregate_function.name}({x.sqlname}) AS {x.name}", self._measures))
         select_clause: str = "SELECT " + ", ".join(levels) + ", " + ", ".join(measures)
         select_distinct_list: List[str] = [f"SELECT DISTINCT {levels[i]}" for i in range(len(levels))]
 
@@ -150,15 +157,17 @@ class View:
         df_columns = pd.MultiIndex.from_product(columns)
         df_rows = pd.MultiIndex.from_product(rows)
         df = pd.DataFrame(columns=df_columns, index=df_rows)
+        ## Can't assign tuple to df, when this works then all major features should have been implemented
         for row in db_result:
-            df.loc[row[1], row[0]] = row[2]
+            data = (row[2], row[3])
+            df.at[row[1], row[0]] = (row[2], row[3])
         return df
 
     def _convert_to_df2(self, query: str) -> pd.DataFrame:
-        engine = create_engine("postgresql+psycopg2://sigmundur:@localhost/ssb")
+        engine = create_engine("postgresql+psycopg2://sigmundur:@localhost/ssb_snowflake")
         with engine.connect() as conn:
             df = pd.read_sql(text(query), conn)
-            df["Measures"] = df[df.columns[len(self.axes):]].apply(lambda x: (x[0]), axis=1)
+            df["Measures"] = df[df.columns[len(self.axes):]].apply(lambda x: tuple((x[i] for i in range(len(x)))), axis=1)
             columns = [ax.attribute.name for ax in [ax for i, ax in enumerate(self.axes) if i % 2 == 0]]
             rows = [ax.attribute.name for ax in [ax for i, ax in enumerate(self.axes) if i % 2 == 1]]
             final_df = df.pivot(columns=columns, index=rows, values="Measures")
