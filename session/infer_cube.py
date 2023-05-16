@@ -178,10 +178,11 @@ def get_measures(db_cursor: psycur, fact_table: str) -> List[str]:
     return list(map(lambda x: x[0], db_cursor.fetchall()))
 
 
-def create_measures(measure_list: List[str]):
-    return list(map(lambda x: create_measure(x), measure_list))
+def create_measures(measure_list: List[str], fact_table_name: str):
+    return list(map(lambda x: create_measure(x, fact_table_name), measure_list))
 
 
-def create_measure(measure: str) -> Measure:
+def create_measure(measure: str, fact_table_name: str) -> Measure:
     sum_agg_func: AggregateFunction = AggregateFunction("SUM", lambda x, y: x + y)
-    return Measure(measure, sum_agg_func)
+    sql_name: str = f"{fact_table_name}.{measure}"
+    return Measure(measure, sum_agg_func, sql_name)

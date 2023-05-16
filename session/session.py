@@ -71,7 +71,7 @@ def create_session(engine: Postgres) -> Session:
         lowest_levels: List[LowestLevelDTO] = get_lowest_level_names(cursor, fact_table_name)
         levelDTOs: List[List[LevelDTO]] = create_levels(cursor, lowest_levels, engine)
         dimensions: List[Dimension] = create_dimensions(levelDTOs, engine)
-        measures: List[Measure] = create_measures(get_measures(cursor, fact_table_name))
+        measures: List[Measure] = create_measures(get_measures(cursor, fact_table_name), fact_table_name)
         metadata: Graph = create_cube_metadata(engine.dbname, dimensions, levelDTOs, measures)
         attach_metadata_to_dimensions(dimensions, metadata)
         cube: BaseCube = create_cube(fact_table_name, dimensions, measures, engine.dbname, metadata, engine)
