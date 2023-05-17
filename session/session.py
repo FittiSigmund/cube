@@ -58,8 +58,8 @@ def get_default_filters() -> List[Predicate]:
 def create_view(cube: BaseCube) -> View:
     axes: List[Axis] = get_default_axes(cube.dimensions())
     measures: List[Measure] = get_default_measure(cube)
-    filters: List[Predicate] = get_default_filters()
-    return View(axes, measures, filters, cube)
+    predicates: None = None
+    return View(axes, measures, predicates, cube)
 
 
 def create_session(engine: Postgres) -> Session:
