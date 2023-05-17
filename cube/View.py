@@ -100,6 +100,8 @@ class View:
         return f"FROM {self.cube.fact_table_name} " + " ".join(subset_clauses)
 
     def _get_all_predicates(self) -> List[Predicate]:
+        if not self.predicates:
+            return []
         current_pred = self.predicates
         result: List[Predicate] = [current_pred]
         while current_pred.next_pred is not None:
@@ -107,14 +109,13 @@ class View:
             result.append(current_pred)
         return result
 
-
     def _create_where_clause(self) -> str:
         axes: List[str] = self._create_axes_where_clause()
         axes: str = " AND ".join(axes)
 
-        filters: List[str] = self._create_filters_where_clause()
-        filters: str = " AND ".join(filters)
-        conditions: str = axes + " AND " + filters if filters else axes
+        predicates: List[str] = self._create_predicates_where_clause()
+        predicates: str = " AND ".join(predicates)
+        conditions: str = axes + " AND " + predicates if predicates else axes
         return f"WHERE " + conditions
 
     def _create_group_by_clause(self) -> str:
@@ -124,7 +125,7 @@ class View:
             result.append(f"{x.level.name}.{x.level.key}")
         return "GROUP BY " + ", ".join(result)
 
-    # Strictly only 2d so far
+    # Does not work currently. Can not figure out how to assign tuples to cells
     def _convert_to_df1(self) -> pd.DataFrame:
         levels: List[str] = list(map(lambda x: f"{x.level.name}.{x.attribute.name}", self.axes))
 
@@ -157,9 +158,7 @@ class View:
         df_columns = pd.MultiIndex.from_product(columns)
         df_rows = pd.MultiIndex.from_product(rows)
         df = pd.DataFrame(columns=df_columns, index=df_rows)
-        ## Can't assign tuple to df, when this works then all major features should have been implemented
         for row in db_result:
-            data = (row[2], row[3])
             df.at[row[1], row[0]] = (row[2], row[3])
         return df
 
@@ -167,7 +166,8 @@ class View:
         engine = create_engine("postgresql+psycopg2://sigmundur:@localhost/ssb_snowflake")
         with engine.connect() as conn:
             df = pd.read_sql(text(query), conn)
-            df["Measures"] = df[df.columns[len(self.axes):]].apply(lambda x: tuple((x[i] for i in range(len(x)))), axis=1)
+            df["Measures"] = df[df.columns[len(self.axes):]].apply(lambda x: tuple((x[i] for i in range(len(x)))),
+                                                                   axis=1)
             columns = [ax.attribute.name for ax in [ax for i, ax in enumerate(self.axes) if i % 2 == 0]]
             rows = [ax.attribute.name for ax in [ax for i, ax in enumerate(self.axes) if i % 2 == 1]]
             final_df = df.pivot(columns=columns, index=rows, values="Measures")
@@ -185,20 +185,21 @@ class View:
             map(lambda x: f"{x.level.name}.{x.attribute.name} IN ({format_level_members(x, x.level_members)})",
                 self.axes))
 
-    def _create_filters_where_clause(self) -> List[str]:
+    def _create_predicates_where_clause(self) -> List[str]:
         def format_filters(p: Predicate):
             if p.level_member_type is LevelMemberType.STR:
                 return f"{p.attribute.level.name}.{p.attribute.name} {p.operator.value} '{p.value}'"
             elif p.level_member_type is LevelMemberType.INT:
                 return f"{p.attribute.level.name}.{p.attribute.name} {p.operator.value} {p.value}"
 
+        if not self.predicates:
+            return []
         pred = self.predicates
         result: List[str] = [format_filters(pred)]
         while pred.next_pred is not None:
             pred = pred.next_pred
             result.append(format_filters(pred))
         return result
-
 
     def _create_from_subset_clause(self, level: NonTopLevel) -> str:
         # The order in hierarchy is the lowest level first and highest last
