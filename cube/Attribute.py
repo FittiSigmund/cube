@@ -47,8 +47,14 @@ class Attribute:
         else:
             return self._fetch_lm_from_db_and_save(str(item))
 
-    def __eq__(self, other):
+    def __eq__(self, other) -> Predicate:
         return Predicate(self, other, PredicateOperator.EQ)
+
+    def __gt__(self, other) -> Predicate:
+        return Predicate(self, other, PredicateOperator.GT)
+
+    def __lt__(self, other) -> Predicate:
+        return Predicate(self, other, PredicateOperator.LT)
 
     def _fetch_lm_from_db_and_save(self, item: str):
         with self._get_db_conn() as conn:
