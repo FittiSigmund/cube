@@ -36,8 +36,11 @@ class Predicate:
                 self.level_member_type = None
 
     def __and__(self, other):
-        self.connective = BooleanConnective.AND
-        self.next_pred = other
+        current_pred = self
+        while current_pred.next_pred is not None:
+            current_pred = current_pred.next_pred
+        current_pred.connective = BooleanConnective.AND
+        current_pred.next_pred = other
         return self
 
     def __repr__(self):

@@ -2,8 +2,8 @@ from enum import Enum
 
 
 class PredicateOperator(Enum):
-    LE = "<"
+    LT = "<"
     LEQ = "<="
     EQ = "="
     GEQ = ">="
-    GE = ">"
+    GT = ">"
