@@ -4,6 +4,8 @@ from numbers import Number
 from typing import Dict
 
 from cube import AggregateFunction
+from cube.Predicate import Predicate
+from cube.PredicateOperator import PredicateOperator
 
 
 class Measure:
@@ -20,3 +22,10 @@ class Measure:
 
     def __repr__(self) -> str:
         return f"Measure({self.name}, {self.aggregate_function})"
+
+    # HACKS
+    def __gt__(self, other) -> Predicate:
+        return Predicate(self, other, PredicateOperator.GT)
+
+    def __lt__(self, other) -> Predicate:
+        return Predicate(self, other, PredicateOperator.LT)

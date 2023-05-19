@@ -6,6 +6,7 @@ import pandas as pd
 from sqlalchemy import create_engine, text
 
 from cube.AggregateFunction import AggregateFunction
+from cube.Attribute import Attribute
 from cube.Axis import Axis
 from cube.BaseCube import BaseCube
 from cube.LevelMember import LevelMember
@@ -59,16 +60,13 @@ class View:
         return self
 
     # Check for axes before converting
-    def output(self, version: int) -> pd.DataFrame:
-        if version == 1:
-            result = self._convert_to_df1()
-            return result
-        elif version == 2:
-            query: str = self._create_sql_query()
-            result = self._convert_to_df2(query)
-            return result
+    def output(self, hack=False) -> pd.DataFrame:
+        query: str = self._create_sql_query()
+        if hack:
+            result = self._convert_to_df_hack(query)
         else:
-            raise Exception(f"Version {version} is not 1 or 2")
+            result = self._convert_to_df(query)
+        return result
 
     def __getattr__(self, item):
         return self.cube.__getattribute__(item)
@@ -84,8 +82,17 @@ class View:
         levels: List[str] = list(map(lambda x: f"{x.level.name}.{x.attribute.name}", self.axes))
         measures: List[str] = list(
             map(lambda x: f"{x.aggregate_function.name}({x.sqlname}) AS {x.name}", self._measures))
-        return "SELECT " + ", ".join(levels) + ", " + ", ".join(measures)
+        # HACK
+        if levels and measures:
+            return "SELECT " + ", ".join(levels) + ", " + ", ".join(measures)
+        if levels:
+            return "SELECT " + ", ".join(levels)
+        if measures:
+            return "SELECT " + ", ".join(measures)
+        else:
+            return "SELECT "
 
+    # Add support for role playing dimensions (i.e., alias the tables when self joining)
     def _create_from_clause(self) -> str:
         subset_clauses: List[str] = []
         axis_lvls: List[NonTopLevel] = [x.level for x in self.axes]
@@ -103,27 +110,36 @@ class View:
         if not self.predicates:
             return []
         current_pred = self.predicates
-        result: List[Predicate] = [current_pred]
+        # HACK
+        result: List[Predicate] = [current_pred] if type(current_pred.attribute) == Attribute else []
         while current_pred.next_pred is not None:
             current_pred = current_pred.next_pred
-            result.append(current_pred)
+            # HACK
+            if type(current_pred.attribute) == Attribute:
+                result.append(current_pred)
         return result
 
     def _create_where_clause(self) -> str:
         axes: List[str] = self._create_axes_where_clause()
-        axes: str = " AND ".join(axes)
+        axes: str = " AND ".join(axes) if axes else ""
 
         predicates: List[str] = self._create_predicates_where_clause()
         predicates: str = " AND ".join(predicates)
-        conditions: str = axes + " AND " + predicates if predicates else axes
-        return f"WHERE " + conditions
+        if axes and predicates:
+            return "WHERE " + axes + " AND " + predicates
+        elif axes:
+            return "WHERE " + axes
+        elif predicates:
+            return "WHERE " + predicates
+        else:
+            return ""
 
     def _create_group_by_clause(self) -> str:
         result: List[str] = []
         for x in self.axes:
             result.append(f"{x.level.name}.{x.attribute.name}")
             result.append(f"{x.level.name}.{x.level.key}")
-        return "GROUP BY " + ", ".join(result)
+        return "GROUP BY " + ", ".join(result) if result else ""
 
     # Does not work currently. Can not figure out how to assign tuples to cells
     def _convert_to_df1(self) -> pd.DataFrame:
@@ -162,7 +178,7 @@ class View:
             df.at[row[1], row[0]] = (row[2], row[3])
         return df
 
-    def _convert_to_df2(self, query: str) -> pd.DataFrame:
+    def _convert_to_df(self, query: str) -> pd.DataFrame:
         engine = create_engine("postgresql+psycopg2://sigmundur:@localhost/ssb_snowflake")
         with engine.connect() as conn:
             df = pd.read_sql(text(query), conn)
@@ -173,6 +189,13 @@ class View:
             final_df = df.pivot(columns=columns, index=rows, values="Measures")
         engine.dispose()
         return final_df
+
+    def _convert_to_df_hack(self, query: str) -> pd.DataFrame:
+        engine = create_engine("postgresql+psycopg2://sigmundur:@localhost/ssb_snowflake")
+        with engine.connect() as conn:
+            df = pd.read_sql(text(query), conn)
+        engine.dispose()
+        return df
 
     def _create_axes_where_clause(self) -> List[str]:
         def format_level_members(a: Axis, lms: List[LevelMember]) -> str:
@@ -186,7 +209,7 @@ class View:
                 self.axes))
 
     def _create_predicates_where_clause(self) -> List[str]:
-        def format_filters(p: Predicate):
+        def format_predicates(p: Predicate):
             if p.level_member_type is LevelMemberType.STR:
                 return f"{p.attribute.level.name}.{p.attribute.name} {p.operator.value} '{p.value}'"
             elif p.level_member_type is LevelMemberType.INT:
@@ -195,10 +218,14 @@ class View:
         if not self.predicates:
             return []
         pred = self.predicates
-        result: List[str] = [format_filters(pred)]
+        result: List[str] = [format_predicates(pred)]
         while pred.next_pred is not None:
             pred = pred.next_pred
-            result.append(format_filters(pred))
+            # HACK
+            if type(pred.attribute) == Measure:
+                result.append(f"{self.cube.fact_table_name}.{pred.attribute.name} {pred.operator.value} {pred.value}")
+            else:
+                result.append(format_predicates(pred))
         return result
 
     def _create_from_subset_clause(self, level: NonTopLevel) -> str:
