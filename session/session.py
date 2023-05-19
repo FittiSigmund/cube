@@ -70,6 +70,15 @@ def create_session(engine: Postgres) -> Session:
         fact_table_name: str = get_fact_table_name(cursor)
         lowest_levels: List[LowestLevelDTO] = get_lowest_level_names(cursor, fact_table_name)
         levelDTOs: List[List[LevelDTO]] = create_levels(cursor, lowest_levels, engine)
+
+        # Renaming role playing dimensions
+        rel_names = [x[len(x) - 1].name for x in levelDTOs]
+        counter = 1
+        for i, rel_name in enumerate(rel_names):
+            if rel_name in rel_names[i + 1:]:
+                levelDTOs[i][len(levelDTOs[i]) - 1].name = levelDTOs[i][len(levelDTOs[i]) - 1].name + str(counter)
+                counter += 1
+
         dimensions: List[Dimension] = create_dimensions(levelDTOs, engine)
         measures: List[Measure] = create_measures(get_measures(cursor, fact_table_name), fact_table_name)
         metadata: Graph = create_cube_metadata(engine.dbname, dimensions, levelDTOs, measures)

@@ -56,6 +56,7 @@ def attach_levels_to_dto_list(level_dtos: List[LevelDTO], levels: List[Level]) -
         level_dtos[i].level = levels[i]
     return level_dtos
 
+
 def create_levels_in_hierarchy(db_cursor: psycur, lowest_level: LowestLevelDTO, engine: Postgres) -> List[LevelDTO]:
     hierarchy: List[LevelDTO] = create_hierarchy(db_cursor, lowest_level.level_name, lowest_level.fact_table_fk)
     levels: List[Level] = [TopLevel()]
@@ -76,12 +77,6 @@ def create_levels(db_cursor: psycur, lowest_levels: List[LowestLevelDTO], engine
 def get_lowest_level_names(db_cursor: psycur, fact_table_name: str) -> List[LowestLevelDTO]:
     db_cursor.execute(lowest_levels_query(fact_table_name))
     result: List[Tuple[str, str]] = db_cursor.fetchall()
-    rel_names: List[str] = [x[0] for x in result]
-    counter: int = 1
-    for i, rel_name in enumerate(rel_names):
-        if rel_name in rel_names[i + 1:]:
-            result[i] = (result[i][0] + str(counter), result[i][1])
-            counter += 1
 
     return list(map(lambda x: LowestLevelDTO(x[0], x[1]), result))
 
@@ -158,10 +153,12 @@ def get_level_attributes(db_cursor: psycur, level_name: str) -> List[str]:
     db_cursor.execute(get_non_key_columns_query(level_name))
     return list(map(lambda x: x[0], db_cursor.fetchall()))
 
+
 def get_next_level_name(db_cursor: psycur, current_level: str) -> str:
     db_cursor.execute(get_next_level_query(current_level))
     result: List[Tuple[str, Any]] = db_cursor.fetchall()
     return result[0][0] if result else ""
+
 
 def create_dimensions(levelDTOs: List[List[LevelDTO]], engine: Postgres) -> List[Dimension]:
     return list(map(lambda x: create_dimension(x[::-1], engine), levelDTOs))
