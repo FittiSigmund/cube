@@ -3,6 +3,7 @@ from __future__ import annotations
 import csv
 
 import numpy as np
+import pandas as pd
 
 import engines
 from session.session import *
@@ -23,6 +24,14 @@ view2 = view.columns(view.date.year.y_year.members()) \
                    (view.supplier.region.r_region == "AMERICA")) \
             .measures(view.lo_revenue, revenue=view.lo_extendedprice * view.lo_discount)
 result = view2.output(1)
+
+view3 = view.columns(view.part.mfgr.m_mfgr.members())\
+            .rows(view.date.year.y_year.members())\
+            .measures(view.lo_revenue, test=view.lo_extendedprice * view.lo_discount)
+result = view3.output(1)
+
+# df = pd.DataFrame(data={"AB": {"CD": 1, "EF": 2}, "AK": {"CD": 3, "EF": 4}}, dtype=object)
+# df.at["CD", "AB"] = 5
 
 hej = 1
 # ## ssb query 2.1
