@@ -30,13 +30,14 @@ if sys.argv and len(sys.argv) == 2:
 
 def pyCube_query11():
     view2 = view.where(
-                       (view.date1.year.y_year == 1993)
-                       & (view.lo_discount > 0)
-                       & (view.lo_discount < 4)
-                       & (view.lo_quantity < 25))\
-                .measures(revenue=view.lo_extendedprice * view.lo_discount)
+        (view.date1.year.y_year == 1993)
+        & (view.lo_discount > 0)
+        & (view.lo_discount < 4)
+        & (view.lo_quantity < 25)) \
+        .measures(revenue=view.lo_extendedprice * view.lo_discount)
     result = view2.output(hack=True)
     hej = 1
+
 
 def pyCube_query12():
     view2 = view.where(
@@ -48,6 +49,7 @@ def pyCube_query12():
     ).measures(revenue=view.lo_extendedprice * view.lo_discount)
     result = view2.output(hack=True)
     hej = 1
+
 
 def pyCube_query13():
     view2 = view.where(
@@ -63,4 +65,88 @@ def pyCube_query13():
     hej = 1
 
 
-pyCube_query13()
+def pyCube_query21():
+    view2 = view.columns(view.date1.year.y_year.members()) \
+        .rows(view.part.brand1.b_brand1.members()) \
+        .where(
+        (view.part.category.ca_category == "MFGR#12")
+        & (view.supplier.region.r_region == "AMERICA")
+    ) \
+        .measures(view.lo_revenue)
+    result = view2.output()
+    hej = 1
+
+
+def pyCube_query22():
+    view2 = view.columns(view.date1.year.y_year.members()) \
+        .rows(view.part.brand1.b_brand1.members()) \
+        .where(
+        (view.part.brand1.b_brand1 > "MFGR#2220")
+        & (view.part.brand1.b_brand1 < "MFGR#2229")
+        & (view.supplier.region.r_region == "ASIA")
+    ) \
+        .measures(view.lo_revenue)
+    result = view2.output()
+    hej = 1
+
+
+def pyCube_query23():
+    view2 = view.columns(view.date1.year.y_year.members()) \
+        .rows(view.part.brand1.b_brand1.members()) \
+        .where(
+        (view.part.brand1.b_brand1 == "MFGR#2339")
+        & (view.supplier.region.r_region == "EUROPE")
+    ) \
+        .measures(view.lo_revenue)
+    result = view2.output()
+    hej = 1
+
+
+def pyCube_query31():
+    view2 = view.columns(view.customer.nation.n_nation.members()) \
+        .rows(view.supplier.nation.n_nation.members()) \
+        .pages(view.date1.year.y_year.members()) \
+        .where(
+        (view.customer.region.r_region == "ASIA")
+        & (view.supplier.region.r_region == "ASIA")
+        & (view.date1.year.y_year >= 1992)
+        & (view.date1.year.y_year <= 1997)
+    ) \
+        .measures(view.lo_revenue)
+    result = view2.output()
+    hej = 1
+
+
+def pyCube_query32():
+    view2 = view.columns(view.customer.city.ci_city.members()) \
+        .rows(view.supplier.city.ci_city.members()) \
+        .pages(view.date1.year.y_year.members()) \
+        .where(
+        (view.customer.nation.n_nation == "UNITED STATES")
+        & (view.supplier.nation.n_nation == "UNITED STATES")
+        & (view.date1.year.y_year >= 1992)
+        & (view.date1.year.y_year <= 1997)
+    ) \
+        .measures(view.lo_revenue)
+    result = view2.output()
+    hej = 1
+
+
+def pyCube_query33():
+    view2 = view.columns(view.customer.city.ci_city.members()) \
+        .rows(view.supplier.city.ci_city.members()) \
+        .pages(view.date1.year.y_year.members()) \
+        .where(
+        ((view.customer.city.ci_city == "UNITED KI1")
+         | (view.customer.city.ci_city == "UNITED KI5"))
+        & ((view.supplier.city.ci_city == "UNITED KI1")
+           | (view.supplier.city.ci_city == "UNITED KI5"))
+        & (view.date1.year.y_year >= 1992)
+        & (view.date1.year.y_year <= 1997)
+    ) \
+        .measures(view.lo_revenue)
+    result = view2.output()
+    hej = 1
+
+
+pyCube_query33()
