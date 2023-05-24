@@ -43,5 +43,13 @@ class Predicate:
         current_pred.next_pred = other
         return self
 
+    def __or__(self, other):
+        current_pred = self
+        while current_pred.next_pred is not None:
+            current_pred = current_pred.next_pred
+        current_pred.connective = BooleanConnective.OR
+        current_pred.next_pred = other
+        return self
+
     def __repr__(self):
         return f"Predicate(Attribute: {self.attribute}, Value: {self.value}, Operator: {self.operator}, Connective: {self.connective})"
