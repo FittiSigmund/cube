@@ -26,6 +26,7 @@ class NonTopLevel(Level):
         self._metadata = None
         self._level_members = []
         self._all_lm_loaded: bool = False
+        self.alias: str = ""
 
     @property
     def child(self):

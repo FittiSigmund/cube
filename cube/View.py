@@ -46,6 +46,9 @@ class View:
     def rows(self, lms: List[LevelMember]) -> View:
         return self.axis(1, lms)
 
+    def pages(self, lms: List[LevelMember]) -> View:
+        return self.axis(2, lms)
+
     def where(self, predicate: Predicate) -> View:
         self.predicates = predicate
         return self
@@ -72,14 +75,14 @@ class View:
         return self.cube.__getattribute__(item)
 
     def _create_sql_query(self) -> str:
-        select_clause: str = self._create_select_clause()
         from_clause: str = self._create_from_clause()
+        select_clause: str = self._create_select_clause()
         where_clause: str = self._create_where_clause()
         group_by_clause: str = self._create_group_by_clause()
         return select_clause + " " + from_clause + " " + where_clause + " " + group_by_clause + ";"
 
     def _create_select_clause(self) -> str:
-        levels: List[str] = list(map(lambda x: f"{x.level.name}.{x.attribute.name}", self.axes))
+        levels: List[str] = list(map(lambda x: f"{x.level.alias}.{x.attribute.name} AS {x.level.alias}", self.axes))
         measures: List[str] = list(
             map(lambda x: f"{x.aggregate_function.name}({x.sqlname}) AS {x.name}", self._measures))
         # HACK
@@ -97,12 +100,18 @@ class View:
         subset_clauses: List[str] = []
         axis_lvls: List[NonTopLevel] = [x.level for x in self.axes]
 
-        all_pred_lvls: List[NonTopLevel] = [pred.attribute.level for pred in self._get_all_predicates()]
+        all_pred_lvls: List[NonTopLevel] = [
+            pred.attribute.level for pred in self._get_all_predicates() if type(pred.attribute) == Attribute
+        ]
         pred_lvls: List[NonTopLevel] = [lvl for lvl in all_pred_lvls if lvl.dimension
                                         not in [x.dimension for x in axis_lvls]]
 
-        for level in axis_lvls + pred_lvls:
-            subset_clauses.append(self._create_from_subset_clause(level))
+        for lvls in pred_lvls:
+            if lvls.dimension in [x.dimension for x in pred_lvls[1:]]:
+                pred_lvls.remove(lvls)
+
+        for i, level in enumerate(axis_lvls + pred_lvls):
+            subset_clauses.append(self._create_from_subset_clause(level, i))
 
         return f"FROM {self.cube.fact_table_name} " + " ".join(subset_clauses)
 
@@ -110,13 +119,10 @@ class View:
         if not self.predicates:
             return []
         current_pred = self.predicates
-        # HACK
-        result: List[Predicate] = [current_pred] if type(current_pred.attribute) == Attribute else []
+        result: List[Predicate] = [current_pred]
         while current_pred.next_pred is not None:
             current_pred = current_pred.next_pred
-            # HACK
-            if type(current_pred.attribute) == Attribute:
-                result.append(current_pred)
+            result.append(current_pred)
         return result
 
     def _create_where_clause(self) -> str:
@@ -137,46 +143,46 @@ class View:
     def _create_group_by_clause(self) -> str:
         result: List[str] = []
         for x in self.axes:
-            result.append(f"{x.level.name}.{x.attribute.name}")
-            result.append(f"{x.level.name}.{x.level.key}")
+            result.append(f"{x.level.alias}.{x.attribute.name}")
+            result.append(f"{x.level.alias}.{x.level.key}")
         return "GROUP BY " + ", ".join(result) if result else ""
 
-    # Does not work currently. Can not figure out how to assign tuples to cells
-    def _convert_to_df1(self) -> pd.DataFrame:
-        levels: List[str] = list(map(lambda x: f"{x.level.name}.{x.attribute.name}", self.axes))
+    # # Does not work currently. Can not figure out how to assign tuples to cells
+    # def _convert_to_df1(self) -> pd.DataFrame:
+    #     levels: List[str] = list(map(lambda x: f"{x.level.name}.{x.attribute.name}", self.axes))
 
-        measures: List[str] = list(
-            map(lambda x: f"{x.aggregate_function.name}({x.sqlname}) AS {x.name}", self._measures))
-        select_clause: str = "SELECT " + ", ".join(levels) + ", " + ", ".join(measures)
-        select_distinct_list: List[str] = [f"SELECT DISTINCT {levels[i]}" for i in range(len(levels))]
+    #     measures: List[str] = list(
+    #         map(lambda x: f"{x.aggregate_function.name}({x.sqlname}) AS {x.name}", self._measures))
+    #     select_clause: str = "SELECT " + ", ".join(levels) + ", " + ", ".join(measures)
+    #     select_distinct_list: List[str] = [f"SELECT DISTINCT {levels[i]}" for i in range(len(levels))]
 
-        from_clause: str = self._create_from_clause()
-        where_clause: str = self._create_where_clause()
-        group_by_clause: str = self._create_group_by_clause()
+    #     from_clause: str = self._create_from_clause()
+    #     where_clause: str = self._create_where_clause()
+    #     group_by_clause: str = self._create_group_by_clause()
 
-        query: str = select_clause + " " + from_clause + " " + where_clause + " " + group_by_clause + ";"
-        query_distinct: List[str] = [distinct + " " + from_clause + " " + where_clause + " " + group_by_clause + ";"
-                                     for distinct in select_distinct_list]
+    #     query: str = select_clause + " " + from_clause + " " + where_clause + " " + group_by_clause + ";"
+    #     query_distinct: List[str] = [distinct + " " + from_clause + " " + where_clause + " " + group_by_clause + ";"
+    #                                  for distinct in select_distinct_list]
 
-        db_result = self.cube.execute_query(query)
-        db_result_distinct: List[List[Tuple[Any, ...]]] = [self.cube.execute_query(x) for x in query_distinct]
+    #     db_result = self.cube.execute_query(query)
+    #     db_result_distinct: List[List[Tuple[Any, ...]]] = [self.cube.execute_query(x) for x in query_distinct]
 
-        column_results: List[List[Tuple[Any, ...]]] = [x for i, x in enumerate(db_result_distinct) if i % 2 == 0]
-        row_results: List[List[Tuple[Any, ...]]] = [x for i, x in enumerate(db_result_distinct) if i % 2 == 1]
+    #     column_results: List[List[Tuple[Any, ...]]] = [x for i, x in enumerate(db_result_distinct) if i % 2 == 0]
+    #     row_results: List[List[Tuple[Any, ...]]] = [x for i, x in enumerate(db_result_distinct) if i % 2 == 1]
 
-        columns: List[List[Any]] = []
-        rows: List[List[Any]] = []
-        for res in column_results:
-            columns.append([x[0] for x in res])
-        for res in row_results:
-            rows.append([x[0] for x in res])
+    #     columns: List[List[Any]] = []
+    #     rows: List[List[Any]] = []
+    #     for res in column_results:
+    #         columns.append([x[0] for x in res])
+    #     for res in row_results:
+    #         rows.append([x[0] for x in res])
 
-        df_columns = pd.MultiIndex.from_product(columns)
-        df_rows = pd.MultiIndex.from_product(rows)
-        df = pd.DataFrame(columns=df_columns, index=df_rows)
-        for row in db_result:
-            df.at[row[1], row[0]] = (row[2], row[3])
-        return df
+    #     df_columns = pd.MultiIndex.from_product(columns)
+    #     df_rows = pd.MultiIndex.from_product(rows)
+    #     df = pd.DataFrame(columns=df_columns, index=df_rows)
+    #     for row in db_result:
+    #         df.at[row[1], row[0]] = (row[2], row[3])
+    #     return df
 
     def _convert_to_df(self, query: str) -> pd.DataFrame:
         engine = create_engine("postgresql+psycopg2://sigmundur:@localhost/ssb_snowflake")
@@ -184,8 +190,8 @@ class View:
             df = pd.read_sql(text(query), conn)
             df["Measures"] = df[df.columns[len(self.axes):]].apply(lambda x: tuple((x[i] for i in range(len(x)))),
                                                                    axis=1)
-            columns = [ax.attribute.name for ax in [ax for i, ax in enumerate(self.axes) if i % 2 == 0]]
-            rows = [ax.attribute.name for ax in [ax for i, ax in enumerate(self.axes) if i % 2 == 1]]
+            columns = [ax.attribute.level.alias for ax in [ax for i, ax in enumerate(self.axes) if i % 2 == 0]]
+            rows = [ax.attribute.level.alias for ax in [ax for i, ax in enumerate(self.axes) if i % 2 == 1]]
             final_df = df.pivot(columns=columns, index=rows, values="Measures")
         engine.dispose()
         return final_df
@@ -205,15 +211,16 @@ class View:
                 return ", ".join(list(map(lambda x: f"{x.name}", lms)))
 
         return list(
-            map(lambda x: f"{x.level.name}.{x.attribute.name} IN ({format_level_members(x, x.level_members)})",
+            map(lambda x: f"{x.level.alias}.{x.attribute.name} IN ({format_level_members(x, x.level_members)})",
                 self.axes))
 
+    # Combine predicates using the correct boolean connective (currently only AND)
     def _create_predicates_where_clause(self) -> List[str]:
         def format_predicates(p: Predicate):
             if p.level_member_type is LevelMemberType.STR:
-                return f"{p.attribute.level.name}.{p.attribute.name} {p.operator.value} '{p.value}'"
+                return f"{p.attribute.level.alias}.{p.attribute.name} {p.operator.value} '{p.value}'"
             elif p.level_member_type is LevelMemberType.INT:
-                return f"{p.attribute.level.name}.{p.attribute.name} {p.operator.value} {p.value}"
+                return f"{p.attribute.level.alias}.{p.attribute.name} {p.operator.value} {p.value}"
 
         if not self.predicates:
             return []
@@ -228,20 +235,23 @@ class View:
                 result.append(format_predicates(pred))
         return result
 
-    def _create_from_subset_clause(self, level: NonTopLevel) -> str:
+    def _create_from_subset_clause(self, level: NonTopLevel, counter: int) -> str:
         # The order in hierarchy is the lowest level first and highest last
         hierarchy: List[NonTopLevel] = self._get_children(level) + [level] + self._get_parents(level)
         try:
-            result: List[str] = [self._create_on_condition_for_fact_table(self.cube.fact_table_name, hierarchy[0])]
+            result: List[str] = [
+                self._create_on_condition_for_fact_table(self.cube.fact_table_name, hierarchy[0], counter)
+            ]
             for i in range(len(hierarchy) - 1):
-                result.append(self._create_on_condition(hierarchy[i], hierarchy[i + 1]))
+                result.append(self._create_on_condition(hierarchy[i], hierarchy[i + 1], counter))
         except IndexError as e:
             print(f"IndexError: {e}")
             return ""
         return "JOIN " + " JOIN ".join(result)
 
-    def _create_on_condition_for_fact_table(self, fact_table: str, level: NonTopLevel) -> str:
-        return f"{level.name} ON {fact_table}.{level.dimension.fact_table_fk} = {level.name}.{level.key}"
+    def _create_on_condition_for_fact_table(self, fact_table: str, level: NonTopLevel, counter: int) -> str:
+        level.alias = f"{level.name}{counter}"
+        return f"{level.name} AS {level.alias} ON {fact_table}.{level.dimension.fact_table_fk} = {level.alias}.{level.key}"
 
     def _get_children(self, level: NonTopLevel) -> List[NonTopLevel]:
         result: List[NonTopLevel] = []
@@ -258,5 +268,6 @@ class View:
                 result.append(level)
         return list(result)
 
-    def _create_on_condition(self, child: NonTopLevel, parent: NonTopLevel):
-        return f"{parent.table_name} ON {child.table_name}.{child.fk_name} = {parent.table_name}.{parent.key}"
+    def _create_on_condition(self, child: NonTopLevel, parent: NonTopLevel, counter: int) -> str:
+        parent.alias = f"{parent.table_name}{counter}"
+        return f"{parent.table_name} AS {parent.alias} ON {child.alias}.{child.fk_name} = {parent.alias}.{parent.key}"
