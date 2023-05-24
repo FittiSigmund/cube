@@ -56,6 +56,12 @@ class Attribute:
     def __lt__(self, other) -> Predicate:
         return Predicate(self, other, PredicateOperator.LT)
 
+    def __ge__(self, other) -> Predicate:
+        return Predicate(self, other, PredicateOperator.GEQ)
+
+    def __le__(self, other) -> Predicate:
+        return Predicate(self, other, PredicateOperator.LEQ)
+
     def _fetch_lm_from_db_and_save(self, item: str):
         with self._get_db_conn() as conn:
             with conn.cursor() as curs:
