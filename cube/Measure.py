@@ -20,6 +20,9 @@ class Measure:
     def __mul__(self, other: Measure) -> Dict[str, str | AggregateFunction]:
         return {"function": self.aggregate_function, "sqlname": f"{self.sqlname} * {other.sqlname}"}
 
+    def __sub__(self, other: Measure) -> Dict[str, str | AggregateFunction]:
+        return {"function": self.aggregate_function, "sqlname": f"{self.sqlname} - {other.sqlname}"}
+
     def __repr__(self) -> str:
         return f"Measure({self.name}, {self.aggregate_function})"
 
