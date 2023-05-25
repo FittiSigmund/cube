@@ -4,6 +4,7 @@
 # The bash script will run this script using GNU time iteratively over every use case.
 # The bash script will save the results of time into files for later analysis.
 import sys
+import matplotlib.pyplot as plt
 
 import engines
 from session.session import *
@@ -149,4 +150,75 @@ def pyCube_query33():
     hej = 1
 
 
-pyCube_query33()
+def pyCube_query34():
+    view2 = view.columns(view.customer.city.ci_city.members()) \
+        .rows(view.supplier.city.ci_city.members()) \
+        .pages(view.date1.year.y_year.members()) \
+        .where(
+        ((view.customer.city.ci_city == "UNITED KI1")
+         | (view.customer.city.ci_city == "UNITED KI5"))
+        & ((view.supplier.city.ci_city == "UNITED KI1")
+           | (view.supplier.city.ci_city == "UNITED KI5"))
+        & (view.date1.month.mo_yearmonth == "Dec1997")
+    ) \
+        .measures(view.lo_revenue)
+    result = view2.output()
+    hej = 1
+
+
+def pyCube_query41():
+    view2 = view.columns(view.date1.year.y_year.members()) \
+        .rows(view.customer.nation.n_nation.members()) \
+        .where(
+        (view.customer.region.r_region == "AMERICA")
+        & (view.supplier.region.r_region == "AMERICA")
+        & (
+                (view.part.mfgr.m_mfgr == "MFGR#1")
+                | (view.part.mfgr.m_mfgr == "MFGR#2")
+        )
+    ) \
+        .measures(profit=view.lo_revenue - view.lo_supplycost)
+    result = view2.output()
+    hej = 1
+
+
+def pyCube_query42():
+    view2 = view.columns(view.date1.year.y_year.members()) \
+        .rows(view.supplier.nation.n_nation.members()) \
+        .pages(view.part.category.ca_category.members()) \
+        .where(
+        (view.customer.region.r_region == "AMERICA")
+        & (view.supplier.region.r_region == "AMERICA")
+        & (
+                (view.date1.year.y_year == 1997)
+                | (view.date1.year.y_year == 1998)
+        )
+        & (
+                (view.part.mfgr.m_mfgr == "MFGR#1")
+                | (view.part.mfgr.m_mfgr == "MFGR#2")
+        )
+    ) \
+        .measures(profit=view.lo_revenue - view.lo_supplycost)
+    result = view2.output()
+    hej = 1
+
+
+def pyCube_query43():
+    view2 = view.columns(view.date1.year.y_year.members()) \
+        .rows(view.supplier.city.ci_city.members()) \
+        .pages(view.part.brand1.b_brand1.members()) \
+        .where(
+        (view.customer.region.r_region == "AMERICA")
+        & (view.supplier.nation.n_nation == "UNITED STATES")
+        & (
+                (view.date1.year.y_year == 1997)
+                | (view.date1.year.y_year == 1998)
+        )
+        & (view.part.category.ca_category == "MFGR#14")
+    ) \
+        .measures(profit=view.lo_revenue - view.lo_supplycost)
+    result = view2.output()
+    hej = 1
+
+
+pyCube_query31()
