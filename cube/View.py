@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from numbers import Number
 from typing import List, Tuple, TYPE_CHECKING, Any, Dict
 
 import pandas as pd
@@ -95,7 +96,6 @@ class View:
         else:
             return "SELECT "
 
-    # Add support for role playing dimensions (i.e., alias the tables when self joining)
     def _create_from_clause(self) -> str:
         subset_clauses: List[str] = []
         axis_lvls: List[NonTopLevel] = [x.level for x in self.axes]
@@ -130,7 +130,7 @@ class View:
         axes: str = " AND ".join(axes) if axes else ""
 
         predicates: List[str] = self._create_predicates_where_clause()
-        predicates: str = " AND ".join(predicates)
+        predicates: str = " ".join(predicates)
         if axes and predicates:
             return "WHERE " + axes + " AND " + predicates
         elif axes:
@@ -185,11 +185,13 @@ class View:
     #     return df
 
     def _convert_to_df(self, query: str) -> pd.DataFrame:
+        def create_measure_tuple(row: pd.Series) -> Tuple[str | Number, ...] | str | Number:
+            return tuple((row[i] for i in range(len(row)))) if len(row) > 1 else row[0]
+
         engine = create_engine("postgresql+psycopg2://sigmundur:@localhost/ssb_snowflake")
         with engine.connect() as conn:
             df = pd.read_sql(text(query), conn)
-            df["Measures"] = df[df.columns[len(self.axes):]].apply(lambda x: tuple((x[i] for i in range(len(x)))),
-                                                                   axis=1)
+            df["Measures"] = df[df.columns[len(self.axes):]].apply(lambda x: create_measure_tuple(x), axis=1)
             columns = [ax.attribute.level.alias for ax in [ax for i, ax in enumerate(self.axes) if i % 2 == 0]]
             rows = [ax.attribute.level.alias for ax in [ax for i, ax in enumerate(self.axes) if i % 2 == 1]]
             final_df = df.pivot(columns=columns, index=rows, values="Measures")
@@ -214,13 +216,13 @@ class View:
             map(lambda x: f"{x.level.alias}.{x.attribute.name} IN ({format_level_members(x, x.level_members)})",
                 self.axes))
 
-    # Combine predicates using the correct boolean connective (currently only AND)
+    # Check the validity of how the predicates are combined using the boolean connectives
     def _create_predicates_where_clause(self) -> List[str]:
         def format_predicates(p: Predicate):
             if p.level_member_type is LevelMemberType.STR:
-                return f"{p.attribute.level.alias}.{p.attribute.name} {p.operator.value} '{p.value}'"
+                return f"{p.attribute.level.alias}.{p.attribute.name} {p.operator.value} '{p.value}' {p.connective.value}"
             elif p.level_member_type is LevelMemberType.INT:
-                return f"{p.attribute.level.alias}.{p.attribute.name} {p.operator.value} {p.value}"
+                return f"{p.attribute.level.alias}.{p.attribute.name} {p.operator.value} {p.value} {p.connective.value}"
 
         if not self.predicates:
             return []
@@ -230,7 +232,7 @@ class View:
             pred = pred.next_pred
             # HACK
             if type(pred.attribute) == Measure:
-                result.append(f"{self.cube.fact_table_name}.{pred.attribute.name} {pred.operator.value} {pred.value}")
+                result.append(f"{self.cube.fact_table_name}.{pred.attribute.name} {pred.operator.value} {pred.value} {pred.connective.value}")
             else:
                 result.append(format_predicates(pred))
         return result
