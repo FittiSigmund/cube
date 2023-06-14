@@ -729,7 +729,7 @@ def compare_query_flight3() -> bool:
     return result1.equals(result2)
 
 
-pyCube_result = pyCube_query41()
+pyCube_result = pyCube_query42()
 pandas_result = pandas_query42()
 pyCube_result.columns = pyCube_result.columns.droplevel(level=2)
 result = pyCube_result.equals(pandas_result)
