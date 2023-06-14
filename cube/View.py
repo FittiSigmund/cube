@@ -10,10 +10,12 @@ from cube.AggregateFunction import AggregateFunction
 from cube.Attribute import Attribute
 from cube.Axis import Axis
 from cube.BaseCube import BaseCube
+from cube.BooleanConnective import BooleanConnective
 from cube.LevelMember import LevelMember
 from cube.LevelMemberType import LevelMemberType
 from cube.Measure import Measure
 from cube.NonTopLevel import NonTopLevel
+from cube.PredicateOperator import PredicateOperator
 
 if TYPE_CHECKING:
     from cube.Predicate import Predicate
@@ -100,37 +102,33 @@ class View:
         subset_clauses: List[str] = []
         axis_lvls: List[NonTopLevel] = [x.level for x in self.axes]
 
-        all_pred_lvls: List[NonTopLevel] = [
-            pred.attribute.level for pred in self._get_all_predicates() if type(pred.attribute) == Attribute
-        ]
+        all_pred_lvls: List[NonTopLevel] = list(set(self._get_all_pred_levels(self.predicates)))
         pred_lvls: List[NonTopLevel] = [lvl for lvl in all_pred_lvls if lvl.dimension
                                         not in [x.dimension for x in axis_lvls]]
-
-        for lvls in pred_lvls:
-            if lvls.dimension in [x.dimension for x in pred_lvls[1:]]:
-                pred_lvls.remove(lvls)
 
         for i, level in enumerate(axis_lvls + pred_lvls):
             subset_clauses.append(self._create_from_subset_clause(level, i))
 
         return f"FROM {self.cube.fact_table_name} " + " ".join(subset_clauses)
 
-    def _get_all_predicates(self) -> List[Predicate]:
-        if not self.predicates:
-            return []
-        current_pred = self.predicates
-        result: List[Predicate] = [current_pred]
-        while current_pred.next_pred is not None:
-            current_pred = current_pred.next_pred
-            result.append(current_pred)
-        return result
+    def _get_all_pred_levels(self, pred: Predicate) -> List[NonTopLevel]:
+        match pred.value:
+            case Number():
+                return []
+            case str():
+                return []
+            case Measure():
+                return []
+            case Attribute():
+                return [pred.value.level]
+            case _:
+                return self._get_all_pred_levels(pred.left_child) + self._get_all_pred_levels(pred.right_child)
 
     def _create_where_clause(self) -> str:
         axes: List[str] = self._create_axes_where_clause()
         axes: str = " AND ".join(axes) if axes else ""
 
-        predicates: List[str] = self._create_predicates_where_clause()
-        predicates: str = " ".join(predicates)
+        predicates: str = self._create_predicates_where_clause()
         if axes and predicates:
             return "WHERE " + axes + " AND " + predicates
         elif axes:
@@ -185,16 +183,15 @@ class View:
     #     return df
 
     def _convert_to_df(self, query: str) -> pd.DataFrame:
-        def create_measure_tuple(row: pd.Series) -> Tuple[str | Number, ...] | str | Number:
-            return tuple((row[i] for i in range(len(row)))) if len(row) > 1 else row[0]
-
         engine = create_engine("postgresql+psycopg2://sigmundur:@localhost/ssb_snowflake")
         with engine.connect() as conn:
             df = pd.read_sql(text(query), conn)
-            df["Measures"] = df[df.columns[len(self.axes):]].apply(lambda x: create_measure_tuple(x), axis=1)
             columns = [ax.attribute.level.alias for ax in [ax for i, ax in enumerate(self.axes) if i % 2 == 0]]
             rows = [ax.attribute.level.alias for ax in [ax for i, ax in enumerate(self.axes) if i % 2 == 1]]
-            final_df = df.pivot(columns=columns, index=rows, values="Measures")
+            measures = [m.name for m in self._measures]
+            final_df = df.pivot(columns=columns, index=rows, values=measures)
+            final_df = final_df.reorder_levels(list(range(1, len(columns) + 1)) + [0], axis=1)
+            # final_df.columns = final_df.columns.sortlevel(level=list(range(0, len(columns))))[0]
         engine.dispose()
         return final_df
 
@@ -216,26 +213,33 @@ class View:
             map(lambda x: f"{x.level.alias}.{x.attribute.name} IN ({format_level_members(x, x.level_members)})",
                 self.axes))
 
-    # Check the validity of how the predicates are combined using the boolean connectives
-    def _create_predicates_where_clause(self) -> List[str]:
-        def format_predicates(p: Predicate):
-            if p.level_member_type is LevelMemberType.STR:
-                return f"{p.attribute.level.alias}.{p.attribute.name} {p.operator.value} '{p.value}' {p.connective.value}"
-            elif p.level_member_type is LevelMemberType.INT:
-                return f"{p.attribute.level.alias}.{p.attribute.name} {p.operator.value} {p.value} {p.connective.value}"
+    def _create_predicates_where_clause(self) -> str:
+        pred_list: List[str] = self._create_predicates_where_clause_aux(self.predicates)
+        return " ".join(pred_list)
 
-        if not self.predicates:
-            return []
-        pred = self.predicates
-        result: List[str] = [format_predicates(pred)]
-        while pred.next_pred is not None:
-            pred = pred.next_pred
-            # HACK
-            if type(pred.attribute) == Measure:
-                result.append(f"{self.cube.fact_table_name}.{pred.attribute.name} {pred.operator.value} {pred.value} {pred.connective.value}")
-            else:
-                result.append(format_predicates(pred))
-        return result
+    def _create_predicates_where_clause_aux(self, pred: Predicate) -> List[str]:
+        match pred.value:
+            case BooleanConnective():
+                left_child: List[str] = self._create_predicates_where_clause_aux(pred.left_child)
+                right_child: List[str] = self._create_predicates_where_clause_aux(pred.right_child)
+                return ["("] + left_child + [pred.value.value] + right_child + [")"]
+            case PredicateOperator():
+                left_child: List[str] = self._create_predicates_where_clause_aux(pred.left_child)
+                right_child: List[str] = self._create_predicates_where_clause_aux(pred.right_child)
+                return left_child + [pred.value.value] + right_child
+            case _:
+                return [self._format_predicate_value(pred)]
+
+    def _format_predicate_value(self, pred: Predicate) -> str:
+        match pred.value:
+            case Attribute():
+                return f"{pred.value.level.alias}.{pred.value.name}"
+            case Measure():
+                return f"{pred.value.sqlname}"
+            case str():
+                return f"'{pred.value}'"
+            case int():
+                return str(pred.value)
 
     def _create_from_subset_clause(self, level: NonTopLevel, counter: int) -> str:
         # The order in hierarchy is the lowest level first and highest last

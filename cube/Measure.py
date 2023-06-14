@@ -28,7 +28,12 @@ class Measure:
 
     # HACKS
     def __gt__(self, other) -> Predicate:
-        return Predicate(self, other, PredicateOperator.GT)
+        return self._create_pred(other, PredicateOperator.GT)
 
     def __lt__(self, other) -> Predicate:
-        return Predicate(self, other, PredicateOperator.LT)
+        return self._create_pred(other, PredicateOperator.LT)
+
+    def _create_pred(self, other, comparison_operator: PredicateOperator) -> Predicate:
+        left_child = Predicate(None, self, None)
+        right_child = Predicate(None, other, None)
+        return Predicate(left_child, comparison_operator, right_child)

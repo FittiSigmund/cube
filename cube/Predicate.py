@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import numbers
 from typing import TYPE_CHECKING
 
 from cube.BooleanConnective import BooleanConnective
@@ -7,49 +8,33 @@ from cube.BooleanConnective import BooleanConnective
 if TYPE_CHECKING:
     from numbers import Number
     from cube.PredicateOperator import PredicateOperator
-    from cube.LevelMember import LevelMember
     from cube.Attribute import Attribute
+    from cube.Measure import Measure
 
 from cube.LevelMemberType import LevelMemberType
 
 
-# Change the filter to contain a boolean connective and a pointer to the next filter, if any
-# Filter also needs to implement the __and__ and __or__ magic methods
-# The __lt__, __lte__, __eq__, and so on comparison methods will be implemented on an Attribute class, which has not
-# been implemented yet (the class has not been implemented yet, that is).
 class Predicate:
     def __init__(self,
-                 attribute: Attribute = None,
-                 value: Number | str = None,
-                 operator: PredicateOperator | None = None) -> None:
-        self.attribute: Attribute | None = attribute
-        self.value: Number | str = value
-        self.operator: PredicateOperator | None = operator
-        self.connective: BooleanConnective = BooleanConnective.EMPTY
-        self.next_pred: Predicate | None = None
+                 left_child: Predicate | None,
+                 value: PredicateOperator | BooleanConnective | Attribute | Measure | Number | str,
+                 right_child: Predicate | None) -> None:
+        self.left_child: Predicate | None = left_child
+        self.value: PredicateOperator | BooleanConnective | Attribute | Number | str = value
+        self.right_child: Predicate | None = right_child
         match self.value:
+            case numbers.Number():
+                self.level_member_type = LevelMemberType.INT
             case str():
                 self.level_member_type = LevelMemberType.STR
-            case int():
-                self.level_member_type = LevelMemberType.INT
             case _:
                 self.level_member_type = None
 
     def __and__(self, other):
-        current_pred = self
-        while current_pred.next_pred is not None:
-            current_pred = current_pred.next_pred
-        current_pred.connective = BooleanConnective.AND
-        current_pred.next_pred = other
-        return self
+        return Predicate(self, BooleanConnective.AND, other)
 
     def __or__(self, other):
-        current_pred = self
-        while current_pred.next_pred is not None:
-            current_pred = current_pred.next_pred
-        current_pred.connective = BooleanConnective.OR
-        current_pred.next_pred = other
-        return self
+        return Predicate(self, BooleanConnective.OR, other)
 
     def __repr__(self):
-        return f"Predicate(Attribute: {self.attribute}, Value: {self.value}, Operator: {self.operator}, Connective: {self.connective})"
+        return f"Predicate(left_child = {self.left_child}, value = {self.value}, right_child = {self.right_child})"

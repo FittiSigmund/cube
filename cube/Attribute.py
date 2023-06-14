@@ -48,19 +48,24 @@ class Attribute:
             return self._fetch_lm_from_db_and_save(str(item))
 
     def __eq__(self, other) -> Predicate:
-        return Predicate(self, other, PredicateOperator.EQ)
+        return self._create_pred(other, PredicateOperator.EQ)
 
     def __gt__(self, other) -> Predicate:
-        return Predicate(self, other, PredicateOperator.GT)
+        return self._create_pred(other, PredicateOperator.GT)
 
     def __lt__(self, other) -> Predicate:
-        return Predicate(self, other, PredicateOperator.LT)
+        return self._create_pred(other, PredicateOperator.LT)
 
     def __ge__(self, other) -> Predicate:
-        return Predicate(self, other, PredicateOperator.GEQ)
+        return self._create_pred(other, PredicateOperator.GEQ)
 
     def __le__(self, other) -> Predicate:
-        return Predicate(self, other, PredicateOperator.LEQ)
+        return self._create_pred(other, PredicateOperator.LEQ)
+
+    def _create_pred(self, other, comparison_operator: PredicateOperator) -> Predicate:
+        left_child: Predicate = Predicate(None, self, None)
+        right_child: Predicate = Predicate(None, other, None)
+        return Predicate(left_child, comparison_operator, right_child)
 
     def _fetch_lm_from_db_and_save(self, item: str):
         with self._get_db_conn() as conn:
