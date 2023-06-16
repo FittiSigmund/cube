@@ -25,13 +25,14 @@ class View:
     def __init__(self,
                  axes: List[Axis] = None,
                  measures: List[Measure] = None,
-                 filters: Predicate = None,
-                 cube: BaseCube | None = None) -> None:
+                 predicates: Predicate = None,
+                 cube: BaseCube = None) -> None:
         self.axes: List[Axis] = axes if axes else []
         self._measures: List[Measure] = measures if measures else []
-        self.predicates: Predicate = filters
+        self.predicates: Predicate = predicates
         self.cube: BaseCube = cube
 
+    # View method generally modifies self and returns self instead of creating and returning a new View
     # Checks not implemented
     # All level members same
     def axis(self, ax: int, lms: List[LevelMember]) -> View:
@@ -211,7 +212,7 @@ class View:
 
         return list(
             map(lambda x: f"{x.level.alias}.{x.attribute.name} IN ({format_level_members(x, x.level_members)})",
-                self.axes))
+                [x for x in self.axes if not x.attribute.all_lms_loaded]))
 
     def _create_predicates_where_clause(self) -> str:
         pred_list: List[str] = self._create_predicates_where_clause_aux(self.predicates)

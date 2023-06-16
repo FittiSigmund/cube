@@ -21,6 +21,7 @@ class Attribute:
         self._engine: Postgres = engine
         self.level: NonTopLevel = level
         self.level_members: List[LevelMember] = []
+        self.all_lms_loaded: bool = False
 
     def members(self):
         with self._get_db_conn() as conn:
@@ -31,6 +32,7 @@ class Attribute:
                 """)
                 db_result: List[Tuple[str, ...]] = curs.fetchall()
         if db_result:
+            self.all_lms_loaded = True
             return list(map(lambda x: LevelMember(x[0], self), db_result))
         else:
             raise AttributeError(f"The '{self.name}' Attribute does not contain any Level Members")
