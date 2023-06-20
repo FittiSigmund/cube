@@ -81,14 +81,30 @@ class Experiments:
         temp1 = date_table.merge(month_table, left_on="d_monthkey", right_on="mo_monthkey")
         temp2 = temp1.merge(year_table, left_on="mo_yearkey", right_on="y_yearkey")
         merged_table = fact_table.merge(temp2, left_on="lo_orderdate", right_on="d_datekey")
-        # temp1 = fact_table.merge(date_table, left_on="lo_orderdate", right_on="d_datekey")
-        # temp2 = temp1.merge(month_table, left_on="d_monthkey", right_on="mo_monthkey")
-        # merged_table = temp2.merge(year_table, left_on="mo_yearkey", right_on="y_yearkey")
         filtered_table = merged_table[
             (merged_table["y_year"] == 1993)
             & (merged_table["lo_discount"] > 0)
             & (merged_table["lo_discount"] < 4)
             & (merged_table["lo_quantity"] < 25)
+            ]
+        return pd.DataFrame([filtered_table.apply(lambda x: x["lo_extendedprice"] * x["lo_discount"], axis=1).sum()],
+                            columns=["revenue"])
+
+    def pandas_query11_baseline3(self):
+        with engine.connect() as conn:
+            df = pd.read_sql("""
+                SELECT lo_extendedprice, lo_discount, lo_quantity, y_year
+                FROM lineorder JOIN date ON lo_orderdate = d_datekey 
+                JOIN month ON d_monthkey = mo_monthkey 
+                JOIN year ON mo_yearkey = y_yearkey
+                """, conn)
+        engine.dispose()
+
+        filtered_table = df[
+            (df["y_year"] == 1993)
+            & (df["lo_discount"] > 0)
+            & (df["lo_discount"] < 4)
+            & (df["lo_quantity"] < 25)
             ]
         return pd.DataFrame([filtered_table.apply(lambda x: x["lo_extendedprice"] * x["lo_discount"], axis=1).sum()],
                             columns=["revenue"])
@@ -139,6 +155,25 @@ class Experiments:
             & (merged_table["lo_discount"] < 7)
             & (merged_table["lo_quantity"] > 25)
             & (merged_table["lo_quantity"] < 36)
+            ]
+        return pd.DataFrame([filtered_table.apply(lambda x: x["lo_extendedprice"] * x["lo_discount"], axis=1).sum()],
+                            columns=["revenue"])
+
+    def pandas_query12_baseline3(self):
+        with engine.connect() as conn:
+            df = pd.read_sql("""
+                SELECT lo_extendedprice, lo_discount, lo_quantity, mo_yearmonthnum
+                FROM lineorder JOIN date ON lo_orderdate = d_datekey 
+                JOIN month ON d_monthkey = mo_monthkey 
+                """, conn)
+        engine.dispose()
+
+        filtered_table = df[
+            (df["mo_yearmonthnum"] == 199401)
+            & (df["lo_discount"] > 3)
+            & (df["lo_discount"] < 7)
+            & (df["lo_quantity"] > 25)
+            & (df["lo_quantity"] < 36)
             ]
         return pd.DataFrame([filtered_table.apply(lambda x: x["lo_extendedprice"] * x["lo_discount"], axis=1).sum()],
                             columns=["revenue"])
@@ -199,6 +234,31 @@ class Experiments:
             & (merged_table["lo_discount"] < 8)
             & (merged_table["lo_quantity"] > 25)
             & (merged_table["lo_quantity"] < 36)
+            ]
+        return pd.DataFrame([filtered_table.apply(lambda x: x["lo_extendedprice"] * x["lo_discount"], axis=1).sum()],
+                            columns=["revenue"])
+
+    def pandas_query13_baseline3(self):
+        with engine.connect() as conn:
+            df = pd.read_sql("""
+                SELECT 
+                    lo_extendedprice, lo_discount, lo_quantity, y_year, d_daynuminyear
+                FROM lineorder 
+                    JOIN date ON lo_orderdate = d_datekey 
+                    JOIN month ON d_monthkey = mo_monthkey 
+                    JOIN year ON mo_yearkey = y_yearkey 
+            """,
+                             conn,
+                             )
+        engine.dispose()
+        filtered_table = df[
+            (df["d_daynuminyear"] > 0)
+            & (df["d_daynuminyear"] < 8)
+            & (df["y_year"] == 1994)
+            & (df["lo_discount"] > 4)
+            & (df["lo_discount"] < 8)
+            & (df["lo_quantity"] > 25)
+            & (df["lo_quantity"] < 36)
             ]
         return pd.DataFrame([filtered_table.apply(lambda x: x["lo_extendedprice"] * x["lo_discount"], axis=1).sum()],
                             columns=["revenue"])
@@ -275,6 +335,34 @@ class Experiments:
 
         filtered_table = merged_table[
             (merged_table["ca_category"] == "MFGR#12") & (merged_table["r_region"] == "AMERICA     ")]
+        return filtered_table.pivot_table(values="lo_revenue", index="b_brand1", columns="y_year", aggfunc=np.sum)
+
+    # KOMIN HER TIL
+    def pandas_query21_baseline3(self):
+        with engine.connect() as conn:
+            df = pd.read_sql("""
+                SELECT 
+                    lo_revenue, ca_category, r_region, b_brand1, y_year
+                FROM lineorder 
+                    JOIN date ON lo_orderdate = d_datekey 
+                    JOIN month ON d_monthkey = mo_monthkey 
+                    JOIN year ON mo_yearkey = y_yearkey 
+                    JOIN part ON lo_partkey = p_partkey 
+                    JOIN brand1 ON p_brand1key = b_brand1key 
+                    JOIN category ON b_categorykey = ca_categorykey 
+                    JOIN mfgr ON ca_mfgrkey = m_mfgrkey 
+                    JOIN supplier ON lo_suppkey = s_suppkey 
+                    JOIN city ON s_citykey = ci_citykey 
+                    JOIN nation ON ci_nationkey = n_nationkey 
+                    JOIN region ON n_regionkey = r_regionkey 
+                """,
+                conn)
+        engine.dispose()
+
+        filtered_table = df[
+            (df["ca_category"] == "MFGR#12")
+            & (df["r_region"] == "AMERICA     ")
+            ]
         return filtered_table.pivot_table(values="lo_revenue", index="b_brand1", columns="y_year", aggfunc=np.sum)
 
     def pyCube_query22(self):
@@ -537,7 +625,7 @@ class Experiments:
             .measures(view.lo_revenue)
         return view2.output()
 
-    def pandas_query32(self):
+    def pandas_query32_baseline1(self):
         with engine.connect() as conn:
             fact_table = pd.read_sql("lineorder", conn,
                                      columns=["lo_orderdate", "lo_suppkey", "lo_custkey", "lo_revenue"])
@@ -572,6 +660,49 @@ class Experiments:
             aggfunc=np.sum
         )
 
+    def pandas_query32_baseline2(self):
+        with engine.connect() as conn:
+            fact_table = pd.read_sql(
+                "lineorder",
+                conn,
+                columns=["lo_orderdate", "lo_suppkey", "lo_custkey", "lo_revenue"])
+            date_table = pd.read_sql("date", conn, columns=["d_datekey", "d_monthkey"])
+            month_table = pd.read_sql("month", conn, columns=["mo_monthkey", "mo_yearkey"])
+            year_table = pd.read_sql("year", conn)
+            supplier_table = pd.read_sql("supplier", conn, columns=["s_suppkey", "s_citykey"])
+            customer_table = pd.read_sql("customer", conn, columns=["c_custkey", "c_citykey"])
+            city_table = pd.read_sql("city", conn)
+            nation_table = pd.read_sql("nation", conn)
+        engine.dispose()
+
+        date1 = date_table.merge(month_table, left_on="d_monthkey", right_on="mo_monthkey")
+        date2 = date1.merge(year_table, left_on="mo_yearkey", right_on="y_yearkey")
+
+        supp_geo1 = city_table.merge(nation_table, left_on="ci_nationkey", right_on="n_nationkey")
+
+        cust_geo1 = city_table.merge(nation_table, left_on="ci_nationkey", right_on="n_nationkey")
+
+        supp = supplier_table.merge(supp_geo1, left_on="s_citykey", right_on="ci_citykey")
+
+        cust = customer_table.merge(cust_geo1, left_on="c_citykey", right_on="ci_citykey")
+
+        merged_table1 = fact_table.merge(date2, left_on="lo_orderdate", right_on="d_datekey")
+        merged_table2 = merged_table1.merge(supp, left_on="lo_suppkey", right_on="s_suppkey")
+        merged_table = merged_table2.merge(cust, left_on="lo_custkey", right_on="c_custkey", suffixes=(None, "_c"))
+
+        filtered_table = merged_table[
+            (merged_table["n_nation_c"] == "UNITED STATES  ")
+            & (merged_table["n_nation"] == "UNITED STATES  ")
+            & (merged_table["y_year"] >= 1992)
+            & (merged_table["y_year"] <= 1997)
+            ]
+        return filtered_table.pivot_table(
+            values="lo_revenue",
+            index="ci_city",
+            columns=["ci_city_c", "y_year"],
+            aggfunc=np.sum
+        )
+
     def pyCube_query33(self):
         view2 = view.columns(view.customer.city.ci_city.members()) \
             .rows(view.supplier.city.ci_city.members()) \
@@ -587,7 +718,7 @@ class Experiments:
             .measures(view.lo_revenue)
         return view2.output()
 
-    def pandas_query33(self):
+    def pandas_query33_baseline1(self):
         with engine.connect() as conn:
             fact_table = pd.read_sql("lineorder", conn,
                                      columns=["lo_orderdate", "lo_suppkey", "lo_custkey", "lo_revenue"])
@@ -624,6 +755,50 @@ class Experiments:
             aggfunc=np.sum
         )
 
+    def pandas_query33_baseline2(self):
+        with engine.connect() as conn:
+            fact_table = pd.read_sql(
+                "lineorder",
+                conn,
+                columns=["lo_orderdate", "lo_suppkey", "lo_custkey", "lo_revenue"])
+            date_table = pd.read_sql("date", conn, columns=["d_datekey", "d_monthkey"])
+            month_table = pd.read_sql("month", conn, columns=["mo_monthkey", "mo_yearkey"])
+            year_table = pd.read_sql("year", conn)
+            supplier_table = pd.read_sql("supplier", conn, columns=["s_suppkey", "s_citykey"])
+            customer_table = pd.read_sql("customer", conn, columns=["c_custkey", "c_citykey"])
+            city_table = pd.read_sql("city", conn)
+        engine.dispose()
+
+        date1 = date_table.merge(month_table, left_on="d_monthkey", right_on="mo_monthkey")
+        date2 = date1.merge(year_table, left_on="mo_yearkey", right_on="y_yearkey")
+
+        supp = supplier_table.merge(city_table, left_on="s_citykey", right_on="ci_citykey")
+
+        cust = customer_table.merge(city_table, left_on="c_citykey", right_on="ci_citykey")
+
+        merged_table1 = fact_table.merge(date2, left_on="lo_orderdate", right_on="d_datekey")
+        merged_table2 = merged_table1.merge(supp, left_on="lo_suppkey", right_on="s_suppkey")
+        merged_table = merged_table2.merge(cust, left_on="lo_custkey", right_on="c_custkey", suffixes=(None, "_c"))
+
+        filtered_table = merged_table[
+            (
+                    (merged_table["ci_city_c"] == "UNITED KI1")
+                    | (merged_table["ci_city_c"] == "UNITED KI5")
+            ) &
+            (
+                    (merged_table["ci_city"] == "UNITED KI1")
+                    | (merged_table["ci_city"] == "UNITED KI5")
+            )
+            & (merged_table["y_year"] >= 1992)
+            & (merged_table["y_year"] <= 1997)
+            ]
+        return filtered_table.pivot_table(
+            values="lo_revenue",
+            index="ci_city",
+            columns=["ci_city_c", "y_year"],
+            aggfunc=np.sum
+        )
+
     def pyCube_query34(self):
         view2 = view.columns(view.customer.city.ci_city.members()) \
             .rows(view.supplier.city.ci_city.members()) \
@@ -638,7 +813,7 @@ class Experiments:
             .measures(view.lo_revenue)
         return view2.output()
 
-    def pandas_query34(self):
+    def pandas_query34_baseline1(self):
         with engine.connect() as conn:
             fact_table = pd.read_sql("lineorder", conn,
                                      columns=["lo_orderdate", "lo_suppkey", "lo_custkey", "lo_revenue"])
@@ -674,6 +849,49 @@ class Experiments:
             aggfunc=np.sum
         )
 
+    def pandas_query34_baseline2(self):
+        with engine.connect() as conn:
+            fact_table = pd.read_sql(
+                "lineorder",
+                conn,
+                columns=["lo_orderdate", "lo_suppkey", "lo_custkey", "lo_revenue"])
+            date_table = pd.read_sql("date", conn, columns=["d_datekey", "d_monthkey"])
+            month_table = pd.read_sql("month", conn, columns=["mo_monthkey", "mo_yearkey", "mo_yearmonth"])
+            year_table = pd.read_sql("year", conn)
+            supplier_table = pd.read_sql("supplier", conn, columns=["s_suppkey", "s_citykey"])
+            customer_table = pd.read_sql("customer", conn, columns=["c_custkey", "c_citykey"])
+            city_table = pd.read_sql("city", conn)
+        engine.dispose()
+
+        date1 = date_table.merge(month_table, left_on="d_monthkey", right_on="mo_monthkey")
+        date2 = date1.merge(year_table, left_on="mo_yearkey", right_on="y_yearkey")
+
+        supp = supplier_table.merge(city_table, left_on="s_citykey", right_on="ci_citykey")
+
+        cust = customer_table.merge(city_table, left_on="c_citykey", right_on="ci_citykey")
+
+        merged_table1 = fact_table.merge(date2, left_on="lo_orderdate", right_on="d_datekey")
+        merged_table2 = merged_table1.merge(supp, left_on="lo_suppkey", right_on="s_suppkey")
+        merged_table = merged_table2.merge(cust, left_on="lo_custkey", right_on="c_custkey", suffixes=(None, "_c"))
+
+        filtered_table = merged_table[
+            (
+                    (merged_table["ci_city_c"] == "UNITED KI1")
+                    | (merged_table["ci_city_c"] == "UNITED KI5")
+            ) &
+            (
+                    (merged_table["ci_city"] == "UNITED KI1")
+                    | (merged_table["ci_city"] == "UNITED KI5")
+            )
+            & (merged_table["mo_yearmonth"] == "Dec1997")
+            ]
+        return filtered_table.pivot_table(
+            values="lo_revenue",
+            index="ci_city",
+            columns=["ci_city_c", "y_year"],
+            aggfunc=np.sum
+        )
+
     def pyCube_query41(self):
         view2 = view.columns(view.date1.year.y_year.members()) \
             .rows(view.customer.nation.n_nation.members()) \
@@ -688,7 +906,7 @@ class Experiments:
             .measures(profit=view.lo_revenue - view.lo_supplycost)
         return view2.output()
 
-    def pandas_query41(self):
+    def pandas_query41_baseline1(self):
         with engine.connect() as conn:
             fact_table = pd.read_sql("lineorder", conn, columns=[
                 "lo_orderdate",
@@ -742,6 +960,73 @@ class Experiments:
             aggfunc=np.sum
         )
 
+    def pandas_query41_baseline2(self):
+        with engine.connect() as conn:
+            fact_table = pd.read_sql("lineorder", conn, columns=[
+                "lo_orderdate",
+                "lo_suppkey",
+                "lo_custkey",
+                "lo_partkey",
+                "lo_revenue",
+                "lo_supplycost"
+            ])
+            date_table = pd.read_sql("date", conn, columns=["d_datekey", "d_monthkey"])
+            month_table = pd.read_sql("month", conn, columns=["mo_monthkey", "mo_yearkey"])
+            year_table = pd.read_sql("year", conn)
+
+            part_table = pd.read_sql("part", conn, columns=["p_partkey", "p_brand1key"])
+            brand_table = pd.read_sql("brand1", conn, columns=["b_brand1key", "b_categorykey"])
+            category_table = pd.read_sql("category", conn, columns=["ca_categorykey", "ca_mfgrkey"])
+            mfgr_table = pd.read_sql("mfgr", conn)
+
+            supplier_table = pd.read_sql("supplier", conn, columns=["s_suppkey", "s_citykey"])
+
+            customer_table = pd.read_sql("customer", conn, columns=["c_custkey", "c_citykey"])
+
+            city_table = pd.read_sql("city", conn, columns=["ci_citykey", "ci_nationkey"])
+            nation_table = pd.read_sql("nation", conn)
+            region_table = pd.read_sql("region", conn)
+
+        engine.dispose()
+
+        date1 = date_table.merge(month_table, left_on="d_monthkey", right_on="mo_monthkey")
+        date2 = date1.merge(year_table, left_on="mo_yearkey", right_on="y_yearkey")
+
+        part1 = part_table.merge(brand_table, left_on="p_brand1key", right_on="b_brand1key")
+        part2 = part1.merge(category_table, left_on="b_categorykey", right_on="ca_categorykey")
+        part3 = part2.merge(mfgr_table, left_on="ca_mfgrkey", right_on="m_mfgrkey")
+
+        supp_geo1 = city_table.merge(nation_table, left_on="ci_nationkey", right_on="n_nationkey")
+        supp_geo2 = supp_geo1.merge(region_table, left_on="n_regionkey", right_on="r_regionkey")
+
+        cust_geo1 = city_table.merge(nation_table, left_on="ci_nationkey", right_on="n_nationkey")
+        cust_geo2 = cust_geo1.merge(region_table, left_on="n_regionkey", right_on="r_regionkey")
+
+        supp = supplier_table.merge(supp_geo2, left_on="s_citykey", right_on="ci_citykey")
+
+        cust = customer_table.merge(cust_geo2, left_on="c_citykey", right_on="ci_citykey")
+
+        merged_table1 = fact_table.merge(date2, left_on="lo_orderdate", right_on="d_datekey")
+        merged_table2 = merged_table1.merge(part3, left_on="lo_partkey", right_on="p_partkey")
+        merged_table3 = merged_table2.merge(supp, left_on="lo_suppkey", right_on="s_suppkey")
+        merged_table = merged_table3.merge(cust, left_on="lo_custkey", right_on="c_custkey", suffixes=(None, "_c"))
+
+        filtered_table = merged_table[
+            (merged_table["r_region_c"] == "AMERICA     ")
+            & (merged_table["r_region"] == "AMERICA     ")
+            & (
+                    (merged_table["m_mfgr"] == "MFGR#1")
+                    | (merged_table["m_mfgr"] == "MFGR#2")
+            )
+            ]
+        filtered_table["profit"] = filtered_table.apply(lambda x: x.lo_revenue - x.lo_supplycost, axis=1)
+        return filtered_table.pivot_table(
+            values="profit",
+            index="n_nation_c",
+            columns="y_year",
+            aggfunc=np.sum
+        )
+
     def pyCube_query42(self):
         view2 = view.columns(view.date1.year.y_year.members()) \
             .rows(view.supplier.nation.n_nation.members()) \
@@ -761,7 +1046,7 @@ class Experiments:
             .measures(profit=view.lo_revenue - view.lo_supplycost)
         return view2.output()
 
-    def pandas_query42(self):
+    def pandas_query42_baseline1(self):
         with engine.connect() as conn:
             fact_table = pd.read_sql("lineorder", conn, columns=[
                 "lo_orderdate",
@@ -819,6 +1104,77 @@ class Experiments:
             aggfunc=np.sum
         )
 
+    def pandas_query42_baseline2(self):
+        with engine.connect() as conn:
+            fact_table = pd.read_sql("lineorder", conn, columns=[
+                "lo_orderdate",
+                "lo_suppkey",
+                "lo_custkey",
+                "lo_partkey",
+                "lo_revenue",
+                "lo_supplycost"
+            ])
+            date_table = pd.read_sql("date", conn, columns=["d_datekey", "d_monthkey"])
+            month_table = pd.read_sql("month", conn, columns=["mo_monthkey", "mo_yearkey"])
+            year_table = pd.read_sql("year", conn)
+
+            part_table = pd.read_sql("part", conn, columns=["p_partkey", "p_brand1key"])
+            brand_table = pd.read_sql("brand1", conn, columns=["b_brand1key", "b_categorykey"])
+            category_table = pd.read_sql("category", conn)
+            mfgr_table = pd.read_sql("mfgr", conn)
+
+            supplier_table = pd.read_sql("supplier", conn, columns=["s_suppkey", "s_citykey"])
+
+            customer_table = pd.read_sql("customer", conn, columns=["c_custkey", "c_citykey"])
+
+            city_table = pd.read_sql("city", conn, columns=["ci_citykey", "ci_nationkey"])
+            nation_table = pd.read_sql("nation", conn)
+            region_table = pd.read_sql("region", conn)
+
+        engine.dispose()
+
+        date1 = date_table.merge(month_table, left_on="d_monthkey", right_on="mo_monthkey")
+        date2 = date1.merge(year_table, left_on="mo_yearkey", right_on="y_yearkey")
+
+        part1 = part_table.merge(brand_table, left_on="p_brand1key", right_on="b_brand1key")
+        part2 = part1.merge(category_table, left_on="b_categorykey", right_on="ca_categorykey")
+        part3 = part2.merge(mfgr_table, left_on="ca_mfgrkey", right_on="m_mfgrkey")
+
+        supp_geo1 = city_table.merge(nation_table, left_on="ci_nationkey", right_on="n_nationkey")
+        supp_geo2 = supp_geo1.merge(region_table, left_on="n_regionkey", right_on="r_regionkey")
+
+        cust_geo1 = city_table.merge(nation_table, left_on="ci_nationkey", right_on="n_nationkey")
+        cust_geo2 = cust_geo1.merge(region_table, left_on="n_regionkey", right_on="r_regionkey")
+
+        supp = supplier_table.merge(supp_geo2, left_on="s_citykey", right_on="ci_citykey")
+
+        cust = customer_table.merge(cust_geo2, left_on="c_citykey", right_on="ci_citykey")
+
+        merged_table1 = fact_table.merge(date2, left_on="lo_orderdate", right_on="d_datekey")
+        merged_table2 = merged_table1.merge(part3, left_on="lo_partkey", right_on="p_partkey")
+        merged_table3 = merged_table2.merge(supp, left_on="lo_suppkey", right_on="s_suppkey")
+        merged_table = merged_table3.merge(cust, left_on="lo_custkey", right_on="c_custkey", suffixes=(None, "_c"))
+
+        filtered_table = merged_table[
+            (merged_table["r_region_c"] == "AMERICA     ")
+            & (merged_table["r_region"] == "AMERICA     ")
+            & (
+                    (merged_table["y_year"] == 1997)
+                    | (merged_table["y_year"] == 1998)
+            )
+            & (
+                    (merged_table["m_mfgr"] == "MFGR#1")
+                    | (merged_table["m_mfgr"] == "MFGR#2")
+            )
+            ]
+        filtered_table["profit"] = filtered_table.apply(lambda x: x.lo_revenue - x.lo_supplycost, axis=1)
+        return filtered_table.pivot_table(
+            values="profit",
+            index="n_nation",
+            columns=["y_year", "ca_category"],
+            aggfunc=np.sum
+        )
+
     def pyCube_query43(self):
         view2 = view.columns(view.date1.year.y_year.members()) \
             .rows(view.supplier.city.ci_city.members()) \
@@ -835,7 +1191,7 @@ class Experiments:
             .measures(profit=view.lo_revenue - view.lo_supplycost)
         return view2.output()
 
-    def pandas_query43(self):
+    def pandas_query43_baseline1(self):
         with engine.connect() as conn:
             fact_table = pd.read_sql("lineorder", conn, columns=[
                 "lo_orderdate",
@@ -888,27 +1244,97 @@ class Experiments:
             aggfunc=np.sum
         )
 
+    def pandas_query43_baseline2(self):
+        with engine.connect() as conn:
+            fact_table = pd.read_sql("lineorder", conn, columns=[
+                "lo_orderdate",
+                "lo_suppkey",
+                "lo_custkey",
+                "lo_partkey",
+                "lo_revenue",
+                "lo_supplycost"
+            ])
+            date_table = pd.read_sql("date", conn, columns=["d_datekey", "d_monthkey"])
+            month_table = pd.read_sql("month", conn, columns=["mo_monthkey", "mo_yearkey"])
+            year_table = pd.read_sql("year", conn)
+
+            part_table = pd.read_sql("part", conn, columns=["p_partkey", "p_brand1key"])
+            brand_table = pd.read_sql("brand1", conn)
+            category_table = pd.read_sql("category", conn)
+
+            supplier_table = pd.read_sql("supplier", conn, columns=["s_suppkey", "s_citykey"])
+
+            customer_table = pd.read_sql("customer", conn, columns=["c_custkey", "c_citykey"])
+
+            city_table = pd.read_sql("city", conn)
+            nation_table = pd.read_sql("nation", conn)
+            region_table = pd.read_sql("region", conn)
+
+        engine.dispose()
+
+        date1 = date_table.merge(month_table, left_on="d_monthkey", right_on="mo_monthkey")
+        date2 = date1.merge(year_table, left_on="mo_yearkey", right_on="y_yearkey")
+
+        part1 = part_table.merge(brand_table, left_on="p_brand1key", right_on="b_brand1key")
+        part2 = part1.merge(category_table, left_on="b_categorykey", right_on="ca_categorykey")
+
+        supp_geo1 = city_table.merge(nation_table, left_on="ci_nationkey", right_on="n_nationkey")
+        supp_geo2 = supp_geo1.merge(region_table, left_on="n_regionkey", right_on="r_regionkey")
+
+        cust_geo1 = city_table.merge(nation_table, left_on="ci_nationkey", right_on="n_nationkey")
+        cust_geo2 = cust_geo1.merge(region_table, left_on="n_regionkey", right_on="r_regionkey")
+
+        supp = supplier_table.merge(supp_geo2, left_on="s_citykey", right_on="ci_citykey")
+
+        cust = customer_table.merge(cust_geo2, left_on="c_citykey", right_on="ci_citykey")
+
+        merged_table1 = fact_table.merge(date2, left_on="lo_orderdate", right_on="d_datekey")
+        merged_table2 = merged_table1.merge(part2, left_on="lo_partkey", right_on="p_partkey")
+        merged_table3 = merged_table2.merge(supp, left_on="lo_suppkey", right_on="s_suppkey")
+        merged_table = merged_table3.merge(cust, left_on="lo_custkey", right_on="c_custkey", suffixes=(None, "_c"))
+
+        filtered_table = merged_table[
+            (merged_table["r_region_c"] == "AMERICA     ")
+            & (merged_table["n_nation"] == "UNITED STATES  ")
+            & (
+                    (merged_table["y_year"] == 1997)
+                    | (merged_table["y_year"] == 1998)
+            )
+            & (merged_table["ca_category"] == "MFGR#14")
+            ]
+        filtered_table["profit"] = filtered_table.apply(lambda x: x.lo_revenue - x.lo_supplycost, axis=1)
+        return filtered_table.pivot_table(
+            values="profit",
+            index="ci_city",
+            columns=["y_year", "b_brand1"],
+            aggfunc=np.sum
+        )
+
     # Create new view before calling query methods
     def compare(
             self,
-            baseline: int = None,
             single: bool = False,
             pyCube_method: Callable[[], pd.DataFrame] = None,
             pandas_method: Callable[[], pd.DataFrame] = None,
             first_query_flight: bool = False) -> None:
-        def prepare_dfs(pyCube_df: pd.DataFrame, pandas_df: pd.DataFrame) -> Tuple[pd.DataFrame, pd.DataFrame]:
-            pyCube_df.columns = pyCube_result.columns.droplevel(level=pyCube_result.columns.nlevels - 1)
-            pyCube_df.sort_index(inplace=True, axis=0)
-            pyCube_df.sort_index(inplace=True, axis=1)
+
+        def prepare_pyCube_df(df: pd.DataFrame) -> pd.DataFrame:
+            df.columns = df.columns.droplevel(level=df.columns.nlevels - 1)
+            df.sort_index(inplace=True, axis=0)
+            df.sort_index(inplace=True, axis=1)
+            return df
+
+        def prepare_pandas_df(pandas_df: pd.DataFrame) -> pd.DataFrame:
             pandas_df.sort_index(inplace=True, axis=0)
             pandas_df.sort_index(inplace=True, axis=1)
-            return pyCube_df, pandas_df
+            return pandas_df
 
         if single:
             pyCube_result = pyCube_method()
             pandas_result = pandas_method()
             if not first_query_flight:
-                pyCube_result, pandas_result = prepare_dfs(pyCube_result, pandas_result)
+                pyCube_result = prepare_pyCube_df(pyCube_result)
+                pandas_result = prepare_pandas_df(pandas_result)
             print(pyCube_result.equals(pandas_result))
             return
 
@@ -917,17 +1343,31 @@ class Experiments:
         for k, v in query_numbers.items():
             if k == 1:
                 for i in range(1, v + 1):
-                    pyCube_result = self.__getattribute__(f"pyCube_query{k}{i}")()
-                    pandas_result = self.__getattribute__(f"pandas_query{k}{i}")()
-                    print(pyCube_result.equals(pandas_result))
+                    postgres = create_session(postgres_engine)
+                    view = postgres.load_view('ssb_snowflake')
+
+                    pyCube_method = self.__getattribute__(f"pyCube_query{k}{i}")
+                    pyCube_result = pyCube_method()
+
+                    for baseline in range(1, 3):
+                        pandas_method = self.__getattribute__(f"pandas_query{k}{i}_baseline{baseline}")
+                        pandas_result = pandas_method()
+                        print(f"pyCube_query{k}{i} is equal to pandas_query{k}{i}_baseline{baseline} == "
+                              f"{pyCube_result.equals(pandas_result)}")
             else:
                 for i in range(1, v + 1):
                     postgres = create_session(postgres_engine)
                     view = postgres.load_view('ssb_snowflake')
-                    pyCube_result, pandas_result = prepare_dfs(
-                        self.__getattribute__(f"pyCube_query{k}{i}_baseline{baseline}")(),
-                        self.__getattribute__(f"pandas_query{k}{i}_baseline{baseline}")())
-                    print(pyCube_result.equals(pandas_result))
+
+                    pyCube_method = self.__getattribute__(f"pyCube_query{k}{i}")
+                    pyCube_result = prepare_pyCube_df(pyCube_method())
+
+                    for baseline in range(1, 3):
+                        pandas_method = self.__getattribute__(f"pandas_query{k}{i}_baseline{baseline}")
+                        pandas_result = prepare_pandas_df(pandas_method())
+
+                        print(f"pyCube_query{k}{i} is equal to pandas_query{k}{i}_baseline{baseline} == "
+                              f"{pyCube_result.equals(pandas_result)}")
 
 
 # pyCube_result = pyCube_query41()
@@ -936,11 +1376,10 @@ class Experiments:
 # result = pyCube_result.equals(pandas_result)
 # hej = 1
 
-## KOMIN TIL PANDAS_QUERY32_BASELINE2 (SUM IKKI ER TIL ENN)
 e = Experiments()
 e.compare(
-    baseline=2,
     single=True,
-    pyCube_method=e.pyCube_query31,
-    pandas_method=e.pandas_query31_baseline2,
-    first_query_flight=False)
+    pyCube_method=e.pyCube_query21,
+    pandas_method=e.pandas_query21_baseline3,
+    first_query_flight=False
+)
