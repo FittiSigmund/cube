@@ -354,7 +354,7 @@ class Experiments:
                     JOIN nation ON ci_nationkey = n_nationkey 
                     JOIN region ON n_regionkey = r_regionkey 
                 """,
-                conn)
+                             conn)
         engine.dispose()
 
         filtered_table = df[
@@ -456,7 +456,7 @@ class Experiments:
                     JOIN nation ON ci_nationkey = n_nationkey 
                     JOIN region ON n_regionkey = r_regionkey 
             """,
-                conn)
+                             conn)
         engine.dispose()
 
         filtered_table = df[
@@ -465,6 +465,7 @@ class Experiments:
             & (df["r_region"] == "ASIA        ")
             ]
         return filtered_table.pivot_table(values="lo_revenue", index="b_brand1", columns="y_year", aggfunc=np.sum)
+
     def pyCube_query23(self):
         view2 = view.columns(view.date1.year.y_year.members()) \
             .rows(view.part.brand1.b_brand1.members()) \
@@ -556,7 +557,7 @@ class Experiments:
                     JOIN region ON n_regionkey = r_regionkey 
             
             """,
-                conn)
+                             conn)
         engine.dispose()
 
         filtered_table = df[
@@ -685,7 +686,7 @@ class Experiments:
                     JOIN year ON mo_yearkey = y_yearkey 
                 
             """,
-                conn)
+                             conn)
         engine.dispose()
 
         filtered_table = df[
@@ -814,7 +815,7 @@ class Experiments:
                     JOIN year ON mo_yearkey = y_yearkey 
                 
             """,
-                conn)
+                             conn)
         engine.dispose()
 
         filtered_table = df[
@@ -829,6 +830,7 @@ class Experiments:
             columns=["ci_city_c", "y_year"],
             aggfunc=np.sum
         )
+
     def pyCube_query33(self):
         view2 = view.columns(view.customer.city.ci_city.members()) \
             .rows(view.supplier.city.ci_city.members()) \
@@ -943,7 +945,7 @@ class Experiments:
                     JOIN year ON mo_yearkey = y_yearkey 
                 
             """,
-                conn)
+                             conn)
         engine.dispose()
 
         filtered_table = df[
@@ -964,6 +966,7 @@ class Experiments:
             columns=["ci_city_c", "y_year"],
             aggfunc=np.sum
         )
+
     def pyCube_query34(self):
         view2 = view.columns(view.customer.city.ci_city.members()) \
             .rows(view.supplier.city.ci_city.members()) \
@@ -1075,7 +1078,7 @@ class Experiments:
                     JOIN month ON d_monthkey = mo_monthkey 
                     JOIN year ON mo_yearkey = y_yearkey 
             """,
-                conn)
+                             conn)
         engine.dispose()
 
         filtered_table = df[
@@ -1095,6 +1098,7 @@ class Experiments:
             columns=["ci_city_c", "y_year"],
             aggfunc=np.sum
         )
+
     def pyCube_query41(self):
         view2 = view.columns(view.date1.year.y_year.members()) \
             .rows(view.customer.nation.n_nation.members()) \
@@ -1258,8 +1262,8 @@ class Experiments:
                     JOIN category ON b_categorykey = ca_categorykey 
                     JOIN mfgr ON ca_mfgrkey = m_mfgrkey 
                 """,
-                conn
-            )
+                             conn
+                             )
         engine.dispose()
 
         filtered_table = df[
@@ -1277,6 +1281,7 @@ class Experiments:
             columns="y_year",
             aggfunc=np.sum
         )
+
     def pyCube_query42(self):
         view2 = view.columns(view.date1.year.y_year.members()) \
             .rows(view.supplier.nation.n_nation.members()) \
@@ -1425,6 +1430,61 @@ class Experiments:
             aggfunc=np.sum
         )
 
+    def pandas_query42_baseline3(self):
+        with engine.connect() as conn:
+            df = pd.read_sql("""
+                SELECT 
+                    lo_revenue,
+                    lo_supplycost,
+                    y_year, 
+                    region3.r_region AS r_region_c, 
+                    nation1.n_nation AS n_nation,
+                    region1.r_region AS r_region,
+                    ca_category,
+                    m_mfgr
+                FROM lineorder 
+                    JOIN date ON lo_orderdate = d_datekey 
+                    JOIN month ON d_monthkey = mo_monthkey 
+                    JOIN year ON mo_yearkey = y_yearkey 
+                    JOIN supplier AS supplier1 ON lineorder.lo_suppkey = supplier1.s_suppkey 
+                    JOIN city AS city1 ON supplier1.s_citykey = city1.ci_citykey 
+                    JOIN nation AS nation1 ON city1.ci_nationkey = nation1.n_nationkey 
+                    JOIN region AS region1 ON nation1.n_regionkey = region1.r_regionkey 
+                    JOIN part AS part2 ON lineorder.lo_partkey = part2.p_partkey 
+                    JOIN brand1 AS brand12 ON part2.p_brand1key = brand12.b_brand1key 
+                    JOIN category AS category2 ON brand12.b_categorykey = category2.ca_categorykey 
+                    JOIN mfgr AS mfgr2 ON category2.ca_mfgrkey = mfgr2.m_mfgrkey 
+                    JOIN customer AS customer3 ON lineorder.lo_custkey = customer3.c_custkey 
+                    JOIN city AS city3 ON customer3.c_citykey = city3.ci_citykey 
+                    JOIN nation AS nation3 ON city3.ci_nationkey = nation3.n_nationkey 
+                    JOIN region AS region3 ON nation3.n_regionkey = region3.r_regionkey 
+                
+            """,
+                             conn
+                             )
+
+        engine.dispose()
+
+        filtered_table = df[
+            (df["r_region_c"] == "AMERICA     ")
+            & (df["r_region"] == "AMERICA     ")
+            & (
+                    (df["y_year"] == 1997)
+                    | (df["y_year"] == 1998)
+            )
+            & (
+                    (df["m_mfgr"] == "MFGR#1")
+                    | (df["m_mfgr"] == "MFGR#2")
+            )
+            ]
+        filtered_table["profit"] = filtered_table.apply(lambda x: x.lo_revenue - x.lo_supplycost, axis=1)
+        return filtered_table.pivot_table(
+            values="profit",
+            index="n_nation",
+            columns=["y_year", "ca_category"],
+            aggfunc=np.sum
+        )
+
     def pyCube_query43(self):
         view2 = view.columns(view.date1.year.y_year.members()) \
             .rows(view.supplier.city.ci_city.members()) \
@@ -1560,6 +1620,56 @@ class Experiments:
             aggfunc=np.sum
         )
 
+    def pandas_query43_baseline3(self):
+        with engine.connect() as conn:
+            df = pd.read_sql("""
+                SELECT 
+                    lo_revenue,
+                    lo_supplycost,
+                    y_year, 
+                    city1.ci_city AS ci_city, 
+                    nation1.n_nation AS n_nation,
+                    region3.r_region AS r_region_c,
+                    ca_category,
+                    b_brand1
+                FROM lineorder 
+                    JOIN date ON lo_orderdate = d_datekey 
+                    JOIN month ON d_monthkey = mo_monthkey 
+                    JOIN year ON mo_yearkey = y_yearkey 
+                    JOIN supplier AS supplier1 ON lineorder.lo_suppkey = supplier1.s_suppkey 
+                    JOIN city AS city1 ON supplier1.s_citykey = city1.ci_citykey 
+                    JOIN nation AS nation1 ON city1.ci_nationkey = nation1.n_nationkey 
+                    JOIN part ON lo_partkey = p_partkey 
+                    JOIN brand1 ON p_brand1key = b_brand1key 
+                    JOIN category ON b_categorykey = ca_categorykey 
+                    JOIN customer AS customer3 ON lineorder.lo_custkey = customer3.c_custkey 
+                    JOIN city AS city3 ON customer3.c_citykey = city3.ci_citykey 
+                    JOIN nation AS nation3 ON city3.ci_nationkey = nation3.n_nationkey 
+                    JOIN region AS region3 ON nation3.n_regionkey = region3.r_regionkey 
+                
+            """,
+                             conn
+                             )
+
+        engine.dispose()
+
+        filtered_table = df[
+            (df["r_region_c"] == "AMERICA     ")
+            & (df["n_nation"] == "UNITED STATES  ")
+            & (
+                    (df["y_year"] == 1997)
+                    | (df["y_year"] == 1998)
+            )
+            & (df["ca_category"] == "MFGR#14")
+            ]
+        filtered_table["profit"] = filtered_table.apply(lambda x: x.lo_revenue - x.lo_supplycost, axis=1)
+        return filtered_table.pivot_table(
+            values="profit",
+            index="ci_city",
+            columns=["y_year", "b_brand1"],
+            aggfunc=np.sum
+        )
+
     # Create new view before calling query methods
     def compare(
             self,
@@ -1599,7 +1709,7 @@ class Experiments:
                     pyCube_method = self.__getattribute__(f"pyCube_query{k}{i}")
                     pyCube_result = pyCube_method()
 
-                    for baseline in range(1, 3):
+                    for baseline in range(1, 4):
                         pandas_method = self.__getattribute__(f"pandas_query{k}{i}_baseline{baseline}")
                         pandas_result = pandas_method()
                         print(f"pyCube_query{k}{i} is equal to pandas_query{k}{i}_baseline{baseline} == "
@@ -1612,7 +1722,7 @@ class Experiments:
                     pyCube_method = self.__getattribute__(f"pyCube_query{k}{i}")
                     pyCube_result = prepare_pyCube_df(pyCube_method())
 
-                    for baseline in range(1, 3):
+                    for baseline in range(1, 4):
                         pandas_method = self.__getattribute__(f"pandas_query{k}{i}_baseline{baseline}")
                         pandas_result = prepare_pandas_df(pandas_method())
 
@@ -1626,11 +1736,5 @@ class Experiments:
 # result = pyCube_result.equals(pandas_result)
 # hej = 1
 
-# KOMIN TIL PANDAS_QUERY42_BASELINE3 (SUM IKKI ER TIL ENN)
 e = Experiments()
-e.compare(
-    single=True,
-    pyCube_method=e.pyCube_query41,
-    pandas_method=e.pandas_query41_baseline3,
-    first_query_flight=False
-)
+e.compare()
