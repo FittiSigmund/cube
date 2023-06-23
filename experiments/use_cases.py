@@ -31,9 +31,6 @@ view = postgres.load_view('ssb_snowflake')
 engine = create_engine("postgresql+psycopg2://sigmundur:@localhost/ssb_snowflake")
 
 
-if sys.argv and len(sys.argv) == 1:
-    sys.exit(1)
-
 # Baseline1: Tag alle kolonner med og join fact tabellen først
 # Baseline2: Tag kun nødvendige kolonner med og join fact tabellen sidst
 # Baseline3: Lav alle joins i db
@@ -1781,5 +1778,13 @@ class Experiments:
 
     #                     print(f"pyCube_query{k}{i} is equal to pandas_query{k}{i}_baseline{baseline} == "
     #                           f"{pyCube_result.equals(pandas_result)}")
+
+
+if sys.argv and len(sys.argv) == 2:
+    try:
+        eval(f"{sys.argv[1]}()")
+        sys.exit(0)
+    except Exception as e:
+        sys.exit(e)
 
 

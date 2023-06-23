@@ -5,7 +5,19 @@
 # The results should be saved to a file for later inspection.
 
 source bin/activate
-result=$(`python -m experiments.use_cases "hej"` 2>&1)
-echo $result
+
+echo "pyCube_query11" >> results
+/usr/bin/time python -m experiments.use_cases "pyCube_query11" 2>> results
+
+echo "pandas_query11_baseline1" >> results
+/usr/bin/time python -m experiments.use_cases "pandas_query11_baseline1" 2>> results
+
+echo "pandas_query11_baseline2" >> results
+/usr/bin/time python -m experiments.use_cases "pandas_query11_baseline2" 2>> results
+
+echo "pandas_query11_baseline3" >> results
+/usr/bin/time python -m experiments.use_cases "pandas_query11_baseline3" 2>> results
+
+
 
 
