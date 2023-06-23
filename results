@@ -1,0 +1,12 @@
+pyCube_query11
+0.49user 0.72system 0:00.84elapsed 144%CPU (0avgtext+0avgdata 96708maxresident)k
+0inputs+0outputs (0major+17934minor)pagefaults 0swaps
+pandas_query11_baseline1
+31.02user 3.06system 0:35.17elapsed 96%CPU (0avgtext+0avgdata 10306668maxresident)k
+0inputs+0outputs (0major+1761644minor)pagefaults 0swaps
+pandas_query11_baseline2
+9.51user 1.24system 0:11.18elapsed 96%CPU (0avgtext+0avgdata 2087324maxresident)k
+0inputs+0outputs (0major+483674minor)pagefaults 0swaps
+pandas_query11_baseline3
+9.65user 1.29system 0:12.60elapsed 86%CPU (0avgtext+0avgdata 2084736maxresident)k
+0inputs+0outputs (0major+476510minor)pagefaults 0swaps
