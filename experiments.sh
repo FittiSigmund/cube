@@ -1,23 +1,43 @@
 #!/bin/bash
 
-# This script will call use_cases.py iteratively over every use case found in the file
-# and will call it using time.
-# The results should be saved to a file for later inspection.
-
 source bin/activate
 
-echo "pyCube_query11" >> results
-/usr/bin/time python -m experiments.use_cases "pyCube_query11" 2>> results
+function run_time {
+    echo $1 >> new_results
+    /usr/bin/time -f "Wall clock time: %Eseconds\nUser CPU time: %Useconds\nSystem CPU time: %Sseconds\nMaximum resident set size of the process during its lifetime: %MKbytes\nAverage resident set size of the process: %tKbytes\nAverage total (data+stack+text) memory use of the process: %KKbytes" python -m experiments.use_cases $1 2>> new_results
+}
 
-echo "pandas_query11_baseline1" >> results
-/usr/bin/time python -m experiments.use_cases "pandas_query11_baseline1" 2>> results
+function run_all_queryflights {
+    for i in 1 2 3 4
+    do
+        if [[ $i -ne 3 ]]
+        then
+            for j in 1 2 3
+            do
+                if [[ $# -eq 1 ]]
+                then
+                    queryname=${1}${i}${j}
+                else
+                    queryname=${1}${i}${j}_baseline${2}
+                fi
+                run_time $queryname
+            done
+        else
+            for j in 1 2 3 4
+            do
+                if [[ $# -eq 1 ]]
+                then
+                    queryname=${1}${i}${j}
+                else
+                    queryname=${1}${i}${j}_baseline${2}
+                fi
+                run_time $queryname
+            done
+        fi
+    done
+}
 
-echo "pandas_query11_baseline2" >> results
-/usr/bin/time python -m experiments.use_cases "pandas_query11_baseline2" 2>> results
-
-echo "pandas_query11_baseline3" >> results
-/usr/bin/time python -m experiments.use_cases "pandas_query11_baseline3" 2>> results
-
-
-
-
+run_all_queryflights "pyCube_query"
+run_all_queryflights "pandas_query" "1"
+run_all_queryflights "pandas_query" "2"
+run_all_queryflights "pandas_query" "3"
