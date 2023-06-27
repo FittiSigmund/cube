@@ -1,0 +1,364 @@
+pyCube_query11
+Wall clock time: 0:00.83seconds
+User CPU time: 0.51seconds
+System CPU time: 0.69seconds
+Maximum resident set size of the process during its lifetime: 96812Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pyCube_query12
+Wall clock time: 0:00.84seconds
+User CPU time: 0.48seconds
+System CPU time: 0.73seconds
+Maximum resident set size of the process during its lifetime: 96364Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pyCube_query13
+Wall clock time: 0:00.91seconds
+User CPU time: 0.50seconds
+System CPU time: 0.73seconds
+Maximum resident set size of the process during its lifetime: 96660Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pyCube_query21
+Wall clock time: 0:01.12seconds
+User CPU time: 0.57seconds
+System CPU time: 0.66seconds
+Maximum resident set size of the process during its lifetime: 97936Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pyCube_query22
+Wall clock time: 0:00.88seconds
+User CPU time: 0.53seconds
+System CPU time: 0.69seconds
+Maximum resident set size of the process during its lifetime: 98500Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pyCube_query23
+Wall clock time: 0:00.80seconds
+User CPU time: 0.56seconds
+System CPU time: 0.65seconds
+Maximum resident set size of the process during its lifetime: 98204Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pyCube_query31
+Wall clock time: 0:01.40seconds
+User CPU time: 0.58seconds
+System CPU time: 0.68seconds
+Maximum resident set size of the process during its lifetime: 97984Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pyCube_query32
+Wall clock time: 0:00.96seconds
+User CPU time: 0.57seconds
+System CPU time: 0.66seconds
+Maximum resident set size of the process during its lifetime: 98000Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pyCube_query33
+Wall clock time: 0:00.81seconds
+User CPU time: 0.55seconds
+System CPU time: 0.64seconds
+Maximum resident set size of the process during its lifetime: 98348Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pyCube_query34
+Wall clock time: 0:00.82seconds
+User CPU time: 0.53seconds
+System CPU time: 0.63seconds
+Maximum resident set size of the process during its lifetime: 98484Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pyCube_query41
+Wall clock time: 0:01.47seconds
+User CPU time: 0.54seconds
+System CPU time: 0.67seconds
+Maximum resident set size of the process during its lifetime: 97708Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pyCube_query42
+Wall clock time: 0:01.63seconds
+User CPU time: 0.53seconds
+System CPU time: 0.69seconds
+Maximum resident set size of the process during its lifetime: 98032Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pyCube_query43
+Wall clock time: 0:01.00seconds
+User CPU time: 0.56seconds
+System CPU time: 0.69seconds
+Maximum resident set size of the process during its lifetime: 98104Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query11_baseline1
+Wall clock time: 0:32.66seconds
+User CPU time: 28.44seconds
+System CPU time: 3.01seconds
+Maximum resident set size of the process during its lifetime: 10306424Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query12_baseline1
+Wall clock time: 0:31.12seconds
+User CPU time: 26.89seconds
+System CPU time: 3.00seconds
+Maximum resident set size of the process during its lifetime: 8665348Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query13_baseline1
+Wall clock time: 0:32.73seconds
+User CPU time: 28.55seconds
+System CPU time: 2.98seconds
+Maximum resident set size of the process during its lifetime: 10306676Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query21_baseline1
+Wall clock time: 1:04.29seconds
+User CPU time: 57.08seconds
+System CPU time: 5.90seconds
+Maximum resident set size of the process during its lifetime: 21365820Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query22_baseline1
+Wall clock time: 0:59.24seconds
+User CPU time: 52.96seconds
+System CPU time: 4.97seconds
+Maximum resident set size of the process during its lifetime: 20522184Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query23_baseline1
+Wall clock time: 1:04.42seconds
+User CPU time: 58.20seconds
+System CPU time: 5.01seconds
+Maximum resident set size of the process during its lifetime: 20522844Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query31_baseline1
+Wall clock time: 0:20.65seconds
+User CPU time: 17.23seconds
+System CPU time: 2.81seconds
+Maximum resident set size of the process during its lifetime: 7719380Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query32_baseline1
+Wall clock time: 0:18.03seconds
+User CPU time: 14.91seconds
+System CPU time: 2.60seconds
+Maximum resident set size of the process during its lifetime: 6219172Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query33_baseline1
+Wall clock time: 0:15.93seconds
+User CPU time: 13.33seconds
+System CPU time: 2.13seconds
+Maximum resident set size of the process during its lifetime: 4670900Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query34_baseline1
+Wall clock time: 0:16.72seconds
+User CPU time: 14.00seconds
+System CPU time: 2.25seconds
+Maximum resident set size of the process during its lifetime: 4952368Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query41_baseline1
+Wall clock time: 0:32.19seconds
+User CPU time: 27.02seconds
+System CPU time: 4.47seconds
+Maximum resident set size of the process during its lifetime: 12521576Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query42_baseline1
+Wall clock time: 0:32.08seconds
+User CPU time: 25.77seconds
+System CPU time: 5.56seconds
+Maximum resident set size of the process during its lifetime: 11931628Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query43_baseline1
+Wall clock time: 0:30.51seconds
+User CPU time: 25.35seconds
+System CPU time: 4.34seconds
+Maximum resident set size of the process during its lifetime: 12238152Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query11_baseline2
+Wall clock time: 0:11.31seconds
+User CPU time: 9.55seconds
+System CPU time: 1.33seconds
+Maximum resident set size of the process during its lifetime: 2087080Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query12_baseline2
+Wall clock time: 0:10.95seconds
+User CPU time: 9.19seconds
+System CPU time: 1.36seconds
+Maximum resident set size of the process during its lifetime: 2087540Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query13_baseline2
+Wall clock time: 0:11.43seconds
+User CPU time: 9.50seconds
+System CPU time: 1.52seconds
+Maximum resident set size of the process during its lifetime: 2228468Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query21_baseline2
+Wall clock time: 0:15.11seconds
+User CPU time: 12.65seconds
+System CPU time: 1.88seconds
+Maximum resident set size of the process during its lifetime: 4108520Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query22_baseline2
+Wall clock time: 0:14.78seconds
+User CPU time: 12.34seconds
+System CPU time: 1.89seconds
+Maximum resident set size of the process during its lifetime: 3828160Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query23_baseline2
+Wall clock time: 0:14.80seconds
+User CPU time: 12.44seconds
+System CPU time: 1.74seconds
+Maximum resident set size of the process during its lifetime: 3827584Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query31_baseline2
+Wall clock time: 0:15.09seconds
+User CPU time: 12.71seconds
+System CPU time: 1.85seconds
+Maximum resident set size of the process during its lifetime: 4436908Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query32_baseline2
+Wall clock time: 0:15.06seconds
+User CPU time: 12.73seconds
+System CPU time: 1.76seconds
+Maximum resident set size of the process during its lifetime: 4201740Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query33_baseline2
+Wall clock time: 0:14.51seconds
+User CPU time: 12.30seconds
+System CPU time: 1.68seconds
+Maximum resident set size of the process during its lifetime: 3499504Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query34_baseline2
+Wall clock time: 0:15.06seconds
+User CPU time: 12.74seconds
+System CPU time: 1.78seconds
+Maximum resident set size of the process during its lifetime: 3686244Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query41_baseline2
+Wall clock time: 0:21.91seconds
+User CPU time: 18.79seconds
+System CPU time: 2.41seconds
+Maximum resident set size of the process during its lifetime: 7034028Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query42_baseline2
+Wall clock time: 0:22.17seconds
+User CPU time: 18.61seconds
+System CPU time: 2.90seconds
+Maximum resident set size of the process during its lifetime: 7144768Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query43_baseline2
+Wall clock time: 0:21.57seconds
+User CPU time: 18.50seconds
+System CPU time: 2.40seconds
+Maximum resident set size of the process during its lifetime: 7223744Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query11_baseline3
+Wall clock time: 0:11.84seconds
+User CPU time: 8.89seconds
+System CPU time: 1.29seconds
+Maximum resident set size of the process during its lifetime: 2125908Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query12_baseline3
+Wall clock time: 0:10.85seconds
+User CPU time: 8.34seconds
+System CPU time: 1.35seconds
+Maximum resident set size of the process during its lifetime: 2085800Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query13_baseline3
+Wall clock time: 0:12.16seconds
+User CPU time: 9.02seconds
+System CPU time: 1.37seconds
+Maximum resident set size of the process during its lifetime: 2288660Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query21_baseline3
+Wall clock time: 0:16.50seconds
+User CPU time: 8.64seconds
+System CPU time: 1.80seconds
+Maximum resident set size of the process during its lifetime: 3263016Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query22_baseline3
+Wall clock time: 0:15.10seconds
+User CPU time: 8.30seconds
+System CPU time: 1.52seconds
+Maximum resident set size of the process during its lifetime: 2787064Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query23_baseline3
+Wall clock time: 0:14.53seconds
+User CPU time: 7.96seconds
+System CPU time: 1.60seconds
+Maximum resident set size of the process during its lifetime: 2787180Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query31_baseline3
+Wall clock time: 0:17.52seconds
+User CPU time: 9.41seconds
+System CPU time: 1.83seconds
+Maximum resident set size of the process during its lifetime: 3974308Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query32_baseline3
+Wall clock time: 0:16.34seconds
+User CPU time: 9.34seconds
+System CPU time: 1.73seconds
+Maximum resident set size of the process during its lifetime: 3974124Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query33_baseline3
+Wall clock time: 0:13.21seconds
+User CPU time: 8.26seconds
+System CPU time: 1.43seconds
+Maximum resident set size of the process during its lifetime: 2787184Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query34_baseline3
+Wall clock time: 0:14.13seconds
+User CPU time: 8.89seconds
+System CPU time: 1.63seconds
+Maximum resident set size of the process during its lifetime: 3307612Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query41_baseline3
+Wall clock time: 0:24.52seconds
+User CPU time: 12.50seconds
+System CPU time: 2.17seconds
+Maximum resident set size of the process during its lifetime: 4536628Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query42_baseline3
+Wall clock time: 0:23.89seconds
+User CPU time: 11.65seconds
+System CPU time: 2.26seconds
+Maximum resident set size of the process during its lifetime: 4901908Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query43_baseline3
+Wall clock time: 0:21.84seconds
+User CPU time: 11.25seconds
+System CPU time: 2.00seconds
+Maximum resident set size of the process during its lifetime: 4901756Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
