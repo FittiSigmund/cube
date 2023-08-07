@@ -1,0 +1,3217 @@
+pyCube_query11
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.52seconds
+User CPU time: 0.45seconds
+System CPU time: 0.73seconds
+Maximum resident set size of the process during its lifetime: 90024Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query42_baseline3
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.40seconds
+User CPU time: 0.48seconds
+System CPU time: 0.69seconds
+Maximum resident set size of the process during its lifetime: 89672Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query43_baseline1
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.40seconds
+User CPU time: 0.47seconds
+System CPU time: 0.70seconds
+Maximum resident set size of the process during its lifetime: 89856Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query21_baseline1
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.40seconds
+User CPU time: 0.51seconds
+System CPU time: 0.66seconds
+Maximum resident set size of the process during its lifetime: 89816Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query33_baseline1
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.40seconds
+User CPU time: 0.50seconds
+System CPU time: 0.66seconds
+Maximum resident set size of the process during its lifetime: 89756Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query11_baseline2
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.39seconds
+User CPU time: 0.51seconds
+System CPU time: 0.66seconds
+Maximum resident set size of the process during its lifetime: 89924Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query41_baseline3
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.42seconds
+User CPU time: 0.49seconds
+System CPU time: 0.70seconds
+Maximum resident set size of the process during its lifetime: 89888Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query11_baseline1
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.46seconds
+User CPU time: 0.51seconds
+System CPU time: 0.48seconds
+Maximum resident set size of the process during its lifetime: 89688Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query34_baseline1
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.51seconds
+User CPU time: 0.54seconds
+System CPU time: 0.60seconds
+Maximum resident set size of the process during its lifetime: 90104Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query12_baseline2
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.44seconds
+User CPU time: 0.46seconds
+System CPU time: 0.53seconds
+Maximum resident set size of the process during its lifetime: 89764Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pyCube_query13
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.40seconds
+User CPU time: 0.47seconds
+System CPU time: 0.70seconds
+Maximum resident set size of the process during its lifetime: 89788Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pyCube_query32
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.40seconds
+User CPU time: 0.50seconds
+System CPU time: 0.66seconds
+Maximum resident set size of the process during its lifetime: 89884Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query22_baseline1
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.39seconds
+User CPU time: 0.46seconds
+System CPU time: 0.70seconds
+Maximum resident set size of the process during its lifetime: 89852Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pyCube_query43
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.40seconds
+User CPU time: 0.47seconds
+System CPU time: 0.69seconds
+Maximum resident set size of the process during its lifetime: 89736Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query32_baseline1
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.40seconds
+User CPU time: 0.49seconds
+System CPU time: 0.66seconds
+Maximum resident set size of the process during its lifetime: 89656Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query41_baseline1
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.39seconds
+User CPU time: 0.46seconds
+System CPU time: 0.70seconds
+Maximum resident set size of the process during its lifetime: 90164Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query32_baseline2
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.40seconds
+User CPU time: 0.45seconds
+System CPU time: 0.70seconds
+Maximum resident set size of the process during its lifetime: 89816Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pyCube_query42
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.39seconds
+User CPU time: 0.44seconds
+System CPU time: 0.72seconds
+Maximum resident set size of the process during its lifetime: 89728Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query32_baseline2
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.40seconds
+User CPU time: 0.40seconds
+System CPU time: 0.76seconds
+Maximum resident set size of the process during its lifetime: 89652Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query13_baseline2
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.39seconds
+User CPU time: 0.46seconds
+System CPU time: 0.70seconds
+Maximum resident set size of the process during its lifetime: 89920Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query22_baseline1
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.39seconds
+User CPU time: 0.45seconds
+System CPU time: 0.71seconds
+Maximum resident set size of the process during its lifetime: 89840Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query43_baseline3
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.40seconds
+User CPU time: 0.44seconds
+System CPU time: 0.71seconds
+Maximum resident set size of the process during its lifetime: 90008Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pyCube_query32
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.39seconds
+User CPU time: 0.49seconds
+System CPU time: 0.67seconds
+Maximum resident set size of the process during its lifetime: 90004Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query22_baseline2
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.40seconds
+User CPU time: 0.46seconds
+System CPU time: 0.70seconds
+Maximum resident set size of the process during its lifetime: 89784Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query11_baseline3
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.40seconds
+User CPU time: 0.48seconds
+System CPU time: 0.69seconds
+Maximum resident set size of the process during its lifetime: 89884Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query31_baseline3
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.39seconds
+User CPU time: 0.51seconds
+System CPU time: 0.66seconds
+Maximum resident set size of the process during its lifetime: 89712Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query42_baseline2
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.41seconds
+User CPU time: 0.47seconds
+System CPU time: 0.69seconds
+Maximum resident set size of the process during its lifetime: 89716Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query23_baseline1
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.40seconds
+User CPU time: 0.46seconds
+System CPU time: 0.70seconds
+Maximum resident set size of the process during its lifetime: 89664Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query31_baseline3
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.40seconds
+User CPU time: 0.49seconds
+System CPU time: 0.67seconds
+Maximum resident set size of the process during its lifetime: 89776Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query42_baseline3
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.39seconds
+User CPU time: 0.49seconds
+System CPU time: 0.67seconds
+Maximum resident set size of the process during its lifetime: 90116Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query33_baseline2
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.40seconds
+User CPU time: 0.52seconds
+System CPU time: 0.64seconds
+Maximum resident set size of the process during its lifetime: 89864Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pyCube_query11
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.39seconds
+User CPU time: 0.50seconds
+System CPU time: 0.66seconds
+Maximum resident set size of the process during its lifetime: 89860Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query13_baseline3
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.40seconds
+User CPU time: 0.46seconds
+System CPU time: 0.70seconds
+Maximum resident set size of the process during its lifetime: 89700Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query22_baseline1
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.40seconds
+User CPU time: 0.48seconds
+System CPU time: 0.68seconds
+Maximum resident set size of the process during its lifetime: 90040Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query32_baseline3
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.39seconds
+User CPU time: 0.49seconds
+System CPU time: 0.67seconds
+Maximum resident set size of the process during its lifetime: 90112Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pyCube_query33
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.40seconds
+User CPU time: 0.44seconds
+System CPU time: 0.73seconds
+Maximum resident set size of the process during its lifetime: 90124Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query43_baseline3
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.39seconds
+User CPU time: 0.44seconds
+System CPU time: 0.73seconds
+Maximum resident set size of the process during its lifetime: 89872Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query11_baseline1
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.39seconds
+User CPU time: 0.48seconds
+System CPU time: 0.68seconds
+Maximum resident set size of the process during its lifetime: 89716Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query12_baseline1
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.39seconds
+User CPU time: 0.46seconds
+System CPU time: 0.70seconds
+Maximum resident set size of the process during its lifetime: 89892Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query41_baseline3
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.40seconds
+User CPU time: 0.50seconds
+System CPU time: 0.65seconds
+Maximum resident set size of the process during its lifetime: 89852Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query31_baseline3
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.40seconds
+User CPU time: 0.43seconds
+System CPU time: 0.73seconds
+Maximum resident set size of the process during its lifetime: 89772Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query42_baseline1
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.39seconds
+User CPU time: 0.48seconds
+System CPU time: 0.68seconds
+Maximum resident set size of the process during its lifetime: 89836Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query41_baseline2
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 9, in <module>
+    import pandas as pd
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/__init__.py", line 48, in <module>
+    from pandas.core.api import (
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/api.py", line 47, in <module>
+    from pandas.core.groupby import (
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/groupby/__init__.py", line 1, in <module>
+    from pandas.core.groupby.generic import (
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/groupby/generic.py", line 77, in <module>
+    from pandas.core.frame import DataFrame
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/frame.py", line 182, in <module>
+    from pandas.core.generic import NDFrame
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/generic.py", line 169, in <module>
+    from pandas.core.methods.describe import describe_ndframe
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/methods/describe.py", line 44, in <module>
+    from pandas.io.formats.format import format_percentiles
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/io/formats/format.py", line 105, in <module>
+    from pandas.io.common import (
+  File "<frozen importlib._bootstrap>", line 1178, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1140, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1080, in _find_spec
+  File "<frozen importlib._bootstrap_external>", line 1504, in find_spec
+  File "<frozen importlib._bootstrap_external>", line 1476, in _get_spec
+  File "<frozen importlib._bootstrap_external>", line 1640, in find_spec
+  File "<frozen importlib._bootstrap_external>", line 128, in _path_join
+KeyboardInterrupt
+Command terminated by signal 2
+Wall clock time: 0:00.19seconds
+User CPU time: 0.25seconds
+System CPU time: 0.70seconds
+Maximum resident set size of the process during its lifetime: 55868Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query11_baseline2
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.39seconds
+User CPU time: 0.50seconds
+System CPU time: 0.66seconds
+Maximum resident set size of the process during its lifetime: 89752Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query34_baseline3
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 11, in <module>
+    from sqlalchemy import create_engine
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/sqlalchemy/__init__.py", line 13, in <module>
+    from .engine import AdaptedConnection as AdaptedConnection
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/sqlalchemy/engine/__init__.py", line 18, in <module>
+    from . import events as events
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/sqlalchemy/engine/events.py", line 19, in <module>
+    from .base import Connection
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 30, in <module>
+    from .interfaces import BindTyping
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/sqlalchemy/engine/interfaces.py", line 38, in <module>
+    from ..sql.compiler import Compiled as Compiled
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/sqlalchemy/sql/__init__.py", line 12, in <module>
+    from .compiler import COLLECT_CARTESIAN_PRODUCTS as COLLECT_CARTESIAN_PRODUCTS
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/sqlalchemy/sql/compiler.py", line 60, in <module>
+    from . import coercions
+  File "<frozen importlib._bootstrap>", line 1178, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1149, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 936, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 1069, in get_code
+  File "<frozen importlib._bootstrap_external>", line 733, in _compile_bytecode
+KeyboardInterrupt
+Command terminated by signal 2
+Wall clock time: 0:00.30seconds
+User CPU time: 0.38seconds
+System CPU time: 0.68seconds
+Maximum resident set size of the process during its lifetime: 75700Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query21_baseline1
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.40seconds
+User CPU time: 0.46seconds
+System CPU time: 0.70seconds
+Maximum resident set size of the process during its lifetime: 89860Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pyCube_query41
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 9, in <module>
+    import pandas as pd
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/__init__.py", line 48, in <module>
+    from pandas.core.api import (
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/api.py", line 27, in <module>
+    from pandas.core.arrays import Categorical
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/arrays/__init__.py", line 9, in <module>
+    from pandas.core.arrays.datetimes import DatetimeArray
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/arrays/datetimes.py", line 79, in <module>
+    from pandas.core.arrays import datetimelike as dtl
+  File "<frozen importlib._bootstrap>", line 1178, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1149, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 936, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 1069, in get_code
+  File "<frozen importlib._bootstrap_external>", line 729, in _compile_bytecode
+KeyboardInterrupt
+Command terminated by signal 2
+Wall clock time: 0:00.16seconds
+User CPU time: 0.24seconds
+System CPU time: 0.68seconds
+Maximum resident set size of the process during its lifetime: 48556Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query13_baseline3
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 9, in <module>
+    import pandas as pd
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/__init__.py", line 48, in <module>
+    from pandas.core.api import (
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/api.py", line 47, in <module>
+    from pandas.core.groupby import (
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/groupby/__init__.py", line 1, in <module>
+    from pandas.core.groupby.generic import (
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/groupby/generic.py", line 77, in <module>
+    from pandas.core.frame import DataFrame
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/frame.py", line 216, in <module>
+    from pandas.core.methods import selectn
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/methods/selectn.py", line 40, in <module>
+    class SelectN:
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/methods/selectn.py", line 40, in SelectN
+    class SelectN:
+    
+KeyboardInterrupt
+Command terminated by signal 2
+Wall clock time: 0:00.20seconds
+User CPU time: 0.27seconds
+System CPU time: 0.69seconds
+Maximum resident set size of the process during its lifetime: 59424Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pyCube_query33
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 9, in <module>
+    import pandas as pd
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/__init__.py", line 48, in <module>
+    from pandas.core.api import (
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/api.py", line 47, in <module>
+    from pandas.core.groupby import (
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/groupby/__init__.py", line 1, in <module>
+    from pandas.core.groupby.generic import (
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/groupby/generic.py", line 30, in <module>
+    from pandas._libs import (
+  File "<frozen importlib._bootstrap>", line 1231, in _handle_fromlist
+KeyboardInterrupt
+Command terminated by signal 2
+Wall clock time: 0:00.16seconds
+User CPU time: 0.27seconds
+System CPU time: 0.66seconds
+Maximum resident set size of the process during its lifetime: 49936Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pyCube_query12
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 9, in <module>
+    import pandas as pd
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/__init__.py", line 48, in <module>
+    from pandas.core.api import (
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/api.py", line 27, in <module>
+    from pandas.core.arrays import Categorical
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/arrays/__init__.py", line 9, in <module>
+    from pandas.core.arrays.datetimes import DatetimeArray
+  File "<frozen importlib._bootstrap>", line 1178, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1149, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 936, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 1069, in get_code
+  File "<frozen importlib._bootstrap_external>", line 729, in _compile_bytecode
+KeyboardInterrupt
+Command terminated by signal 2
+Wall clock time: 0:00.15seconds
+User CPU time: 0.24seconds
+System CPU time: 0.68seconds
+Maximum resident set size of the process during its lifetime: 48152Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pyCube_query43
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 9, in <module>
+    import pandas as pd
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/__init__.py", line 48, in <module>
+    from pandas.core.api import (
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/api.py", line 47, in <module>
+    from pandas.core.groupby import (
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/groupby/__init__.py", line 1, in <module>
+    from pandas.core.groupby.generic import (
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/groupby/generic.py", line 77, in <module>
+    from pandas.core.frame import DataFrame
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/frame.py", line 182, in <module>
+    from pandas.core.generic import NDFrame
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/generic.py", line 138, in <module>
+    from pandas.core import (
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/indexing.py", line 77, in <module>
+    from pandas.core.indexes.api import (
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/indexes/api.py", line 26, in <module>
+    from pandas.core.indexes.datetimes import DatetimeIndex
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/indexes/datetimes.py", line 59, in <module>
+    from pandas.core.indexes.datetimelike import DatetimeTimedeltaMixin
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/indexes/datetimelike.py", line 81, in <module>
+    class DatetimeIndexOpsMixin(NDArrayBackedExtensionIndex, ABC):
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/indexes/datetimelike.py", line 89, in DatetimeIndexOpsMixin
+    @doc(DatetimeLikeArrayMixin.mean)
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/util/_decorators.py", line 384, in decorator
+    [
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/util/_decorators.py", line 387, in <listcomp>
+    else dedent(component.__doc__ or "")
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/textwrap.py", line 466, in dedent
+    text = re.sub(r'(?m)^' + margin, '', text)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/re/__init__.py", line 185, in sub
+    return _compile(pattern, flags).sub(repl, string, count)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
+Command terminated by signal 2
+Wall clock time: 0:00.19seconds
+User CPU time: 0.26seconds
+System CPU time: 0.69seconds
+Maximum resident set size of the process during its lifetime: 54188Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query31_baseline3
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 9, in <module>
+    import pandas as pd
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/__init__.py", line 48, in <module>
+    from pandas.core.api import (
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/api.py", line 22, in <module>
+    from pandas.core.algorithms import (
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/algorithms.py", line 35, in <module>
+    from pandas.core.dtypes.cast import (
+  File "<frozen importlib._bootstrap>", line 1167, in _find_and_load
+KeyboardInterrupt
+Command terminated by signal 2
+Wall clock time: 0:00.14seconds
+User CPU time: 0.26seconds
+System CPU time: 0.64seconds
+Maximum resident set size of the process during its lifetime: 45340Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query43_baseline3
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 9, in <module>
+    import pandas as pd
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/__init__.py", line 48, in <module>
+    from pandas.core.api import (
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/api.py", line 47, in <module>
+    from pandas.core.groupby import (
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/groupby/__init__.py", line 1, in <module>
+    from pandas.core.groupby.generic import (
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/groupby/generic.py", line 77, in <module>
+    from pandas.core.frame import DataFrame
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/frame.py", line 182, in <module>
+    from pandas.core.generic import NDFrame
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/generic.py", line 160, in <module>
+    from pandas.core.internals import (
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/internals/__init__.py", line 2, in <module>
+    from pandas.core.internals.array_manager import (
+  File "<frozen importlib._bootstrap>", line 1178, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1149, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 936, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 1069, in get_code
+  File "<frozen importlib._bootstrap_external>", line 729, in _compile_bytecode
+KeyboardInterrupt
+Command terminated by signal 2
+Wall clock time: 0:00.19seconds
+User CPU time: 0.26seconds
+System CPU time: 0.69seconds
+Maximum resident set size of the process during its lifetime: 55236Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pyCube_query34
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 9, in <module>
+    import pandas as pd
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/__init__.py", line 48, in <module>
+    from pandas.core.api import (
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/api.py", line 27, in <module>
+    from pandas.core.arrays import Categorical
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/arrays/__init__.py", line 21, in <module>
+    from pandas.core.arrays.string_arrow import ArrowStringArray
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/arrays/string_arrow.py", line 63, in <module>
+    class ArrowStringArray(ObjectStringArrayMixin, ArrowExtensionArray, BaseStringArray):
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/arrays/string_arrow.py", line 130, in ArrowStringArray
+    @classmethod
+     ^^^^^^^^^^^
+KeyboardInterrupt
+Command terminated by signal 2
+Wall clock time: 0:00.17seconds
+User CPU time: 0.25seconds
+System CPU time: 0.67seconds
+Maximum resident set size of the process during its lifetime: 49304Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pyCube_query34
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.39seconds
+User CPU time: 0.45seconds
+System CPU time: 0.71seconds
+Maximum resident set size of the process during its lifetime: 89940Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pyCube_query42
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 13, in <module>
+    from session.session import *
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 12, in <module>
+    from cube.Axis import Axis
+  File "/home/sigmundur/work/cubeProject/cube/cube/Axis.py", line 5, in <module>
+    from cube.Attribute import Attribute
+  File "/home/sigmundur/work/cubeProject/cube/cube/Attribute.py", line 11, in <module>
+    from cube.LevelMember import LevelMember
+  File "/home/sigmundur/work/cubeProject/cube/cube/LevelMember.py", line 5, in <module>
+    from rdflib import Namespace
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/rdflib/__init__.py", line 54, in <module>
+    _DISTRIBUTION_METADATA = metadata.metadata("rdflib")
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/importlib/metadata/__init__.py", line 998, in metadata
+    return Distribution.from_name(distribution_name).metadata
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/importlib/metadata/__init__.py", line 617, in metadata
+    return _adapters.Message(email.message_from_string(text))
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/email/__init__.py", line 38, in message_from_string
+    return Parser(*args, **kws).parsestr(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/email/parser.py", line 67, in parsestr
+    return self.parse(StringIO(text), headersonly=headersonly)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/email/parser.py", line 56, in parse
+    feedparser.feed(data)
+  File "/usr/lib/python3.11/email/feedparser.py", line 176, in feed
+    self._call_parse()
+  File "/usr/lib/python3.11/email/feedparser.py", line 180, in _call_parse
+    self._parse()
+  File "/usr/lib/python3.11/email/feedparser.py", line 224, in _parsegen
+    for line in self._input:
+  File "/usr/lib/python3.11/email/feedparser.py", line 129, in __next__
+    line = self.readline()
+           ^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/email/feedparser.py", line 85, in readline
+    line = self._lines.popleft()
+           ^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
+Command terminated by signal 2
+Wall clock time: 0:00.37seconds
+User CPU time: 0.44seconds
+System CPU time: 0.69seconds
+Maximum resident set size of the process during its lifetime: 83744Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pyCube_query34
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 9, in <module>
+    import pandas as pd
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/__init__.py", line 22, in <module>
+    from pandas.compat import is_numpy_dev as _is_numpy_dev  # pyright: ignore # noqa:F401
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/compat/__init__.py", line 25, in <module>
+    from pandas.compat.numpy import (
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/compat/numpy/__init__.py", line 4, in <module>
+    from pandas.util.version import Version
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/util/__init__.py", line 8, in <module>
+    from pandas.core.util.hashing import (  # noqa:F401
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/util/hashing.py", line 17, in <module>
+    from pandas._libs import lib
+  File "pandas/_libs/lib.pyx", line 103, in init pandas._libs.lib
+  File "<frozen importlib._bootstrap>", line 1209, in _handle_fromlist
+KeyboardInterrupt
+Command terminated by signal 2
+Wall clock time: 0:00.14seconds
+User CPU time: 0.23seconds
+System CPU time: 0.66seconds
+Maximum resident set size of the process during its lifetime: 44184Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query23_baseline3
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 9, in <module>
+    import pandas as pd
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/__init__.py", line 48, in <module>
+    from pandas.core.api import (
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/api.py", line 47, in <module>
+    from pandas.core.groupby import (
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/groupby/__init__.py", line 1, in <module>
+    from pandas.core.groupby.generic import (
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/groupby/generic.py", line 77, in <module>
+    from pandas.core.frame import DataFrame
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/frame.py", line 182, in <module>
+    from pandas.core.generic import NDFrame
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/generic.py", line 138, in <module>
+    from pandas.core import (
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/indexing.py", line 77, in <module>
+    from pandas.core.indexes.api import (
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/indexes/api.py", line 27, in <module>
+    from pandas.core.indexes.interval import IntervalIndex
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/indexes/interval.py", line 193, in <module>
+    class IntervalIndex(ExtensionIndex):
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/indexes/interval.py", line 695, in IntervalIndex
+    @Appender(_index_shared_docs["get_indexer_non_unique"] % _index_doc_kwargs)
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/util/_decorators.py", line 485, in __call__
+    func.__doc__ = dedent(self.join.join(docitems))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/textwrap.py", line 436, in dedent
+    indents = _leading_whitespace_re.findall(text)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
+Command terminated by signal 2
+Wall clock time: 0:00.18seconds
+User CPU time: 0.28seconds
+System CPU time: 0.67seconds
+Maximum resident set size of the process during its lifetime: 54720Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pyCube_query21
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 9, in <module>
+    import pandas as pd
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/__init__.py", line 48, in <module>
+    from pandas.core.api import (
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/api.py", line 47, in <module>
+    from pandas.core.groupby import (
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/groupby/__init__.py", line 1, in <module>
+    from pandas.core.groupby.generic import (
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/groupby/generic.py", line 77, in <module>
+    from pandas.core.frame import DataFrame
+  File "<frozen importlib._bootstrap>", line 1178, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1149, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 936, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 1069, in get_code
+  File "<frozen importlib._bootstrap_external>", line 729, in _compile_bytecode
+KeyboardInterrupt
+Command terminated by signal 2
+Wall clock time: 0:00.17seconds
+User CPU time: 0.25seconds
+System CPU time: 0.67seconds
+Maximum resident set size of the process during its lifetime: 51088Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query11_baseline2
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 9, in <module>
+    import pandas as pd
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/__init__.py", line 48, in <module>
+    from pandas.core.api import (
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/api.py", line 47, in <module>
+    from pandas.core.groupby import (
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/groupby/__init__.py", line 1, in <module>
+    from pandas.core.groupby.generic import (
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/groupby/generic.py", line 77, in <module>
+    from pandas.core.frame import DataFrame
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/frame.py", line 490, in <module>
+    class DataFrame(NDFrame, OpsMixin):
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/frame.py", line 6720, in DataFrame
+    @Appender(NDFrame.sort_values.__doc__)
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/util/_decorators.py", line 485, in __call__
+    func.__doc__ = dedent(self.join.join(docitems))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/textwrap.py", line 436, in dedent
+    indents = _leading_whitespace_re.findall(text)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
+Command terminated by signal 2
+Wall clock time: 0:00.21seconds
+User CPU time: 0.27seconds
+System CPU time: 0.71seconds
+Maximum resident set size of the process during its lifetime: 60928Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pyCube_query12
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 9, in <module>
+    import pandas as pd
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/__init__.py", line 48, in <module>
+    from pandas.core.api import (
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/api.py", line 47, in <module>
+    from pandas.core.groupby import (
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/groupby/__init__.py", line 1, in <module>
+    from pandas.core.groupby.generic import (
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/groupby/generic.py", line 79, in <module>
+    from pandas.core.groupby.groupby import (
+  File "<frozen importlib._bootstrap>", line 1178, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1149, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 936, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 1032, in get_code
+  File "<frozen importlib._bootstrap_external>", line 1131, in get_data
+KeyboardInterrupt
+Command terminated by signal 2
+Wall clock time: 0:00.21seconds
+User CPU time: 0.35seconds
+System CPU time: 0.62seconds
+Maximum resident set size of the process during its lifetime: 61260Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query42_baseline3
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.40seconds
+User CPU time: 0.49seconds
+System CPU time: 0.67seconds
+Maximum resident set size of the process during its lifetime: 90020Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query41_baseline2
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.39seconds
+User CPU time: 0.45seconds
+System CPU time: 0.71seconds
+Maximum resident set size of the process during its lifetime: 89984Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query32_baseline1
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.40seconds
+User CPU time: 0.49seconds
+System CPU time: 0.67seconds
+Maximum resident set size of the process during its lifetime: 89748Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query22_baseline3
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.39seconds
+User CPU time: 0.45seconds
+System CPU time: 0.71seconds
+Maximum resident set size of the process during its lifetime: 89760Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query11_baseline1
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.40seconds
+User CPU time: 0.49seconds
+System CPU time: 0.67seconds
+Maximum resident set size of the process during its lifetime: 90108Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query42_baseline2
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.40seconds
+User CPU time: 0.51seconds
+System CPU time: 0.66seconds
+Maximum resident set size of the process during its lifetime: 89988Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query23_baseline1
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.40seconds
+User CPU time: 0.47seconds
+System CPU time: 0.70seconds
+Maximum resident set size of the process during its lifetime: 89904Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pyCube_query41
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.40seconds
+User CPU time: 0.46seconds
+System CPU time: 0.70seconds
+Maximum resident set size of the process during its lifetime: 89792Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query31_baseline2
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.39seconds
+User CPU time: 0.46seconds
+System CPU time: 0.70seconds
+Maximum resident set size of the process during its lifetime: 89824Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query34_baseline1
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.40seconds
+User CPU time: 0.42seconds
+System CPU time: 0.75seconds
+Maximum resident set size of the process during its lifetime: 89880Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pyCube_query43
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.40seconds
+User CPU time: 0.48seconds
+System CPU time: 0.64seconds
+Maximum resident set size of the process during its lifetime: 89932Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pyCube_query22
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.39seconds
+User CPU time: 0.46seconds
+System CPU time: 0.70seconds
+Maximum resident set size of the process during its lifetime: 90120Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query13_baseline2
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.40seconds
+User CPU time: 0.43seconds
+System CPU time: 0.74seconds
+Maximum resident set size of the process during its lifetime: 89744Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pyCube_query41
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.40seconds
+User CPU time: 0.51seconds
+System CPU time: 0.66seconds
+Maximum resident set size of the process during its lifetime: 89976Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query32_baseline1
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.40seconds
+User CPU time: 0.44seconds
+System CPU time: 0.72seconds
+Maximum resident set size of the process during its lifetime: 89684Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query13_baseline1
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.40seconds
+User CPU time: 0.48seconds
+System CPU time: 0.68seconds
+Maximum resident set size of the process during its lifetime: 89976Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query23_baseline3
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.40seconds
+User CPU time: 0.47seconds
+System CPU time: 0.70seconds
+Maximum resident set size of the process during its lifetime: 89760Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query22_baseline2
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.40seconds
+User CPU time: 0.46seconds
+System CPU time: 0.71seconds
+Maximum resident set size of the process during its lifetime: 89988Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pyCube_query12
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.39seconds
+User CPU time: 0.47seconds
+System CPU time: 0.69seconds
+Maximum resident set size of the process during its lifetime: 89968Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query34_baseline1
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.40seconds
+User CPU time: 0.45seconds
+System CPU time: 0.71seconds
+Maximum resident set size of the process during its lifetime: 89692Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pyCube_query21
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.40seconds
+User CPU time: 0.43seconds
+System CPU time: 0.73seconds
+Maximum resident set size of the process during its lifetime: 89864Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query32_baseline3
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.40seconds
+User CPU time: 0.46seconds
+System CPU time: 0.70seconds
+Maximum resident set size of the process during its lifetime: 89788Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query42_baseline1
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.40seconds
+User CPU time: 0.48seconds
+System CPU time: 0.68seconds
+Maximum resident set size of the process during its lifetime: 90016Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query33_baseline3
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.40seconds
+User CPU time: 0.47seconds
+System CPU time: 0.69seconds
+Maximum resident set size of the process during its lifetime: 89920Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query21_baseline3
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.39seconds
+User CPU time: 0.44seconds
+System CPU time: 0.72seconds
+Maximum resident set size of the process during its lifetime: 89980Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query23_baseline3
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.40seconds
+User CPU time: 0.46seconds
+System CPU time: 0.69seconds
+Maximum resident set size of the process during its lifetime: 89912Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pyCube_query11
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.40seconds
+User CPU time: 0.46seconds
+System CPU time: 0.70seconds
+Maximum resident set size of the process during its lifetime: 89768Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query13_baseline1
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.40seconds
+User CPU time: 0.42seconds
+System CPU time: 0.74seconds
+Maximum resident set size of the process during its lifetime: 89504Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query43_baseline1
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.40seconds
+User CPU time: 0.49seconds
+System CPU time: 0.67seconds
+Maximum resident set size of the process during its lifetime: 89860Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pyCube_query41
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.40seconds
+User CPU time: 0.46seconds
+System CPU time: 0.70seconds
+Maximum resident set size of the process during its lifetime: 89880Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pyCube_query31
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.40seconds
+User CPU time: 0.49seconds
+System CPU time: 0.67seconds
+Maximum resident set size of the process during its lifetime: 89876Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query43_baseline3
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.40seconds
+User CPU time: 0.51seconds
+System CPU time: 0.66seconds
+Maximum resident set size of the process during its lifetime: 90088Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pyCube_query22
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.40seconds
+User CPU time: 0.49seconds
+System CPU time: 0.67seconds
+Maximum resident set size of the process during its lifetime: 89968Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query41_baseline2
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.39seconds
+User CPU time: 0.48seconds
+System CPU time: 0.68seconds
+Maximum resident set size of the process during its lifetime: 89916Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query12_baseline3
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.39seconds
+User CPU time: 0.46seconds
+System CPU time: 0.70seconds
+Maximum resident set size of the process during its lifetime: 89972Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query42_baseline2
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.40seconds
+User CPU time: 0.47seconds
+System CPU time: 0.69seconds
+Maximum resident set size of the process during its lifetime: 89892Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query34_baseline2
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.39seconds
+User CPU time: 0.47seconds
+System CPU time: 0.69seconds
+Maximum resident set size of the process during its lifetime: 89868Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query31_baseline1
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.40seconds
+User CPU time: 0.46seconds
+System CPU time: 0.71seconds
+Maximum resident set size of the process during its lifetime: 90088Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query22_baseline1
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.40seconds
+User CPU time: 0.53seconds
+System CPU time: 0.63seconds
+Maximum resident set size of the process during its lifetime: 89864Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query13_baseline3
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.39seconds
+User CPU time: 0.46seconds
+System CPU time: 0.70seconds
+Maximum resident set size of the process during its lifetime: 89732Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query33_baseline1
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.40seconds
+User CPU time: 0.45seconds
+System CPU time: 0.71seconds
+Maximum resident set size of the process during its lifetime: 89792Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pyCube_query32
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.40seconds
+User CPU time: 0.50seconds
+System CPU time: 0.66seconds
+Maximum resident set size of the process during its lifetime: 89724Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query34_baseline3
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.40seconds
+User CPU time: 0.46seconds
+System CPU time: 0.70seconds
+Maximum resident set size of the process during its lifetime: 89828Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query41_baseline1
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.39seconds
+User CPU time: 0.43seconds
+System CPU time: 0.73seconds
+Maximum resident set size of the process during its lifetime: 89896Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query13_baseline1
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.39seconds
+User CPU time: 0.47seconds
+System CPU time: 0.69seconds
+Maximum resident set size of the process during its lifetime: 89760Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pyCube_query42
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.40seconds
+User CPU time: 0.49seconds
+System CPU time: 0.67seconds
+Maximum resident set size of the process during its lifetime: 89872Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query32_baseline2
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.39seconds
+User CPU time: 0.46seconds
+System CPU time: 0.70seconds
+Maximum resident set size of the process during its lifetime: 89904Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pyCube_query22
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.40seconds
+User CPU time: 0.51seconds
+System CPU time: 0.66seconds
+Maximum resident set size of the process during its lifetime: 89956Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query12_baseline1
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.40seconds
+User CPU time: 0.48seconds
+System CPU time: 0.67seconds
+Maximum resident set size of the process during its lifetime: 89896Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query43_baseline2
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.40seconds
+User CPU time: 0.45seconds
+System CPU time: 0.72seconds
+Maximum resident set size of the process during its lifetime: 89876Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pyCube_query31
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.40seconds
+User CPU time: 0.49seconds
+System CPU time: 0.67seconds
+Maximum resident set size of the process during its lifetime: 89924Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pyCube_query12
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.40seconds
+User CPU time: 0.48seconds
+System CPU time: 0.68seconds
+Maximum resident set size of the process during its lifetime: 89872Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query23_baseline2
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.40seconds
+User CPU time: 0.48seconds
+System CPU time: 0.68seconds
+Maximum resident set size of the process during its lifetime: 89896Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query23_baseline2
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.39seconds
+User CPU time: 0.48seconds
+System CPU time: 0.68seconds
+Maximum resident set size of the process during its lifetime: 89956Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query34_baseline3
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.40seconds
+User CPU time: 0.48seconds
+System CPU time: 0.69seconds
+Maximum resident set size of the process during its lifetime: 89916Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pyCube_query43
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.39seconds
+User CPU time: 0.46seconds
+System CPU time: 0.70seconds
+Maximum resident set size of the process during its lifetime: 89892Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query22_baseline1
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.39seconds
+User CPU time: 0.45seconds
+System CPU time: 0.71seconds
+Maximum resident set size of the process during its lifetime: 89952Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query12_baseline3
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.40seconds
+User CPU time: 0.46seconds
+System CPU time: 0.70seconds
+Maximum resident set size of the process during its lifetime: 89824Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query23_baseline3
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 68, in create_session
+    conn, cursor = get_db_connection_and_cursor(engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 97, in get_db_connection_and_cursor
+    conn = psycopg2.connect(user=engine.user,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+Command exited with non-zero status 1
+Wall clock time: 0:00.39seconds
+User CPU time: 0.47seconds
+System CPU time: 0.69seconds
+Maximum resident set size of the process during its lifetime: 89956Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes

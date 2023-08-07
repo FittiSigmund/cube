@@ -4,7 +4,7 @@ source bin/activate
 
 function run_time {
     echo $1 >> new_results
-    /usr/bin/time -f "Wall clock time: %Eseconds\nUser CPU time: %Useconds\nSystem CPU time: %Sseconds\nMaximum resident set size of the process during its lifetime: %MKbytes\nAverage resident set size of the process: %tKbytes\nAverage total (data+stack+text) memory use of the process: %KKbytes" python -m experiments.use_cases $1 2>> new_results
+    /usr/bin/time -f "Wall clock time: %Eseconds\nMaximum resident set size of the process during its lifetime: %MKbytes" python -m experiments.use_cases $1 2>> new_results
 }
 
 function run_all_queryflights {
@@ -37,7 +37,20 @@ function run_all_queryflights {
     done
 }
 
-run_all_queryflights "pyCube_query"
-run_all_queryflights "pandas_query" "1"
-run_all_queryflights "pandas_query" "2"
-run_all_queryflights "pandas_query" "3"
+# run_all_queryflights "pyCube_query"
+# run_all_queryflights "pandas_query" "1"
+# run_all_queryflights "pandas_query" "2"
+# run_all_queryflights "pandas_query" "3"
+
+function run {
+    query_names=$(shuf ${1})
+    file_name=results_$(date "+%Y%m%d%H%M%S")
+    for query_name in $(echo $query_names)
+    do
+        echo $query_name 
+        echo $query_name >> $file_name
+        /usr/bin/time -f "Wall clock time: %Eseconds\nMaximum resident set size of the process during its lifetime: %MKbytes" python -m experiments.use_cases $query_name 2>> $file_name
+    done
+}
+
+run experiments_names.txt

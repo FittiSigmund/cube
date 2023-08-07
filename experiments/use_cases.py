@@ -30,6 +30,7 @@ view = postgres.load_view('ssb_snowflake')
 
 engine = create_engine("postgresql+psycopg2://sigmundur:@localhost/ssb_snowflake")
 
+pd.options.mode.chained_assignment = None
 
 # Baseline1: Tag alle kolonner med og join fact tabellen først
 # Baseline2: Tag kun nødvendige kolonner med og join fact tabellen sidst

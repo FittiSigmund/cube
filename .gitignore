@@ -8,3 +8,4 @@ __pycache__/*
 experiments/data/*
 experiments/ssb-dbgen-correct
 experiments/ssb-dbgen
+experiments/convert/__pycache__/*

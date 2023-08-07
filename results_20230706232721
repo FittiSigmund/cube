@@ -1,0 +1,528 @@
+pandas_query42_baseline2
+/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py:1466: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  filtered_table["profit"] = filtered_table.apply(lambda x: x.lo_revenue - x.lo_supplycost, axis=1)
+Wall clock time: 0:23.01seconds
+User CPU time: 19.91seconds
+System CPU time: 2.44seconds
+Maximum resident set size of the process during its lifetime: 7221932Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query31_baseline3
+Wall clock time: 0:18.96seconds
+User CPU time: 9.99seconds
+System CPU time: 1.78seconds
+Maximum resident set size of the process during its lifetime: 3974220Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query43_baseline3
+/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py:1711: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  filtered_table["profit"] = filtered_table.apply(lambda x: x.lo_revenue - x.lo_supplycost, axis=1)
+Wall clock time: 0:21.78seconds
+User CPU time: 11.14seconds
+System CPU time: 2.02seconds
+Maximum resident set size of the process during its lifetime: 4902032Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pyCube_query42
+Wall clock time: 0:01.02seconds
+User CPU time: 0.49seconds
+System CPU time: 0.71seconds
+Maximum resident set size of the process during its lifetime: 98320Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query34_baseline3
+Wall clock time: 0:14.35seconds
+User CPU time: 8.96seconds
+System CPU time: 1.70seconds
+Maximum resident set size of the process during its lifetime: 3262776Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query32_baseline3
+Wall clock time: 0:15.96seconds
+User CPU time: 9.26seconds
+System CPU time: 1.70seconds
+Maximum resident set size of the process during its lifetime: 3974460Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query11_baseline3
+Wall clock time: 0:11.89seconds
+User CPU time: 8.90seconds
+System CPU time: 1.32seconds
+Maximum resident set size of the process during its lifetime: 1950404Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query23_baseline3
+Wall clock time: 0:14.80seconds
+User CPU time: 7.92seconds
+System CPU time: 1.50seconds
+Maximum resident set size of the process during its lifetime: 2787528Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query34_baseline1
+Wall clock time: 0:16.51seconds
+User CPU time: 14.10seconds
+System CPU time: 2.00seconds
+Maximum resident set size of the process during its lifetime: 4953320Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query23_baseline3
+Wall clock time: 0:14.90seconds
+User CPU time: 7.98seconds
+System CPU time: 1.50seconds
+Maximum resident set size of the process during its lifetime: 2787732Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query34_baseline2
+Wall clock time: 0:15.05seconds
+User CPU time: 12.93seconds
+System CPU time: 1.65seconds
+Maximum resident set size of the process during its lifetime: 3686532Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query11_baseline2
+Wall clock time: 0:11.72seconds
+User CPU time: 10.00seconds
+System CPU time: 1.35seconds
+Maximum resident set size of the process during its lifetime: 2087204Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query13_baseline3
+Wall clock time: 0:13.05seconds
+User CPU time: 9.77seconds
+System CPU time: 1.28seconds
+Maximum resident set size of the process during its lifetime: 2288492Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query41_baseline1
+/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py:1198: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  filtered_table["profit"] = filtered_table.apply(lambda x: x.lo_revenue - x.lo_supplycost, axis=1)
+Wall clock time: 0:35.65seconds
+User CPU time: 28.84seconds
+System CPU time: 5.90seconds
+Maximum resident set size of the process during its lifetime: 12448468Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pyCube_query31
+Wall clock time: 0:01.22seconds
+User CPU time: 0.54seconds
+System CPU time: 0.68seconds
+Maximum resident set size of the process during its lifetime: 97700Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query34_baseline3
+Wall clock time: 0:16.04seconds
+User CPU time: 10.10seconds
+System CPU time: 1.64seconds
+Maximum resident set size of the process during its lifetime: 3262356Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query13_baseline2
+Wall clock time: 0:12.93seconds
+User CPU time: 10.80seconds
+System CPU time: 1.44seconds
+Maximum resident set size of the process during its lifetime: 2226468Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query21_baseline2
+Wall clock time: 0:16.13seconds
+User CPU time: 13.74seconds
+System CPU time: 1.83seconds
+Maximum resident set size of the process during its lifetime: 4108720Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query33_baseline3
+Wall clock time: 0:16.21seconds
+User CPU time: 9.95seconds
+System CPU time: 1.58seconds
+Maximum resident set size of the process during its lifetime: 2787004Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query42_baseline1
+/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py:1394: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  filtered_table["profit"] = filtered_table.apply(lambda x: x.lo_revenue - x.lo_supplycost, axis=1)
+Wall clock time: 0:39.06seconds
+User CPU time: 31.57seconds
+System CPU time: 6.34seconds
+Maximum resident set size of the process during its lifetime: 11931580Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pyCube_query33
+Wall clock time: 0:01.04seconds
+User CPU time: 0.62seconds
+System CPU time: 0.61seconds
+Maximum resident set size of the process during its lifetime: 98028Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query22_baseline1
+Wall clock time: 1:09.80seconds
+User CPU time: 60.94seconds
+System CPU time: 7.16seconds
+Maximum resident set size of the process during its lifetime: 20521460Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query32_baseline3
+Wall clock time: 0:19.50seconds
+User CPU time: 11.34seconds
+System CPU time: 1.89seconds
+Maximum resident set size of the process during its lifetime: 3974328Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query22_baseline2
+Wall clock time: 0:17.89seconds
+User CPU time: 15.20seconds
+System CPU time: 1.84seconds
+Maximum resident set size of the process during its lifetime: 3828648Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pyCube_query13
+Wall clock time: 0:01.04seconds
+User CPU time: 0.66seconds
+System CPU time: 0.56seconds
+Maximum resident set size of the process during its lifetime: 96872Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query12_baseline2
+Wall clock time: 0:12.87seconds
+User CPU time: 10.81seconds
+System CPU time: 1.43seconds
+Maximum resident set size of the process during its lifetime: 2087312Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pyCube_query21
+Wall clock time: 0:01.15seconds
+User CPU time: 0.64seconds
+System CPU time: 0.58seconds
+Maximum resident set size of the process during its lifetime: 98228Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pyCube_query12
+Wall clock time: 0:01.04seconds
+User CPU time: 0.58seconds
+System CPU time: 0.65seconds
+Maximum resident set size of the process during its lifetime: 96624Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query23_baseline2
+Wall clock time: 0:17.48seconds
+User CPU time: 14.79seconds
+System CPU time: 1.89seconds
+Maximum resident set size of the process during its lifetime: 3828100Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query22_baseline3
+Wall clock time: 0:18.40seconds
+User CPU time: 9.80seconds
+System CPU time: 1.61seconds
+Maximum resident set size of the process during its lifetime: 2787140Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query12_baseline3
+Wall clock time: 0:12.66seconds
+User CPU time: 9.85seconds
+System CPU time: 1.33seconds
+Maximum resident set size of the process during its lifetime: 2085600Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query43_baseline2
+/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py:1660: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  filtered_table["profit"] = filtered_table.apply(lambda x: x.lo_revenue - x.lo_supplycost, axis=1)
+Wall clock time: 0:26.28seconds
+User CPU time: 22.53seconds
+System CPU time: 2.71seconds
+Maximum resident set size of the process during its lifetime: 7221248Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query32_baseline2
+Wall clock time: 0:17.68seconds
+User CPU time: 14.94seconds
+System CPU time: 1.95seconds
+Maximum resident set size of the process during its lifetime: 4202208Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query41_baseline2
+/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py:1266: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  filtered_table["profit"] = filtered_table.apply(lambda x: x.lo_revenue - x.lo_supplycost, axis=1)
+Wall clock time: 0:26.58seconds
+User CPU time: 22.92seconds
+System CPU time: 2.65seconds
+Maximum resident set size of the process during its lifetime: 7033776Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query43_baseline1
+/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py:1593: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  filtered_table["profit"] = filtered_table.apply(lambda x: x.lo_revenue - x.lo_supplycost, axis=1)
+Wall clock time: 0:31.17seconds
+User CPU time: 26.13seconds
+System CPU time: 4.22seconds
+Maximum resident set size of the process during its lifetime: 12238720Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query32_baseline2
+Wall clock time: 0:15.40seconds
+User CPU time: 13.08seconds
+System CPU time: 1.87seconds
+Maximum resident set size of the process during its lifetime: 4203080Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query21_baseline1
+Wall clock time: 1:13.25seconds
+User CPU time: 65.07seconds
+System CPU time: 6.03seconds
+Maximum resident set size of the process during its lifetime: 21366816Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query31_baseline3
+Wall clock time: 0:20.99seconds
+User CPU time: 11.27seconds
+System CPU time: 2.11seconds
+Maximum resident set size of the process during its lifetime: 3974648Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query13_baseline1
+Wall clock time: 0:36.74seconds
+User CPU time: 31.88seconds
+System CPU time: 3.55seconds
+Maximum resident set size of the process during its lifetime: 10306792Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query31_baseline1
+Wall clock time: 0:23.12seconds
+User CPU time: 19.30seconds
+System CPU time: 3.06seconds
+Maximum resident set size of the process during its lifetime: 7719424Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query41_baseline1
+/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py:1198: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  filtered_table["profit"] = filtered_table.apply(lambda x: x.lo_revenue - x.lo_supplycost, axis=1)
+Wall clock time: 0:45.25seconds
+User CPU time: 39.06seconds
+System CPU time: 5.04seconds
+Maximum resident set size of the process during its lifetime: 12521128Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query22_baseline3
+Wall clock time: 0:29.98seconds
+User CPU time: 14.89seconds
+System CPU time: 2.35seconds
+Maximum resident set size of the process during its lifetime: 2787332Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query41_baseline3
+/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py:1315: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  filtered_table["profit"] = filtered_table.apply(lambda x: x.lo_revenue - x.lo_supplycost, axis=1)
+Wall clock time: 0:41.13seconds
+User CPU time: 21.42seconds
+System CPU time: 3.07seconds
+Maximum resident set size of the process during its lifetime: 4536776Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query41_baseline3
+/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py:1315: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  filtered_table["profit"] = filtered_table.apply(lambda x: x.lo_revenue - x.lo_supplycost, axis=1)
+Wall clock time: 0:38.97seconds
+User CPU time: 19.97seconds
+System CPU time: 3.09seconds
+Maximum resident set size of the process during its lifetime: 4536516Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query12_baseline3
+Wall clock time: 0:20.69seconds
+User CPU time: 15.20seconds
+System CPU time: 1.76seconds
+Maximum resident set size of the process during its lifetime: 2085552Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pyCube_query43
+Wall clock time: 0:01.62seconds
+User CPU time: 0.80seconds
+System CPU time: 0.65seconds
+Maximum resident set size of the process during its lifetime: 98492Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query23_baseline1
+Wall clock time: 1:15.53seconds
+User CPU time: 66.85seconds
+System CPU time: 6.01seconds
+Maximum resident set size of the process during its lifetime: 20522988Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query22_baseline1
+Wall clock time: 1:37.33seconds
+User CPU time: 86.87seconds
+System CPU time: 7.60seconds
+Maximum resident set size of the process during its lifetime: 20522620Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pyCube_query21
+Wall clock time: 0:02.43seconds
+User CPU time: 0.97seconds
+System CPU time: 0.62seconds
+Maximum resident set size of the process during its lifetime: 98072Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query43_baseline3
+/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py:1711: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  filtered_table["profit"] = filtered_table.apply(lambda x: x.lo_revenue - x.lo_supplycost, axis=1)
+Wall clock time: 0:47.00seconds
+User CPU time: 22.70seconds
+System CPU time: 3.85seconds
+Maximum resident set size of the process during its lifetime: 4901920Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query21_baseline3
+Wall clock time: 0:35.44seconds
+User CPU time: 17.37seconds
+System CPU time: 2.58seconds
+Maximum resident set size of the process during its lifetime: 3307304Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query22_baseline1
+Wall clock time: 1:49.94seconds
+User CPU time: 96.44seconds
+System CPU time: 8.75seconds
+Maximum resident set size of the process during its lifetime: 20522620Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query32_baseline3
+Wall clock time: 0:35.09seconds
+User CPU time: 18.49seconds
+System CPU time: 3.02seconds
+Maximum resident set size of the process during its lifetime: 3974588Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pyCube_query12
+Wall clock time: 0:02.10seconds
+User CPU time: 0.96seconds
+System CPU time: 0.64seconds
+Maximum resident set size of the process during its lifetime: 96728Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pyCube_query21
+Wall clock time: 0:02.50seconds
+User CPU time: 1.07seconds
+System CPU time: 0.67seconds
+Maximum resident set size of the process during its lifetime: 98308Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pyCube_query41
+Wall clock time: 0:03.13seconds
+User CPU time: 1.09seconds
+System CPU time: 0.70seconds
+Maximum resident set size of the process during its lifetime: 97848Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query42_baseline2
+/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py:1466: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  filtered_table["profit"] = filtered_table.apply(lambda x: x.lo_revenue - x.lo_supplycost, axis=1)
+Wall clock time: 0:38.52seconds
+User CPU time: 31.24seconds
+System CPU time: 4.23seconds
+Maximum resident set size of the process during its lifetime: 7145868Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query42_baseline2
+/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py:1466: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  filtered_table["profit"] = filtered_table.apply(lambda x: x.lo_revenue - x.lo_supplycost, axis=1)
+Wall clock time: 0:24.73seconds
+User CPU time: 20.82seconds
+System CPU time: 2.76seconds
+Maximum resident set size of the process during its lifetime: 7221860Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query42_baseline3
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 1785, in <module>
+    eval(f"{sys.argv[1]}()")
+  File "<string>", line 1, in <module>
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 1477, in pandas_query42_baseline3
+    df = pd.read_sql("""
+         ^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/io/sql.py", line 661, in read_sql
+    return pandas_sql.read_query(
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/io/sql.py", line 1736, in read_query
+    result = self.execute(sql, params)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/io/sql.py", line 1560, in execute
+    return self.con.exec_driver_sql(sql, *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1771, in exec_driver_sql
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1841, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 2342, in _handle_dbapi_exception
+    raise exc_info[1].with_traceback(exc_info[2])
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/sqlalchemy/engine/default.py", line 920, in do_execute
+    cursor.execute(statement, parameters)
+  File "/usr/lib/python3.11/encodings/utf_8.py", line 15, in decode
+    def decode(input, errors='strict'):
+    
+KeyboardInterrupt
+Command terminated by signal 2
+Wall clock time: 0:12.92seconds
+User CPU time: 1.45seconds
+System CPU time: 1.40seconds
+Maximum resident set size of the process during its lifetime: 1415784Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes

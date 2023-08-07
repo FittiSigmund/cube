@@ -1,0 +1,780 @@
+pandas_query22_baseline2
+Wall clock time: 0:15.47seconds
+Maximum resident set size of the process during its lifetime: 3827988Kbytes
+pandas_query13_baseline3
+Wall clock time: 0:12.58seconds
+Maximum resident set size of the process during its lifetime: 2288628Kbytes
+pandas_query42_baseline2
+Wall clock time: 0:22.65seconds
+Maximum resident set size of the process during its lifetime: 7145608Kbytes
+pandas_query43_baseline1
+Wall clock time: 0:31.16seconds
+Maximum resident set size of the process during its lifetime: 12238276Kbytes
+pandas_query41_baseline1
+Wall clock time: 0:33.52seconds
+Maximum resident set size of the process during its lifetime: 12519156Kbytes
+pyCube_query21
+Wall clock time: 0:00.98seconds
+Maximum resident set size of the process during its lifetime: 97988Kbytes
+pandas_query43_baseline1
+Wall clock time: 0:30.69seconds
+Maximum resident set size of the process during its lifetime: 12239984Kbytes
+pyCube_query11
+Wall clock time: 0:00.93seconds
+Maximum resident set size of the process during its lifetime: 96656Kbytes
+pandas_query33_baseline1
+Wall clock time: 0:16.67seconds
+Maximum resident set size of the process during its lifetime: 4670472Kbytes
+pandas_query23_baseline1
+Wall clock time: 1:01.44seconds
+Maximum resident set size of the process during its lifetime: 20522772Kbytes
+pandas_query41_baseline1
+Wall clock time: 0:34.77seconds
+Maximum resident set size of the process during its lifetime: 12448428Kbytes
+pyCube_query43
+Wall clock time: 0:00.96seconds
+Maximum resident set size of the process during its lifetime: 98508Kbytes
+pyCube_query42
+Wall clock time: 0:01.07seconds
+Maximum resident set size of the process during its lifetime: 98080Kbytes
+pyCube_query12
+Wall clock time: 0:00.88seconds
+Maximum resident set size of the process during its lifetime: 96896Kbytes
+pyCube_query32
+Wall clock time: 0:00.90seconds
+Maximum resident set size of the process during its lifetime: 98352Kbytes
+pandas_query11_baseline2
+Wall clock time: 0:11.66seconds
+Maximum resident set size of the process during its lifetime: 2087060Kbytes
+pandas_query13_baseline2
+Wall clock time: 0:11.81seconds
+Maximum resident set size of the process during its lifetime: 2226816Kbytes
+pandas_query22_baseline3
+Wall clock time: 0:15.89seconds
+Maximum resident set size of the process during its lifetime: 2787188Kbytes
+pandas_query21_baseline3
+Wall clock time: 0:17.33seconds
+Maximum resident set size of the process during its lifetime: 3263708Kbytes
+pyCube_query41
+Wall clock time: 0:01.16seconds
+Maximum resident set size of the process during its lifetime: 97552Kbytes
+pandas_query22_baseline2
+Wall clock time: 0:14.79seconds
+Maximum resident set size of the process during its lifetime: 3827936Kbytes
+pandas_query34_baseline1
+Wall clock time: 0:16.63seconds
+Maximum resident set size of the process during its lifetime: 4953268Kbytes
+pandas_query31_baseline2
+Wall clock time: 0:14.82seconds
+Maximum resident set size of the process during its lifetime: 4437656Kbytes
+pandas_query11_baseline3
+Wall clock time: 0:11.79seconds
+Maximum resident set size of the process during its lifetime: 1947804Kbytes
+pandas_query13_baseline1
+Wall clock time: 0:31.23seconds
+Maximum resident set size of the process during its lifetime: 10306120Kbytes
+pandas_query12_baseline3
+Wall clock time: 0:10.67seconds
+Maximum resident set size of the process during its lifetime: 2085932Kbytes
+pandas_query12_baseline3
+Wall clock time: 0:10.68seconds
+Maximum resident set size of the process during its lifetime: 2086080Kbytes
+pyCube_query12
+Wall clock time: 0:00.87seconds
+Maximum resident set size of the process during its lifetime: 96656Kbytes
+pandas_query11_baseline3
+Wall clock time: 0:11.82seconds
+Maximum resident set size of the process during its lifetime: 1950548Kbytes
+pandas_query33_baseline3
+Wall clock time: 0:13.16seconds
+Maximum resident set size of the process during its lifetime: 2787680Kbytes
+pandas_query42_baseline1
+Wall clock time: 0:30.41seconds
+Maximum resident set size of the process during its lifetime: 12005204Kbytes
+pandas_query41_baseline2
+Wall clock time: 0:21.92seconds
+Maximum resident set size of the process during its lifetime: 7035972Kbytes
+pandas_query41_baseline3
+Wall clock time: 0:22.24seconds
+Maximum resident set size of the process during its lifetime: 4536748Kbytes
+pyCube_query34
+Wall clock time: 0:00.87seconds
+Maximum resident set size of the process during its lifetime: 97912Kbytes
+pyCube_query41
+Wall clock time: 0:01.11seconds
+Maximum resident set size of the process during its lifetime: 97660Kbytes
+pandas_query22_baseline3
+Wall clock time: 0:14.98seconds
+Maximum resident set size of the process during its lifetime: 2787400Kbytes
+pandas_query12_baseline2
+Wall clock time: 0:10.76seconds
+Maximum resident set size of the process during its lifetime: 2087728Kbytes
+pandas_query11_baseline1
+Wall clock time: 0:32.61seconds
+Maximum resident set size of the process during its lifetime: 10307104Kbytes
+pyCube_query43
+Wall clock time: 0:00.98seconds
+Maximum resident set size of the process during its lifetime: 98732Kbytes
+pandas_query41_baseline3
+Wall clock time: 0:23.18seconds
+Maximum resident set size of the process during its lifetime: 4536724Kbytes
+pandas_query32_baseline3
+Wall clock time: 0:17.28seconds
+Maximum resident set size of the process during its lifetime: 3974644Kbytes
+pyCube_query23
+Wall clock time: 0:00.88seconds
+Maximum resident set size of the process during its lifetime: 98652Kbytes
+pandas_query31_baseline2
+Wall clock time: 0:15.14seconds
+Maximum resident set size of the process during its lifetime: 4437160Kbytes
+pandas_query31_baseline1
+Wall clock time: 0:19.58seconds
+Maximum resident set size of the process during its lifetime: 7719516Kbytes
+pandas_query31_baseline3
+Wall clock time: 0:17.76seconds
+Maximum resident set size of the process during its lifetime: 3974444Kbytes
+pandas_query33_baseline3
+Wall clock time: 0:13.46seconds
+Maximum resident set size of the process during its lifetime: 2787200Kbytes
+pandas_query42_baseline3
+Wall clock time: 0:22.65seconds
+Maximum resident set size of the process during its lifetime: 4901748Kbytes
+pandas_query42_baseline1
+Wall clock time: 0:31.92seconds
+Maximum resident set size of the process during its lifetime: 11932472Kbytes
+pandas_query33_baseline1
+Wall clock time: 0:15.93seconds
+Maximum resident set size of the process during its lifetime: 4671676Kbytes
+pandas_query23_baseline3
+Wall clock time: 0:14.80seconds
+Maximum resident set size of the process during its lifetime: 2787360Kbytes
+pandas_query43_baseline1
+Wall clock time: 0:30.55seconds
+Maximum resident set size of the process during its lifetime: 12239832Kbytes
+pandas_query21_baseline2
+Wall clock time: 0:14.86seconds
+Maximum resident set size of the process during its lifetime: 4109244Kbytes
+pandas_query22_baseline2
+Wall clock time: 0:14.62seconds
+Maximum resident set size of the process during its lifetime: 3828340Kbytes
+pandas_query12_baseline2
+Wall clock time: 0:10.99seconds
+Maximum resident set size of the process during its lifetime: 2087208Kbytes
+pandas_query41_baseline2
+Wall clock time: 0:21.88seconds
+Maximum resident set size of the process during its lifetime: 7033996Kbytes
+pyCube_query11
+Wall clock time: 0:00.90seconds
+Maximum resident set size of the process during its lifetime: 96728Kbytes
+pandas_query31_baseline1
+Wall clock time: 0:19.81seconds
+Maximum resident set size of the process during its lifetime: 7719240Kbytes
+pyCube_query22
+Wall clock time: 0:00.90seconds
+Maximum resident set size of the process during its lifetime: 98248Kbytes
+pandas_query11_baseline2
+Wall clock time: 0:11.30seconds
+Maximum resident set size of the process during its lifetime: 2087548Kbytes
+pandas_query33_baseline2
+Wall clock time: 0:14.42seconds
+Maximum resident set size of the process during its lifetime: 3500044Kbytes
+pandas_query22_baseline1
+Wall clock time: 0:59.89seconds
+Maximum resident set size of the process during its lifetime: 20522264Kbytes
+pyCube_query33
+Wall clock time: 0:00.87seconds
+Maximum resident set size of the process during its lifetime: 98380Kbytes
+pandas_query12_baseline3
+Wall clock time: 0:10.87seconds
+Maximum resident set size of the process during its lifetime: 2085868Kbytes
+pandas_query34_baseline2
+Wall clock time: 0:15.30seconds
+Maximum resident set size of the process during its lifetime: 3687188Kbytes
+pandas_query31_baseline2
+Wall clock time: 0:15.08seconds
+Maximum resident set size of the process during its lifetime: 4437504Kbytes
+pandas_query32_baseline1
+Wall clock time: 0:17.82seconds
+Maximum resident set size of the process during its lifetime: 6219208Kbytes
+pandas_query12_baseline1
+Wall clock time: 0:29.56seconds
+Maximum resident set size of the process during its lifetime: 8665724Kbytes
+pandas_query41_baseline2
+Wall clock time: 0:22.75seconds
+Maximum resident set size of the process during its lifetime: 6955372Kbytes
+pandas_query31_baseline3
+Wall clock time: 0:17.92seconds
+Maximum resident set size of the process during its lifetime: 3974296Kbytes
+pyCube_query43
+Wall clock time: 0:00.91seconds
+Maximum resident set size of the process during its lifetime: 98132Kbytes
+pandas_query13_baseline1
+Wall clock time: 0:31.33seconds
+Maximum resident set size of the process during its lifetime: 10306660Kbytes
+pyCube_query13
+Wall clock time: 0:00.86seconds
+Maximum resident set size of the process during its lifetime: 96732Kbytes
+pandas_query42_baseline1
+Wall clock time: 0:32.13seconds
+Maximum resident set size of the process during its lifetime: 11931572Kbytes
+pandas_query33_baseline2
+Wall clock time: 0:14.58seconds
+Maximum resident set size of the process during its lifetime: 3499664Kbytes
+pandas_query34_baseline1
+Wall clock time: 0:16.96seconds
+Maximum resident set size of the process during its lifetime: 4952316Kbytes
+pyCube_query32
+Wall clock time: 0:00.89seconds
+Maximum resident set size of the process during its lifetime: 98392Kbytes
+pandas_query31_baseline2
+Wall clock time: 0:15.32seconds
+Maximum resident set size of the process during its lifetime: 4437644Kbytes
+pyCube_query42
+Wall clock time: 0:01.06seconds
+Maximum resident set size of the process during its lifetime: 98128Kbytes
+pandas_query34_baseline3
+Wall clock time: 0:14.97seconds
+Maximum resident set size of the process during its lifetime: 3262912Kbytes
+pandas_query32_baseline2
+Wall clock time: 0:15.04seconds
+Maximum resident set size of the process during its lifetime: 4203352Kbytes
+pyCube_query42
+Wall clock time: 0:01.09seconds
+Maximum resident set size of the process during its lifetime: 97888Kbytes
+pandas_query11_baseline1
+Wall clock time: 0:31.78seconds
+Maximum resident set size of the process during its lifetime: 10307200Kbytes
+pandas_query21_baseline2
+Wall clock time: 0:15.00seconds
+Maximum resident set size of the process during its lifetime: 4109448Kbytes
+pyCube_query21
+Wall clock time: 0:00.95seconds
+Maximum resident set size of the process during its lifetime: 98156Kbytes
+pandas_query13_baseline1
+Wall clock time: 0:31.41seconds
+Maximum resident set size of the process during its lifetime: 10307100Kbytes
+pyCube_query33
+Wall clock time: 0:00.89seconds
+Maximum resident set size of the process during its lifetime: 97980Kbytes
+pandas_query11_baseline3
+Wall clock time: 0:11.70seconds
+Maximum resident set size of the process during its lifetime: 2084500Kbytes
+pandas_query34_baseline1
+Wall clock time: 0:17.23seconds
+Maximum resident set size of the process during its lifetime: 4952764Kbytes
+pandas_query11_baseline1
+Wall clock time: 0:32.23seconds
+Maximum resident set size of the process during its lifetime: 10306904Kbytes
+pandas_query41_baseline3
+Wall clock time: 0:22.39seconds
+Maximum resident set size of the process during its lifetime: 4536352Kbytes
+pyCube_query42
+Wall clock time: 0:01.04seconds
+Maximum resident set size of the process during its lifetime: 98368Kbytes
+pandas_query34_baseline2
+Wall clock time: 0:15.07seconds
+Maximum resident set size of the process during its lifetime: 3687328Kbytes
+pandas_query41_baseline1
+Wall clock time: 0:35.35seconds
+Maximum resident set size of the process during its lifetime: 12448668Kbytes
+pandas_query34_baseline3
+Wall clock time: 0:15.65seconds
+Maximum resident set size of the process during its lifetime: 3307532Kbytes
+pandas_query23_baseline1
+Wall clock time: 1:02.20seconds
+Maximum resident set size of the process during its lifetime: 20522000Kbytes
+pandas_query21_baseline2
+Wall clock time: 0:15.42seconds
+Maximum resident set size of the process during its lifetime: 4109024Kbytes
+pyCube_query31
+Wall clock time: 0:01.10seconds
+Maximum resident set size of the process during its lifetime: 97908Kbytes
+pyCube_query32
+Wall clock time: 0:00.90seconds
+Maximum resident set size of the process during its lifetime: 98000Kbytes
+pandas_query34_baseline3
+Wall clock time: 0:15.72seconds
+Maximum resident set size of the process during its lifetime: 3262656Kbytes
+pyCube_query41
+Wall clock time: 0:01.26seconds
+Maximum resident set size of the process during its lifetime: 98092Kbytes
+pandas_query43_baseline3
+Wall clock time: 0:22.36seconds
+Maximum resident set size of the process during its lifetime: 4901472Kbytes
+pandas_query43_baseline1
+Wall clock time: 0:30.71seconds
+Maximum resident set size of the process during its lifetime: 12240268Kbytes
+pyCube_query12
+Wall clock time: 0:00.89seconds
+Maximum resident set size of the process during its lifetime: 96792Kbytes
+pandas_query13_baseline2
+Wall clock time: 0:12.78seconds
+Maximum resident set size of the process during its lifetime: 2227992Kbytes
+pyCube_query31
+Wall clock time: 0:01.12seconds
+Maximum resident set size of the process during its lifetime: 97864Kbytes
+pandas_query12_baseline1
+Wall clock time: 0:29.78seconds
+Maximum resident set size of the process during its lifetime: 8665852Kbytes
+pyCube_query43
+Wall clock time: 0:00.91seconds
+Maximum resident set size of the process during its lifetime: 98824Kbytes
+pyCube_query32
+Wall clock time: 0:00.87seconds
+Maximum resident set size of the process during its lifetime: 98720Kbytes
+pyCube_query12
+Wall clock time: 0:00.86seconds
+Maximum resident set size of the process during its lifetime: 96936Kbytes
+pyCube_query43
+Wall clock time: 0:00.90seconds
+Maximum resident set size of the process during its lifetime: 98944Kbytes
+pandas_query32_baseline1
+Wall clock time: 0:18.82seconds
+Maximum resident set size of the process during its lifetime: 6219060Kbytes
+pandas_query41_baseline2
+Wall clock time: 0:25.42seconds
+Maximum resident set size of the process during its lifetime: 7033732Kbytes
+pandas_query21_baseline3
+Wall clock time: 0:18.98seconds
+Maximum resident set size of the process during its lifetime: 3262628Kbytes
+pandas_query31_baseline2
+Wall clock time: 0:16.09seconds
+Maximum resident set size of the process during its lifetime: 4436844Kbytes
+pandas_query21_baseline1
+Wall clock time: 1:05.40seconds
+Maximum resident set size of the process during its lifetime: 21366400Kbytes
+pandas_query43_baseline2
+Wall clock time: 0:21.92seconds
+Maximum resident set size of the process during its lifetime: 7181624Kbytes
+pandas_query11_baseline3
+Wall clock time: 0:11.86seconds
+Maximum resident set size of the process during its lifetime: 2084912Kbytes
+pandas_query13_baseline2
+Wall clock time: 0:11.26seconds
+Maximum resident set size of the process during its lifetime: 2228312Kbytes
+pandas_query34_baseline1
+Wall clock time: 0:16.80seconds
+Maximum resident set size of the process during its lifetime: 4953288Kbytes
+pandas_query13_baseline3
+Wall clock time: 0:12.22seconds
+Maximum resident set size of the process during its lifetime: 2288444Kbytes
+pyCube_query41
+Wall clock time: 0:01.19seconds
+Maximum resident set size of the process during its lifetime: 97872Kbytes
+pyCube_query23
+Wall clock time: 0:00.86seconds
+Maximum resident set size of the process during its lifetime: 98472Kbytes
+pandas_query41_baseline3
+Wall clock time: 0:22.10seconds
+Maximum resident set size of the process during its lifetime: 4536952Kbytes
+pandas_query32_baseline3
+Wall clock time: 0:16.91seconds
+Maximum resident set size of the process during its lifetime: 3974204Kbytes
+pyCube_query34
+Wall clock time: 0:00.86seconds
+Maximum resident set size of the process during its lifetime: 98192Kbytes
+pyCube_query22
+Wall clock time: 0:00.90seconds
+Maximum resident set size of the process during its lifetime: 98304Kbytes
+pandas_query33_baseline2
+Wall clock time: 0:14.48seconds
+Maximum resident set size of the process during its lifetime: 3499816Kbytes
+pandas_query42_baseline1
+Wall clock time: 0:30.52seconds
+Maximum resident set size of the process during its lifetime: 12003924Kbytes
+pandas_query23_baseline2
+Wall clock time: 0:14.55seconds
+Maximum resident set size of the process during its lifetime: 3827864Kbytes
+pandas_query22_baseline1
+Wall clock time: 0:59.97seconds
+Maximum resident set size of the process during its lifetime: 20522700Kbytes
+pandas_query31_baseline1
+Wall clock time: 0:19.42seconds
+Maximum resident set size of the process during its lifetime: 7719852Kbytes
+pandas_query22_baseline3
+Wall clock time: 0:15.07seconds
+Maximum resident set size of the process during its lifetime: 2787168Kbytes
+pandas_query33_baseline3
+Wall clock time: 0:13.92seconds
+Maximum resident set size of the process during its lifetime: 2787460Kbytes
+pandas_query13_baseline2
+Wall clock time: 0:11.62seconds
+Maximum resident set size of the process during its lifetime: 2226676Kbytes
+pandas_query43_baseline3
+Wall clock time: 0:21.89seconds
+Maximum resident set size of the process during its lifetime: 4901876Kbytes
+pyCube_query32
+Wall clock time: 0:00.87seconds
+Maximum resident set size of the process during its lifetime: 98696Kbytes
+pandas_query32_baseline1
+Wall clock time: 0:19.15seconds
+Maximum resident set size of the process during its lifetime: 6219216Kbytes
+pandas_query21_baseline3
+Wall clock time: 0:16.41seconds
+Maximum resident set size of the process during its lifetime: 3259036Kbytes
+pyCube_query33
+Wall clock time: 0:00.86seconds
+Maximum resident set size of the process during its lifetime: 98376Kbytes
+pandas_query42_baseline3
+Wall clock time: 0:21.29seconds
+Maximum resident set size of the process during its lifetime: 4902148Kbytes
+pandas_query32_baseline1
+Wall clock time: 0:17.88seconds
+Maximum resident set size of the process during its lifetime: 6219028Kbytes
+pandas_query12_baseline2
+Wall clock time: 0:10.85seconds
+Maximum resident set size of the process during its lifetime: 2087432Kbytes
+pyCube_query13
+Wall clock time: 0:00.86seconds
+Maximum resident set size of the process during its lifetime: 96652Kbytes
+pyCube_query31
+Wall clock time: 0:01.08seconds
+Maximum resident set size of the process during its lifetime: 97956Kbytes
+pandas_query43_baseline2
+Wall clock time: 0:22.05seconds
+Maximum resident set size of the process during its lifetime: 7181640Kbytes
+pyCube_query21
+Wall clock time: 0:00.94seconds
+Maximum resident set size of the process during its lifetime: 98144Kbytes
+pandas_query22_baseline3
+Wall clock time: 0:14.83seconds
+Maximum resident set size of the process during its lifetime: 2787768Kbytes
+pyCube_query34
+Wall clock time: 0:00.87seconds
+Maximum resident set size of the process during its lifetime: 98260Kbytes
+pandas_query23_baseline2
+Wall clock time: 0:14.45seconds
+Maximum resident set size of the process during its lifetime: 3828040Kbytes
+pandas_query13_baseline1
+Wall clock time: 0:31.25seconds
+Maximum resident set size of the process during its lifetime: 10307036Kbytes
+pandas_query32_baseline3
+Wall clock time: 0:15.97seconds
+Maximum resident set size of the process during its lifetime: 3974136Kbytes
+pandas_query23_baseline3
+Wall clock time: 0:14.86seconds
+Maximum resident set size of the process during its lifetime: 2787244Kbytes
+pyCube_query22
+Wall clock time: 0:00.91seconds
+Maximum resident set size of the process during its lifetime: 98048Kbytes
+pandas_query11_baseline1
+Wall clock time: 0:31.55seconds
+Maximum resident set size of the process during its lifetime: 10307032Kbytes
+pandas_query13_baseline3
+Wall clock time: 0:12.19seconds
+Maximum resident set size of the process during its lifetime: 2288768Kbytes
+pandas_query21_baseline1
+Wall clock time: 1:03.65seconds
+Maximum resident set size of the process during its lifetime: 21366784Kbytes
+pandas_query21_baseline1
+Wall clock time: 1:02.94seconds
+Maximum resident set size of the process during its lifetime: 21366456Kbytes
+pandas_query22_baseline2
+Wall clock time: 0:14.84seconds
+Maximum resident set size of the process during its lifetime: 3828128Kbytes
+pandas_query31_baseline3
+Wall clock time: 0:17.67seconds
+Maximum resident set size of the process during its lifetime: 3974564Kbytes
+pandas_query33_baseline3
+Wall clock time: 0:13.46seconds
+Maximum resident set size of the process during its lifetime: 2787196Kbytes
+pandas_query42_baseline2
+Wall clock time: 0:22.21seconds
+Maximum resident set size of the process during its lifetime: 7145532Kbytes
+pandas_query12_baseline1
+Wall clock time: 0:29.49seconds
+Maximum resident set size of the process during its lifetime: 8665332Kbytes
+pyCube_query22
+Wall clock time: 0:00.93seconds
+Maximum resident set size of the process during its lifetime: 98148Kbytes
+pyCube_query31
+Wall clock time: 0:01.10seconds
+Maximum resident set size of the process during its lifetime: 97776Kbytes
+pandas_query13_baseline3
+Wall clock time: 0:13.77seconds
+Maximum resident set size of the process during its lifetime: 2288264Kbytes
+pandas_query21_baseline2
+Wall clock time: 0:15.09seconds
+Maximum resident set size of the process during its lifetime: 4108900Kbytes
+pandas_query12_baseline2
+Wall clock time: 0:10.83seconds
+Maximum resident set size of the process during its lifetime: 2087476Kbytes
+pandas_query33_baseline2
+Wall clock time: 0:15.19seconds
+Maximum resident set size of the process during its lifetime: 3499644Kbytes
+pandas_query34_baseline2
+Wall clock time: 0:15.00seconds
+Maximum resident set size of the process during its lifetime: 3686824Kbytes
+pandas_query41_baseline1
+Wall clock time: 0:33.55seconds
+Maximum resident set size of the process during its lifetime: 12448568Kbytes
+pandas_query11_baseline2
+Wall clock time: 0:11.23seconds
+Maximum resident set size of the process during its lifetime: 2086924Kbytes
+pandas_query23_baseline2
+Wall clock time: 0:14.46seconds
+Maximum resident set size of the process during its lifetime: 3827968Kbytes
+pandas_query42_baseline2
+Wall clock time: 0:23.18seconds
+Maximum resident set size of the process during its lifetime: 7223124Kbytes
+pyCube_query11
+Wall clock time: 0:00.90seconds
+Maximum resident set size of the process during its lifetime: 96760Kbytes
+pandas_query23_baseline2
+Wall clock time: 0:14.49seconds
+Maximum resident set size of the process during its lifetime: 3827428Kbytes
+pyCube_query34
+Wall clock time: 0:00.87seconds
+Maximum resident set size of the process during its lifetime: 98240Kbytes
+pandas_query34_baseline3
+Wall clock time: 0:14.29seconds
+Maximum resident set size of the process during its lifetime: 3307932Kbytes
+pandas_query12_baseline1
+Wall clock time: 0:29.09seconds
+Maximum resident set size of the process during its lifetime: 8665820Kbytes
+pandas_query23_baseline3
+Wall clock time: 0:14.99seconds
+Maximum resident set size of the process during its lifetime: 2787432Kbytes
+pyCube_query23
+Wall clock time: 0:00.90seconds
+Maximum resident set size of the process during its lifetime: 98592Kbytes
+pyCube_query41
+Wall clock time: 0:01.12seconds
+Maximum resident set size of the process during its lifetime: 98028Kbytes
+pandas_query22_baseline1
+Wall clock time: 0:59.16seconds
+Maximum resident set size of the process during its lifetime: 20522016Kbytes
+pyCube_query12
+Wall clock time: 0:00.87seconds
+Maximum resident set size of the process during its lifetime: 96740Kbytes
+pandas_query11_baseline2
+Wall clock time: 0:11.57seconds
+Maximum resident set size of the process during its lifetime: 2087136Kbytes
+pyCube_query23
+Wall clock time: 0:00.88seconds
+Maximum resident set size of the process during its lifetime: 98284Kbytes
+pandas_query31_baseline1
+Wall clock time: 0:19.60seconds
+Maximum resident set size of the process during its lifetime: 7718424Kbytes
+pandas_query22_baseline1
+Wall clock time: 0:59.32seconds
+Maximum resident set size of the process during its lifetime: 20522468Kbytes
+pandas_query13_baseline2
+Wall clock time: 0:11.46seconds
+Maximum resident set size of the process during its lifetime: 2228012Kbytes
+pandas_query23_baseline2
+Wall clock time: 0:14.76seconds
+Maximum resident set size of the process during its lifetime: 3827324Kbytes
+pandas_query11_baseline2
+Wall clock time: 0:11.40seconds
+Maximum resident set size of the process during its lifetime: 2087504Kbytes
+pandas_query11_baseline3
+Wall clock time: 0:12.19seconds
+Maximum resident set size of the process during its lifetime: 1947848Kbytes
+pandas_query22_baseline1
+Wall clock time: 0:59.49seconds
+Maximum resident set size of the process during its lifetime: 20522600Kbytes
+pandas_query22_baseline2
+Wall clock time: 0:14.72seconds
+Maximum resident set size of the process during its lifetime: 3827436Kbytes
+pandas_query42_baseline3
+Wall clock time: 0:21.85seconds
+Maximum resident set size of the process during its lifetime: 4901920Kbytes
+pandas_query34_baseline3
+Wall clock time: 0:14.44seconds
+Maximum resident set size of the process during its lifetime: 3258752Kbytes
+pandas_query33_baseline1
+Wall clock time: 0:16.07seconds
+Maximum resident set size of the process during its lifetime: 4671664Kbytes
+pandas_query33_baseline3
+Wall clock time: 0:13.44seconds
+Maximum resident set size of the process during its lifetime: 2787300Kbytes
+pandas_query33_baseline2
+Wall clock time: 0:14.48seconds
+Maximum resident set size of the process during its lifetime: 3499668Kbytes
+pandas_query22_baseline3
+Wall clock time: 0:15.20seconds
+Maximum resident set size of the process during its lifetime: 2787300Kbytes
+pandas_query32_baseline3
+Wall clock time: 0:16.07seconds
+Maximum resident set size of the process during its lifetime: 3974552Kbytes
+pandas_query13_baseline3
+Wall clock time: 0:12.39seconds
+Maximum resident set size of the process during its lifetime: 2288660Kbytes
+pyCube_query33
+Wall clock time: 0:00.90seconds
+Maximum resident set size of the process during its lifetime: 98228Kbytes
+pandas_query21_baseline3
+Wall clock time: 0:16.78seconds
+Maximum resident set size of the process during its lifetime: 3262652Kbytes
+pandas_query31_baseline3
+Wall clock time: 0:17.63seconds
+Maximum resident set size of the process during its lifetime: 3974160Kbytes
+pyCube_query21
+Wall clock time: 0:00.98seconds
+Maximum resident set size of the process during its lifetime: 98292Kbytes
+pandas_query42_baseline1
+Wall clock time: 0:30.87seconds
+Maximum resident set size of the process during its lifetime: 12003596Kbytes
+pandas_query43_baseline2
+Wall clock time: 0:21.76seconds
+Maximum resident set size of the process during its lifetime: 7221388Kbytes
+pandas_query41_baseline1
+Wall clock time: 0:33.70seconds
+Maximum resident set size of the process during its lifetime: 12448356Kbytes
+pandas_query32_baseline2
+Wall clock time: 0:15.84seconds
+Maximum resident set size of the process during its lifetime: 4202924Kbytes
+pandas_query21_baseline3
+Wall clock time: 0:16.17seconds
+Maximum resident set size of the process during its lifetime: 3258684Kbytes
+pandas_query21_baseline2
+Wall clock time: 0:14.86seconds
+Maximum resident set size of the process during its lifetime: 4108856Kbytes
+pandas_query12_baseline1
+Wall clock time: 0:29.18seconds
+Maximum resident set size of the process during its lifetime: 8665880Kbytes
+pandas_query31_baseline1
+Wall clock time: 0:19.50seconds
+Maximum resident set size of the process during its lifetime: 7719436Kbytes
+pandas_query13_baseline1
+Wall clock time: 0:31.11seconds
+Maximum resident set size of the process during its lifetime: 10306744Kbytes
+pyCube_query22
+Wall clock time: 0:00.91seconds
+Maximum resident set size of the process during its lifetime: 98204Kbytes
+pandas_query41_baseline3
+Wall clock time: 0:21.87seconds
+Maximum resident set size of the process during its lifetime: 4536988Kbytes
+pandas_query33_baseline1
+Wall clock time: 0:15.85seconds
+Maximum resident set size of the process during its lifetime: 4671708Kbytes
+pandas_query12_baseline3
+Wall clock time: 0:10.74seconds
+Maximum resident set size of the process during its lifetime: 2085828Kbytes
+pandas_query23_baseline1
+Wall clock time: 0:58.51seconds
+Maximum resident set size of the process during its lifetime: 20522172Kbytes
+pandas_query41_baseline2
+Wall clock time: 0:21.90seconds
+Maximum resident set size of the process during its lifetime: 7034020Kbytes
+pandas_query43_baseline2
+Wall clock time: 0:21.56seconds
+Maximum resident set size of the process during its lifetime: 7221588Kbytes
+pandas_query34_baseline2
+Wall clock time: 0:14.99seconds
+Maximum resident set size of the process during its lifetime: 3687372Kbytes
+pandas_query12_baseline3
+Wall clock time: 0:10.75seconds
+Maximum resident set size of the process during its lifetime: 2085660Kbytes
+pyCube_query11
+Wall clock time: 0:00.88seconds
+Maximum resident set size of the process during its lifetime: 96716Kbytes
+pandas_query33_baseline1
+Wall clock time: 0:16.00seconds
+Maximum resident set size of the process during its lifetime: 4671884Kbytes
+pyCube_query13
+Wall clock time: 0:00.88seconds
+Maximum resident set size of the process during its lifetime: 96976Kbytes
+pandas_query34_baseline1
+Wall clock time: 0:16.66seconds
+Maximum resident set size of the process during its lifetime: 4953168Kbytes
+pandas_query23_baseline3
+Wall clock time: 0:14.87seconds
+Maximum resident set size of the process during its lifetime: 2787480Kbytes
+pyCube_query42
+Wall clock time: 0:01.05seconds
+Maximum resident set size of the process during its lifetime: 98052Kbytes
+pyCube_query21
+Wall clock time: 0:00.95seconds
+Maximum resident set size of the process during its lifetime: 98148Kbytes
+pyCube_query31
+Wall clock time: 0:01.10seconds
+Maximum resident set size of the process during its lifetime: 97852Kbytes
+pyCube_query33
+Wall clock time: 0:00.87seconds
+Maximum resident set size of the process during its lifetime: 98092Kbytes
+pandas_query43_baseline3
+Wall clock time: 0:21.60seconds
+Maximum resident set size of the process during its lifetime: 4901808Kbytes
+pandas_query43_baseline3
+Wall clock time: 0:21.68seconds
+Maximum resident set size of the process during its lifetime: 4901568Kbytes
+pandas_query43_baseline2
+Wall clock time: 0:21.91seconds
+Maximum resident set size of the process during its lifetime: 7181508Kbytes
+pandas_query11_baseline1
+Wall clock time: 0:31.53seconds
+Maximum resident set size of the process during its lifetime: 10306888Kbytes
+pandas_query21_baseline1
+Wall clock time: 1:02.96seconds
+Maximum resident set size of the process during its lifetime: 21366432Kbytes
+pandas_query43_baseline3
+Wall clock time: 0:21.66seconds
+Maximum resident set size of the process during its lifetime: 4901832Kbytes
+pandas_query23_baseline1
+Wall clock time: 0:59.03seconds
+Maximum resident set size of the process during its lifetime: 20522288Kbytes
+pyCube_query23
+Wall clock time: 0:00.87seconds
+Maximum resident set size of the process during its lifetime: 98020Kbytes
+pandas_query32_baseline1
+Wall clock time: 0:17.45seconds
+Maximum resident set size of the process during its lifetime: 6218748Kbytes
+pyCube_query13
+Wall clock time: 0:00.86seconds
+Maximum resident set size of the process during its lifetime: 96676Kbytes
+pandas_query32_baseline2
+Wall clock time: 0:14.36seconds
+Maximum resident set size of the process during its lifetime: 4202936Kbytes
+pyCube_query11
+Wall clock time: 0:00.86seconds
+Maximum resident set size of the process during its lifetime: 96592Kbytes
+pandas_query23_baseline3
+Wall clock time: 0:14.62seconds
+Maximum resident set size of the process during its lifetime: 2787204Kbytes
+pandas_query32_baseline2
+Wall clock time: 0:14.40seconds
+Maximum resident set size of the process during its lifetime: 4203212Kbytes
+pandas_query34_baseline2
+Wall clock time: 0:14.67seconds
+Maximum resident set size of the process during its lifetime: 3686396Kbytes
+pandas_query43_baseline1
+Wall clock time: 0:29.58seconds
+Maximum resident set size of the process during its lifetime: 12238192Kbytes
+pandas_query21_baseline1
+Wall clock time: 1:01.54seconds
+Maximum resident set size of the process during its lifetime: 21366500Kbytes
+pandas_query42_baseline3
+Wall clock time: 0:21.11seconds
+Maximum resident set size of the process during its lifetime: 4902032Kbytes
+pyCube_query13
+Wall clock time: 0:00.86seconds
+Maximum resident set size of the process during its lifetime: 96800Kbytes
+pandas_query32_baseline2
+Wall clock time: 0:14.35seconds
+Maximum resident set size of the process during its lifetime: 4203016Kbytes
+pandas_query42_baseline3
+Wall clock time: 0:21.04seconds
+Maximum resident set size of the process during its lifetime: 4901932Kbytes
+pyCube_query34
+Wall clock time: 0:00.85seconds
+Maximum resident set size of the process during its lifetime: 98264Kbytes
+pandas_query31_baseline3
+Wall clock time: 0:17.27seconds
+Maximum resident set size of the process during its lifetime: 3974280Kbytes
+pandas_query32_baseline3
+Wall clock time: 0:15.80seconds
+Maximum resident set size of the process during its lifetime: 3974360Kbytes
+pandas_query42_baseline2
+Wall clock time: 0:21.68seconds
+Maximum resident set size of the process during its lifetime: 7145968Kbytes
+pandas_query23_baseline1
+Wall clock time: 0:57.32seconds
+Maximum resident set size of the process during its lifetime: 20522580Kbytes
+pandas_query12_baseline2
+Wall clock time: 0:10.65seconds
+Maximum resident set size of the process during its lifetime: 2087408Kbytes
+pandas_query42_baseline2
+Wall clock time: 0:21.19seconds
+Maximum resident set size of the process during its lifetime: 7221512Kbytes

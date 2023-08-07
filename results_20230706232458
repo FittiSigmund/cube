@@ -1,0 +1,214 @@
+pyCube_query41
+Wall clock time: 0:01.15seconds
+User CPU time: 0.50seconds
+System CPU time: 0.72seconds
+Maximum resident set size of the process during its lifetime: 98140Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pyCube_query21
+Wall clock time: 0:00.93seconds
+User CPU time: 0.49seconds
+System CPU time: 0.71seconds
+Maximum resident set size of the process during its lifetime: 98112Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query23_baseline2
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 1785, in <module>
+    eval(f"{sys.argv[1]}()")
+  File "<string>", line 1, in <module>
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 550, in pandas_query23_baseline2
+    merged_table1 = fact_table.merge(date2, left_on="lo_orderdate", right_on="d_datekey")
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/frame.py", line 9848, in merge
+    return merge(
+           ^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/reshape/merge.py", line 158, in merge
+    return op.get_result(copy=copy)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/reshape/merge.py", line 807, in get_result
+    result = self._reindex_and_concat(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/reshape/merge.py", line 767, in _reindex_and_concat
+    lmgr = left._mgr.reindex_indexer(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/internals/managers.py", line 747, in reindex_indexer
+    new_blocks = [
+                 ^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/internals/managers.py", line 748, in <listcomp>
+    blk.take_nd(
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/internals/blocks.py", line 945, in take_nd
+    new_values = algos.take_nd(
+                 ^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/array_algos/take.py", line 117, in take_nd
+    return _take_nd_ndarray(arr, indexer, axis, fill_value, allow_fill)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/core/array_algos/take.py", line 162, in _take_nd_ndarray
+    func(arr, indexer, out, fill_value)
+KeyboardInterrupt
+Command terminated by signal 2
+Wall clock time: 0:10.90seconds
+User CPU time: 9.05seconds
+System CPU time: 1.40seconds
+Maximum resident set size of the process during its lifetime: 2443888Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query43_baseline1
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 11, in <module>
+    from sqlalchemy import create_engine
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/sqlalchemy/__init__.py", line 13, in <module>
+    from .engine import AdaptedConnection as AdaptedConnection
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/sqlalchemy/engine/__init__.py", line 18, in <module>
+    from . import events as events
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/sqlalchemy/engine/events.py", line 19, in <module>
+    from .base import Connection
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 30, in <module>
+    from .interfaces import BindTyping
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/sqlalchemy/engine/interfaces.py", line 38, in <module>
+    from ..sql.compiler import Compiled as Compiled
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/sqlalchemy/sql/__init__.py", line 12, in <module>
+    from .compiler import COLLECT_CARTESIAN_PRODUCTS as COLLECT_CARTESIAN_PRODUCTS
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/sqlalchemy/sql/compiler.py", line 60, in <module>
+    from . import coercions
+KeyboardInterrupt
+Command terminated by signal 2
+Wall clock time: 0:00.30seconds
+User CPU time: 0.40seconds
+System CPU time: 0.66seconds
+Maximum resident set size of the process during its lifetime: 75800Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query42_baseline1
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 1785, in <module>
+    eval(f"{sys.argv[1]}()")
+  File "<string>", line 1, in <module>
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 1346, in pandas_query42_baseline1
+    fact_table = pd.read_sql("lineorder", conn, columns=[
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/io/sql.py", line 651, in read_sql
+    return pandas_sql.read_table(
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/pandas/io/sql.py", line 1625, in read_table
+    self.meta.reflect(bind=self.con, only=[table_name])
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/sqlalchemy/sql/schema.py", line 5768, in reflect
+    Table(name, self, **reflect_opts)
+  File "<string>", line 2, in __new__
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/sqlalchemy/util/deprecations.py", line 283, in warned
+    return fn(*args, **kwargs)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/sqlalchemy/sql/schema.py", line 435, in __new__
+    return cls._new(*args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/sqlalchemy/sql/schema.py", line 485, in _new
+    table.__init__(name, metadata, *args, _no_init=False, **kw)
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/sqlalchemy/sql/schema.py", line 865, in __init__
+    self._autoload(
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/sqlalchemy/sql/schema.py", line 897, in _autoload
+    conn_insp.reflect_table(
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/sqlalchemy/engine/reflection.py", line 1571, in reflect_table
+    self._reflect_fk(
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/sqlalchemy/engine/reflection.py", line 1772, in _reflect_fk
+    sa_schema.Table(
+  File "<string>", line 2, in __new__
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/sqlalchemy/util/deprecations.py", line 283, in warned
+    return fn(*args, **kwargs)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/sqlalchemy/sql/schema.py", line 435, in __new__
+    return cls._new(*args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/sqlalchemy/sql/schema.py", line 485, in _new
+    table.__init__(name, metadata, *args, _no_init=False, **kw)
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/sqlalchemy/sql/schema.py", line 865, in __init__
+    self._autoload(
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/sqlalchemy/sql/schema.py", line 897, in _autoload
+    conn_insp.reflect_table(
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/sqlalchemy/engine/reflection.py", line 1527, in reflect_table
+    _reflect_info = self._get_reflection_info(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/sqlalchemy/engine/reflection.py", line 2006, in _get_reflection_info
+    columns=run(
+            ^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/sqlalchemy/engine/reflection.py", line 1992, in run
+    res = meth(filter_names=_fn, **kw)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/sqlalchemy/engine/reflection.py", line 923, in get_multi_columns
+    self.dialect.get_multi_columns(
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/sqlalchemy/dialects/postgresql/base.py", line 3514, in get_multi_columns
+    for rec in self._load_enums(
+               ^^^^^^^^^^^^^^^^^
+  File "<string>", line 2, in _load_enums
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/sqlalchemy/engine/reflection.py", line 97, in cache
+    ret = fn(self, con, *args, **kw)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/sqlalchemy/dialects/postgresql/base.py", line 4588, in _load_enums
+    result = connection.execute(self._enum_query(schema))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1413, in execute
+    return meth(
+           ^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/sqlalchemy/sql/elements.py", line 483, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1841, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 2342, in _handle_dbapi_exception
+    raise exc_info[1].with_traceback(exc_info[2])
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/sigmundur/work/cubeProject/cube/lib/python3.11/site-packages/sqlalchemy/engine/default.py", line 920, in do_execute
+    cursor.execute(statement, parameters)
+  File "/usr/lib/python3.11/encodings/utf_8.py", line 15, in decode
+    def decode(input, errors='strict'):
+    
+KeyboardInterrupt
+Command terminated by signal 2
+Wall clock time: 0:00.68seconds
+User CPU time: 0.56seconds
+System CPU time: 0.67seconds
+Maximum resident set size of the process during its lifetime: 96756Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query42_baseline1
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/sigmundur/work/cubeProject/cube/experiments/use_cases.py", line 28, in <module>
+    postgres = create_session(postgres_engine)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/session.py", line 70, in create_session
+    fact_table_name: str = get_fact_table_name(cursor)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sigmundur/work/cubeProject/cube/session/infer_cube.py", line 25, in get_fact_table_name
+    db_cursor.execute(table_cardinality_query(table_name))
+  File "/usr/lib/python3.11/encodings/utf_8.py", line 15, in decode
+    def decode(input, errors='strict'):
+    
+KeyboardInterrupt
+Command terminated by signal 2
+Wall clock time: 0:00.52seconds
+User CPU time: 0.45seconds
+System CPU time: 0.72seconds
+Maximum resident set size of the process during its lifetime: 92496Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
+pandas_query13_baseline3
+Wall clock time: 0:12.03seconds
+User CPU time: 8.99seconds
+System CPU time: 1.29seconds
+Maximum resident set size of the process during its lifetime: 2288628Kbytes
+Average resident set size of the process: 0Kbytes
+Average total (data+stack+text) memory use of the process: 0Kbytes
