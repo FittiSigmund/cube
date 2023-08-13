@@ -4,6 +4,7 @@
 # The bash script will run this script using GNU time iteratively over every use case.
 # The bash script will save the results of time into files for later analysis.
 import sys
+import time
 from typing import Dict, Callable
 
 import pandas as pd
@@ -1783,9 +1784,12 @@ class Experiments:
 
 if sys.argv and len(sys.argv) == 2:
     try:
+        t0 = time.perf_counter()
         eval(f"{sys.argv[1]}()")
-        sys.exit(0)
+        t1 = time.perf_counter()
+        t = t1 - t0
+        sys.exit((1, 2))
     except Exception as e:
-        sys.exit(e)
+        sys.exit(f"Exception: {e}")
 
 
