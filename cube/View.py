@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from numbers import Number
-from typing import List, Tuple, TYPE_CHECKING, Any, Dict
+from typing import List, TYPE_CHECKING, Dict
 
 import pandas as pd
 from sqlalchemy import create_engine, text
@@ -16,6 +16,7 @@ from cube.LevelMemberType import LevelMemberType
 from cube.Measure import Measure
 from cube.NonTopLevel import NonTopLevel
 from cube.PredicateOperator import PredicateOperator
+from timers import PythonTimer, DBTimer
 
 if TYPE_CHECKING:
     from cube.Predicate import Predicate
@@ -197,10 +198,14 @@ class View:
         return final_df
 
     def _convert_to_df_hack(self, query: str) -> pd.DataFrame:
-        engine = create_engine("postgresql+psycopg2://sigmundur:@localhost/ssb_snowflake")
-        with engine.connect() as conn:
-            df = pd.read_sql(text(query), conn)
-        engine.dispose()
+        python_timer = PythonTimer()
+        python_timer.stop()
+        with DBTimer():
+            engine = create_engine("postgresql+psycopg2://sigmundur:@localhost/ssb_snowflake")
+            with engine.connect() as conn:
+                df = pd.read_sql(text(query), conn)
+            engine.dispose()
+        python_timer.start()
         return df
 
     def _create_axes_where_clause(self) -> List[str]:
@@ -278,3 +283,5 @@ class View:
     def _create_on_condition(self, child: NonTopLevel, parent: NonTopLevel, counter: int) -> str:
         parent.alias = f"{parent.table_name}{counter}"
         return f"{parent.table_name} AS {parent.alias} ON {child.alias}.{child.fk_name} = {parent.alias}.{parent.key}"
+
+

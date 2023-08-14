@@ -13,6 +13,7 @@ from sqlalchemy import create_engine
 
 from session.session import *
 import engines
+from timers import PythonTimer, DBTimer
 
 DATABASE_USER = "sigmundur"
 DATABASE_PASSWORD = ""
@@ -33,254 +34,268 @@ engine = create_engine("postgresql+psycopg2://sigmundur:@localhost/ssb_snowflake
 
 pd.options.mode.chained_assignment = None
 
+
 # Baseline1: Tag alle kolonner med og join fact tabellen først
 # Baseline2: Tag kun nødvendige kolonner med og join fact tabellen sidst
 # Baseline3: Lav alle joins i db
 def pyCube_query11():
-    view2 = view.where(
-        (view.date1.year.y_year == 1993)
-        & (view.lo_discount > 0)
-        & (view.lo_discount < 4)
-        & (view.lo_quantity < 25)) \
-        .measures(revenue=view.lo_extendedprice * view.lo_discount)
-    return view2.output(hack=True)
+    with PythonTimer():
+        view2 = view.where(
+            (view.date1.year.y_year == 1993)
+            & (view.lo_discount > 0)
+            & (view.lo_discount < 4)
+            & (view.lo_quantity < 25)) \
+            .measures(revenue=view.lo_extendedprice * view.lo_discount)
+        return view2.output(hack=True)
 
 
 def pandas_query11_baseline1():
-    with engine.connect() as conn:
-        fact_table = pd.read_sql("lineorder", conn)
-        date_table = pd.read_sql("date", conn)
-        month_table = pd.read_sql("month", conn)
-        year_table = pd.read_sql("year", conn)
-    engine.dispose()
-    temp1 = fact_table.merge(date_table, left_on="lo_orderdate", right_on="d_datekey")
-    temp2 = temp1.merge(month_table, left_on="d_monthkey", right_on="mo_monthkey")
-    merged_table = temp2.merge(year_table, left_on="mo_yearkey", right_on="y_yearkey")
-    filtered_table = merged_table[
-        (merged_table["y_year"] == 1993)
-        & (merged_table["lo_discount"] > 0)
-        & (merged_table["lo_discount"] < 4)
-        & (merged_table["lo_quantity"] < 25)
-        ]
-    return pd.DataFrame([filtered_table.apply(lambda x: x["lo_extendedprice"] * x["lo_discount"], axis=1).sum()],
-                        columns=["revenue"])
+    with PythonTimer():
+        with engine.connect() as conn:
+            fact_table = pd.read_sql("lineorder", conn)
+            date_table = pd.read_sql("date", conn)
+            month_table = pd.read_sql("month", conn)
+            year_table = pd.read_sql("year", conn)
+        engine.dispose()
+        temp1 = fact_table.merge(date_table, left_on="lo_orderdate", right_on="d_datekey")
+        temp2 = temp1.merge(month_table, left_on="d_monthkey", right_on="mo_monthkey")
+        merged_table = temp2.merge(year_table, left_on="mo_yearkey", right_on="y_yearkey")
+        filtered_table = merged_table[
+            (merged_table["y_year"] == 1993)
+            & (merged_table["lo_discount"] > 0)
+            & (merged_table["lo_discount"] < 4)
+            & (merged_table["lo_quantity"] < 25)
+            ]
+        return pd.DataFrame([filtered_table.apply(lambda x: x["lo_extendedprice"] * x["lo_discount"], axis=1).sum()],
+                            columns=["revenue"])
 
 
 def pandas_query11_baseline2():
-    with engine.connect() as conn:
-        fact_table = pd.read_sql(
-            "lineorder",
-            conn,
-            columns=["lo_orderdate", "lo_discount", "lo_quantity", "lo_extendedprice"]
-        )
-        date_table = pd.read_sql("date", conn, columns=["d_datekey", "d_monthkey"])
-        month_table = pd.read_sql("month", conn, columns=["mo_monthkey", "mo_yearkey"])
-        year_table = pd.read_sql("year", conn)
-    engine.dispose()
-    temp1 = date_table.merge(month_table, left_on="d_monthkey", right_on="mo_monthkey")
-    temp2 = temp1.merge(year_table, left_on="mo_yearkey", right_on="y_yearkey")
-    merged_table = fact_table.merge(temp2, left_on="lo_orderdate", right_on="d_datekey")
-    filtered_table = merged_table[
-        (merged_table["y_year"] == 1993)
-        & (merged_table["lo_discount"] > 0)
-        & (merged_table["lo_discount"] < 4)
-        & (merged_table["lo_quantity"] < 25)
-        ]
-    return pd.DataFrame([filtered_table.apply(lambda x: x["lo_extendedprice"] * x["lo_discount"], axis=1).sum()],
-                        columns=["revenue"])
+    with PythonTimer():
+        with engine.connect() as conn:
+            fact_table = pd.read_sql(
+                "lineorder",
+                conn,
+                columns=["lo_orderdate", "lo_discount", "lo_quantity", "lo_extendedprice"]
+            )
+            date_table = pd.read_sql("date", conn, columns=["d_datekey", "d_monthkey"])
+            month_table = pd.read_sql("month", conn, columns=["mo_monthkey", "mo_yearkey"])
+            year_table = pd.read_sql("year", conn)
+        engine.dispose()
+        temp1 = date_table.merge(month_table, left_on="d_monthkey", right_on="mo_monthkey")
+        temp2 = temp1.merge(year_table, left_on="mo_yearkey", right_on="y_yearkey")
+        merged_table = fact_table.merge(temp2, left_on="lo_orderdate", right_on="d_datekey")
+        filtered_table = merged_table[
+            (merged_table["y_year"] == 1993)
+            & (merged_table["lo_discount"] > 0)
+            & (merged_table["lo_discount"] < 4)
+            & (merged_table["lo_quantity"] < 25)
+            ]
+        return pd.DataFrame([filtered_table.apply(lambda x: x["lo_extendedprice"] * x["lo_discount"], axis=1).sum()],
+                            columns=["revenue"])
 
 
 def pandas_query11_baseline3():
-    with engine.connect() as conn:
-        df = pd.read_sql("""
-            SELECT lo_extendedprice, lo_discount, lo_quantity, y_year
-            FROM lineorder JOIN date ON lo_orderdate = d_datekey 
-            JOIN month ON d_monthkey = mo_monthkey 
-            JOIN year ON mo_yearkey = y_yearkey
-            """, conn)
-    engine.dispose()
+    with PythonTimer():
+        with engine.connect() as conn:
+            df = pd.read_sql("""
+                SELECT lo_extendedprice, lo_discount, lo_quantity, y_year
+                FROM lineorder JOIN date ON lo_orderdate = d_datekey 
+                JOIN month ON d_monthkey = mo_monthkey 
+                JOIN year ON mo_yearkey = y_yearkey
+                """, conn)
+        engine.dispose()
 
-    filtered_table = df[
-        (df["y_year"] == 1993)
-        & (df["lo_discount"] > 0)
-        & (df["lo_discount"] < 4)
-        & (df["lo_quantity"] < 25)
-        ]
-    return pd.DataFrame([filtered_table.apply(lambda x: x["lo_extendedprice"] * x["lo_discount"], axis=1).sum()],
-                        columns=["revenue"])
+        filtered_table = df[
+            (df["y_year"] == 1993)
+            & (df["lo_discount"] > 0)
+            & (df["lo_discount"] < 4)
+            & (df["lo_quantity"] < 25)
+            ]
+        return pd.DataFrame([filtered_table.apply(lambda x: x["lo_extendedprice"] * x["lo_discount"], axis=1).sum()],
+                            columns=["revenue"])
 
 
 def pyCube_query12():
-    view2 = view.where(
-        (view.date1.month.mo_yearmonthnum == 199401)
-        & (view.lo_discount > 3)
-        & (view.lo_discount < 7)
-        & (view.lo_quantity > 25)
-        & (view.lo_quantity < 36)
-    ).measures(revenue=view.lo_extendedprice * view.lo_discount)
-    return view2.output(hack=True)
+    with PythonTimer():
+        view2 = view.where(
+            (view.date1.month.mo_yearmonthnum == 199401)
+            & (view.lo_discount > 3)
+            & (view.lo_discount < 7)
+            & (view.lo_quantity > 25)
+            & (view.lo_quantity < 36)
+        ).measures(revenue=view.lo_extendedprice * view.lo_discount)
+        return view2.output(hack=True)
 
 
 def pandas_query12_baseline1():
-    with engine.connect() as conn:
-        fact_table = pd.read_sql("lineorder", conn)
-        date_table = pd.read_sql("date", conn)
-        month_table = pd.read_sql("month", conn)
-    engine.dispose()
-    temp1 = fact_table.merge(date_table, left_on="lo_orderdate", right_on="d_datekey")
-    merged_table = temp1.merge(month_table, left_on="d_monthkey", right_on="mo_monthkey")
-    filtered_table = merged_table[
-        (merged_table["mo_yearmonthnum"] == 199401)
-        & (merged_table["lo_discount"] > 3)
-        & (merged_table["lo_discount"] < 7)
-        & (merged_table["lo_quantity"] > 25)
-        & (merged_table["lo_quantity"] < 36)
-        ]
-    return pd.DataFrame([filtered_table.apply(lambda x: x["lo_extendedprice"] * x["lo_discount"], axis=1).sum()],
-                        columns=["revenue"])
+    with PythonTimer():
+        with engine.connect() as conn:
+            fact_table = pd.read_sql("lineorder", conn)
+            date_table = pd.read_sql("date", conn)
+            month_table = pd.read_sql("month", conn)
+        engine.dispose()
+        temp1 = fact_table.merge(date_table, left_on="lo_orderdate", right_on="d_datekey")
+        merged_table = temp1.merge(month_table, left_on="d_monthkey", right_on="mo_monthkey")
+        filtered_table = merged_table[
+            (merged_table["mo_yearmonthnum"] == 199401)
+            & (merged_table["lo_discount"] > 3)
+            & (merged_table["lo_discount"] < 7)
+            & (merged_table["lo_quantity"] > 25)
+            & (merged_table["lo_quantity"] < 36)
+            ]
+        return pd.DataFrame([filtered_table.apply(lambda x: x["lo_extendedprice"] * x["lo_discount"], axis=1).sum()],
+                            columns=["revenue"])
 
 
 def pandas_query12_baseline2():
-    with engine.connect() as conn:
-        fact_table = pd.read_sql(
-            "lineorder",
-            conn,
-            columns=["lo_orderdate", "lo_discount", "lo_quantity", "lo_extendedprice"]
-        )
-        date_table = pd.read_sql("date", conn, columns=["d_datekey", "d_monthkey"])
-        month_table = pd.read_sql("month", conn)
-    engine.dispose()
-    temp1 = date_table.merge(month_table, left_on="d_monthkey", right_on="mo_monthkey")
-    merged_table = fact_table.merge(temp1, left_on="lo_orderdate", right_on="d_datekey")
-    filtered_table = merged_table[
-        (merged_table["mo_yearmonthnum"] == 199401)
-        & (merged_table["lo_discount"] > 3)
-        & (merged_table["lo_discount"] < 7)
-        & (merged_table["lo_quantity"] > 25)
-        & (merged_table["lo_quantity"] < 36)
-        ]
-    return pd.DataFrame([filtered_table.apply(lambda x: x["lo_extendedprice"] * x["lo_discount"], axis=1).sum()],
-                        columns=["revenue"])
+    with PythonTimer():
+        with engine.connect() as conn:
+            fact_table = pd.read_sql(
+                "lineorder",
+                conn,
+                columns=["lo_orderdate", "lo_discount", "lo_quantity", "lo_extendedprice"]
+            )
+            date_table = pd.read_sql("date", conn, columns=["d_datekey", "d_monthkey"])
+            month_table = pd.read_sql("month", conn)
+        engine.dispose()
+        temp1 = date_table.merge(month_table, left_on="d_monthkey", right_on="mo_monthkey")
+        merged_table = fact_table.merge(temp1, left_on="lo_orderdate", right_on="d_datekey")
+        filtered_table = merged_table[
+            (merged_table["mo_yearmonthnum"] == 199401)
+            & (merged_table["lo_discount"] > 3)
+            & (merged_table["lo_discount"] < 7)
+            & (merged_table["lo_quantity"] > 25)
+            & (merged_table["lo_quantity"] < 36)
+            ]
+        return pd.DataFrame([filtered_table.apply(lambda x: x["lo_extendedprice"] * x["lo_discount"], axis=1).sum()],
+                            columns=["revenue"])
 
 
 def pandas_query12_baseline3():
-    with engine.connect() as conn:
-        df = pd.read_sql("""
-            SELECT lo_extendedprice, lo_discount, lo_quantity, mo_yearmonthnum
-            FROM lineorder JOIN date ON lo_orderdate = d_datekey 
-            JOIN month ON d_monthkey = mo_monthkey 
-            """, conn)
-    engine.dispose()
+    with PythonTimer():
+        with engine.connect() as conn:
+            df = pd.read_sql("""
+                 SELECT lo_extendedprice, lo_discount, lo_quantity, mo_yearmonthnum
+                 FROM lineorder JOIN date ON lo_orderdate = d_datekey 
+                 JOIN month ON d_monthkey = mo_monthkey 
+                 """, conn)
+        engine.dispose()
 
-    filtered_table = df[
-        (df["mo_yearmonthnum"] == 199401)
-        & (df["lo_discount"] > 3)
-        & (df["lo_discount"] < 7)
-        & (df["lo_quantity"] > 25)
-        & (df["lo_quantity"] < 36)
-        ]
-    return pd.DataFrame([filtered_table.apply(lambda x: x["lo_extendedprice"] * x["lo_discount"], axis=1).sum()],
-                        columns=["revenue"])
+        filtered_table = df[
+            (df["mo_yearmonthnum"] == 199401)
+            & (df["lo_discount"] > 3)
+            & (df["lo_discount"] < 7)
+            & (df["lo_quantity"] > 25)
+            & (df["lo_quantity"] < 36)
+            ]
+        return pd.DataFrame([filtered_table.apply(lambda x: x["lo_extendedprice"] * x["lo_discount"], axis=1).sum()],
+                            columns=["revenue"])
 
 
 def pyCube_query13():
-    view2 = view.where(
-        (view.date1.date.d_daynuminyear > 0)
-        & (view.date1.date.d_daynuminyear < 8)
-        & (view.date1.year.y_year == 1994)
-        & (view.lo_discount > 4)
-        & (view.lo_discount < 8)
-        & (view.lo_quantity > 25)
-        & (view.lo_quantity < 36)
-    ).measures(revenue=view.lo_extendedprice * view.lo_discount)
-    return view2.output(hack=True)
+    with PythonTimer():
+        view2 = view.where(
+            (view.date1.date.d_daynuminyear > 0)
+            & (view.date1.date.d_daynuminyear < 8)
+            & (view.date1.year.y_year == 1994)
+            & (view.lo_discount > 4)
+            & (view.lo_discount < 8)
+            & (view.lo_quantity > 25)
+            & (view.lo_quantity < 36)
+        ).measures(revenue=view.lo_extendedprice * view.lo_discount)
+        return view2.output(hack=True)
 
 
 def pandas_query13_baseline1():
-    with engine.connect() as conn:
-        fact_table = pd.read_sql("lineorder", conn)
-        date_table = pd.read_sql("date", conn)
-        month_table = pd.read_sql("month", conn)
-        year_table = pd.read_sql("year", conn)
-    engine.dispose()
-    temp1 = fact_table.merge(date_table, left_on="lo_orderdate", right_on="d_datekey")
-    temp2 = temp1.merge(month_table, left_on="d_monthkey", right_on="mo_monthkey")
-    merged_table = temp2.merge(year_table, left_on="mo_yearkey", right_on="y_yearkey")
-    filtered_table = merged_table[
-        (merged_table["d_daynuminyear"] > 0)
-        & (merged_table["d_daynuminyear"] < 8)
-        & (merged_table["y_year"] == 1994)
-        & (merged_table["lo_discount"] > 4)
-        & (merged_table["lo_discount"] < 8)
-        & (merged_table["lo_quantity"] > 25)
-        & (merged_table["lo_quantity"] < 36)
-        ]
-    return pd.DataFrame([filtered_table.apply(lambda x: x["lo_extendedprice"] * x["lo_discount"], axis=1).sum()],
-                        columns=["revenue"])
+    with PythonTimer():
+        with engine.connect() as conn:
+            fact_table = pd.read_sql("lineorder", conn)
+            date_table = pd.read_sql("date", conn)
+            month_table = pd.read_sql("month", conn)
+            year_table = pd.read_sql("year", conn)
+        engine.dispose()
+        temp1 = fact_table.merge(date_table, left_on="lo_orderdate", right_on="d_datekey")
+        temp2 = temp1.merge(month_table, left_on="d_monthkey", right_on="mo_monthkey")
+        merged_table = temp2.merge(year_table, left_on="mo_yearkey", right_on="y_yearkey")
+        filtered_table = merged_table[
+            (merged_table["d_daynuminyear"] > 0)
+            & (merged_table["d_daynuminyear"] < 8)
+            & (merged_table["y_year"] == 1994)
+            & (merged_table["lo_discount"] > 4)
+            & (merged_table["lo_discount"] < 8)
+            & (merged_table["lo_quantity"] > 25)
+            & (merged_table["lo_quantity"] < 36)
+            ]
+        return pd.DataFrame([filtered_table.apply(lambda x: x["lo_extendedprice"] * x["lo_discount"], axis=1).sum()],
+                            columns=["revenue"])
 
 
 def pandas_query13_baseline2():
-    with engine.connect() as conn:
-        fact_table = pd.read_sql(
-            "lineorder",
-            conn,
-            columns=["lo_orderdate", "lo_discount", "lo_quantity", "lo_extendedprice"]
-        )
-        date_table = pd.read_sql("date", conn, columns=["d_datekey", "d_monthkey", "d_daynuminyear"])
-        month_table = pd.read_sql("month", conn, columns=["mo_monthkey", "mo_yearkey"])
-        year_table = pd.read_sql("year", conn)
-    engine.dispose()
-    temp1 = fact_table.merge(date_table, left_on="lo_orderdate", right_on="d_datekey")
-    temp2 = temp1.merge(month_table, left_on="d_monthkey", right_on="mo_monthkey")
-    merged_table = temp2.merge(year_table, left_on="mo_yearkey", right_on="y_yearkey")
-    filtered_table = merged_table[
-        (merged_table["d_daynuminyear"] > 0)
-        & (merged_table["d_daynuminyear"] < 8)
-        & (merged_table["y_year"] == 1994)
-        & (merged_table["lo_discount"] > 4)
-        & (merged_table["lo_discount"] < 8)
-        & (merged_table["lo_quantity"] > 25)
-        & (merged_table["lo_quantity"] < 36)
-        ]
-    return pd.DataFrame([filtered_table.apply(lambda x: x["lo_extendedprice"] * x["lo_discount"], axis=1).sum()],
-                        columns=["revenue"])
+    with PythonTimer():
+        with engine.connect() as conn:
+            fact_table = pd.read_sql(
+                "lineorder",
+                conn,
+                columns=["lo_orderdate", "lo_discount", "lo_quantity", "lo_extendedprice"]
+            )
+            date_table = pd.read_sql("date", conn, columns=["d_datekey", "d_monthkey", "d_daynuminyear"])
+            month_table = pd.read_sql("month", conn, columns=["mo_monthkey", "mo_yearkey"])
+            year_table = pd.read_sql("year", conn)
+        engine.dispose()
+        temp1 = fact_table.merge(date_table, left_on="lo_orderdate", right_on="d_datekey")
+        temp2 = temp1.merge(month_table, left_on="d_monthkey", right_on="mo_monthkey")
+        merged_table = temp2.merge(year_table, left_on="mo_yearkey", right_on="y_yearkey")
+        filtered_table = merged_table[
+            (merged_table["d_daynuminyear"] > 0)
+            & (merged_table["d_daynuminyear"] < 8)
+            & (merged_table["y_year"] == 1994)
+            & (merged_table["lo_discount"] > 4)
+            & (merged_table["lo_discount"] < 8)
+            & (merged_table["lo_quantity"] > 25)
+            & (merged_table["lo_quantity"] < 36)
+            ]
+        return pd.DataFrame([filtered_table.apply(lambda x: x["lo_extendedprice"] * x["lo_discount"], axis=1).sum()],
+                            columns=["revenue"])
 
 
 def pandas_query13_baseline3():
-    with engine.connect() as conn:
-        df = pd.read_sql("""
-            SELECT 
-                lo_extendedprice, lo_discount, lo_quantity, y_year, d_daynuminyear
-            FROM lineorder 
-                JOIN date ON lo_orderdate = d_datekey 
-                JOIN month ON d_monthkey = mo_monthkey 
-                JOIN year ON mo_yearkey = y_yearkey 
-        """,
-                         conn,
-                         )
-    engine.dispose()
-    filtered_table = df[
-        (df["d_daynuminyear"] > 0)
-        & (df["d_daynuminyear"] < 8)
-        & (df["y_year"] == 1994)
-        & (df["lo_discount"] > 4)
-        & (df["lo_discount"] < 8)
-        & (df["lo_quantity"] > 25)
-        & (df["lo_quantity"] < 36)
-        ]
-    return pd.DataFrame([filtered_table.apply(lambda x: x["lo_extendedprice"] * x["lo_discount"], axis=1).sum()],
-                        columns=["revenue"])
+    with PythonTimer():
+        with engine.connect() as conn:
+            df = pd.read_sql("""
+                SELECT 
+                    lo_extendedprice, lo_discount, lo_quantity, y_year, d_daynuminyear
+                FROM lineorder 
+                    JOIN date ON lo_orderdate = d_datekey 
+                    JOIN month ON d_monthkey = mo_monthkey 
+                    JOIN year ON mo_yearkey = y_yearkey 
+            """,
+                             conn,
+                             )
+        engine.dispose()
+        filtered_table = df[
+            (df["d_daynuminyear"] > 0)
+            & (df["d_daynuminyear"] < 8)
+            & (df["y_year"] == 1994)
+            & (df["lo_discount"] > 4)
+            & (df["lo_discount"] < 8)
+            & (df["lo_quantity"] > 25)
+            & (df["lo_quantity"] < 36)
+            ]
+        return pd.DataFrame([filtered_table.apply(lambda x: x["lo_extendedprice"] * x["lo_discount"], axis=1).sum()],
+                            columns=["revenue"])
 
 
 def pyCube_query21():
-    view2 = view.columns(view.date1.year.y_year.members()) \
-        .rows(view.part.brand1.b_brand1.members()) \
-        .where(
-        (view.part.category.ca_category == "MFGR#12")
-        & (view.supplier.region.r_region == "AMERICA")
-    ) \
-        .measures(view.lo_revenue)
-    return view2.output()
+    with PythonTimer():
+        view2 = view.columns(view.date1.year.y_year.members()) \
+            .rows(view.part.brand1.b_brand1.members()) \
+            .where(
+            (view.part.category.ca_category == "MFGR#12")
+            & (view.supplier.region.r_region == "AMERICA")
+        ) \
+            .measures(view.lo_revenue)
+        return view2.output()
 
 
 def pandas_query21_baseline1():
@@ -1784,12 +1799,12 @@ class Experiments:
 
 if sys.argv and len(sys.argv) == 2:
     try:
-        t0 = time.perf_counter()
+        python_timer = PythonTimer()
+        db_timer = DBTimer()
         eval(f"{sys.argv[1]}()")
-        t1 = time.perf_counter()
-        t = t1 - t0
-        sys.exit((1, 2))
+        py_time = python_timer.elapsed_time()
+        db_time = db_timer.elapsed_time()
+        print(f"py_time: {py_time} -- db_time: {db_time}")
+        sys.exit(0)
     except Exception as e:
         sys.exit(f"Exception: {e}")
-
-
