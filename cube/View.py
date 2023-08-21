@@ -198,14 +198,10 @@ class View:
         return final_df
 
     def _convert_to_df_hack(self, query: str) -> pd.DataFrame:
-        python_timer = PythonTimer()
-        python_timer.stop()
-        with DBTimer():
-            engine = create_engine("postgresql+psycopg2://sigmundur:@localhost/ssb_snowflake")
-            with engine.connect() as conn:
-                df = pd.read_sql(text(query), conn)
-            engine.dispose()
-        python_timer.start()
+        engine = create_engine("postgresql+psycopg2://sigmundur:@localhost/ssb_snowflake")
+        with engine.connect() as conn:
+            df = pd.read_sql(text(query), conn)
+        engine.dispose()
         return df
 
     def _create_axes_where_clause(self) -> List[str]:

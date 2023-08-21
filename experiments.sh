@@ -53,4 +53,14 @@ function run {
     done
 }
 
-run experiments_names.txt
+function new_run_time {
+    query_names=$(shuf ${1})
+    file_name=results_$(date "+%Y%m%d%H%M%S")
+    for query_name in $(echo $query_names)
+    do
+        echo $query_name
+        python -m experiments.use_cases $query_name 1>> $file_name
+    done
+}
+
+new_run_time experiments_names.txt

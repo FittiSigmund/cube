@@ -2,6 +2,8 @@
 
 source bin/activate
 
-
-test=$(python -m experiments.use_cases pyCube_query11)
-#echo $test
+for query_name in $(cat experiments_names_test.txt)
+do
+    echo $query_name
+    python -m experiments.use_cases $query_name 1>> tmp.test
+done
