@@ -1,0 +1,480 @@
+pyCube_query13()
+py_time: 178086643 -- db_time: 1155442230
+
+pyCube_query23()
+py_time: 25233192 -- db_time: 1253555867
+
+pandas_query21_baseline2()
+py_time: 39366847830 -- db_time: 30996970249
+
+pyCube_query21()
+py_time: 25357153 -- db_time: 1633577759
+
+pandas_query21_baseline3()
+py_time: 14621772980 -- db_time: 53408794998
+
+pandas_query21_baseline2()
+py_time: 38386101461 -- db_time: 30426777178
+
+pyCube_query22()
+py_time: 17186574 -- db_time: 1380638842
+
+pyCube_query21()
+py_time: 16348280 -- db_time: 1608873079
+
+pandas_query23_baseline2()
+py_time: 36068516170 -- db_time: 30519461826
+
+pyCube_query43()
+py_time: 19727815 -- db_time: 1683993181
+
+pandas_query22_baseline3()
+py_time: 14857867012 -- db_time: 50071573321
+
+pyCube_query31()
+py_time: 17980752 -- db_time: 2147248516
+
+pyCube_query22()
+py_time: 16319409 -- db_time: 1369391646
+
+pandas_query11_baseline3()
+py_time: 18563342832 -- db_time: 33557119747
+
+pandas_query32_baseline2()
+py_time: 38469551622 -- db_time: 30151854100
+
+pandas_query34_baseline2()
+py_time: 38798691820 -- db_time: 30175181532
+
+pandas_query11_baseline3()
+py_time: 18526613114 -- db_time: 33624169104
+
+pyCube_query42()
+py_time: 18088468 -- db_time: 3475249656
+
+pandas_query23_baseline3()
+py_time: 14006286882 -- db_time: 50127768200
+
+pandas_query12_baseline3()
+py_time: 15832887341 -- db_time: 32157014123
+
+pandas_query32_baseline3()
+py_time: 15790396825 -- db_time: 51653897521
+
+pyCube_query13()
+py_time: 8908023 -- db_time: 948063285
+
+pyCube_query43()
+py_time: 19413450 -- db_time: 1676231138
+
+pandas_query32_baseline3()
+py_time: 15712719735 -- db_time: 51409325415
+
+pandas_query34_baseline2()
+py_time: 40170512508 -- db_time: 30300187326
+
+pandas_query13_baseline3()
+py_time: 20231385401 -- db_time: 35164209852
+
+pandas_query22_baseline2()
+py_time: 37035200440 -- db_time: 30613860446
+
+pandas_query12_baseline3()
+py_time: 15781507531 -- db_time: 32377713222
+
+pyCube_query32()
+py_time: 18222846 -- db_time: 1459659746
+
+pyCube_query12()
+py_time: 8241314 -- db_time: 869971805
+
+pandas_query13_baseline3()
+py_time: 18607621473 -- db_time: 35064937429
+
+pandas_query31_baseline3()
+py_time: 16384768295 -- db_time: 55835280155
+
+pandas_query23_baseline2()
+py_time: 36097987941 -- db_time: 30567831641
+
+pandas_query22_baseline3()
+py_time: 14954119659 -- db_time: 50187943405
+
+pandas_query32_baseline3()
+py_time: 15742245680 -- db_time: 51967127958
+
+pyCube_query42()
+py_time: 18080184 -- db_time: 3595528757
+
+pandas_query12_baseline2()
+py_time: 19243156849 -- db_time: 29410021606
+
+pandas_query11_baseline2()
+py_time: 21763336226 -- db_time: 29601853001
+
+pandas_query34_baseline3()
+py_time: 17256022373 -- db_time: 44597691446
+
+pyCube_query11()
+py_time: 20648270 -- db_time: 868451702
+
+pyCube_query43()
+py_time: 34688096 -- db_time: 1755118494
+
+pyCube_query34()
+py_time: 17432655 -- db_time: 1165552858
+
+pandas_query13_baseline2()
+py_time: 21884008278 -- db_time: 29285570454
+
+pyCube_query13()
+py_time: 8214589 -- db_time: 960328512
+
+pandas_query11_baseline3()
+py_time: 18597007383 -- db_time: 33698391283
+
+pyCube_query22()
+py_time: 15676965 -- db_time: 1379938765
+
+pandas_query32_baseline3()
+py_time: 15735966225 -- db_time: 51601275592
+
+pyCube_query11()
+py_time: 9629919 -- db_time: 868652338
+
+pyCube_query34()
+py_time: 26316407 -- db_time: 1163797026
+
+pyCube_query42()
+py_time: 18285283 -- db_time: 3651689882
+
+pyCube_query12()
+py_time: 8191091 -- db_time: 862843973
+
+pandas_query32_baseline2()
+py_time: 38493600619 -- db_time: 30359918537
+
+pandas_query32_baseline2()
+py_time: 38764714810 -- db_time: 30247727868
+
+pandas_query12_baseline3()
+py_time: 18995443010 -- db_time: 36296092477
+
+pyCube_query21()
+py_time: 35876047 -- db_time: 2658880717
+
+pandas_query23_baseline2()
+py_time: 39890941758 -- db_time: 35605009653
+
+pandas_query33_baseline3()
+py_time: 18414922023 -- db_time: 50677003434
+
+pandas_query23_baseline2()
+py_time: 39512370059 -- db_time: 35178571497
+
+pandas_query11_baseline2()
+py_time: 25448470429 -- db_time: 34512926705
+
+pandas_query31_baseline3()
+py_time: 18781135355 -- db_time: 65732221526
+
+pandas_query22_baseline2()
+py_time: 40278799157 -- db_time: 35044929930
+
+pandas_query23_baseline2()
+py_time: 39324480034 -- db_time: 35146729646
+
+pandas_query13_baseline3()
+py_time: 22055576876 -- db_time: 41429552099
+
+pandas_query11_baseline3()
+py_time: 21975373848 -- db_time: 39090677344
+
+pandas_query31_baseline3()
+py_time: 18712933924 -- db_time: 65234960664
+
+pyCube_query32()
+py_time: 25582415 -- db_time: 2259468294
+
+pyCube_query41()
+py_time: 21854128 -- db_time: 4954612263
+
+pandas_query13_baseline2()
+py_time: 25039598048 -- db_time: 33940547444
+
+pandas_query21_baseline2()
+py_time: 41569509802 -- db_time: 35080379339
+
+pandas_query31_baseline3()
+py_time: 18755040589 -- db_time: 65507841279
+
+pandas_query33_baseline3()
+py_time: 18332198902 -- db_time: 50163740158
+
+pyCube_query32()
+py_time: 25638781 -- db_time: 2273444317
+
+pandas_query12_baseline2()
+py_time: 22179005744 -- db_time: 33792570113
+
+pandas_query12_baseline3()
+py_time: 18924362685 -- db_time: 37484418424
+
+pandas_query11_baseline3()
+py_time: 22155678078 -- db_time: 39119720350
+
+pyCube_query42()
+py_time: 25092041 -- db_time: 5615468101
+
+pyCube_query34()
+py_time: 25104288 -- db_time: 1834414574
+
+pyCube_query33()
+py_time: 25424176 -- db_time: 1852143291
+
+pyCube_query33()
+py_time: 33884357 -- db_time: 1899097871
+
+pandas_query13_baseline2()
+py_time: 27815818582 -- db_time: 34065998012
+
+pyCube_query42()
+py_time: 26794429 -- db_time: 5993125486
+
+pandas_query34_baseline2()
+py_time: 46353659147 -- db_time: 36177963292
+
+pandas_query11_baseline2()
+py_time: 28029542248 -- db_time: 35286816312
+
+pandas_query33_baseline2()
+py_time: 41103586681 -- db_time: 36448381343
+
+pandas_query33_baseline2()
+py_time: 41792554127 -- db_time: 38142459372
+
+pandas_query34_baseline3()
+py_time: 21275084605 -- db_time: 54876138627
+
+pandas_query12_baseline2()
+py_time: 23320768380 -- db_time: 35726105170
+
+pandas_query33_baseline2()
+py_time: 41990269778 -- db_time: 36430712989
+
+pyCube_query13()
+py_time: 13191127 -- db_time: 1661846099
+
+pyCube_query32()
+py_time: 40538479 -- db_time: 2475145235
+
+pandas_query33_baseline3()
+py_time: 19535176633 -- db_time: 52208046469
+
+pyCube_query41()
+py_time: 22161363 -- db_time: 5886760219
+
+pandas_query23_baseline3()
+py_time: 17422765193 -- db_time: 61646398952
+
+pyCube_query31()
+py_time: 25994141 -- db_time: 3702366561
+
+pyCube_query23()
+py_time: 23683076 -- db_time: 2036420962
+
+pyCube_query21()
+py_time: 44867557 -- db_time: 2718966538
+
+pandas_query11_baseline2()
+py_time: 26003733036 -- db_time: 35135244817
+
+pyCube_query21()
+py_time: 23282535 -- db_time: 2799657425
+
+pandas_query12_baseline3()
+py_time: 19250895845 -- db_time: 39971270667
+
+pandas_query33_baseline3()
+py_time: 19147182780 -- db_time: 52901306574
+
+pandas_query12_baseline2()
+py_time: 23249898883 -- db_time: 36694713597
+
+pandas_query34_baseline2()
+py_time: 44721853824 -- db_time: 36170850032
+
+pandas_query33_baseline3()
+py_time: 18405980333 -- db_time: 52152917595
+
+pandas_query22_baseline3()
+py_time: 17423393243 -- db_time: 61818031771
+
+pyCube_query22()
+py_time: 23792876 -- db_time: 2319530803
+
+pandas_query11_baseline2()
+py_time: 30984687719 -- db_time: 35805834857
+
+pyCube_query43()
+py_time: 29567381 -- db_time: 2918958297
+
+pyCube_query33()
+py_time: 27476092 -- db_time: 1999565303
+
+pandas_query22_baseline3()
+py_time: 17671363159 -- db_time: 63919664824
+
+pyCube_query41()
+py_time: 37951670 -- db_time: 5426519046
+
+pyCube_query23()
+py_time: 35552765 -- db_time: 2120543163
+
+pyCube_query23()
+py_time: 25223929 -- db_time: 2119837295
+
+pandas_query32_baseline2()
+py_time: 43369667043 -- db_time: 36369315058
+
+pyCube_query34()
+py_time: 25955145 -- db_time: 1963647825
+
+pandas_query34_baseline3()
+py_time: 20680039522 -- db_time: 55003224831
+
+pandas_query13_baseline3()
+py_time: 22840355460 -- db_time: 42624924803
+
+pandas_query23_baseline3()
+py_time: 20785575371 -- db_time: 62090018266
+
+pandas_query32_baseline3()
+py_time: 19722604075 -- db_time: 64273355017
+
+pyCube_query33()
+py_time: 34613547 -- db_time: 2020308489
+
+pandas_query34_baseline2()
+py_time: 45708187476 -- db_time: 37882862677
+
+pyCube_query11()
+py_time: 16721785 -- db_time: 1442754739
+
+pandas_query21_baseline2()
+py_time: 43439628484 -- db_time: 36608425792
+
+pyCube_query41()
+py_time: 23166463 -- db_time: 5478064924
+
+pyCube_query43()
+py_time: 42199739 -- db_time: 2809210013
+
+pandas_query13_baseline2()
+py_time: 26033889697 -- db_time: 35095435674
+
+pandas_query23_baseline3()
+py_time: 16997151944 -- db_time: 61852865929
+
+pandas_query23_baseline3()
+py_time: 17073130558 -- db_time: 62160332234
+
+pandas_query22_baseline2()
+py_time: 42411537132 -- db_time: 36795942082
+
+pyCube_query32()
+py_time: 28805925 -- db_time: 2509469245
+
+pyCube_query11()
+py_time: 13258441 -- db_time: 1495784259
+
+pyCube_query12()
+py_time: 12927569 -- db_time: 1463780219
+
+pyCube_query12()
+py_time: 16213058 -- db_time: 1446701063
+
+pyCube_query11()
+py_time: 13536227 -- db_time: 1502227213
+
+pandas_query33_baseline2()
+py_time: 40856663894 -- db_time: 36472536620
+
+pandas_query33_baseline2()
+py_time: 39763672041 -- db_time: 35216218297
+
+pandas_query34_baseline3()
+py_time: 20902627795 -- db_time: 55236626022
+
+pandas_query21_baseline3()
+py_time: 17536108491 -- db_time: 66532029366
+
+pandas_query21_baseline2()
+py_time: 44375148944 -- db_time: 37251430241
+
+pandas_query22_baseline2()
+py_time: 41736921055 -- db_time: 36867977223
+
+pandas_query34_baseline3()
+py_time: 21047162888 -- db_time: 56464578659
+
+pyCube_query31()
+py_time: 32775462 -- db_time: 3717613101
+
+pandas_query12_baseline2()
+py_time: 23309856598 -- db_time: 35532720420
+
+pandas_query21_baseline3()
+py_time: 17487883810 -- db_time: 66614243455
+
+pandas_query31_baseline3()
+py_time: 20823328916 -- db_time: 71287871074
+
+pyCube_query13()
+py_time: 13961996 -- db_time: 1603416043
+
+pyCube_query31()
+py_time: 42816770 -- db_time: 3662491665
+
+pandas_query22_baseline2()
+py_time: 43721324238 -- db_time: 37698686959
+
+pyCube_query12()
+py_time: 17025179 -- db_time: 1455229166
+
+pyCube_query41()
+py_time: 31157997 -- db_time: 5986712256
+
+pandas_query13_baseline3()
+py_time: 30404548345 -- db_time: 45778331389
+
+pyCube_query34()
+py_time: 26590012 -- db_time: 1978701743
+
+pandas_query13_baseline2()
+py_time: 26096845143 -- db_time: 35473234926
+
+pyCube_query23()
+py_time: 24394901 -- db_time: 2088822829
+
+pandas_query32_baseline2()
+py_time: 44168328890 -- db_time: 36330983094
+
+pyCube_query22()
+py_time: 23550255 -- db_time: 2339656644
+
+pyCube_query33()
+py_time: 34636745 -- db_time: 2006099771
+
+pyCube_query31()
+py_time: 35412883 -- db_time: 3634132109
+
+pandas_query21_baseline3()
+py_time: 17480032735 -- db_time: 66003441793
+
+pandas_query21_baseline3()
+py_time: 17653528036 -- db_time: 66445965881
+
+pandas_query22_baseline3()
+py_time: 17978016870 -- db_time: 60056640987
+

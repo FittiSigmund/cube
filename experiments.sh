@@ -55,12 +55,24 @@ function run {
 
 function new_run_time {
     query_names=$(shuf ${1})
-    file_name=results_$(date "+%Y%m%d%H%M%S")
+    file_name=$2
     for query_name in $(echo $query_names)
     do
         echo $query_name
-        python -m experiments.use_cases $query_name 1>> $file_name
+        python -m experiments.use_cases $query_name 1>> results/$file_name
     done
 }
 
-new_run_time experiments_names.txt
+function new_run_memory {
+    query_names=$(shuf ${1})
+    file_name=$2
+    for query_name in $(echo $query_names)
+    do
+        echo $query_name 
+        echo $query_name >> results/$file_name
+        /usr/bin/time -f "Maximum resident set size of the process during its lifetime: %MKbytes" python -m experiments.use_cases $query_name 2>> results/$file_name
+    done
+}
+
+new_run_time experiments_names_without_baseline1.txt $1
+new_run_memory experiments_names_without_baseline1.txt $2
