@@ -1773,6 +1773,13 @@ def pandas_query43_baseline3():
         )
 
 
+def custom_query():
+    with PythonTimer():
+        view2 = view.measures(view.lo_extendedprice)
+        test = view2.output(hack=True)
+        return test
+
+
 class Experiments:
     pass
     # If this method is in a class which contains all the test cases then it will run and compare the output of all

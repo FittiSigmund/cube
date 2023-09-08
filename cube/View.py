@@ -18,8 +18,7 @@ from cube.NonTopLevel import NonTopLevel
 from cube.PredicateOperator import PredicateOperator
 from timers import PythonTimer, DBTimer
 
-if TYPE_CHECKING:
-    from cube.Predicate import Predicate
+from cube.Predicate import Predicate
 
 
 class View:
@@ -30,7 +29,7 @@ class View:
                  cube: BaseCube = None) -> None:
         self.axes: List[Axis] = axes if axes else []
         self._measures: List[Measure] = measures if measures else []
-        self.predicates: Predicate = predicates
+        self.predicates: Predicate = predicates if predicates else Predicate(None, "", None)
         self.cube: BaseCube = cube
 
     # View method generally modifies self and returns self instead of creating and returning a new View
@@ -239,7 +238,7 @@ class View:
             case Measure():
                 return f"{pred.value.sqlname}"
             case str():
-                return f"'{pred.value}'"
+                return f"{pred.value}"
             case int():
                 return str(pred.value)
 
