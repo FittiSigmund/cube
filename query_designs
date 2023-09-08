@@ -1,0 +1,24 @@
+0 axes, 1 measure, 0 "axis size" = 1 cell
+
+view2 = view.measures(view.lo_extendedprice)
+return view2.output(hack=True)
+
+1 axis, 1 measure, 0 "axis size" = 7 cells
+
+view2 = view.columns(view.date1.year.y_year.members())\
+            .measures(view.lo_extendedprice)
+return view2.output()
+
+1 axis, 1 measure, 1 "axis size" = 365 cells
+
+view2 = view.columns(view.date1.month.mo_month.members())\
+            .measures(view.lo_extendedprice)
+return view2.output()
+
+2 axes, 1 measure, 1 "axis size" = 1825 cells
+
+view2 = view.columns(view.date1.month.mo_month.members())\
+            .rows(view.part.mfgr.m_mfgr.members())\
+            .measures(view.lo_extendedprice)
+return view2.output()
+

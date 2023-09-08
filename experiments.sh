@@ -74,5 +74,5 @@ function new_run_memory {
     done
 }
 
-new_run_time experiments_names_without_baseline1.txt $1
-new_run_memory experiments_names_without_baseline1.txt $2
+new_run_time experiments_names_for_sf_10.txt $1
+new_run_memory experiments_names_for_sf_10.txt $2
