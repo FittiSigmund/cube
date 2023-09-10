@@ -144,12 +144,13 @@ def print_query_flight(result_dict):
         if i == 3:
             for j, a in enumerate(get_query_names(i)):
                 if j == 0:
-                    print(r"\begin{axis}[bar shift=-9pt]")
-                    print(f"    \\addplot[style={{color={c[j][0]},fill={c[j][0]}}}]")
-                    print(f"        coordinates {{(Q{i}1, {result_dict[a[0]][0]}) (Q{i}2, {result_dict[a[1]][0]}) (Q{i}3, {result_dict[a[2]][0]}) (Q{i}4, {result_dict[a[3]][0]})}};")
-                    print(r"    \addplot[style={color=bbblue,fill=bbblue}]")
-                    print(f"        coordinates {{(Q{i}1, {result_dict[a[0]][1]}) (Q{i}2, {result_dict[a[1]][1]}) (Q{i}3, {result_dict[a[2]][1]}) (Q{i}4, {result_dict[a[3]][1]})}};")
-                    print(r"\end{axis}")
+                    if a[0] in result_dict.keys():
+                        print(r"\begin{axis}[bar shift=-9pt]")
+                        print(f"    \\addplot[style={{color={c[j][0]},fill={c[j][0]}}}]")
+                        print(f"        coordinates {{(Q{i}1, {result_dict[a[0]][0]}) (Q{i}2, {result_dict[a[1]][0]}) (Q{i}3, {result_dict[a[2]][0]}) (Q{i}4, {result_dict[a[3]][0]})}};")
+                        print(r"    \addplot[style={color=bbblue,fill=bbblue}]")
+                        print(f"        coordinates {{(Q{i}1, {result_dict[a[0]][1]}) (Q{i}2, {result_dict[a[1]][1]}) (Q{i}3, {result_dict[a[2]][1]}) (Q{i}4, {result_dict[a[3]][1]})}};")
+                        print(r"\end{axis}")
                 else:
                     if a[0] in result_dict.keys():
                         print(f"\\begin{{axis}}[bar shift={6 * j - 9}pt,hide axis]")
@@ -163,12 +164,13 @@ def print_query_flight(result_dict):
         else:
             for j, a in enumerate(get_query_names(i)):
                 if j == 0:
-                    print(r"\begin{axis}[bar shift=-9pt]")
-                    print(f"    \\addplot[style={{color={c[j][0]},fill={c[j][0]}}}]")
-                    print(f"        coordinates {{(Q{i}1, {result_dict[a[0]][0]}) (Q{i}2, {result_dict[a[1]][0]}) (Q{i}3, {result_dict[a[2]][0]})}};")
-                    print(r"    \addplot[style={color=bbblue,fill=bbblue}]")
-                    print(f"        coordinates {{(Q{i}1, {result_dict[a[0]][1]}) (Q{i}2, {result_dict[a[1]][1]}) (Q{i}3, {result_dict[a[2]][1]})}};")
-                    print(r"\end{axis}")
+                    if a[0] in result_dict.keys():
+                        print(r"\begin{axis}[bar shift=-9pt]")
+                        print(f"    \\addplot[style={{color={c[j][0]},fill={c[j][0]}}}]")
+                        print(f"        coordinates {{(Q{i}1, {result_dict[a[0]][0]}) (Q{i}2, {result_dict[a[1]][0]}) (Q{i}3, {result_dict[a[2]][0]})}};")
+                        print(r"    \addplot[style={color=bbblue,fill=bbblue}]")
+                        print(f"        coordinates {{(Q{i}1, {result_dict[a[0]][1]}) (Q{i}2, {result_dict[a[1]][1]}) (Q{i}3, {result_dict[a[2]][1]})}};")
+                        print(r"\end{axis}")
                 else:
                     if a[0] in result_dict.keys():
                         print(f"\\begin{{axis}}[bar shift={6*j - 9}pt,hide axis]")

@@ -118,8 +118,9 @@ def print_plot(res_dict):
         print("".join(strs))
 
     for i, name in enumerate(query_names[0]):
-        print(f"        \\node[above left,rotate=15,yshift=.51cm,xshift=2pt,style={{{c[0]}}}] (Q{name[-2:]}) at (axis cs:Q{name[-2:]}, {res_dict[name]}) {{{res_dict[name]}}};")
-        print(f"        \\draw[->,style={{{c[0]}}},bend left] (Q{name[-2:]}.south) to[xshift=-8pt,yshift=2pt] (axis cs:Q{name[-2:]}, {res_dict[name]}.north);")
+        if name in res_dict.keys():
+            print(f"        \\node[above left,rotate=15,yshift=.51cm,xshift=2pt,style={{{c[0]}}}] (Q{name[-2:]}) at (axis cs:Q{name[-2:]}, {res_dict[name]}) {{{res_dict[name]}}};")
+            print(f"        \\draw[->,style={{{c[0]}}},bend left] (Q{name[-2:]}.south) to[xshift=-8pt,yshift=2pt] (axis cs:Q{name[-2:]}, {res_dict[name]}.north);")
 
     print(r"    \end{axis}")
     print(r"\end{tikzpicture}")

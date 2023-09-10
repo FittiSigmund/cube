@@ -1,3 +1,5 @@
+All cells are "potential" cells i.e., the cells have been found combinatorically but it may not be true that all cells have a value (since not all combinations make sense)
+
 0 axes, 1 measure, 0 "axis size" = 1 cell
 
 view2 = view.measures(view.lo_extendedprice)
@@ -22,3 +24,117 @@ view2 = view.columns(view.date1.month.mo_month.members())\
             .measures(view.lo_extendedprice)
 return view2.output()
 
+2 axes, 2 measure, 1 "axis size" = 3650 cells
+
+view2 = view.columns(view.date1.month.mo_month.members())\
+            .rows(view.part.mfgr.m_mfgr.members())\
+            .measures(view.lo_extendedprice,
+                      view.lo_quantity)
+return view2.output()
+
+2 axes, 2 measure, 2 "axis size" = 25550 cells
+
+view2 = view.columns(view.date1.date.d_daynuminmonth.members())\
+            .rows(view.part.mfgr.m_mfgr.members())\
+            .measures(view.lo_extendedprice,
+                      view.lo_quantity)
+return view2.output()
+
+3 axes, 2 measure, 2 "axis size" = 638750 cells
+
+view2 = view.columns(view.date1.date.d_daynuminmonth.members())\
+            .rows(view.part.mfgr.m_mfgr.members())\
+            .pages(view.supplier.nation.n_nation.members())\
+            .measures(view.lo_extendedprice,
+                      view.lo_quantity)
+return view2.output()
+
+3 axes, 2 measure, 3 "axis size" = 6387500 cells
+
+view2 = view.columns(view.date1.date.d_daynuminmonth.members())\
+            .rows(view.part.mfgr.m_mfgr.members())\
+            .pages(view.supplier.city.ci_city.members())\
+            .measures(view.lo_extendedprice,
+                      view.lo_quantity)
+return view2.output()
+
+3 axes, 3 measure, 3 "axis size" = 9581250 cells
+
+view2 = view.columns(view.date1.date.d_daynuminmonth.members())\
+            .rows(view.part.mfgr.m_mfgr.members())\
+            .pages(view.supplier.city.ci_city.members())\
+            .measures(view.lo_extendedprice,
+                      view.lo_quantity,
+                      view.lo_revenue)
+return view2.output()
+
+4 axes, 3 measure, 3 "axis size" = 2395312500 cells
+
+view2 = view.columns(view.date1.date.d_daynuminmonth.members())\
+            .rows(view.part.mfgr.m_mfgr.members())\
+            .pages(view.supplier.city.ci_city.members())\
+            .sections(view.customer.city.ci_city.members())\
+            .measures(view.lo_extendedprice,
+                      view.lo_quantity,
+                      view.lo_revenue)
+return view2.output()
+
+4 axes, 4 measure, 3 "axis size" 
+
+view2 = view.columns(view.date1.date.d_daynuminmonth.members())\
+            .rows(view.part.mfgr.m_mfgr.members())\
+            .pages(view.supplier.city.ci_city.members())\
+            .sections(view.customer.city.ci_city.members())\
+            .measures(view.lo_extendedprice,
+                      view.lo_quantity,
+                      view.lo_revenue,
+                      view.lo_supplycost)
+return view2.output()
+
+4 axes, 4 measure, 4 "axis size" 
+
+view2 = view.columns(view.date1.date.d_daynuminmonth.members())\
+            .rows(view.part.category.ca_category.members())\
+            .pages(view.supplier.city.ci_city.members())\
+            .sections(view.customer.city.ci_city.members())\
+            .measures(view.lo_extendedprice,
+                      view.lo_quantity,
+                      view.lo_revenue,
+                      view.lo_supplycost)
+return view2.output()
+
+4 axes, 4 measure, 5 "axis size" 
+
+view2 = view.columns(view.date1.date.d_daynuminmonth.members())\
+            .rows(view.part.brand1.b_brand1.members())\
+            .pages(view.supplier.city.ci_city.members())\
+            .sections(view.customer.city.ci_city.members())\
+            .measures(view.lo_extendedprice,
+                      view.lo_quantity,
+                      view.lo_revenue,
+                      view.lo_supplycost)
+return view2.output()
+
+4 axes, 4 measure, 6 "axis size" 
+
+view2 = view.columns(view.date1.date.d_daynuminmonth.members())\
+            .rows(view.part.part.p_name.members())\
+            .pages(view.supplier.city.ci_city.members())\
+            .sections(view.customer.city.ci_city.members())\
+            .measures(view.lo_extendedprice,
+                      view.lo_quantity,
+                      view.lo_revenue,
+                      view.lo_supplycost)
+return view2.output()
+
+4 axes, 4 measure, 6 "axis size" 
+
+view2 = view.columns(view.date1.date.d_daynuminmonth.members())\
+            .rows(view.part.part.p_name.members())\
+            .pages(view.supplier.city.ci_city.members())\
+            .sections(view.customer.city.ci_city.members())\
+            .measures(view.lo_extendedprice,
+                      view.lo_quantity,
+                      view.lo_revenue,
+                      view.lo_supplycost)
+return view2.output()
