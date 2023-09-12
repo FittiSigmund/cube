@@ -238,7 +238,7 @@ class View:
             case Measure():
                 return f"{pred.value.sqlname}"
             case str():
-                return f"{pred.value}"
+                return f"'{pred.value}'" if pred.value else ""
             case int():
                 return str(pred.value)
 

@@ -514,7 +514,8 @@ def pyCube_query23():
             & (view.supplier.region.r_region == "EUROPE")
         ) \
             .measures(view.lo_revenue)
-        return view2.output()
+        test = view2.output()
+        return test
 
 
 def pandas_query23_baseline1():
@@ -1773,81 +1774,27 @@ def pandas_query43_baseline3():
         )
 
 
-def custom_query():
+def pyCube_new_query1():
     with PythonTimer():
         view2 = view.measures(view.lo_extendedprice)
-        test = view2.output(hack=True)
+        return view2.output(hack=True)
+
+
+def pyCube_new_query2():
+    with PythonTimer():
+        # Doesn't work with just columns
+        view2 = view.columns(view.date1.year.y_year.members()) \
+            .measures(view.lo_extendedprice)
+        test = view2.output()
         return test
-
-
-class Experiments:
-    pass
-    # If this method is in a class which contains all the test cases then it will run and compare the output of all
-    # test cases to ensure the same output in each query type
-    # def compare(
-    #         self,
-    #         single: bool = False,
-    #         pyCube_method: Callable[[], pd.DataFrame] = None,
-    #         pandas_method: Callable[[], pd.DataFrame] = None,
-    #         first_query_flight: bool = False) -> None:
-
-    #     def prepare_pyCube_df(df: pd.DataFrame) -> pd.DataFrame:
-    #         df.columns = df.columns.droplevel(level=df.columns.nlevels - 1)
-    #         df.sort_index(inplace=True, axis=0)
-    #         df.sort_index(inplace=True, axis=1)
-    #         return df
-
-    #     def prepare_pandas_df(pandas_df: pd.DataFrame) -> pd.DataFrame:
-    #         pandas_df.sort_index(inplace=True, axis=0)
-    #         pandas_df.sort_index(inplace=True, axis=1)
-    #         return pandas_df
-
-    #     if single:
-    #         pyCube_result = pyCube_method()
-    #         pandas_result = pandas_method()
-    #         if not first_query_flight:
-    #             pyCube_result = prepare_pyCube_df(pyCube_result)
-    #             pandas_result = prepare_pandas_df(pandas_result)
-    #         print(pyCube_result.equals(pandas_result))
-    #         return
-
-    #     query_numbers: Dict[int, int] = {1: 3, 2: 3, 3: 4, 4: 3}
-    #     global view
-    #     for k, v in query_numbers.items():
-    #         if k == 1:
-    #             for i in range(1, v + 1):
-    #                 postgres = create_session(postgres_engine)
-    #                 view = postgres.load_view('ssb_snowflake')
-
-    #                 pyCube_method = self.__getattribute__(f"pyCube_query{k}{i}")
-    #                 pyCube_result = pyCube_method()
-
-    #                 for baseline in range(1, 4):
-    #                     pandas_method = self.__getattribute__(f"pandas_query{k}{i}_baseline{baseline}")
-    #                     pandas_result = pandas_method()
-    #                     print(f"pyCube_query{k}{i} is equal to pandas_query{k}{i}_baseline{baseline} == "
-    #                           f"{pyCube_result.equals(pandas_result)}")
-    #         else:
-    #             for i in range(1, v + 1):
-    #                 postgres = create_session(postgres_engine)
-    #                 view = postgres.load_view('ssb_snowflake')
-
-    #                 pyCube_method = self.__getattribute__(f"pyCube_query{k}{i}")
-    #                 pyCube_result = prepare_pyCube_df(pyCube_method())
-
-    #                 for baseline in range(1, 4):
-    #                     pandas_method = self.__getattribute__(f"pandas_query{k}{i}_baseline{baseline}")
-    #                     pandas_result = prepare_pandas_df(pandas_method())
-
-    #                     print(f"pyCube_query{k}{i} is equal to pandas_query{k}{i}_baseline{baseline} == "
-    #                           f"{pyCube_result.equals(pandas_result)}")
 
 
 if sys.argv and len(sys.argv) == 2:
     try:
         python_timer = PythonTimer()
         db_timer = DBTimer()
-        eval(f"{sys.argv[1]}()")
+        # eval(f"{sys.argv[1]}()")
+        pyCube_new_query2()
         py_time = python_timer.elapsed_time()
         db_time = db_timer.elapsed_time()
         print(f"{sys.argv[1]}()")
