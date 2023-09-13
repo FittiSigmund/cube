@@ -4,8 +4,8 @@ from typing import Dict
 
 class PythonTimer(object):
     _instance = None
-    start_time: int | None = None
-    stop_time: int | None = None
+    start_time = None
+    stop_time = None
     times: Dict[int, int] = {}
 
     def __new__(cls, *args, **kwargs):
@@ -44,8 +44,8 @@ class PythonTimer(object):
 
 class DBTimer(object):
     _instance = None
-    start_time: int | None = None
-    stop_time: int | None = None
+    start_time = None
+    stop_time = None
     times: Dict[int, int] = {}
 
     def __new__(cls, *args, **kwargs):

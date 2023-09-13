@@ -29,5 +29,5 @@ function second_part {
     python -m result_memory_converter results/$memory_file_name 1>> results/final_results/$final_file_name
 }
 
-first_part $1
+# first_part $1
 second_part

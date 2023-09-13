@@ -1,0 +1,33 @@
+pyCube_new_query1()
+py_time: 8377649 -- db_time: 191785659
+
+pyCube_new_query2()
+py_time: 15227876 -- db_time: 2673082957
+
+pyCube_new_query3()
+py_time: 15179471 -- db_time: 2744416625
+
+pyCube_new_query5()
+py_time: 16229628 -- db_time: 1977652781
+
+pyCube_new_query6()
+py_time: 22806238 -- db_time: 3872346951
+
+pyCube_new_query7()
+py_time: 45944662 -- db_time: 4109692123
+
+pyCube_new_query8()
+py_time: 296864862 -- db_time: 10025380834
+
+pyCube_new_query9()
+py_time: 339382300 -- db_time: 10184398342
+
+pyCube_new_query10()
+py_time: 1590416393 -- db_time: 12340917070
+
+pyCube_new_query11()
+py_time: 7765409460 -- db_time: 18043701294
+
+pyCube_new_query12()
+py_time: 8966307198 -- db_time: 18828557387
+

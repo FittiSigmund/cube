@@ -1,4 +1,4 @@
-from typing import List, TypeVar
+from typing import List, TypeVar, Union
 
 import psycopg2
 from psycopg2.extensions import cursor as psycur
@@ -31,7 +31,7 @@ class Dimension:
         self._lowest_level: NonTopLevel = level_list[0]
         self.engine: Postgres = engine
         self._cursor: psycur = get_db_cursor(engine)
-        self._metadata: Graph | None = None
+        self._metadata: Union[Graph, None] = None
         self.fact_table_fk: str = fact_table_fk
         for level in level_list:
             level.dimension = self
@@ -46,7 +46,7 @@ class Dimension:
         return self._name
 
     @property
-    def metadata(self) -> Graph | None:
+    def metadata(self) -> Union[Graph, None]:
         return self._metadata
 
     @metadata.setter

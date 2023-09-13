@@ -1774,17 +1774,130 @@ def pandas_query43_baseline3():
         )
 
 
-def pyCube_new_query1():
-    with PythonTimer():
-        view2 = view.measures(view.lo_extendedprice)
-        return view2.output(hack=True)
+# # query 1 from query_designs
+# def pyCube_new_query1():
+#     with PythonTimer():
+#         view2 = view.measures(view.lo_extendedprice)
+#         return view2.output(hack=True)
+#
+#
+# # query 4 from query_designs
+# def pyCube_new_query2():
+#     with PythonTimer():
+#         view2 = view.columns(view.supplier.region.r_region.members()) \
+#                     .rows(view.part.mfgr.m_mfgr.members()) \
+#                     .measures(view.lo_extendedprice)
+#         test = view2.output()
+#         return test
+#
+#
+# # query 5 from query_designs
+# def pyCube_new_query3():
+#     with PythonTimer():
+#         view2 = view.columns(view.supplier.region.r_region.members()) \
+#                     .rows(view.part.mfgr.m_mfgr.members()) \
+#                     .measures(view.lo_extendedprice,
+#                               view.lo_quantity)
+#         test = view2.output()
+#         return test
 
 
-def pyCube_new_query2():
+# query 7 from query_designs
+def pyCube_new_query5():
     with PythonTimer():
-        # Doesn't work with just columns
-        view2 = view.columns(view.date1.year.y_year.members()) \
-            .measures(view.lo_extendedprice)
+        view2 = view.columns(view.supplier.city.ci_city.members()) \
+            .rows(view.part.mfgr.m_mfgr.members()) \
+            .measures(view.lo_extendedprice,
+                      view.lo_quantity)
+        test = view2.output()
+        return test
+
+
+# query 8 from query_designs
+def pyCube_new_query6():
+    with PythonTimer():
+        view2 = view.columns(view.supplier.city.ci_city.members()) \
+                    .rows(view.part.mfgr.m_mfgr.members()) \
+                    .pages(view.customer.region.r_region.members()) \
+                    .measures(view.lo_extendedprice,
+                              view.lo_quantity)
+        test = view2.output()
+        return test
+
+
+# query 9 from query_designs
+def pyCube_new_query7():
+    with PythonTimer():
+        view2 = view.columns(view.supplier.city.ci_city.members()) \
+                    .rows(view.part.mfgr.m_mfgr.members()) \
+                    .pages(view.customer.nation.n_nation.members()) \
+                    .measures(view.lo_extendedprice,
+                              view.lo_quantity)
+        test = view2.output()
+        return test
+
+
+# query 10 from query_designs
+def pyCube_new_query8():
+    with PythonTimer():
+        view2 = view.columns(view.supplier.city.ci_city.members()) \
+                    .rows(view.part.mfgr.m_mfgr.members()) \
+                    .pages(view.customer.city.ci_city.members()) \
+                    .measures(view.lo_extendedprice,
+                              view.lo_quantity)
+        test = view2.output()
+        return test
+
+
+# query 11 from query_designs
+def pyCube_new_query9():
+    with PythonTimer():
+        view2 = view.columns(view.supplier.city.ci_city.members()) \
+                    .rows(view.part.mfgr.m_mfgr.members()) \
+                    .pages(view.customer.city.ci_city.members()) \
+                    .measures(view.lo_extendedprice,
+                              view.lo_quantity,
+                              view.lo_revenue)
+        test = view2.output()
+        return test
+
+
+# query 12 from query_designs
+def pyCube_new_query10():
+    with PythonTimer():
+        view2 = view.columns(view.supplier.city.ci_city.members()) \
+                    .rows(view.part.category.ca_category.members()) \
+                    .pages(view.customer.city.ci_city.members()) \
+                    .measures(view.lo_extendedprice,
+                              view.lo_quantity,
+                              view.lo_revenue)
+        test = view2.output()
+        return test
+
+
+# query 13 from query_designs
+def pyCube_new_query11():
+    with PythonTimer():
+        view2 = view.columns(view.supplier.city.ci_city.members()) \
+            .rows(view.part.brand1.b_brand1.members()) \
+            .pages(view.customer.city.ci_city.members()) \
+            .measures(view.lo_extendedprice,
+                      view.lo_quantity,
+                      view.lo_revenue)
+        test = view2.output()
+        return test
+
+
+# query 14 from query_designs
+def pyCube_new_query12():
+    with PythonTimer():
+        view2 = view.columns(view.supplier.city.ci_city.members()) \
+            .rows(view.part.brand1.b_brand1.members()) \
+            .pages(view.customer.city.ci_city.members()) \
+            .measures(view.lo_extendedprice,
+                      view.lo_quantity,
+                      view.lo_revenue,
+                      view.lo_supplycost)
         test = view2.output()
         return test
 
@@ -1794,7 +1907,7 @@ if sys.argv and len(sys.argv) == 2:
         python_timer = PythonTimer()
         db_timer = DBTimer()
         # eval(f"{sys.argv[1]}()")
-        pyCube_new_query2()
+        pyCube_new_query6()
         py_time = python_timer.elapsed_time()
         db_time = db_timer.elapsed_time()
         print(f"{sys.argv[1]}()")

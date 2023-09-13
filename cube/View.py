@@ -113,17 +113,27 @@ class View:
         return f"FROM {self.cube.fact_table_name} " + " ".join(subset_clauses)
 
     def _get_all_pred_levels(self, pred: Predicate) -> List[NonTopLevel]:
-        match pred.value:
-            case Number():
-                return []
-            case str():
-                return []
-            case Measure():
-                return []
-            case Attribute():
-                return [pred.value.level]
-            case _:
-                return self._get_all_pred_levels(pred.left_child) + self._get_all_pred_levels(pred.right_child)
+        if isinstance(pred.value, Number):
+            return []
+        elif isinstance(pred.value, str):
+            return []
+        elif isinstance(pred.value, Measure):
+            return []
+        elif isinstance(pred.value, Attribute):
+            return [pred.value.level]
+        else:
+            return self._get_all_pred_levels(pred.left_child) + self._get_all_pred_levels(pred.right_child)
+        # match pred.value:
+        #     case Number():
+        #         return []
+        #     case str():
+        #         return []
+        #     case Measure():
+        #         return []
+        #     case Attribute():
+        #         return [pred.value.level]
+        #     case _:
+        #         return self._get_all_pred_levels(pred.left_child) + self._get_all_pred_levels(pred.right_child)
 
     def _create_where_clause(self) -> str:
         axes: List[str] = self._create_axes_where_clause()
@@ -219,28 +229,47 @@ class View:
         return " ".join(pred_list)
 
     def _create_predicates_where_clause_aux(self, pred: Predicate) -> List[str]:
-        match pred.value:
-            case BooleanConnective():
-                left_child: List[str] = self._create_predicates_where_clause_aux(pred.left_child)
-                right_child: List[str] = self._create_predicates_where_clause_aux(pred.right_child)
-                return ["("] + left_child + [pred.value.value] + right_child + [")"]
-            case PredicateOperator():
-                left_child: List[str] = self._create_predicates_where_clause_aux(pred.left_child)
-                right_child: List[str] = self._create_predicates_where_clause_aux(pred.right_child)
-                return left_child + [pred.value.value] + right_child
-            case _:
-                return [self._format_predicate_value(pred)]
+        if isinstance(pred.value, BooleanConnective):
+            left_child: List[str] = self._create_predicates_where_clause_aux(pred.left_child)
+            right_child: List[str] = self._create_predicates_where_clause_aux(pred.right_child)
+            return ["("] + left_child + [pred.value.value] + right_child + [")"]
+        elif isinstance(pred.value, PredicateOperator):
+            left_child: List[str] = self._create_predicates_where_clause_aux(pred.left_child)
+            right_child: List[str] = self._create_predicates_where_clause_aux(pred.right_child)
+            return left_child + [pred.value.value] + right_child
+        else:
+            return [self._format_predicate_value(pred)]
+        # match pred.value:
+        #     case BooleanConnective():
+        #         left_child: List[str] = self._create_predicates_where_clause_aux(pred.left_child)
+        #         right_child: List[str] = self._create_predicates_where_clause_aux(pred.right_child)
+        #         return ["("] + left_child + [pred.value.value] + right_child + [")"]
+        #     case PredicateOperator():
+        #         left_child: List[str] = self._create_predicates_where_clause_aux(pred.left_child)
+        #         right_child: List[str] = self._create_predicates_where_clause_aux(pred.right_child)
+        #         return left_child + [pred.value.value] + right_child
+        #     case _:
+        #         return [self._format_predicate_value(pred)]
 
     def _format_predicate_value(self, pred: Predicate) -> str:
-        match pred.value:
-            case Attribute():
-                return f"{pred.value.level.alias}.{pred.value.name}"
-            case Measure():
-                return f"{pred.value.sqlname}"
-            case str():
-                return f"'{pred.value}'" if pred.value else ""
-            case int():
-                return str(pred.value)
+        if isinstance(pred.value, Attribute):
+            return f"{pred.value.level.alias}.{pred.value.name}"
+        elif isinstance(pred.value, Measure):
+            return f"{pred.value.sqlname}"
+        elif isinstance(pred.value, str):
+            return f"'{pred.value}'" if pred.value else ""
+        elif isinstance(pred.value, int):
+            return str(pred.value)
+
+        # match pred.value:
+        #     case Attribute():
+        #         return f"{pred.value.level.alias}.{pred.value.name}"
+        #     case Measure():
+        #         return f"{pred.value.sqlname}"
+        #     case str():
+        #         return f"'{pred.value}'" if pred.value else ""
+        #     case int():
+        #         return str(pred.value)
 
     def _create_from_subset_clause(self, level: NonTopLevel, counter: int) -> str:
         # The order in hierarchy is the lowest level first and highest last

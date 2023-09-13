@@ -22,13 +22,20 @@ class Predicate:
         self.left_child: Predicate | None = left_child
         self.value: PredicateOperator | BooleanConnective | Attribute | Number | str = value
         self.right_child: Predicate | None = right_child
-        match self.value:
-            case numbers.Number():
-                self.level_member_type = LevelMemberType.INT
-            case str():
-                self.level_member_type = LevelMemberType.STR
-            case _:
-                self.level_member_type = None
+        if type(self.value) is numbers.Number():
+            self.level_member_type = LevelMemberType.INT
+        elif type(self.value) is str():
+            self.level_member_type = LevelMemberType.STR
+        else:
+            self.level_member_type = None
+
+        # match self.value:
+        #     case numbers.Number():
+        #         self.level_member_type = LevelMemberType.INT
+        #     case str():
+        #         self.level_member_type = LevelMemberType.STR
+        #     case _:
+        #         self.level_member_type = None
 
     def __and__(self, other):
         return Predicate(self, BooleanConnective.AND, other)
