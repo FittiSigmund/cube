@@ -47,17 +47,24 @@ def average_values(python_dict, db_dict) -> None:
 def get_query_names(flight_no: int) -> list[list[str]]:
     if flight_no == 3:
         return [
-                [f"pyCube_query{flight_no}1", f"pyCube_query{flight_no}2", f"pyCube_query{flight_no}3", f"pyCube_query{flight_no}4"],
-                [f"pandas_query{flight_no}1_baseline1", f"pandas_query{flight_no}2_baseline1", f"pandas_query{flight_no}3_baseline1", f"pandas_query{flight_no}4_baseline1"],
-                [f"pandas_query{flight_no}1_baseline2", f"pandas_query{flight_no}2_baseline2", f"pandas_query{flight_no}3_baseline2", f"pandas_query{flight_no}4_baseline2"],
-                [f"pandas_query{flight_no}1_baseline3", f"pandas_query{flight_no}2_baseline3", f"pandas_query{flight_no}3_baseline3", f"pandas_query{flight_no}4_baseline3"],
+            [f"pyCube_query{flight_no}1", f"pyCube_query{flight_no}2", f"pyCube_query{flight_no}3",
+             f"pyCube_query{flight_no}4"],
+            [f"pandas_query{flight_no}1_baseline1", f"pandas_query{flight_no}2_baseline1",
+             f"pandas_query{flight_no}3_baseline1", f"pandas_query{flight_no}4_baseline1"],
+            [f"pandas_query{flight_no}1_baseline2", f"pandas_query{flight_no}2_baseline2",
+             f"pandas_query{flight_no}3_baseline2", f"pandas_query{flight_no}4_baseline2"],
+            [f"pandas_query{flight_no}1_baseline3", f"pandas_query{flight_no}2_baseline3",
+             f"pandas_query{flight_no}3_baseline3", f"pandas_query{flight_no}4_baseline3"],
         ]
     else:
         return [
             [f"pyCube_query{flight_no}1", f"pyCube_query{flight_no}2", f"pyCube_query{flight_no}3"],
-            [f"pandas_query{flight_no}1_baseline1", f"pandas_query{flight_no}2_baseline1", f"pandas_query{flight_no}3_baseline1"],
-            [f"pandas_query{flight_no}1_baseline2", f"pandas_query{flight_no}2_baseline2", f"pandas_query{flight_no}3_baseline2"],
-            [f"pandas_query{flight_no}1_baseline3", f"pandas_query{flight_no}2_baseline3", f"pandas_query{flight_no}3_baseline3"],
+            [f"pandas_query{flight_no}1_baseline1", f"pandas_query{flight_no}2_baseline1",
+             f"pandas_query{flight_no}3_baseline1"],
+            [f"pandas_query{flight_no}1_baseline2", f"pandas_query{flight_no}2_baseline2",
+             f"pandas_query{flight_no}3_baseline2"],
+            [f"pandas_query{flight_no}1_baseline3", f"pandas_query{flight_no}2_baseline3",
+             f"pandas_query{flight_no}3_baseline3"],
         ]
 
 
@@ -132,7 +139,7 @@ def print_end():
     print()
 
 
-def print_query_flight(result_dict):
+def print_query_flight_old(result_dict):
     c = [
         ["bblue", "bbblue"],
         ["rred", "rrred"],
@@ -147,17 +154,21 @@ def print_query_flight(result_dict):
                     if a[0] in result_dict.keys():
                         print(r"\begin{axis}[bar shift=-9pt]")
                         print(f"    \\addplot[style={{color={c[j][0]},fill={c[j][0]}}}]")
-                        print(f"        coordinates {{(Q{i}1, {result_dict[a[0]][0]}) (Q{i}2, {result_dict[a[1]][0]}) (Q{i}3, {result_dict[a[2]][0]}) (Q{i}4, {result_dict[a[3]][0]})}};")
+                        print(
+                            f"        coordinates {{(Q{i}1, {result_dict[a[0]][0]}) (Q{i}2, {result_dict[a[1]][0]}) (Q{i}3, {result_dict[a[2]][0]}) (Q{i}4, {result_dict[a[3]][0]})}};")
                         print(r"    \addplot[style={color=bbblue,fill=bbblue}]")
-                        print(f"        coordinates {{(Q{i}1, {result_dict[a[0]][1]}) (Q{i}2, {result_dict[a[1]][1]}) (Q{i}3, {result_dict[a[2]][1]}) (Q{i}4, {result_dict[a[3]][1]})}};")
+                        print(
+                            f"        coordinates {{(Q{i}1, {result_dict[a[0]][1]}) (Q{i}2, {result_dict[a[1]][1]}) (Q{i}3, {result_dict[a[2]][1]}) (Q{i}4, {result_dict[a[3]][1]})}};")
                         print(r"\end{axis}")
                 else:
                     if a[0] in result_dict.keys():
                         print(f"\\begin{{axis}}[bar shift={6 * j - 9}pt,hide axis]")
                         print(f"    \\addplot+[style={{color={c[j][0]},fill={c[j][0]}}}]")
-                        print(f"        coordinates {{(Q{i}1, {result_dict[a[0]][0]}) (Q{i}2, {result_dict[a[1]][0]}) (Q{i}3, {result_dict[a[2]][0]}) (Q{i}4, {result_dict[a[3]][0]})}};")
+                        print(
+                            f"        coordinates {{(Q{i}1, {result_dict[a[0]][0]}) (Q{i}2, {result_dict[a[1]][0]}) (Q{i}3, {result_dict[a[2]][0]}) (Q{i}4, {result_dict[a[3]][0]})}};")
                         print(f"    \\addplot+[style={{color={c[j][1]},fill={c[j][1]}}}]")
-                        print(f"        coordinates {{(Q{i}1, {result_dict[a[0]][1]}) (Q{i}2, {result_dict[a[1]][1]}) (Q{i}3, {result_dict[a[2]][1]}) (Q{i}4, {result_dict[a[3]][1]})}};")
+                        print(
+                            f"        coordinates {{(Q{i}1, {result_dict[a[0]][1]}) (Q{i}2, {result_dict[a[1]][1]}) (Q{i}3, {result_dict[a[2]][1]}) (Q{i}4, {result_dict[a[3]][1]})}};")
                         print(r"\end{axis}")
                     else:
                         print()
@@ -167,24 +178,135 @@ def print_query_flight(result_dict):
                     if a[0] in result_dict.keys():
                         print(r"\begin{axis}[bar shift=-9pt]")
                         print(f"    \\addplot[style={{color={c[j][0]},fill={c[j][0]}}}]")
-                        print(f"        coordinates {{(Q{i}1, {result_dict[a[0]][0]}) (Q{i}2, {result_dict[a[1]][0]}) (Q{i}3, {result_dict[a[2]][0]})}};")
+                        print(
+                            f"        coordinates {{(Q{i}1, {result_dict[a[0]][0]}) (Q{i}2, {result_dict[a[1]][0]}) (Q{i}3, {result_dict[a[2]][0]})}};")
                         print(r"    \addplot[style={color=bbblue,fill=bbblue}]")
-                        print(f"        coordinates {{(Q{i}1, {result_dict[a[0]][1]}) (Q{i}2, {result_dict[a[1]][1]}) (Q{i}3, {result_dict[a[2]][1]})}};")
+                        print(
+                            f"        coordinates {{(Q{i}1, {result_dict[a[0]][1]}) (Q{i}2, {result_dict[a[1]][1]}) (Q{i}3, {result_dict[a[2]][1]})}};")
                         print(r"\end{axis}")
                 else:
                     if a[0] in result_dict.keys():
-                        print(f"\\begin{{axis}}[bar shift={6*j - 9}pt,hide axis]")
+                        print(f"\\begin{{axis}}[bar shift={6 * j - 9}pt,hide axis]")
                         print(f"    \\addplot+[style={{color={c[j][0]},fill={c[j][0]}}}]")
-                        print(f"        coordinates {{(Q{i}1, {result_dict[a[0]][0]}) (Q{i}2, {result_dict[a[1]][0]}) (Q{i}3, {result_dict[a[2]][0]})}};")
+                        print(
+                            f"        coordinates {{(Q{i}1, {result_dict[a[0]][0]}) (Q{i}2, {result_dict[a[1]][0]}) (Q{i}3, {result_dict[a[2]][0]})}};")
                         print(f"    \\addplot+[style={{color={c[j][1]},fill={c[j][1]}}}]")
-                        print(f"        coordinates {{(Q{i}1, {result_dict[a[0]][1]}) (Q{i}2, {result_dict[a[1]][1]}) (Q{i}3, {result_dict[a[2]][1]})}};")
+                        print(
+                            f"        coordinates {{(Q{i}1, {result_dict[a[0]][1]}) (Q{i}2, {result_dict[a[1]][1]}) (Q{i}3, {result_dict[a[2]][1]})}};")
                         print(r"\end{axis}")
                     else:
                         print()
         print_end()
 
 
-if sys.argv and len(sys.argv) == 2:
+def print_start_new(num_of_queries):
+    print(r"\begin{tikzpicture}[")
+    print(r"  every axis/.style={")
+    print(r"    ymajorgrids = true,")
+    print(r"    major x tick style = transparent,")
+    print(r"    xtick = data,")
+    print(r"    enlarge x limits=0.25,")
+    print(r"    symbolic x coords={")
+    for i in range(1, num_of_queries + 1):
+        print(f"      Q{i},")
+    print(r"    },")
+    print(r"    width  = 0.4*\textwidth,")
+    print(r"    height = 4cm,")
+    print(r"    ylabel = {Runtime (s)},")
+    print(r"    y label style = {font=\footnotesize,at={(-0.05,0.5)}},")
+    print(r"    ybar stacked,")
+    print(r"    ybar=1.2pt,")
+    print(r"    ymin=0,")
+    print(r"    ymax=35,")
+    print(r"    scaled y ticks = false,")
+    print(r"    bar width=4pt,")
+    print(r"    legend cell align=left,")
+    print(r"    legend style={")
+    print(r"            at={(1,1.05)},")
+    print(r"            anchor=south east,")
+    print(r"            column sep=1ex")
+    print(r"    },")
+    print(r"  },")
+    print(r"]")
+
+
+def get_new_query_names():
+    return [
+        ["pyCube_new_query5",
+         "pyCube_new_query6",
+         "pyCube_new_query7",
+         "pyCube_new_query8",
+         "pyCube_new_query9",
+         "pyCube_new_query10",
+         "pyCube_new_query11",
+         "pyCube_new_query12"]
+    ]
+
+hello = ["pyCube_new_query1",
+ "pyCube_new_query2",
+ "pyCube_new_query3",
+ "pyCube_new_query4",
+ "pyCube_new_query5",
+ "pyCube_new_query6",
+ "pyCube_new_query7",
+ "pyCube_new_query8"]
+
+
+def print_query_flight_new(result_dict):
+    c = [
+        ["bblue", "bbblue"],
+        ["rred", "rrred"],
+        ["ggreen", "gggreen"],
+        ["ppurple", "pppurple"],
+    ]
+    num_of_queries = 8
+
+    print_start_new(num_of_queries)
+    for j, names in enumerate(get_new_query_names()):
+        if j == 0:
+            print(r"\begin{axis}[bar shift=-9pt]")
+            print(f"    \\addplot[style={{color={c[0][0]},fill={c[0][0]}}}]")
+            py_strs = ["coordinates ", r"{"]
+            db_strs = ["coordinates ", r"{"]
+            for k, name in enumerate(names):
+                py_strs.append(f"(Q{k + 1}, {result_dict[name][0]}) ")
+                db_strs.append(f"(Q{k + 1}, {result_dict[name][1]}) ")
+            py_strs.append(r"};")
+            db_strs.append(r"};")
+            py_temp = "".join(py_strs)
+            db_temp = "".join(db_strs)
+            print(f"      {py_temp}")
+            print(r"    \addplot[style={color=bbblue,fill=bbblue}]")
+            print(f"      {db_temp}")
+            print(r"\end{axis}")
+        else:
+            print(f"\\begin{{axis}}[bar shift={6 * j - 9}pt,hide axis]")
+            print(f"    \\addplot+[style={{color={c[j][0]},fill={c[j][0]}}}]")
+            py_strs = ["coordinates ", r"{"]
+            db_strs = ["coordinates ", r"{"]
+            for k, name in enumerate(names):
+                py_strs.append(f"(Q{k + 1}, {result_dict[name][0]}) ")
+                db_strs.append(f"(Q{k + 1}, {result_dict[name][1]}) ")
+            py_strs.append(r"};")
+            db_strs.append(r"};")
+            py_temp = "".join(py_strs)
+            db_temp = "".join(db_strs)
+            print(f"        {py_temp}")
+            print(f"    \\addplot+[style={{color={c[j][1]},fill={c[j][1]}}}]")
+            print(f"        {db_temp}")
+            print(r"\end{axis}")
+
+        print_end()
+
+
+def print_query_flight(result_dict, new):
+    if new:
+        print_query_flight_new(result_dict)
+    else:
+        print_query_flight_old(result_dict)
+
+
+if sys.argv and len(sys.argv) == 3:
     python_results, db_results = parse_results(sys.argv[1])
     remove_largest_and_smallest_element(python_results, db_results)
     average_values(python_results, db_results)
@@ -193,6 +315,6 @@ if sys.argv and len(sys.argv) == 2:
     for key, value in zip(python_results.items(), db_results.items()):
         result[key[0]] = [*key[1], *value[1]]
 
-    print_query_flight(result)
+    new = True if sys.argv[2].lower() == "new" else False
+    print_query_flight(result, new)
     sys.exit(0)
-

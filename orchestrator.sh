@@ -14,8 +14,8 @@ function first_part {
     sed 's/.$//' lineorder.tbl > ../data/lineorder.tbl
     rm supplier.tbl customer.tbl part.tbl date.tbl lineorder.tbl
     cd ../..
-    psql -d ssb_snowflake -f experiments/bobby.sql
-    psql -d ssb_snowflake -f experiments/convert.sql
+    # psql -d ssb_snowflake -f experiments/bobby.sql
+    # psql -d ssb_snowflake -f experiments/convert.sql
 }
 
 function second_part {
@@ -29,5 +29,5 @@ function second_part {
     python -m result_memory_converter results/$memory_file_name 1>> results/final_results/$final_file_name
 }
 
-# first_part $1
-second_part
+first_part $1
+# second_part

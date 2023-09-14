@@ -91,7 +91,7 @@ c = ["bblue", "rred", "ggreen", "ppurple"]
 query_flight_names = ["Q11", "Q12", "Q13", "Q21", "Q22", "Q23", "Q31", "Q32", "Q33", "Q34", "Q41", "Q42", "Q43"]
 
 
-def print_plot(res_dict):
+def print_plot_old(res_dict):
     print(r"\begin{tikzpicture}")
     print(r"    \begin{axis}[")
     print(r"        width  = 0.8*\textwidth,")
@@ -126,8 +126,74 @@ def print_plot(res_dict):
     print(r"\end{tikzpicture}")
 
 
-if sys.argv and len(sys.argv) == 2:
+def print_start_new(num_of_queries):
+    print(r"\begin{tikzpicture}")
+    print(r"    \begin{axis}[")
+    print(r"        width  = 0.8*\textwidth,")
+    print(r"        height = 4cm,")
+    print(r"        major x tick style = transparent,")
+    print(r"        ybar=1.2pt,")
+    print(r"        bar width=4pt,")
+    print(r"        ymajorgrids = true,")
+    print(r"        ylabel = {Memory (GB)},")
+    print(r"        y label style = {font=\footnotesize,at={(-0.005,0.5)}},")
+    coords = []
+    for i in range(1, num_of_queries + 1):
+        coords.append(f"Q{i}")
+    temp = ",".join(coords)
+    print(f"        symbolic x coords={{{temp}}},")
+    print(r"        xtick = data,")
+    print(r"        scaled y ticks = false,")
+    print(r"        ymin=0")
+    print(r"    ]")
+
+
+def get_new_query_names():
+    return [
+        ["pyCube_new_query5",
+         "pyCube_new_query6",
+         "pyCube_new_query7",
+         "pyCube_new_query8",
+         "pyCube_new_query9",
+         "pyCube_new_query10",
+         "pyCube_new_query11",
+         "pyCube_new_query12"]
+    ]
+
+
+def print_plot_new(res_dict):
+    num_of_queries = 8
+    print_start_new(num_of_queries)
+
+    for i, names in enumerate(get_new_query_names()):
+        print(f"        \\addplot[style={{{c[i]},fill={c[i]},mark=none}}]")
+        strs = ["coordinates ", r"{"]
+        for j, name in enumerate(names):
+            if name in res_dict.keys():
+                strs.append(f"(Q{j + 1}, {res_dict[name]}) ")
+        strs.append(r"};")
+        temp = "".join(strs)
+        print(f"            {temp}")
+
+    # for i, name in enumerate(query_names[0]):
+    #     if name in res_dict.keys():
+    #         print(f"        \\node[above left,rotate=15,yshift=.51cm,xshift=2pt,style={{{c[0]}}}] (Q{name[-2:]}) at (axis cs:Q{name[-2:]}, {res_dict[name]}) {{{res_dict[name]}}};")
+    #         print(f"        \\draw[->,style={{{c[0]}}},bend left] (Q{name[-2:]}.south) to[xshift=-8pt,yshift=2pt] (axis cs:Q{name[-2:]}, {res_dict[name]}.north);")
+
+    print(r"    \end{axis}")
+    print(r"\end{tikzpicture}")
+
+
+def print_plot(res_dict, new):
+    if new:
+        print_plot_new(res_dict)
+    else:
+        print_plot_old(res_dict)
+
+
+if sys.argv and len(sys.argv) == 3:
     mem_results = parse_results(sys.argv[1])
     remove_largest_and_smallest_element(mem_results)
     average_values(mem_results)
-    print_plot(mem_results)
+    new = True if sys.argv[2].lower() == "new" else False
+    print_plot(mem_results, new)

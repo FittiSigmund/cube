@@ -1,0 +1,523 @@
+-----------------------------
+------ SCALE FACTOR 1 ------
+-----------------------------
+pandas_query13_baseline3
+Maximum resident set size of the process during its lifetime: 2300368Kbytes
+pandas_query22_baseline1
+Maximum resident set size of the process during its lifetime: 20544696Kbytes
+pandas_query33_baseline3
+Maximum resident set size of the process during its lifetime: 2807140Kbytes
+pandas_query31_baseline3
+Maximum resident set size of the process during its lifetime: 3667416Kbytes
+pandas_query33_baseline2
+Maximum resident set size of the process during its lifetime: 3489032Kbytes
+pandas_query34_baseline3
+Maximum resident set size of the process during its lifetime: 3284116Kbytes
+pyCube_query23
+Maximum resident set size of the process during its lifetime: 90420Kbytes
+pyCube_query13
+Maximum resident set size of the process during its lifetime: 88648Kbytes
+pandas_query42_baseline1
+Maximum resident set size of the process during its lifetime: 11966448Kbytes
+pandas_query34_baseline3
+Maximum resident set size of the process during its lifetime: 3284564Kbytes
+pandas_query11_baseline2
+Maximum resident set size of the process during its lifetime: 1960928Kbytes
+pandas_query42_baseline3
+Maximum resident set size of the process during its lifetime: 4599152Kbytes
+pandas_query21_baseline1
+Maximum resident set size of the process during its lifetime: 21388656Kbytes
+pyCube_query31
+Maximum resident set size of the process during its lifetime: 90140Kbytes
+pandas_query32_baseline2
+Maximum resident set size of the process during its lifetime: 4192548Kbytes
+pandas_query33_baseline3
+Maximum resident set size of the process during its lifetime: 2806952Kbytes
+pandas_query23_baseline1
+Maximum resident set size of the process during its lifetime: 20544584Kbytes
+pandas_query34_baseline1
+Maximum resident set size of the process during its lifetime: 4942648Kbytes
+pyCube_query23
+Maximum resident set size of the process during its lifetime: 90420Kbytes
+pandas_query12_baseline3
+Maximum resident set size of the process during its lifetime: 1959412Kbytes
+pandas_query43_baseline3
+Maximum resident set size of the process during its lifetime: 4599012Kbytes
+pandas_query32_baseline3
+Maximum resident set size of the process during its lifetime: 3837556Kbytes
+pandas_query43_baseline3
+Maximum resident set size of the process during its lifetime: 4599040Kbytes
+pyCube_query33
+Maximum resident set size of the process during its lifetime: 90264Kbytes
+pandas_query23_baseline2
+Maximum resident set size of the process during its lifetime: 3817476Kbytes
+pandas_query21_baseline2
+Maximum resident set size of the process during its lifetime: 4098844Kbytes
+pandas_query11_baseline3
+Maximum resident set size of the process during its lifetime: 1959428Kbytes
+pandas_query42_baseline2
+Maximum resident set size of the process during its lifetime: 7136224Kbytes
+pandas_query34_baseline2
+Maximum resident set size of the process during its lifetime: 3676404Kbytes
+pandas_query12_baseline3
+Maximum resident set size of the process during its lifetime: 1958892Kbytes
+pandas_query32_baseline1
+Maximum resident set size of the process during its lifetime: 6208336Kbytes
+pyCube_query34
+Maximum resident set size of the process during its lifetime: 90560Kbytes
+pandas_query23_baseline3
+Maximum resident set size of the process during its lifetime: 2806764Kbytes
+pandas_query11_baseline3
+Maximum resident set size of the process during its lifetime: 1959244Kbytes
+pandas_query22_baseline2
+Maximum resident set size of the process during its lifetime: 3817440Kbytes
+pyCube_query31
+Maximum resident set size of the process during its lifetime: 90388Kbytes
+pandas_query33_baseline2
+Maximum resident set size of the process during its lifetime: 3489312Kbytes
+pyCube_query12
+Maximum resident set size of the process during its lifetime: 88304Kbytes
+pandas_query31_baseline2
+Maximum resident set size of the process during its lifetime: 4426796Kbytes
+pyCube_query22
+Maximum resident set size of the process during its lifetime: 90540Kbytes
+pyCube_query32
+Maximum resident set size of the process during its lifetime: 90740Kbytes
+pandas_query11_baseline3
+Maximum resident set size of the process during its lifetime: 1959012Kbytes
+pandas_query41_baseline1
+Maximum resident set size of the process during its lifetime: 12482504Kbytes
+pandas_query41_baseline1
+Maximum resident set size of the process during its lifetime: 12482072Kbytes
+pandas_query41_baseline3
+Maximum resident set size of the process during its lifetime: 4496916Kbytes
+pandas_query12_baseline3
+Maximum resident set size of the process during its lifetime: 1959112Kbytes
+pyCube_query42
+Maximum resident set size of the process during its lifetime: 90144Kbytes
+pyCube_query12
+Maximum resident set size of the process during its lifetime: 88452Kbytes
+pandas_query34_baseline3
+Maximum resident set size of the process during its lifetime: 3284260Kbytes
+pandas_query21_baseline3
+Maximum resident set size of the process during its lifetime: 3284372Kbytes
+pandas_query21_baseline2
+Maximum resident set size of the process during its lifetime: 4098832Kbytes
+pandas_query42_baseline2
+Maximum resident set size of the process during its lifetime: 7136216Kbytes
+pandas_query12_baseline1
+Maximum resident set size of the process during its lifetime: 8694168Kbytes
+pandas_query33_baseline1
+Maximum resident set size of the process during its lifetime: 4661220Kbytes
+pandas_query31_baseline3
+Maximum resident set size of the process during its lifetime: 3666892Kbytes
+pyCube_query21
+Maximum resident set size of the process during its lifetime: 90360Kbytes
+pandas_query21_baseline1
+Maximum resident set size of the process during its lifetime: 21388756Kbytes
+pyCube_query23
+Maximum resident set size of the process during its lifetime: 90688Kbytes
+pandas_query33_baseline3
+Maximum resident set size of the process during its lifetime: 2806728Kbytes
+pandas_query41_baseline1
+Maximum resident set size of the process during its lifetime: 12482160Kbytes
+pandas_query11_baseline1
+Maximum resident set size of the process during its lifetime: 10335048Kbytes
+pandas_query43_baseline3
+Maximum resident set size of the process during its lifetime: 4599084Kbytes
+pandas_query11_baseline1
+Maximum resident set size of the process during its lifetime: 10335060Kbytes
+pandas_query13_baseline2
+Maximum resident set size of the process during its lifetime: 2189580Kbytes
+pandas_query22_baseline3
+Maximum resident set size of the process during its lifetime: 2806668Kbytes
+pandas_query32_baseline2
+Maximum resident set size of the process during its lifetime: 4192300Kbytes
+pandas_query21_baseline1
+Maximum resident set size of the process during its lifetime: 21388780Kbytes
+pyCube_query42
+Maximum resident set size of the process during its lifetime: 89916Kbytes
+pandas_query13_baseline1
+Maximum resident set size of the process during its lifetime: 10335056Kbytes
+pandas_query22_baseline3
+Maximum resident set size of the process during its lifetime: 2806988Kbytes
+pyCube_query21
+Maximum resident set size of the process during its lifetime: 90400Kbytes
+pandas_query34_baseline1
+Maximum resident set size of the process during its lifetime: 4942612Kbytes
+pandas_query21_baseline1
+Maximum resident set size of the process during its lifetime: 21388736Kbytes
+pyCube_query21
+Maximum resident set size of the process during its lifetime: 90260Kbytes
+pyCube_query42
+Maximum resident set size of the process during its lifetime: 90004Kbytes
+pandas_query42_baseline2
+Maximum resident set size of the process during its lifetime: 7136004Kbytes
+pyCube_query22
+Maximum resident set size of the process during its lifetime: 90424Kbytes
+pandas_query22_baseline1
+Maximum resident set size of the process during its lifetime: 20544540Kbytes
+pandas_query33_baseline2
+Maximum resident set size of the process during its lifetime: 3489144Kbytes
+pandas_query41_baseline2
+Maximum resident set size of the process during its lifetime: 6945416Kbytes
+pandas_query31_baseline2
+Maximum resident set size of the process during its lifetime: 4426816Kbytes
+pandas_query32_baseline3
+Maximum resident set size of the process during its lifetime: 3837116Kbytes
+pyCube_query12
+Maximum resident set size of the process during its lifetime: 88700Kbytes
+pandas_query43_baseline2
+Maximum resident set size of the process during its lifetime: 7178096Kbytes
+pyCube_query13
+Maximum resident set size of the process during its lifetime: 88508Kbytes
+pandas_query43_baseline2
+Maximum resident set size of the process during its lifetime: 7178364Kbytes
+pyCube_query32
+Maximum resident set size of the process during its lifetime: 90504Kbytes
+pandas_query34_baseline2
+Maximum resident set size of the process during its lifetime: 3676524Kbytes
+pyCube_query12
+Maximum resident set size of the process during its lifetime: 88308Kbytes
+pandas_query13_baseline3
+Maximum resident set size of the process during its lifetime: 2300020Kbytes
+pyCube_query13
+Maximum resident set size of the process during its lifetime: 88440Kbytes
+pandas_query12_baseline1
+Maximum resident set size of the process during its lifetime: 8694312Kbytes
+pandas_query23_baseline2
+Maximum resident set size of the process during its lifetime: 3817184Kbytes
+pandas_query41_baseline1
+Maximum resident set size of the process during its lifetime: 12482004Kbytes
+pyCube_query21
+Maximum resident set size of the process during its lifetime: 90356Kbytes
+pyCube_query31
+Maximum resident set size of the process during its lifetime: 90148Kbytes
+pandas_query13_baseline3
+Maximum resident set size of the process during its lifetime: 2299808Kbytes
+pandas_query13_baseline2
+Maximum resident set size of the process during its lifetime: 2189280Kbytes
+pandas_query43_baseline2
+Maximum resident set size of the process during its lifetime: 7178332Kbytes
+pandas_query32_baseline1
+Maximum resident set size of the process during its lifetime: 6208452Kbytes
+pandas_query13_baseline1
+Maximum resident set size of the process during its lifetime: 10334912Kbytes
+pandas_query11_baseline1
+Maximum resident set size of the process during its lifetime: 10334900Kbytes
+pandas_query33_baseline3
+Maximum resident set size of the process during its lifetime: 2806908Kbytes
+pandas_query12_baseline1
+Maximum resident set size of the process during its lifetime: 8694184Kbytes
+pandas_query42_baseline3
+Maximum resident set size of the process during its lifetime: 4598772Kbytes
+pandas_query31_baseline3
+Maximum resident set size of the process during its lifetime: 3667440Kbytes
+pandas_query41_baseline2
+Maximum resident set size of the process during its lifetime: 6945540Kbytes
+pandas_query43_baseline2
+Maximum resident set size of the process during its lifetime: 7178372Kbytes
+pandas_query34_baseline1
+Maximum resident set size of the process during its lifetime: 4942700Kbytes
+pandas_query33_baseline3
+Maximum resident set size of the process during its lifetime: 2806620Kbytes
+pandas_query13_baseline3
+Maximum resident set size of the process during its lifetime: 2300068Kbytes
+pandas_query42_baseline3
+Maximum resident set size of the process during its lifetime: 4599108Kbytes
+pandas_query32_baseline3
+Maximum resident set size of the process during its lifetime: 3837108Kbytes
+pandas_query21_baseline3
+Maximum resident set size of the process during its lifetime: 3284208Kbytes
+pandas_query22_baseline2
+Maximum resident set size of the process during its lifetime: 3817600Kbytes
+pyCube_query43
+Maximum resident set size of the process during its lifetime: 90404Kbytes
+pandas_query23_baseline2
+Maximum resident set size of the process during its lifetime: 3817420Kbytes
+pandas_query43_baseline2
+Maximum resident set size of the process during its lifetime: 7178136Kbytes
+pandas_query43_baseline3
+Maximum resident set size of the process during its lifetime: 4598908Kbytes
+pandas_query12_baseline2
+Maximum resident set size of the process during its lifetime: 1961476Kbytes
+pyCube_query43
+Maximum resident set size of the process during its lifetime: 90644Kbytes
+pyCube_query41
+Maximum resident set size of the process during its lifetime: 90232Kbytes
+pandas_query12_baseline2
+Maximum resident set size of the process during its lifetime: 1961324Kbytes
+pyCube_query43
+Maximum resident set size of the process during its lifetime: 90640Kbytes
+pyCube_query11
+Maximum resident set size of the process during its lifetime: 88324Kbytes
+pandas_query41_baseline2
+Maximum resident set size of the process during its lifetime: 6945556Kbytes
+pandas_query13_baseline2
+Maximum resident set size of the process during its lifetime: 2189552Kbytes
+pandas_query41_baseline2
+Maximum resident set size of the process during its lifetime: 6945660Kbytes
+pandas_query11_baseline2
+Maximum resident set size of the process during its lifetime: 1961420Kbytes
+pandas_query41_baseline3
+Maximum resident set size of the process during its lifetime: 4496708Kbytes
+pandas_query41_baseline3
+Maximum resident set size of the process during its lifetime: 4496460Kbytes
+pyCube_query22
+Maximum resident set size of the process during its lifetime: 90596Kbytes
+pandas_query12_baseline2
+Maximum resident set size of the process during its lifetime: 1961288Kbytes
+pandas_query13_baseline1
+Maximum resident set size of the process during its lifetime: 10335156Kbytes
+pandas_query22_baseline1
+Maximum resident set size of the process during its lifetime: 20544380Kbytes
+pyCube_query13
+Maximum resident set size of the process during its lifetime: 88524Kbytes
+pandas_query42_baseline2
+Maximum resident set size of the process during its lifetime: 7136252Kbytes
+pyCube_query41
+Maximum resident set size of the process during its lifetime: 90252Kbytes
+pandas_query21_baseline2
+Maximum resident set size of the process during its lifetime: 4098676Kbytes
+pandas_query43_baseline1
+Maximum resident set size of the process during its lifetime: 12200700Kbytes
+pyCube_query23
+Maximum resident set size of the process during its lifetime: 90404Kbytes
+pyCube_query32
+Maximum resident set size of the process during its lifetime: 90448Kbytes
+pyCube_query22
+Maximum resident set size of the process during its lifetime: 90396Kbytes
+pandas_query22_baseline3
+Maximum resident set size of the process during its lifetime: 2806620Kbytes
+pandas_query43_baseline1
+Maximum resident set size of the process during its lifetime: 12200884Kbytes
+pyCube_query11
+Maximum resident set size of the process during its lifetime: 88352Kbytes
+pandas_query11_baseline3
+Maximum resident set size of the process during its lifetime: 1959148Kbytes
+pandas_query23_baseline3
+Maximum resident set size of the process during its lifetime: 2806456Kbytes
+pandas_query31_baseline1
+Maximum resident set size of the process during its lifetime: 7708576Kbytes
+pandas_query22_baseline2
+Maximum resident set size of the process during its lifetime: 3817688Kbytes
+pyCube_query21
+Maximum resident set size of the process during its lifetime: 90140Kbytes
+pandas_query32_baseline2
+Maximum resident set size of the process during its lifetime: 4192544Kbytes
+pandas_query42_baseline3
+Maximum resident set size of the process during its lifetime: 4598736Kbytes
+pandas_query33_baseline2
+Maximum resident set size of the process during its lifetime: 3489072Kbytes
+pandas_query12_baseline1
+Maximum resident set size of the process during its lifetime: 8693924Kbytes
+pandas_query34_baseline3
+Maximum resident set size of the process during its lifetime: 3284328Kbytes
+pandas_query23_baseline1
+Maximum resident set size of the process during its lifetime: 20544412Kbytes
+pandas_query22_baseline2
+Maximum resident set size of the process during its lifetime: 3817316Kbytes
+pandas_query11_baseline3
+Maximum resident set size of the process during its lifetime: 1959288Kbytes
+pyCube_query43
+Maximum resident set size of the process during its lifetime: 90680Kbytes
+pyCube_query41
+Maximum resident set size of the process during its lifetime: 90336Kbytes
+pyCube_query32
+Maximum resident set size of the process during its lifetime: 90456Kbytes
+pandas_query31_baseline1
+Maximum resident set size of the process during its lifetime: 7708792Kbytes
+pandas_query41_baseline3
+Maximum resident set size of the process during its lifetime: 4496648Kbytes
+pandas_query42_baseline1
+Maximum resident set size of the process during its lifetime: 11966712Kbytes
+pandas_query21_baseline3
+Maximum resident set size of the process during its lifetime: 3284464Kbytes
+pyCube_query42
+Maximum resident set size of the process during its lifetime: 90100Kbytes
+pandas_query34_baseline2
+Maximum resident set size of the process during its lifetime: 3676604Kbytes
+pandas_query23_baseline3
+Maximum resident set size of the process during its lifetime: 2806792Kbytes
+pandas_query12_baseline2
+Maximum resident set size of the process during its lifetime: 1961368Kbytes
+pandas_query34_baseline2
+Maximum resident set size of the process during its lifetime: 3676568Kbytes
+pandas_query33_baseline1
+Maximum resident set size of the process during its lifetime: 4661008Kbytes
+pyCube_query33
+Maximum resident set size of the process during its lifetime: 90476Kbytes
+pandas_query33_baseline1
+Maximum resident set size of the process during its lifetime: 4661032Kbytes
+pandas_query31_baseline3
+Maximum resident set size of the process during its lifetime: 3667404Kbytes
+pyCube_query41
+Maximum resident set size of the process during its lifetime: 90004Kbytes
+pandas_query42_baseline2
+Maximum resident set size of the process during its lifetime: 7136332Kbytes
+pandas_query31_baseline2
+Maximum resident set size of the process during its lifetime: 4426896Kbytes
+pandas_query31_baseline1
+Maximum resident set size of the process during its lifetime: 7708796Kbytes
+pandas_query12_baseline2
+Maximum resident set size of the process during its lifetime: 1961104Kbytes
+pandas_query13_baseline2
+Maximum resident set size of the process during its lifetime: 2189324Kbytes
+pandas_query41_baseline3
+Maximum resident set size of the process during its lifetime: 4496908Kbytes
+pandas_query31_baseline1
+Maximum resident set size of the process during its lifetime: 7708692Kbytes
+pandas_query33_baseline1
+Maximum resident set size of the process during its lifetime: 4661152Kbytes
+pyCube_query34
+Maximum resident set size of the process during its lifetime: 90280Kbytes
+pandas_query33_baseline2
+Maximum resident set size of the process during its lifetime: 3489112Kbytes
+pandas_query21_baseline2
+Maximum resident set size of the process during its lifetime: 4098636Kbytes
+pyCube_query43
+Maximum resident set size of the process during its lifetime: 91004Kbytes
+pandas_query11_baseline1
+Maximum resident set size of the process during its lifetime: 10334796Kbytes
+pyCube_query11
+Maximum resident set size of the process during its lifetime: 88844Kbytes
+pandas_query31_baseline2
+Maximum resident set size of the process during its lifetime: 4426568Kbytes
+pandas_query34_baseline1
+Maximum resident set size of the process during its lifetime: 4942396Kbytes
+pandas_query31_baseline3
+Maximum resident set size of the process during its lifetime: 3667212Kbytes
+pandas_query34_baseline3
+Maximum resident set size of the process during its lifetime: 3284596Kbytes
+pyCube_query32
+Maximum resident set size of the process during its lifetime: 90472Kbytes
+pandas_query23_baseline1
+Maximum resident set size of the process during its lifetime: 20544724Kbytes
+pyCube_query12
+Maximum resident set size of the process during its lifetime: 88252Kbytes
+pandas_query12_baseline3
+Maximum resident set size of the process during its lifetime: 1959248Kbytes
+pandas_query43_baseline1
+Maximum resident set size of the process during its lifetime: 12200720Kbytes
+pandas_query23_baseline2
+Maximum resident set size of the process during its lifetime: 3817592Kbytes
+pandas_query32_baseline1
+Maximum resident set size of the process during its lifetime: 6208636Kbytes
+pandas_query21_baseline1
+Maximum resident set size of the process during its lifetime: 21388500Kbytes
+pandas_query23_baseline3
+Maximum resident set size of the process during its lifetime: 2806788Kbytes
+pyCube_query13
+Maximum resident set size of the process during its lifetime: 88468Kbytes
+pandas_query42_baseline3
+Maximum resident set size of the process during its lifetime: 4598996Kbytes
+pyCube_query23
+Maximum resident set size of the process during its lifetime: 90476Kbytes
+pandas_query33_baseline1
+Maximum resident set size of the process during its lifetime: 4661020Kbytes
+pandas_query42_baseline1
+Maximum resident set size of the process during its lifetime: 11966312Kbytes
+pyCube_query22
+Maximum resident set size of the process during its lifetime: 90316Kbytes
+pandas_query11_baseline2
+Maximum resident set size of the process during its lifetime: 1961400Kbytes
+pyCube_query33
+Maximum resident set size of the process during its lifetime: 90212Kbytes
+pandas_query23_baseline1
+Maximum resident set size of the process during its lifetime: 20544424Kbytes
+pandas_query31_baseline2
+Maximum resident set size of the process during its lifetime: 4426732Kbytes
+pandas_query13_baseline1
+Maximum resident set size of the process during its lifetime: 10334744Kbytes
+pandas_query34_baseline1
+Maximum resident set size of the process during its lifetime: 4942364Kbytes
+pandas_query41_baseline2
+Maximum resident set size of the process during its lifetime: 6945156Kbytes
+pandas_query11_baseline1
+Maximum resident set size of the process during its lifetime: 10334904Kbytes
+pandas_query34_baseline2
+Maximum resident set size of the process during its lifetime: 3676600Kbytes
+pandas_query23_baseline3
+Maximum resident set size of the process during its lifetime: 2806880Kbytes
+pandas_query32_baseline1
+Maximum resident set size of the process during its lifetime: 6208780Kbytes
+pyCube_query42
+Maximum resident set size of the process during its lifetime: 90480Kbytes
+pandas_query32_baseline1
+Maximum resident set size of the process during its lifetime: 6208152Kbytes
+pyCube_query33
+Maximum resident set size of the process during its lifetime: 90592Kbytes
+pandas_query21_baseline3
+Maximum resident set size of the process during its lifetime: 3284184Kbytes
+pandas_query22_baseline1
+Maximum resident set size of the process during its lifetime: 20544712Kbytes
+pandas_query23_baseline1
+Maximum resident set size of the process during its lifetime: 20544540Kbytes
+pandas_query43_baseline3
+Maximum resident set size of the process during its lifetime: 4599212Kbytes
+pandas_query13_baseline1
+Maximum resident set size of the process during its lifetime: 10334856Kbytes
+pyCube_query34
+Maximum resident set size of the process during its lifetime: 90652Kbytes
+pandas_query32_baseline2
+Maximum resident set size of the process during its lifetime: 4192532Kbytes
+pandas_query22_baseline3
+Maximum resident set size of the process during its lifetime: 2806944Kbytes
+pandas_query42_baseline1
+Maximum resident set size of the process during its lifetime: 11966484Kbytes
+pyCube_query11
+Maximum resident set size of the process during its lifetime: 88528Kbytes
+pandas_query42_baseline1
+Maximum resident set size of the process during its lifetime: 11966292Kbytes
+pandas_query23_baseline2
+Maximum resident set size of the process during its lifetime: 3817360Kbytes
+pandas_query43_baseline1
+Maximum resident set size of the process during its lifetime: 12201108Kbytes
+pandas_query22_baseline1
+Maximum resident set size of the process during its lifetime: 20544576Kbytes
+pyCube_query34
+Maximum resident set size of the process during its lifetime: 90404Kbytes
+pandas_query32_baseline2
+Maximum resident set size of the process during its lifetime: 4192328Kbytes
+pyCube_query31
+Maximum resident set size of the process during its lifetime: 89796Kbytes
+pandas_query13_baseline2
+Maximum resident set size of the process during its lifetime: 2189676Kbytes
+pyCube_query31
+Maximum resident set size of the process during its lifetime: 90188Kbytes
+pandas_query22_baseline3
+Maximum resident set size of the process during its lifetime: 2806796Kbytes
+pandas_query12_baseline3
+Maximum resident set size of the process during its lifetime: 1959332Kbytes
+pandas_query31_baseline1
+Maximum resident set size of the process during its lifetime: 7708740Kbytes
+pyCube_query34
+Maximum resident set size of the process during its lifetime: 90576Kbytes
+pandas_query21_baseline3
+Maximum resident set size of the process during its lifetime: 3284328Kbytes
+pandas_query21_baseline2
+Maximum resident set size of the process during its lifetime: 4098936Kbytes
+pyCube_query41
+Maximum resident set size of the process during its lifetime: 90264Kbytes
+pandas_query13_baseline3
+Maximum resident set size of the process during its lifetime: 2300388Kbytes
+pandas_query41_baseline1
+Maximum resident set size of the process during its lifetime: 12482220Kbytes
+pandas_query32_baseline3
+Maximum resident set size of the process during its lifetime: 3837252Kbytes
+pandas_query11_baseline2
+Maximum resident set size of the process during its lifetime: 1961092Kbytes
+pyCube_query33
+Maximum resident set size of the process during its lifetime: 90044Kbytes
+pandas_query43_baseline1
+Maximum resident set size of the process during its lifetime: 12200580Kbytes
+pandas_query11_baseline2
+Maximum resident set size of the process during its lifetime: 1960820Kbytes
+pandas_query22_baseline2
+Maximum resident set size of the process during its lifetime: 3817588Kbytes
+pyCube_query11
+Maximum resident set size of the process during its lifetime: 88592Kbytes
+pandas_query12_baseline1
+Maximum resident set size of the process during its lifetime: 8693584Kbytes
+pandas_query32_baseline3
+Maximum resident set size of the process during its lifetime: 3837688Kbytes
