@@ -1,7 +1,5 @@
-All cells are "potential" cells i.e., the cells have been found combinatorically but it may not be true that all cells have a value (since not all combinations make sense)
-
 QUERY 1
-0 axes, 1 measure, 0 "axis size" = 1 cell
+0 axes, 1 measure, 0 "axis size"
 
 view2 = view.measures(view.lo_extendedprice)
 return view2.output(hack=True)
@@ -9,7 +7,7 @@ return view2.output(hack=True)
 -------------------------------------------------------------------------------------
 
 QUERY 2
-1 axis, 1 measure, 0 "axis size" = 7 cells
+1 axis, 1 measure, 0 "axis size"
 
 view2 = view.columns(view.supplier.nation.n_nation.members())\
             .measures(view.lo_extendedprice)
@@ -18,7 +16,7 @@ return view2.output()
 -------------------------------------------------------------------------------------
 
 QUERY 3
-1 axis, 1 measure, 1 "axis size" = 365 cells
+1 axis, 1 measure, 1 "axis size"
 
 view2 = view.columns(view.supplier.region.r_region.members())\
             .measures(view.lo_extendedprice)
@@ -27,7 +25,7 @@ return view2.output()
 -------------------------------------------------------------------------------------
 
 QUERY 4
-2 axes, 1 measure, 1 "axis size" = 1825 cells
+2 axes, 1 measure, 1 "axis size"
 
 view2 = view.columns(view.supplier.region.r_region.members())\
             .rows(view.part.mfgr.m_mfgr.members())\
@@ -37,7 +35,7 @@ return view2.output()
 -------------------------------------------------------------------------------------
 
 QUERY 5
-2 axes, 2 measure, 1 "axis size" = 3650 cells
+2 axes, 2 measure, 1 "axis size"
 
 view2 = view.columns(view.supplier.region.r_region.members())\
             .rows(view.part.mfgr.m_mfgr.members())\
@@ -48,7 +46,7 @@ return view2.output()
 -------------------------------------------------------------------------------------
 
 QUERY 6
-2 axes, 2 measure, 2 "axis size" = 25550 cells
+2 axes, 2 measure, 2 "axis size"
 
 view2 = view.columns(view.supplier.nation.n_nation.members())\
             .rows(view.part.mfgr.m_mfgr.members())\
