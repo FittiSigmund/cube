@@ -1894,12 +1894,21 @@ def pyCube_new_query8():
         return view2.output()
 
 
+def test():
+    with PythonTimer():
+        view2 = view.columns(view.part.part.p_color.members()) \
+                    .rows(view.supplier.region.r_region.members()) \
+                    .measures(view.lo_extendedprice)
+        temp = view2.output()
+        return temp
+
+
 if sys.argv and len(sys.argv) == 2:
     try:
         python_timer = PythonTimer()
         db_timer = DBTimer()
         # eval(f"{sys.argv[1]}()")
-        pyCube_new_query6()
+        test()
         py_time = python_timer.elapsed_time()
         db_time = db_timer.elapsed_time()
         print(f"{sys.argv[1]}()")
