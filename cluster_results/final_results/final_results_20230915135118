@@ -1,0 +1,280 @@
+----------------------------
+------ SCALE FACTOR 5 ------
+----------------------------
+
+\begin{tikzpicture}[
+  every axis/.style={
+    ymajorgrids = true,
+    major x tick style = transparent,
+    xtick = data,
+    xlabel = {QF 1},
+    enlarge x limits=0.25,
+    symbolic x coords={
+      Q11,
+      Q12,
+      Q13,
+    },
+    width  = 0.4*\textwidth,
+    height = 4cm,
+    ylabel = {Runtime (s)},
+    y label style = {font=\footnotesize,at={(-0.05,0.5)}},
+    ybar stacked,
+    ybar=1.2pt,
+    ymin=0,
+    ymax=265,
+    scaled y ticks = false,
+    bar width=4pt,
+    legend cell align=left,
+    legend style={
+            at={(1,1.05)},
+            anchor=south east,
+            column sep=1ex
+    },
+  },
+]
+\begin{axis}[bar shift=-9pt]
+    \addplot[style={color=bblue,fill=bblue}]
+        coordinates {(Q11, 0.011) (Q12, 0.01) (Q13, 0.011)};
+    \addplot[style={color=bbblue,fill=bbblue}]
+        coordinates {(Q11, 1.487) (Q12, 1.426) (Q13, 1.444)};
+\end{axis}
+\begin{axis}[bar shift=-3pt,hide axis]
+    \addplot+[style={color=rred,fill=rred}]
+        coordinates {(Q11, 145.761) (Q12, 130.498) (Q13, 141.947)};
+    \addplot+[style={color=rrred,fill=rrred}]
+        coordinates {(Q11, 108.364) (Q12, 108.405) (Q13, 108.294)};
+\end{axis}
+\begin{axis}[bar shift=3pt,hide axis]
+    \addplot+[style={color=ggreen,fill=ggreen}]
+        coordinates {(Q11, 40.413) (Q12, 35.883) (Q13, 39.245)};
+    \addplot+[style={color=gggreen,fill=gggreen}]
+        coordinates {(Q11, 47.858) (Q12, 47.683) (Q13, 47.725)};
+\end{axis}
+\begin{axis}[bar shift=9pt,hide axis]
+    \addplot+[style={color=ppurple,fill=ppurple}]
+        coordinates {(Q11, 35.771) (Q12, 30.17) (Q13, 35.889)};
+    \addplot+[style={color=pppurple,fill=pppurple}]
+        coordinates {(Q11, 58.225) (Q12, 54.705) (Q13, 62.074)};
+\end{axis}
+\end{tikzpicture}
+
+\begin{tikzpicture}[
+  every axis/.style={
+    ymajorgrids = true,
+    major x tick style = transparent,
+    xtick = data,
+    xlabel = {QF 2},
+    enlarge x limits=0.25,
+    symbolic x coords={
+      Q21,
+      Q22,
+      Q23,
+    },
+    width  = 0.4*\textwidth,
+    height = 4cm,
+    ylabel = {Runtime (s)},
+    y label style = {font=\footnotesize,at={(-0.05,0.5)}},
+    ybar stacked,
+    ybar=1.2pt,
+    ymin=0,
+    ymax=525,
+    scaled y ticks = false,
+    bar width=4pt,
+    legend cell align=left,
+    legend style={
+            at={(1,1.05)},
+            anchor=south east,
+            column sep=1ex
+    },
+  },
+]
+\begin{axis}[bar shift=-9pt]
+    \addplot[style={color=bblue,fill=bblue}]
+        coordinates {(Q21, 0.02) (Q22, 0.02) (Q23, 0.02)};
+    \addplot[style={color=bbblue,fill=bbblue}]
+        coordinates {(Q21, 1.923) (Q22, 1.599) (Q23, 1.427)};
+\end{axis}
+\begin{axis}[bar shift=-3pt,hide axis]
+    \addplot+[style={color=rred,fill=rred}]
+        coordinates {(Q21, 404.47) (Q22, 372.422) (Q23, 369.128)};
+    \addplot+[style={color=rrred,fill=rrred}]
+        coordinates {(Q21, 109.188) (Q22, 109.137) (Q23, 109.239)};
+\end{axis}
+\begin{axis}[bar shift=3pt,hide axis]
+    \addplot+[style={color=ggreen,fill=ggreen}]
+        coordinates {(Q21, 71.729) (Q22, 67.477) (Q23, 66.316)};
+    \addplot+[style={color=gggreen,fill=gggreen}]
+        coordinates {(Q21, 50.54) (Q22, 50.489) (Q23, 50.469)};
+\end{axis}
+\begin{axis}[bar shift=9pt,hide axis]
+    \addplot+[style={color=ppurple,fill=ppurple}]
+        coordinates {(Q21, 26.643) (Q22, 26.686) (Q23, 25.091)};
+    \addplot+[style={color=pppurple,fill=pppurple}]
+        coordinates {(Q21, 100.401) (Q22, 91.667) (Q23, 91.596)};
+\end{axis}
+\end{tikzpicture}
+
+\begin{tikzpicture}[
+  every axis/.style={
+    ymajorgrids = true,
+    major x tick style = transparent,
+    xtick = data,
+    xlabel = {QF 3},
+    enlarge x limits=0.25,
+    symbolic x coords={
+      Q31,
+      Q32,
+      Q33,
+      Q34,
+    },
+    width  = 0.4*\textwidth,
+    height = 4cm,
+    ylabel = {Runtime (s)},
+    y label style = {font=\footnotesize,at={(-0.05,0.5)}},
+    ybar stacked,
+    ybar=1.2pt,
+    ymin=0,
+    ymax=160,
+    scaled y ticks = false,
+    bar width=4pt,
+    legend cell align=left,
+    legend style={
+            at={(1,1.05)},
+            anchor=south east,
+            column sep=1ex
+    },
+  },
+]
+\begin{axis}[bar shift=-9pt]
+    \addplot[style={color=bblue,fill=bblue}]
+        coordinates {(Q31, 0.022) (Q32, 0.023) (Q33, 0.022) (Q34, 0.022)};
+    \addplot[style={color=bbblue,fill=bbblue}]
+        coordinates {(Q31, 3.148) (Q32, 1.731) (Q33, 1.355) (Q34, 1.359)};
+\end{axis}
+\begin{axis}[bar shift=-3pt,hide axis]
+    \addplot+[style={color=rred,fill=rred}]
+        coordinates {(Q31, 104.682) (Q32, 92.902) (Q33, 79.732) (Q34, 90.647)};
+    \addplot+[style={color=rrred,fill=rrred}]
+        coordinates {(Q31, 50.358) (Q32, 50.286) (Q33, 50.371) (Q34, 50.443)};
+\end{axis}
+\begin{axis}[bar shift=3pt,hide axis]
+    \addplot+[style={color=ggreen,fill=ggreen}]
+        coordinates {(Q31, 73.674) (Q32, 72.25) (Q33, 69.152) (Q34, 77.905)};
+    \addplot+[style={color=gggreen,fill=gggreen}]
+        coordinates {(Q31, 50.229) (Q32, 50.482) (Q33, 50.383) (Q34, 50.421)};
+\end{axis}
+\begin{axis}[bar shift=9pt,hide axis]
+    \addplot+[style={color=ppurple,fill=ppurple}]
+        coordinates {(Q31, 29.087) (Q32, 27.951) (Q33, 29.227) (Q34, 32.827)};
+    \addplot+[style={color=pppurple,fill=pppurple}]
+        coordinates {(Q31, 108.676) (Q32, 99.525) (Q33, 78.754) (Q34, 83.782)};
+\end{axis}
+\end{tikzpicture}
+
+\begin{tikzpicture}[
+  every axis/.style={
+    ymajorgrids = true,
+    major x tick style = transparent,
+    xtick = data,
+    xlabel = {QF 4},
+    enlarge x limits=0.25,
+    symbolic x coords={
+      Q41,
+      Q42,
+      Q43,
+    },
+    width  = 0.4*\textwidth,
+    height = 4cm,
+    ylabel = {Runtime (s)},
+    y label style = {font=\footnotesize,at={(-0.05,0.5)}},
+    ybar stacked,
+    ybar=1.2pt,
+    ymin=0,
+    ymax=275,
+    scaled y ticks = false,
+    bar width=4pt,
+    legend cell align=left,
+    legend style={
+            at={(1,1.05)},
+            anchor=south east,
+            column sep=1ex
+    },
+  },
+]
+\begin{axis}[bar shift=-9pt]
+    \addplot[style={color=bblue,fill=bblue}]
+        coordinates {(Q41, 0.019) (Q42, 0.022) (Q43, 0.023)};
+    \addplot[style={color=bbblue,fill=bbblue}]
+        coordinates {(Q41, 4.886) (Q42, 4.754) (Q43, 2.23)};
+\end{axis}
+\begin{axis}[bar shift=-3pt,hide axis]
+    \addplot+[style={color=rred,fill=rred}]
+        coordinates {(Q41, 208.071) (Q42, 191.908) (Q43, 192.068)};
+    \addplot+[style={color=rrred,fill=rrred}]
+        coordinates {(Q41, 59.868) (Q42, 59.91) (Q43, 59.585)};
+\end{axis}
+\begin{axis}[bar shift=3pt,hide axis]
+    \addplot+[style={color=ggreen,fill=ggreen}]
+        coordinates {(Q41, 129.861) (Q42, 134.685) (Q43, 132.401)};
+    \addplot+[style={color=gggreen,fill=gggreen}]
+        coordinates {(Q41, 60.004) (Q42, 59.52) (Q43, 59.698)};
+\end{axis}
+\begin{axis}[bar shift=9pt,hide axis]
+    \addplot+[style={color=ppurple,fill=ppurple}]
+        coordinates {(Q41, 49.167) (Q42, 41.358) (Q43, 37.539)};
+    \addplot+[style={color=pppurple,fill=pppurple}]
+        coordinates {(Q41, 139.001) (Q42, 148.93) (Q43, 137.815)};
+\end{axis}
+\end{tikzpicture}
+
+\begin{tikzpicture}
+    \begin{axis}[
+        width  = 0.8*\textwidth,
+        height = 4cm,
+        major x tick style = transparent,
+        ybar=1.2pt,
+        bar width=4pt,
+        ymajorgrids = true,
+        ylabel = {Memory (GB)},
+        y label style = {font=\footnotesize,at={(-0.05,0.5)}},
+        symbolic x coords={Q11,Q12,Q13,Q21,Q22,Q23,Q31,Q32,Q33,Q34,Q41,Q42,Q43},
+        xtick = data,
+        scaled y ticks = false,
+        ymin=0
+    ]
+        \addplot[style={bblue,fill=bblue,mark=none}]
+coordinates {(Q11, 0.088) (Q12, 0.089) (Q13, 0.089) (Q21, 0.09) (Q22, 0.09) (Q23, 0.09) (Q31, 0.09) (Q32, 0.09) (Q33, 0.09) (Q34, 0.09) (Q41, 0.09) (Q42, 0.09) (Q43, 0.091) };
+        \addplot[style={rred,fill=rred,mark=none}]
+coordinates {(Q11, 51.429) (Q12, 43.226) (Q13, 51.429) (Q21, 106.654) (Q22, 102.435) (Q23, 102.435) (Q31, 37.863) (Q32, 30.363) (Q33, 22.629) (Q34, 24.035) (Q41, 61.783) (Q42, 59.205) (Q43, 60.377) };
+        \addplot[style={ggreen,fill=ggreen,mark=none}]
+coordinates {(Q11, 9.377) (Q12, 9.377) (Q13, 10.436) (Q21, 19.71) (Q22, 18.248) (Q23, 18.248) (Q31, 21.481) (Q32, 20.307) (Q33, 16.784) (Q34, 17.722) (Q41, 34.284) (Q42, 35.231) (Q43, 35.423) };
+        \addplot[style={ppurple,fill=ppurple,mark=none}]
+coordinates {(Q11, 9.375) (Q12, 9.375) (Q13, 10.308) (Q21, 15.999) (Q22, 13.626) (Q23, 13.626) (Q31, 17.979) (Q32, 18.83) (Q33, 13.626) (Q34, 15.999) (Q41, 22.126) (Q42, 22.639) (Q43, 22.639) };
+        \node[above left,rotate=15,yshift=.51cm,xshift=2pt,style={bblue}] (Q11) at (axis cs:Q11, 0.088) {0.088};
+        \draw[->,style={bblue},bend left] (Q11.south) to[xshift=-8pt,yshift=2pt] (axis cs:Q11, 0.088.north);
+        \node[above left,rotate=15,yshift=.51cm,xshift=2pt,style={bblue}] (Q12) at (axis cs:Q12, 0.089) {0.089};
+        \draw[->,style={bblue},bend left] (Q12.south) to[xshift=-8pt,yshift=2pt] (axis cs:Q12, 0.089.north);
+        \node[above left,rotate=15,yshift=.51cm,xshift=2pt,style={bblue}] (Q13) at (axis cs:Q13, 0.089) {0.089};
+        \draw[->,style={bblue},bend left] (Q13.south) to[xshift=-8pt,yshift=2pt] (axis cs:Q13, 0.089.north);
+        \node[above left,rotate=15,yshift=.51cm,xshift=2pt,style={bblue}] (Q21) at (axis cs:Q21, 0.09) {0.09};
+        \draw[->,style={bblue},bend left] (Q21.south) to[xshift=-8pt,yshift=2pt] (axis cs:Q21, 0.09.north);
+        \node[above left,rotate=15,yshift=.51cm,xshift=2pt,style={bblue}] (Q22) at (axis cs:Q22, 0.09) {0.09};
+        \draw[->,style={bblue},bend left] (Q22.south) to[xshift=-8pt,yshift=2pt] (axis cs:Q22, 0.09.north);
+        \node[above left,rotate=15,yshift=.51cm,xshift=2pt,style={bblue}] (Q23) at (axis cs:Q23, 0.09) {0.09};
+        \draw[->,style={bblue},bend left] (Q23.south) to[xshift=-8pt,yshift=2pt] (axis cs:Q23, 0.09.north);
+        \node[above left,rotate=15,yshift=.51cm,xshift=2pt,style={bblue}] (Q31) at (axis cs:Q31, 0.09) {0.09};
+        \draw[->,style={bblue},bend left] (Q31.south) to[xshift=-8pt,yshift=2pt] (axis cs:Q31, 0.09.north);
+        \node[above left,rotate=15,yshift=.51cm,xshift=2pt,style={bblue}] (Q32) at (axis cs:Q32, 0.09) {0.09};
+        \draw[->,style={bblue},bend left] (Q32.south) to[xshift=-8pt,yshift=2pt] (axis cs:Q32, 0.09.north);
+        \node[above left,rotate=15,yshift=.51cm,xshift=2pt,style={bblue}] (Q33) at (axis cs:Q33, 0.09) {0.09};
+        \draw[->,style={bblue},bend left] (Q33.south) to[xshift=-8pt,yshift=2pt] (axis cs:Q33, 0.09.north);
+        \node[above left,rotate=15,yshift=.51cm,xshift=2pt,style={bblue}] (Q34) at (axis cs:Q34, 0.09) {0.09};
+        \draw[->,style={bblue},bend left] (Q34.south) to[xshift=-8pt,yshift=2pt] (axis cs:Q34, 0.09.north);
+        \node[above left,rotate=15,yshift=.51cm,xshift=2pt,style={bblue}] (Q41) at (axis cs:Q41, 0.09) {0.09};
+        \draw[->,style={bblue},bend left] (Q41.south) to[xshift=-8pt,yshift=2pt] (axis cs:Q41, 0.09.north);
+        \node[above left,rotate=15,yshift=.51cm,xshift=2pt,style={bblue}] (Q42) at (axis cs:Q42, 0.09) {0.09};
+        \draw[->,style={bblue},bend left] (Q42.south) to[xshift=-8pt,yshift=2pt] (axis cs:Q42, 0.09.north);
+        \node[above left,rotate=15,yshift=.51cm,xshift=2pt,style={bblue}] (Q43) at (axis cs:Q43, 0.091) {0.091};
+        \draw[->,style={bblue},bend left] (Q43.south) to[xshift=-8pt,yshift=2pt] (axis cs:Q43, 0.091.north);
+    \end{axis}
+\end{tikzpicture}
