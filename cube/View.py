@@ -53,6 +53,12 @@ class View:
     def pages(self, lms: List[LevelMember]) -> View:
         return self.axis(2, lms)
 
+    def sections(self, lms: List[LevelMember]) -> View:
+        return self.axis(3, lms)
+
+    def chapters(self, lms: List[LevelMember]) -> View:
+        return self.axis(4, lms)
+
     def where(self, predicate: Predicate) -> View:
         self.predicates = predicate
         return self
@@ -239,17 +245,6 @@ class View:
             return left_child + [pred.value.value] + right_child
         else:
             return [self._format_predicate_value(pred)]
-        # match pred.value:
-        #     case BooleanConnective():
-        #         left_child: List[str] = self._create_predicates_where_clause_aux(pred.left_child)
-        #         right_child: List[str] = self._create_predicates_where_clause_aux(pred.right_child)
-        #         return ["("] + left_child + [pred.value.value] + right_child + [")"]
-        #     case PredicateOperator():
-        #         left_child: List[str] = self._create_predicates_where_clause_aux(pred.left_child)
-        #         right_child: List[str] = self._create_predicates_where_clause_aux(pred.right_child)
-        #         return left_child + [pred.value.value] + right_child
-        #     case _:
-        #         return [self._format_predicate_value(pred)]
 
     def _format_predicate_value(self, pred: Predicate) -> str:
         if isinstance(pred.value, Attribute):

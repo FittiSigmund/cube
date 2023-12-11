@@ -4,6 +4,7 @@
 # The bash script will run this script using GNU time iteratively over every use case.
 # The bash script will save the results of time into files for later analysis.
 import sys
+import tempfile
 import time
 from typing import Dict, Callable
 
@@ -770,7 +771,8 @@ def pyCube_query32():
             & (view.date1.year.y_year <= 1997)
         ) \
             .measures(view.lo_revenue)
-        return view2.output()
+        hej =  view2.output()
+        return hej
 
 
 def pandas_query32_baseline1():
@@ -1774,145 +1776,28 @@ def pandas_query43_baseline3():
         )
 
 
-# # query 1 from query_designs
-# def pyCube_new_query1():
-#     with PythonTimer():
-#         view2 = view.measures(view.lo_extendedprice)
-#         return view2.output(hack=True)
-#
-#
-# # query 4 from query_designs
-# def pyCube_new_query2():
-#     with PythonTimer():
-#         view2 = view.columns(view.supplier.region.r_region.members()) \
-#                     .rows(view.part.mfgr.m_mfgr.members()) \
-#                     .measures(view.lo_extendedprice)
-#         test = view2.output()
-#         return test
-#
-#
-# # query 5 from query_designs
-# def pyCube_new_query3():
-#     with PythonTimer():
-#         view2 = view.columns(view.supplier.region.r_region.members()) \
-#                     .rows(view.part.mfgr.m_mfgr.members()) \
-#                     .measures(view.lo_extendedprice,
-#                               view.lo_quantity)
-#         test = view2.output()
-#         return test
-
-
-# query 7 from query_designs
-def pyCube_new_query1():
-    with PythonTimer():
-        view2 = view.columns(view.supplier.city.ci_city.members()) \
-            .rows(view.part.mfgr.m_mfgr.members()) \
-            .measures(view.lo_extendedprice,
-                      view.lo_quantity)
-        return view2.output()
-
-
-# query 8 from query_designs
-def pyCube_new_query2():
-    with PythonTimer():
-        view2 = view.columns(view.supplier.city.ci_city.members()) \
-                    .rows(view.part.mfgr.m_mfgr.members()) \
-                    .pages(view.customer.region.r_region.members()) \
-                    .measures(view.lo_extendedprice,
-                              view.lo_quantity)
-        return view2.output()
-
-
-# query 9 from query_designs
-def pyCube_new_query3():
-    with PythonTimer():
-        view2 = view.columns(view.supplier.city.ci_city.members()) \
-                    .rows(view.part.mfgr.m_mfgr.members()) \
-                    .pages(view.customer.nation.n_nation.members()) \
-                    .measures(view.lo_extendedprice,
-                              view.lo_quantity)
-        return view2.output()
-
-
-# query 10 from query_designs
-def pyCube_new_query4():
-    with PythonTimer():
-        view2 = view.columns(view.supplier.city.ci_city.members()) \
-                    .rows(view.part.mfgr.m_mfgr.members()) \
-                    .pages(view.customer.city.ci_city.members()) \
-                    .measures(view.lo_extendedprice,
-                              view.lo_quantity)
-        return view2.output()
-
-
-# query 11 from query_designs
-def pyCube_new_query5():
-    with PythonTimer():
-        view2 = view.columns(view.supplier.city.ci_city.members()) \
-                    .rows(view.part.mfgr.m_mfgr.members()) \
-                    .pages(view.customer.city.ci_city.members()) \
-                    .measures(view.lo_extendedprice,
-                              view.lo_quantity,
-                              view.lo_revenue)
-        return view2.output()
-
-
-# query 12 from query_designs
-def pyCube_new_query6():
-    with PythonTimer():
-        view2 = view.columns(view.supplier.city.ci_city.members()) \
-                    .rows(view.part.category.ca_category.members()) \
-                    .pages(view.customer.city.ci_city.members()) \
-                    .measures(view.lo_extendedprice,
-                              view.lo_quantity,
-                              view.lo_revenue)
-        return view2.output()
-
-
-# query 13 from query_designs
-def pyCube_new_query7():
-    with PythonTimer():
-        view2 = view.columns(view.supplier.city.ci_city.members()) \
-            .rows(view.part.brand1.b_brand1.members()) \
-            .pages(view.customer.city.ci_city.members()) \
-            .measures(view.lo_extendedprice,
-                      view.lo_quantity,
-                      view.lo_revenue)
-        return view2.output()
-
-
-# query 14 from query_designs
-def pyCube_new_query8():
-    with PythonTimer():
-        view2 = view.columns(view.supplier.city.ci_city.members()) \
-            .rows(view.part.brand1.b_brand1.members()) \
-            .pages(view.customer.city.ci_city.members()) \
-            .measures(view.lo_extendedprice,
-                      view.lo_quantity,
-                      view.lo_revenue,
-                      view.lo_supplycost)
-        return view2.output()
-
-
 def test():
     with PythonTimer():
-        view2 = view.columns(view.part.part.p_color.members()) \
-                    .rows(view.supplier.region.r_region.members()) \
-                    .measures(view.lo_extendedprice)
-        temp = view2.output()
-        return temp
+        view2 = view.columns(view.date1.year.y_year.members()) \
+            .rows(view.supplier.region.r_region.members()) \
+            .pages(view.part.mfgr.m_mfgr.members()) \
+            .sections(view.date.year.y_year.members()) \
+            .chapters(view.customer.region.r_region.members()) \
+            .measures(view.lo_revenue, view.lo_supplycost)
+        tmp = view2.output()
+        return tmp
 
 
 if sys.argv and len(sys.argv) == 2:
     try:
         python_timer = PythonTimer()
         db_timer = DBTimer()
-        # eval(f"{sys.argv[1]}()")
-        test()
-        py_time = python_timer.elapsed_time()
-        db_time = db_timer.elapsed_time()
-        print(f"{sys.argv[1]}()")
-        print(f"py_time: {py_time} -- db_time: {db_time}")
+        eval(f"{sys.argv[1]}()")
+        # test()
+        #py_time = python_timer.elapsed_time()
+        #db_time = db_timer.elapsed_time()
+        # print(f"{sys.argv[1]}()")
+        # print(f"py_time: {py_time} -- db_time: {db_time}")
         print()
         sys.exit(0)
     except Exception as e:
