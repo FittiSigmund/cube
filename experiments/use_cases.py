@@ -771,7 +771,7 @@ def pyCube_query32():
             & (view.date1.year.y_year <= 1997)
         ) \
             .measures(view.lo_revenue)
-        hej =  view2.output()
+        hej = view2.output()
         return hej
 
 
@@ -1322,6 +1322,73 @@ def pandas_query41_baseline2():
         )
 
 
+def pandas_query41_baseline2_chained():
+    with PythonTimer():
+        with engine.connect() as conn:
+            fact_table = pd.read_sql("lineorder", conn, columns=[
+                "lo_orderdate",
+                "lo_suppkey",
+                "lo_custkey",
+                "lo_partkey",
+                "lo_revenue",
+                "lo_supplycost"
+            ])
+            date_table = pd.read_sql("date", conn, columns=["d_datekey", "d_monthkey"])
+            month_table = pd.read_sql("month", conn, columns=["mo_monthkey", "mo_yearkey"])
+            year_table = pd.read_sql("year", conn)
+
+            part_table = pd.read_sql("part", conn, columns=["p_partkey", "p_brand1key"])
+            brand_table = pd.read_sql("brand1", conn, columns=["b_brand1key", "b_categorykey"])
+            category_table = pd.read_sql("category", conn, columns=["ca_categorykey", "ca_mfgrkey"])
+            mfgr_table = pd.read_sql("mfgr", conn)
+
+            supplier_table = pd.read_sql("supplier", conn, columns=["s_suppkey", "s_citykey"])
+
+            customer_table = pd.read_sql("customer", conn, columns=["c_custkey", "c_citykey"])
+
+            city_table = pd.read_sql("city", conn, columns=["ci_citykey", "ci_nationkey"])
+            nation_table = pd.read_sql("nation", conn)
+            region_table = pd.read_sql("region", conn)
+
+        engine.dispose()
+
+        date = date_table.merge(month_table, left_on="d_monthkey", right_on="mo_monthkey") \
+            .merge(year_table, left_on="mo_yearkey", right_on="y_yearkey")
+
+        part = part_table.merge(brand_table, left_on="p_brand1key", right_on="b_brand1key") \
+            .merge(category_table, left_on="b_categorykey", right_on="ca_categorykey") \
+            .merge(mfgr_table, left_on="ca_mfgrkey", right_on="m_mfgrkey")
+
+        supp = city_table.merge(nation_table, left_on="ci_nationkey", right_on="n_nationkey") \
+            .merge(region_table, left_on="n_regionkey", right_on="r_regionkey") \
+            .merge(supplier_table, left_on="ci_citykey", right_on="s_citykey")
+
+        cust = city_table.merge(nation_table, left_on="ci_nationkey", right_on="n_nationkey") \
+            .merge(region_table, left_on="n_regionkey", right_on="r_regionkey") \
+            .merge(customer_table, left_on="ci_citykey", right_on="c_citykey")
+
+        merged_table = fact_table.merge(date, left_on="lo_orderdate", right_on="d_datekey") \
+            .merge(part, left_on="lo_partkey", right_on="p_partkey") \
+            .merge(supp, left_on="lo_suppkey", right_on="s_suppkey") \
+            .merge(cust, left_on="lo_custkey", right_on="c_custkey", suffixes=(None, "_c"))
+
+        filtered_table = merged_table[
+            (merged_table["r_region_c"] == "AMERICA     ")
+            & (merged_table["r_region"] == "AMERICA     ")
+            & (
+                    (merged_table["m_mfgr"] == "MFGR#1")
+                    | (merged_table["m_mfgr"] == "MFGR#2")
+            )
+            ]
+        filtered_table["profit"] = filtered_table.apply(lambda x: x.lo_revenue - x.lo_supplycost, axis=1)
+        return filtered_table.pivot_table(
+            values="profit",
+            index="n_nation_c",
+            columns="y_year",
+            aggfunc=np.sum
+        )
+
+
 def pandas_query41_baseline3():
     with PythonTimer():
         with engine.connect() as conn:
@@ -1792,10 +1859,12 @@ if sys.argv and len(sys.argv) == 2:
     try:
         python_timer = PythonTimer()
         db_timer = DBTimer()
-        eval(f"{sys.argv[1]}()")
+        hey = eval(f"{sys.argv[1]}()")
+        breyd = pandas_query41_baseline2()
+        result = hey.equals(breyd)
         # test()
-        #py_time = python_timer.elapsed_time()
-        #db_time = db_timer.elapsed_time()
+        # py_time = python_timer.elapsed_time()
+        # db_time = db_timer.elapsed_time()
         # print(f"{sys.argv[1]}()")
         # print(f"py_time: {py_time} -- db_time: {db_time}")
         print()
