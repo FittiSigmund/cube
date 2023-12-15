@@ -1184,7 +1184,8 @@ def pandas_query34_baseline3():
 def pyCube_query41():
     with PythonTimer():
         view2 = view.columns(view.date1.year.y_year.members()) \
-            .rows(view.customer.nation.n_nation.members()) \
+            .rows(view.customer
+                  .nation.n_nation.members()) \
             .where(
             (view.customer.region.r_region == "AMERICA")
             & (view.supplier.region.r_region == "AMERICA")
