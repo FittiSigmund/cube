@@ -19,7 +19,7 @@ from cube.NonTopLevel import NonTopLevel
 from cube.TopLevel import TopLevel
 from engines import Postgres
 
-DataFrame = TypeVar(pd.DataFrame)
+DataFrame = TypeVar("DataFrame")
 
 
 def construct_query(select_stmt: str, from_stmt: str, where_stmt: str, group_by_stmt: str,

@@ -1,0 +1,13 @@
+2024-05-28 14:08:58,311 tinyolap.storage_provider.sqlite INFO  SqliteStorage - Opening database '/home/sigmundur/work/aau/cubeProject/cube/db/test.tinyolap.db'
+2024-05-28 14:08:58,312 tinyolap.storage_provider.sqlite INFO  SqliteStorage - Prepare (new) database for initial use by adding meta tables.
+2024-05-28 14:08:58,312 tinyolap.storage_provider.sqlite INFO  SqliteStorage - Adding or replacing table 'tinyolap_meta' to database.
+2024-05-28 14:08:58,319 tinyolap.storage_provider.sqlite INFO  SqliteStorage - Adding or updating meta configuration for key: 'provider'.
+2024-05-28 14:08:58,319 tinyolap.storage_provider.sqlite INFO  SqliteStorage - Adding or replacing table 'tinyolap_cubes' to database.
+2024-05-28 14:08:58,319 tinyolap.storage_provider.sqlite INFO  SqliteStorage - Adding or updating meta configuration for key: 'provider'.
+2024-05-28 14:08:58,319 tinyolap.storage_provider.sqlite INFO  SqliteStorage - Adding or replacing table 'tinyolap_dimensions' to database.
+2024-05-28 14:08:58,319 tinyolap.storage_provider.sqlite INFO  SqliteStorage - Adding or updating meta configuration for key: 'provider'.
+2024-05-28 14:08:58,319 tinyolap.storage_provider.sqlite INFO  SqliteStorage - Adding or replacing table 'tinyolap_history' to database.
+2024-05-28 14:08:58,319 tinyolap.storage_provider.sqlite INFO  SqliteStorage - Adding or updating meta configuration for key: 'db'.
+2024-05-28 14:08:58,320 tinyolap.storage_provider.sqlite INFO  SqliteStorage - Adding or updating meta configuration for key: 'code'.
+2024-05-28 14:08:58,320 tinyolap.storage_provider.sqlite INFO  SqliteStorage - Adding or updating configuration for dimension 'city'.
+2024-05-28 14:08:58,321 tinyolap.storage_provider.sqlite INFO  SqliteStorage - Closing database '/home/sigmundur/work/aau/cubeProject/cube/db/test.tinyolap.db'.
