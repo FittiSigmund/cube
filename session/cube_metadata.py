@@ -85,7 +85,7 @@ def create_metadata_for_level_attribute(metadata, level_dto_list):
 
 
 def create_metadata_for_measures(measures, metadata, dsd_node):
-    # Need the call to list, because map is lazily evaluated
+    # Need the call to list, because map is only an iterator
     list(map(lambda x: create_metadata_for_measure(x, metadata, dsd_node), measures))
 
 

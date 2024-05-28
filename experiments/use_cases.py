@@ -10,7 +10,8 @@ from typing import Dict, Callable
 
 import pandas as pd
 import numpy as np
-from sqlalchemy import create_engine
+# from sqlalchemy import create_engine
+import sqlalchemy
 
 from session.session import *
 import engines
@@ -31,7 +32,7 @@ postgres_engine: Postgres = engines.postgres(DATABASE_NAME,
 postgres = create_session(postgres_engine)
 view = postgres.load_view('ssb_snowflake')
 
-engine = create_engine("postgresql+psycopg2://sigmundur:@localhost/ssb_snowflake")
+engine = sqlalchemy.create_engine("postgresql+psycopg2://sigmundur:@localhost/ssb_snowflake")
 
 pd.options.mode.chained_assignment = None
 
@@ -1855,6 +1856,8 @@ def test():
         tmp = view2.output()
         return tmp
 
+def tinyOlapTest():
+    pass
 
 if sys.argv and len(sys.argv) == 2:
     try:
