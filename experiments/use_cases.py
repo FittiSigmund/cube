@@ -11,7 +11,8 @@ from typing import Dict, Callable
 import pandas as pd
 import numpy as np
 # from sqlalchemy import create_engine
-import sqlalchemy
+from sqlalchemy import create_engine
+from tinyolap.database import Database
 
 from session.session import *
 import engines
@@ -32,7 +33,7 @@ postgres_engine: Postgres = engines.postgres(DATABASE_NAME,
 postgres = create_session(postgres_engine)
 view = postgres.load_view('ssb_snowflake')
 
-engine = sqlalchemy.create_engine("postgresql+psycopg2://sigmundur:@localhost/ssb_snowflake")
+engine = create_engine("postgresql+psycopg2://sigmundur:@localhost/ssb_snowflake")
 
 pd.options.mode.chained_assignment = None
 
@@ -1856,8 +1857,26 @@ def test():
         tmp = view2.output()
         return tmp
 
+
 def tinyOlapTest():
-    pass
+    db = Database("testdb")
+
+    ## GET TINYOLAP TO WORK
+    nations = db.add_dimension("nation")
+    nations.edit()
+    nations.add_many("nation1")
+    nations.add_many("nation2")
+    nations.commit()
+
+    # city = db.add_dimension("city")
+    # city.edit()
+    # city.add("city1", "nation1")
+    # city.add("city2", "nation1")
+    # city.add("city3", "nation2")
+    # city.commit()
+
+    hej = 1
+
 
 if sys.argv and len(sys.argv) == 2:
     try:
@@ -1875,3 +1894,6 @@ if sys.argv and len(sys.argv) == 2:
         sys.exit(0)
     except Exception as e:
         sys.exit(f"Exception: {e}")
+
+if sys.argv and len(sys.argv) == 1:
+    tinyOlapTest()
