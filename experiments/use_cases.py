@@ -773,8 +773,8 @@ def pyCube_query32():
             & (view.date1.year.y_year <= 1997)
         ) \
             .measures(view.lo_revenue)
-        hej = view2.output()
-        return hej
+        return view2.output()
+
 
 
 def pandas_query32_baseline1():
@@ -1861,20 +1861,27 @@ def test():
 def tinyOlapTest():
     db = Database("testdb")
 
-    ## GET TINYOLAP TO WORK
+    regions = db.add_dimension("region")
+    regions.edit()
+    regions.add_many("region1", ["nation1", "nation2"])
+    regions.add_many("nation1", ["city1", "city2"])
+    regions.add_many("nation1", ["city3", "city4"])
+    regions.commit()
+
     nations = db.add_dimension("nation")
     nations.edit()
-    nations.add_many("nation1")
-    nations.add_many("nation2")
+    nations.add_many("nation1", ["city1", "city2"])
+    nations.add_many("nation2", "city3")
     nations.commit()
 
-    # city = db.add_dimension("city")
-    # city.edit()
-    # city.add("city1", "nation1")
-    # city.add("city2", "nation1")
-    # city.add("city3", "nation2")
-    # city.commit()
+    city = db.add_dimension("city")
+    city.edit()
+    city.add_many("city1")
+    city.add_many("city2")
+    city.add_many("city3")
+    city.commit()
 
+    cube = db.add_cube("test", [regions, nations])
     hej = 1
 
 
