@@ -25,10 +25,12 @@ class Session:
     def __init__(self, views: List[View], engine: Postgres):
         self._views: List[View] = views
         self._engine: Postgres = engine
+        for view in views:
+            setattr(self, view.name, view)
 
     @property
-    def cubes(self) -> List[View]:
-        return self._views
+    def views(self) -> List[str]:
+        return list(map(lambda v: str(v), self._views))
 
     def load_view(self, view_name: str) -> View | str:
         view_candidate: List[View] = list(filter(lambda x: x.cube.name == view_name, self._views))
@@ -59,7 +61,7 @@ def create_view(cube: BaseCube) -> View:
     axes: List[Axis] = get_default_axes(cube.dimensions())
     measures: List[Measure] = get_default_measure(cube)
     predicates: None = None
-    return View(axes, measures, predicates, cube)
+    return View(axes, measures, predicates, cube, cube.name)
 
 
 def create_session(engine: Postgres) -> Session:

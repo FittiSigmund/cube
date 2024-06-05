@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from numbers import Number
-from typing import List, TYPE_CHECKING, Dict
+from typing import List, Dict
 
 import pandas as pd
 from sqlalchemy import create_engine, text
@@ -16,7 +16,6 @@ from cube.LevelMemberType import LevelMemberType
 from cube.Measure import Measure
 from cube.NonTopLevel import NonTopLevel
 from cube.PredicateOperator import PredicateOperator
-from timers import PythonTimer, DBTimer
 
 from cube.Predicate import Predicate
 
@@ -26,11 +25,13 @@ class View:
                  axes: List[Axis] = None,
                  measures: List[Measure] = None,
                  predicates: Predicate = None,
-                 cube: BaseCube = None) -> None:
+                 cube: BaseCube = None,
+                 name: str = "") -> None:
         self.axes: List[Axis] = axes if axes else []
-        self._measures: List[Measure] = measures if measures else []
+        self.measures: List[Measure] = measures if measures else []
         self.predicates: Predicate = predicates if predicates else Predicate(None, "", None)
         self.cube: BaseCube = cube
+        self.name = name
 
     # View method generally modifies self and returns self instead of creating and returning a new View
     # Checks not implemented
@@ -64,13 +65,16 @@ class View:
         return self
 
     def measures(self, *args: Measure, **kwargs: Dict[str, str | AggregateFunction]) -> View:
-        self._measures = list(args)
+        self.measures = list(args)
         if kwargs:
             calculated_measures: List[Measure] = []
             for k, v in kwargs.items():
                 calculated_measures.append(Measure(k, v["function"], v["sqlname"]))
-            self._measures += calculated_measures
+            self.measures += calculated_measures
         return self
+
+    def dimensions(self):
+        return self.cube.dimensions()
 
     # Check for axes before converting
     def output(self, hack=False) -> pd.DataFrame:
@@ -94,7 +98,7 @@ class View:
     def _create_select_clause(self) -> str:
         levels: List[str] = list(map(lambda x: f"{x.level.alias}.{x.attribute.name} AS {x.level.alias}", self.axes))
         measures: List[str] = list(
-            map(lambda x: f"{x.aggregate_function.name}({x.sqlname}) AS {x.name}", self._measures))
+            map(lambda x: f"{x.aggregate_function.name}({x.sqlname}) AS {x.name}", self.measures))
         # HACK
         if levels and measures:
             return "SELECT " + ", ".join(levels) + ", " + ", ".join(measures)
@@ -129,17 +133,6 @@ class View:
             return [pred.value.level]
         else:
             return self._get_all_pred_levels(pred.left_child) + self._get_all_pred_levels(pred.right_child)
-        # match pred.value:
-        #     case Number():
-        #         return []
-        #     case str():
-        #         return []
-        #     case Measure():
-        #         return []
-        #     case Attribute():
-        #         return [pred.value.level]
-        #     case _:
-        #         return self._get_all_pred_levels(pred.left_child) + self._get_all_pred_levels(pred.right_child)
 
     def _create_where_clause(self) -> str:
         axes: List[str] = self._create_axes_where_clause()
@@ -162,42 +155,6 @@ class View:
             result.append(f"{x.level.alias}.{x.level.key}")
         return "GROUP BY " + ", ".join(result) if result else ""
 
-    # # Does not work currently. Can not figure out how to assign tuples to cells
-    # def _convert_to_df1(self) -> pd.DataFrame:
-    #     levels: List[str] = list(map(lambda x: f"{x.level.name}.{x.attribute.name}", self.axes))
-
-    #     measures: List[str] = list(
-    #         map(lambda x: f"{x.aggregate_function.name}({x.sqlname}) AS {x.name}", self._measures))
-    #     select_clause: str = "SELECT " + ", ".join(levels) + ", " + ", ".join(measures)
-    #     select_distinct_list: List[str] = [f"SELECT DISTINCT {levels[i]}" for i in range(len(levels))]
-
-    #     from_clause: str = self._create_from_clause()
-    #     where_clause: str = self._create_where_clause()
-    #     group_by_clause: str = self._create_group_by_clause()
-
-    #     query: str = select_clause + " " + from_clause + " " + where_clause + " " + group_by_clause + ";"
-    #     query_distinct: List[str] = [distinct + " " + from_clause + " " + where_clause + " " + group_by_clause + ";"
-    #                                  for distinct in select_distinct_list]
-
-    #     db_result = self.cube.execute_query(query)
-    #     db_result_distinct: List[List[Tuple[Any, ...]]] = [self.cube.execute_query(x) for x in query_distinct]
-
-    #     column_results: List[List[Tuple[Any, ...]]] = [x for i, x in enumerate(db_result_distinct) if i % 2 == 0]
-    #     row_results: List[List[Tuple[Any, ...]]] = [x for i, x in enumerate(db_result_distinct) if i % 2 == 1]
-
-    #     columns: List[List[Any]] = []
-    #     rows: List[List[Any]] = []
-    #     for res in column_results:
-    #         columns.append([x[0] for x in res])
-    #     for res in row_results:
-    #         rows.append([x[0] for x in res])
-
-    #     df_columns = pd.MultiIndex.from_product(columns)
-    #     df_rows = pd.MultiIndex.from_product(rows)
-    #     df = pd.DataFrame(columns=df_columns, index=df_rows)
-    #     for row in db_result:
-    #         df.at[row[1], row[0]] = (row[2], row[3])
-    #     return df
 
     def _convert_to_df(self, query: str) -> pd.DataFrame:
         engine = create_engine("postgresql+psycopg2://sigmundur:@localhost/ssb_snowflake")
@@ -205,7 +162,7 @@ class View:
             df = pd.read_sql(text(query), conn)
             columns = [ax.attribute.level.alias for ax in [ax for i, ax in enumerate(self.axes) if i % 2 == 0]]
             rows = [ax.attribute.level.alias for ax in [ax for i, ax in enumerate(self.axes) if i % 2 == 1]]
-            measures = [m.name for m in self._measures]
+            measures = [m.name for m in self.measures]
             final_df = df.pivot(columns=columns, index=rows, values=measures)
             final_df = final_df.reorder_levels(list(range(1, len(columns) + 1)) + [0], axis=1)
             # final_df.columns = final_df.columns.sortlevel(level=list(range(0, len(columns))))[0]
@@ -256,16 +213,6 @@ class View:
         elif isinstance(pred.value, int):
             return str(pred.value)
 
-        # match pred.value:
-        #     case Attribute():
-        #         return f"{pred.value.level.alias}.{pred.value.name}"
-        #     case Measure():
-        #         return f"{pred.value.sqlname}"
-        #     case str():
-        #         return f"'{pred.value}'" if pred.value else ""
-        #     case int():
-        #         return str(pred.value)
-
     def _create_from_subset_clause(self, level: NonTopLevel, counter: int) -> str:
         # The order in hierarchy is the lowest level first and highest last
         hierarchy: List[NonTopLevel] = self._get_children(level) + [level] + self._get_parents(level)
@@ -303,4 +250,6 @@ class View:
         parent.alias = f"{parent.table_name}{counter}"
         return f"{parent.table_name} AS {parent.alias} ON {child.alias}.{child.fk_name} = {parent.alias}.{parent.key}"
 
+    def __str__(self):
+        return f"View({self.name})"
 

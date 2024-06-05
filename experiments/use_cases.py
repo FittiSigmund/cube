@@ -10,7 +10,6 @@ from typing import Dict, Callable
 
 import pandas as pd
 import numpy as np
-# from sqlalchemy import create_engine
 from sqlalchemy import create_engine
 from tinyolap.database import Database
 
@@ -774,7 +773,6 @@ def pyCube_query32():
         ) \
             .measures(view.lo_revenue)
         return view2.output()
-
 
 
 def pandas_query32_baseline1():
@@ -1846,7 +1844,7 @@ def pandas_query43_baseline3():
         )
 
 
-def test():
+def pyCubeTest():
     with PythonTimer():
         view2 = view.columns(view.date1.year.y_year.members()) \
             .rows(view.supplier.region.r_region.members()) \
@@ -1885,6 +1883,20 @@ def tinyOlapTest():
     hej = 1
 
 
+def test():
+    print(postgres.views)
+    print(postgres.ssb_snowflake)
+    view = postgres.ssb_snowflake
+    print(view.measures)
+    print(view.dimensions())
+    print(view.date.hierarchies())
+    print(view.date.year.attributes())
+    print(view.date.year.y_year)
+    print(view.date.year.y_year["1994"])
+    print(view.date.year.y_year.members())
+    print(view.date.year.y_year["1994"].children())
+
+
 if sys.argv and len(sys.argv) == 2:
     try:
         python_timer = PythonTimer()
@@ -1903,4 +1915,4 @@ if sys.argv and len(sys.argv) == 2:
         sys.exit(f"Exception: {e}")
 
 if sys.argv and len(sys.argv) == 1:
-    tinyOlapTest()
+    test()

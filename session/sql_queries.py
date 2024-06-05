@@ -6,8 +6,10 @@ ALL_USER_TABLES_QUERY = """
         AND table_info.table_type = 'BASE TABLE';
 """
 
+
 def table_cardinality_query(table_name: str) -> str:
     return f"""SELECT COUNT(*) FROM {table_name};"""
+
 
 def lowest_levels_query(fact_table_name: str) -> str:
     return f"""
@@ -21,6 +23,7 @@ def lowest_levels_query(fact_table_name: str) -> str:
         AND c.conrelid = (SELECT oid FROM pg_class WHERE relname = '{fact_table_name}') 
         AND c.conname = kcu.constraint_name
 """
+
 
 # """
 #         SELECT relname
@@ -40,6 +43,8 @@ def get_pk_and_fk_columns_query(level_name: str) -> str:
         AND tc.constraint_type IN ('PRIMARY KEY', 'FOREIGN KEY')
         AND tc.constraint_name = k.constraint_name;
 """
+
+
 def get_non_key_columns_query(level_name: str) -> str:
     return f"""
         SELECT info_col.column_name
@@ -51,6 +56,7 @@ def get_non_key_columns_query(level_name: str) -> str:
             WHERE kcu.table_name = '{level_name}'
             )
 """
+
 
 def get_next_level_query(current_level: str) -> str:
     return f"""
@@ -65,6 +71,7 @@ def get_next_level_query(current_level: str) -> str:
                 WHERE relname = '{current_level}') 
                 AND contype = 'f')
 """
+
 
 ## This query fetches all non constraint bounded numeric columns from the fact table
 ## The measures will all have the aggregate function SUM
