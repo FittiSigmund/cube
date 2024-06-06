@@ -3,9 +3,11 @@
 # which use case to invoke from this script.
 # The bash script will run this script using GNU time iteratively over every use case.
 # The bash script will save the results of time into files for later analysis.
+import itertools
 import sys
 import tempfile
 import time
+from random import randrange
 from typing import Dict, Callable
 
 import pandas as pd
@@ -49,6 +51,158 @@ def pyCube_query11():
             & (view.lo_quantity < 25)) \
             .measures(revenue=view.lo_extendedprice * view.lo_discount)
         return view2.output(hack=True)
+
+
+def tinyOlap_query11():
+    conn = psycopg2.connect(user=postgres_engine.user,
+                            password=postgres_engine.password,
+                            host=postgres_engine.host,
+                            port=postgres_engine.port,
+                            database=postgres_engine.dbname)
+
+    with conn.cursor() as cur:
+        cur.execute("SELECT y_year FROM year;")
+        years = list(map(lambda x: str(x[0]), cur.fetchall()))
+        cur.execute("SELECT mo_month FROM month;")
+        months = list(map(lambda x: str(x[0]), cur.fetchall()))
+        cur.execute("SELECT d_daynuminmonth FROM date;")
+        days = list(map(lambda x: str(x[0]), cur.fetchall()))
+        measures = ["quantity", "extendedprice", "discount"]
+        cur.execute("SELECT p_name FROM part;")
+        part_names = list(map(lambda x: str(x[0]), cur.fetchall()))
+        cur.execute("SELECT b_brand1 FROM brand1;")
+        brand1_names = list(map(lambda x: str(x[0]), cur.fetchall()))
+        cur.execute("SELECT ca_category FROM category;")
+        categories = list(map(lambda x: str(x[0]), cur.fetchall()))
+        cur.execute("SELECT m_mfgr FROM mfgr;")
+        mfgrs = list(map(lambda x: str(x[0]), cur.fetchall()))
+        cur.execute("SELECT c_name FROM customer;")
+        customers = list(map(lambda x: str(x[0]), cur.fetchall()))
+        cur.execute("SELECT ci_city FROM city;")
+        cities = list(map(lambda x: str(x[0]), cur.fetchall()))
+        cur.execute("SELECT n_nation FROM nation;")
+        nations = list(map(lambda x: str(x[0]), cur.fetchall()))
+        cur.execute("SELECT r_region FROM region;")
+        regions = list(map(lambda x: str(x[0]), cur.fetchall()))
+        cur.execute(
+        """
+select 
+    y_year, 
+    mo_month, 
+    d_daynuminmonth, 
+    p_name,
+    b_brand1,
+    ca_category,
+    m_mfgr,
+    c_name,
+    ci_city,
+    n_nation,
+    r_region,
+    lo_quantity, 
+    lo_extendedprice, 
+    lo_discount
+from 
+    lineorder lo 
+        join date d on lo.lo_orderdate = d.d_datekey 
+        join month mo on d.d_monthkey = mo.mo_monthkey 
+        join year y on mo.mo_yearkey = y.y_yearkey 
+        join part p on lo.lo_partkey = p.p_partkey 
+        join brand1 b on p.p_brand1key = b.b_brand1key
+        join category ca on b.b_categorykey = ca.ca_categorykey
+        join mfgr m on ca.ca_mfgrkey = m.m_mfgrkey
+        join customer c on lo.lo_custkey = c.c_custkey
+        join city ci on c.c_citykey = ci.ci_citykey
+        join nation n on ci.ci_nationkey = n.n_nationkey
+        join region r on n.n_regionkey = r.r_regionkey;
+        
+        """)
+        attribute_values = cur.fetchall()
+
+    db = Database("testdb")
+
+    order_date_years = db.add_dimension("order_date_years")
+    order_date_years.edit()
+    order_date_years.add_many(years)
+    order_date_years.commit()
+
+    order_date_months = db.add_dimension("order_date_months")
+    order_date_months.edit()
+    order_date_months.add_many(months)
+    order_date_months.commit()
+
+    order_date_days = db.add_dimension("order_date_days")
+    order_date_days.edit()
+    order_date_days.add_many(days)
+    order_date_days.commit()
+
+    part_names_dim = db.add_dimension("parts")
+    part_names_dim.edit()
+    part_names_dim.add_many(part_names)
+    part_names_dim.commit()
+
+    brand1_dim = db.add_dimension("brand1")
+    brand1_dim.edit()
+    brand1_dim.add_many(brand1_names)
+    brand1_dim.commit()
+
+    category_dim = db.add_dimension("categories")
+    category_dim.edit()
+    category_dim.add_many(categories)
+    category_dim.commit()
+
+    mfgr_dim = db.add_dimension("mfgr")
+    mfgr_dim.edit()
+    mfgr_dim.add_many(mfgrs)
+    mfgr_dim.commit()
+
+    customer_dim = db.add_dimension("customer")
+    customer_dim.edit()
+    customer_dim.add_many(customers)
+    customer_dim.commit()
+
+    city_dim = db.add_dimension("city")
+    city_dim.edit()
+    city_dim.add_many(cities)
+    city_dim.commit()
+
+    nation_dim = db.add_dimension("nation")
+    nation_dim.edit()
+    nation_dim.add_many(nations)
+    nation_dim.commit()
+
+    region_dim = db.add_dimension("region")
+    region_dim.edit()
+    region_dim.add_many(regions)
+    region_dim.commit()
+
+    measures_dim = db.add_dimension("measures")
+    measures_dim.edit()
+    measures_dim.add_many(measures)
+    measures_dim.commit()
+
+    # Test this now to get a feel for how it performs (Key is needed if going further)
+    cube = db.add_cube("ssb", [
+        order_date_years,
+        order_date_months,
+        order_date_days,
+        part_names_dim,
+        brand1_dim,
+        category_dim,
+        mfgr_dim,
+        customer_dim,
+        city_dim,
+        nation_dim,
+        region_dim,
+        measures_dim])
+
+    for values in attribute_values:
+        address = values[:11]
+        measure_values = values[11:]
+        cube.set(address + (measures[0],), measure_values[0])
+        cube.set(address + (measures[1],), measure_values[1])
+        cube.set(address + (measures[2],), measure_values[2])
+
+    hej = 1
 
 
 def pandas_query11_baseline1():
@@ -1856,33 +2010,6 @@ def pyCubeTest():
         return tmp
 
 
-def tinyOlapTest():
-    db = Database("testdb")
-
-    regions = db.add_dimension("region")
-    regions.edit()
-    regions.add_many("region1", ["nation1", "nation2"])
-    regions.add_many("nation1", ["city1", "city2"])
-    regions.add_many("nation1", ["city3", "city4"])
-    regions.commit()
-
-    nations = db.add_dimension("nation")
-    nations.edit()
-    nations.add_many("nation1", ["city1", "city2"])
-    nations.add_many("nation2", "city3")
-    nations.commit()
-
-    city = db.add_dimension("city")
-    city.edit()
-    city.add_many("city1")
-    city.add_many("city2")
-    city.add_many("city3")
-    city.commit()
-
-    cube = db.add_cube("test", [regions, nations])
-    hej = 1
-
-
 def test():
     print(postgres.views)
     print(postgres.ssb_snowflake)
@@ -1895,6 +2022,7 @@ def test():
     print(view.date.year.y_year["1994"])
     print(view.date.year.y_year.members())
     print(view.date.year.y_year["1994"].children())
+    print(view.date.month.mo_month["January "].children())
 
 
 if sys.argv and len(sys.argv) == 2:
@@ -1915,4 +2043,4 @@ if sys.argv and len(sys.argv) == 2:
         sys.exit(f"Exception: {e}")
 
 if sys.argv and len(sys.argv) == 1:
-    test()
+    tinyOlap_query11()

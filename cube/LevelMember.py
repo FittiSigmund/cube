@@ -65,8 +65,8 @@ class LevelMember:
             if children:
                 for child in children:
                     lm_name = child[0]
-                    lm = LevelMember(lm_name, self.attribute.child, self)
-                    setattr(self.attribute.child, str(lm_name), lm)
+                    lm = LevelMember(lm_name, self.attribute.level.child.level_member, self)
+                    setattr(self.attribute.level.child.level_member, str(lm_name), lm)
                     self._children.append(lm)
                 return self._children
             else:
@@ -102,16 +102,19 @@ class LevelMember:
         return result
 
     def _get_equality_condition_where_stmt_for_children(self) -> str:
-        return f"{self.attribute.name}.{self.attribute.column_name} = {self.name}"
+        if type(self.name) is int:
+            return f"{self.attribute.level.name}.{self.attribute.name} = {self.name}"
+        else:
+            return f"{self.attribute.level.name}.{self.attribute.name} = '{self.name}'"
 
     def _get_join_condition_where_stmt_for_children(self) -> str:
-        return f"{self.attribute.name}.{self.attribute.pk_name} = {self.attribute.child.name}.{self.attribute.child.fk_name}"
+        return f"{self.attribute.level.name}.{self.attribute.level.key} = {self.attribute.level.child.name}.{self.attribute.level.child.fk_name}"
 
     def _get_from_stmt_for_children(self) -> str:
-        return f"{self.attribute.name}, {self.attribute.child.name}"
+        return f"{self.attribute.level.name}, {self.attribute.level.child.name}"
 
     def _get_select_stmt_for_children(self) -> str:
-        return f"{self.attribute.child.name}.{self.attribute.child.column_name}"
+        return f"{self.attribute.level.child.name}.{self.attribute.level.child.level_member.name}"
 
     def _get_ancestors(self) -> List[NonTopLevel]:
         levels = []
@@ -173,11 +176,11 @@ class LevelMember:
         return result
 
     def _get_db_conn(self):
-        return psycopg2.connect(user=self._engine.user,
-                                password=self._engine.password,
-                                host=self._engine.host,
-                                port=self._engine.port,
-                                database=self._engine.dbname)
+        return psycopg2.connect(user=self.attribute._engine.user,
+                                password=self.attribute._engine.password,
+                                host=self.attribute._engine.host,
+                                port=self.attribute._engine.port,
+                                database=self.attribute._engine.dbname)
 
     def _get_attr_or_item(self, item: Union[str, int]) -> LevelMember:
         parents: List[NonTopLevel] = self._get_ancestors()
