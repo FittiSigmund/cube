@@ -78,11 +78,11 @@ CREATE TABLE lineorder (
 
 -- Load generated ssb data
 
-\copy supplier FROM '/home/sigmundur/work/cubeProject/cube/experiments/data/supplier.tbl' DELIMITER '|' CSV;
-\copy customer FROM '/home/sigmundur/work/cubeProject/cube/experiments/data/customer.tbl' DELIMITER '|' CSV;
-\copy part FROM '/home/sigmundur/work/cubeProject/cube/experiments/data/part.tbl' DELIMITER '|' CSV;
-\copy date FROM '/home/sigmundur/work/cubeProject/cube/experiments/data/date.tbl' DELIMITER '|' CSV;
-\copy lineorder FROM '/home/sigmundur/work/cubeProject/cube/experiments/data/lineorder.tbl' DELIMITER '|' CSV;
+\copy supplier FROM '/home/sigmundur/work/aau/cubeProject/cube/experiments/data/supplier.tbl' DELIMITER '|' CSV;
+\copy customer FROM '/home/sigmundur/work/aau/cubeProject/cube/experiments/data/customer.tbl' DELIMITER '|' CSV;
+\copy part FROM '/home/sigmundur/work/aau/cubeProject/cube/experiments/data/part.tbl' DELIMITER '|' CSV;
+\copy date FROM '/home/sigmundur/work/aau/cubeProject/cube/experiments/data/date.tbl' DELIMITER '|' CSV;
+\copy lineorder FROM '/home/sigmundur/work/aau/cubeProject/cube/experiments/data/lineorder.tbl' DELIMITER '|' CSV;
 
 
 

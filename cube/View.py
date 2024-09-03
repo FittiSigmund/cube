@@ -28,7 +28,7 @@ class View:
                  cube: BaseCube = None,
                  name: str = "") -> None:
         self.axes: List[Axis] = axes if axes else []
-        self.measures: List[Measure] = measures if measures else []
+        self._measures: List[Measure] = measures if measures else []
         self.predicates: Predicate = predicates if predicates else Predicate(None, "", None)
         self.cube: BaseCube = cube
         self.name = name
@@ -65,12 +65,12 @@ class View:
         return self
 
     def measures(self, *args: Measure, **kwargs: Dict[str, str | AggregateFunction]) -> View:
-        self.measures = list(args)
+        self._measures = list(args)
         if kwargs:
             calculated_measures: List[Measure] = []
             for k, v in kwargs.items():
                 calculated_measures.append(Measure(k, v["function"], v["sqlname"]))
-            self.measures += calculated_measures
+            self._measures += calculated_measures
         return self
 
     def dimensions(self):
@@ -98,7 +98,7 @@ class View:
     def _create_select_clause(self) -> str:
         levels: List[str] = list(map(lambda x: f"{x.level.alias}.{x.attribute.name} AS {x.level.alias}", self.axes))
         measures: List[str] = list(
-            map(lambda x: f"{x.aggregate_function.name}({x.sqlname}) AS {x.name}", self.measures))
+            map(lambda x: f"{x.aggregate_function.name}({x.sqlname}) AS {x.name}", self._measures))
         # HACK
         if levels and measures:
             return "SELECT " + ", ".join(levels) + ", " + ", ".join(measures)
@@ -162,7 +162,7 @@ class View:
             df = pd.read_sql(text(query), conn)
             columns = [ax.attribute.level.alias for ax in [ax for i, ax in enumerate(self.axes) if i % 2 == 0]]
             rows = [ax.attribute.level.alias for ax in [ax for i, ax in enumerate(self.axes) if i % 2 == 1]]
-            measures = [m.name for m in self.measures]
+            measures = [m.name for m in self._measures]
             final_df = df.pivot(columns=columns, index=rows, values=measures)
             final_df = final_df.reorder_levels(list(range(1, len(columns) + 1)) + [0], axis=1)
             # final_df.columns = final_df.columns.sortlevel(level=list(range(0, len(columns))))[0]

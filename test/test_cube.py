@@ -115,7 +115,7 @@ class TestCube(unittest.TestCase):
         self.cube = session.load_view("salesdb_snowflake_test")
 
     def test_measures(self):
-        cube_function = lambda: self.cube.measures()
+        cube_function = lambda: self.cube._measures()
         name_list = ["total_sales_price", "unit_sales"]
         self.assert_equal_instance_and_name(cube_function, 2, Measure, name_list)
 

@@ -2011,18 +2011,30 @@ def pyCubeTest():
 
 
 def test():
-    print(postgres.views)
-    print(postgres.ssb_snowflake)
-    view = postgres.ssb_snowflake
-    print(view.measures)
-    print(view.dimensions())
-    print(view.date.hierarchies())
+    # print(postgres.views)
+    # print(postgres.ssb_snowflake)
+    # view = postgres.ssb_snowflake
+    # print(view._measures)
+    # print(view.dimensions())
+    # print(view.date.hierarchies())
     print(view.date.year.attributes())
     print(view.date.year.y_year)
     print(view.date.year.y_year["1994"])
     print(view.date.year.y_year.members())
     print(view.date.year.y_year["1994"].children())
     print(view.date.month.mo_month["January "].children())
+
+def mere_test():
+    view2 = view.columns(view.date1.month.mo_month.members())\
+                .rows([view.part.category.ca_category["MFGR#44"],
+                       view.part.category.ca_category["MFGR#45"]])\
+                .pages([view.customer.city.ci_city["UNITED ST9"]])\
+                .where((view.date1.month.mo_month == "January")
+                       | (view.date1.month.mo_month == "February")
+                       & (view.date1.date.d_daynuminmonth <= 7))\
+                .measures(view.lo_revenue, profit=view.lo_revenue / view.lo_supplycost)\
+                .output()
+    return view2
 
 
 if sys.argv and len(sys.argv) == 2:
